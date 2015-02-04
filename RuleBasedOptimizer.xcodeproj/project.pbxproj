@@ -8,11 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
-		AF75152B1A7FA1B70003FE5B /* LogicalNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7515291A7FA1B70003FE5B /* LogicalNode.cpp */; };
-		AF75152E1A7FA4630003FE5B /* LogicalOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75152C1A7FA4630003FE5B /* LogicalOperator.cpp */; };
-		AF7515341A7FB5650003FE5B /* LogicalNodeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7515321A7FB5650003FE5B /* LogicalNodeParser.cpp */; };
-		AF7515371A80D2770003FE5B /* TreeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7515351A80D2770003FE5B /* TreeGenerator.cpp */; };
-		AF75153D1A80FA120003FE5B /* ExhaustiveTransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75153B1A80FA120003FE5B /* ExhaustiveTransformation.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,16 +25,6 @@
 /* Begin PBXFileReference section */
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		AF7515291A7FA1B70003FE5B /* LogicalNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogicalNode.cpp; sourceTree = "<group>"; };
-		AF75152A1A7FA1B70003FE5B /* LogicalNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogicalNode.h; sourceTree = "<group>"; };
-		AF75152C1A7FA4630003FE5B /* LogicalOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogicalOperator.cpp; sourceTree = "<group>"; };
-		AF75152D1A7FA4630003FE5B /* LogicalOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogicalOperator.h; sourceTree = "<group>"; };
-		AF7515321A7FB5650003FE5B /* LogicalNodeParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogicalNodeParser.cpp; sourceTree = "<group>"; };
-		AF7515331A7FB5650003FE5B /* LogicalNodeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogicalNodeParser.h; sourceTree = "<group>"; };
-		AF7515351A80D2770003FE5B /* TreeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TreeGenerator.cpp; sourceTree = "<group>"; };
-		AF7515361A80D2770003FE5B /* TreeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeGenerator.h; sourceTree = "<group>"; };
-		AF75153B1A80FA120003FE5B /* ExhaustiveTransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExhaustiveTransformation.cpp; sourceTree = "<group>"; };
-		AF75153C1A80FA120003FE5B /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExhaustiveTransformation.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,16 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				AF75151C1A7F86440003FE5B /* main.cpp */,
-				AF7515291A7FA1B70003FE5B /* LogicalNode.cpp */,
-				AF75152A1A7FA1B70003FE5B /* LogicalNode.h */,
-				AF75152C1A7FA4630003FE5B /* LogicalOperator.cpp */,
-				AF75152D1A7FA4630003FE5B /* LogicalOperator.h */,
-				AF7515321A7FB5650003FE5B /* LogicalNodeParser.cpp */,
-				AF7515331A7FB5650003FE5B /* LogicalNodeParser.h */,
-				AF7515351A80D2770003FE5B /* TreeGenerator.cpp */,
-				AF7515361A80D2770003FE5B /* TreeGenerator.h */,
-				AF75153B1A80FA120003FE5B /* ExhaustiveTransformation.cpp */,
-				AF75153C1A80FA120003FE5B /* ExhaustiveTransformation.h */,
 			);
 			path = RuleBasedOptimizer;
 			sourceTree = "<group>";
@@ -143,12 +118,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF7515341A7FB5650003FE5B /* LogicalNodeParser.cpp in Sources */,
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
-				AF7515371A80D2770003FE5B /* TreeGenerator.cpp in Sources */,
-				AF75152B1A7FA1B70003FE5B /* LogicalNode.cpp in Sources */,
-				AF75153D1A80FA120003FE5B /* ExhaustiveTransformation.cpp in Sources */,
-				AF75152E1A7FA4630003FE5B /* LogicalOperator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
