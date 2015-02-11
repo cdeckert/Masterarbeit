@@ -60,20 +60,29 @@ std::vector<EquivalenceClass*> ExhaustiveTransformation<EquivalenceClass, PlanNo
         PlanNode * pNew = ruleSet->commutativity(p);
         if(equivalence->addNode(pNew))
         {
-            newEquivalences.push_back(pNew->getEquivalences());
+            for(EquivalenceClass* e : pNew->getEquivalences())
+            {
+                newEquivalences.push_back(e);
+            }
         }
         
-        pNew = ruleSet->leftAssociativity(p);
+        /*pNew = ruleSet->leftAssociativity(p);
         if(equivalence->addNode(pNew))
         {
-            newEquivalences.push_back(pNew->getEquivalences());
+            for(EquivalenceClass* e : pNew->getEquivalences())
+            {
+                newEquivalences.push_back(e);
+            }
         }
         
         pNew = ruleSet->rightAssociativity(p);
         if(equivalence->addNode(pNew))
         {
-            newEquivalences.push_back(pNew->getEquivalences());
-        }
+            for(EquivalenceClass* e : pNew->getEquivalences())
+            {
+                newEquivalences.push_back(e);
+            }
+        }*/
     }
     return newEquivalences;
 }

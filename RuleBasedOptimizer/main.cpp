@@ -20,6 +20,6 @@ int main(int argc, const char * argv[]) {
     ExhaustiveTransformation<EquivalenceClass<Bitvector>, PlanNode<Bitvector>, Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>> * transformation = new ExhaustiveTransformation<EquivalenceClass<Bitvector>, PlanNode<Bitvector>, Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>>::ExhaustiveTransformation(new Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>());
     
     transformation->execute(equivalence);
-    
+    std::cout << "End!\n";
     return 0;
 }

@@ -33,7 +33,7 @@ bool Rule<EquivalenceClass, PlanNode>::isCommutativityApplicable(PlanNode * plan
 template <typename EquivalenceClass, typename PlanNode>
 PlanNode * Rule<EquivalenceClass, PlanNode>::commutativity(PlanNode * planNode)
 {
-    return new PlanNode(planNode.getOperator(), planNode.getRight(), planNode.getLeft());
+    return new PlanNode(planNode->getOperator(), planNode->getRight(), planNode->getLeft());
 }
 
 

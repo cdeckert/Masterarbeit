@@ -39,7 +39,7 @@ public:
 template <typename Bitvector>
 void EquivalenceClass<Bitvector>::init()
 {
-    //this->relationships = NULL;
+    this->relationships = Bitvector();
     //this->plans = nullptr;
 }
 
@@ -68,7 +68,7 @@ template <typename Bitvector>
 EquivalenceClass<Bitvector>::EquivalenceClass(Bitvector relationships)
 {
     this->init();
-    this->setRelationships();
+    this->setRelationships(relationships);
 }
 
 

@@ -12,6 +12,8 @@
 
 enum Operator {JOIN};
 
+
+
 template <typename Bitvector>
 struct EquivalenceClass;
 
@@ -33,6 +35,9 @@ struct PlanNode
     void addRight(int);
     void addRight(Bitvector);
     void addRight(EquivalenceClass<Bitvector> *);
+    
+    EquivalenceClass<Bitvector> * getLeft();
+    EquivalenceClass<Bitvector> * getRight();
     
     void init();
     
@@ -73,13 +78,8 @@ template <typename Bitvector>
 PlanNode<Bitvector>::PlanNode(Operator rootOperator, EquivalenceClass<Bitvector> * left, EquivalenceClass<Bitvector> * right)
 {
     this->init();
-    Bitvector leftVector(left);
-    Bitvector rightVector(right);
-    
-    this->relationships += leftVector;
-    this->relationships += rightVector;
-    this->relationshipsLeft += leftVector;
-    this->relationshipsRight += rightVector;
+    this->addLeft(left);
+    this->addRight(right);
 }
 
 
@@ -97,7 +97,7 @@ Operator PlanNode<Bitvector>::getOperator()
 template <typename Bitvector>
 void PlanNode<Bitvector>::addLeft(int left)
 {
-    EquivalenceClass<Bitvector> * leftEquivalence = new EquivalenceClass<Bitvector>::EquivalenceClass(left);
+    EquivalenceClass<Bitvector> * leftEquivalence = new typename EquivalenceClass<Bitvector>::EquivalenceClass(left);
     this->addLeft(leftEquivalence);
 }
 
@@ -140,6 +140,18 @@ void PlanNode<Bitvector>::addRight(EquivalenceClass<Bitvector> * euqivalence)
 
 
 
+template <typename Bitvector>
+EquivalenceClass<Bitvector> * PlanNode<Bitvector>::getLeft()
+{
+    return this->leftEquivalence;
+}
+
+template <typename Bitvector>
+EquivalenceClass<Bitvector> * PlanNode<Bitvector>::getRight()
+{
+    return this->rightEquivalence;
+}
+
 
 
 
@@ -174,8 +186,8 @@ void PlanNode<Bitvector>::init()
 {
     //this->leftEquivalence = NULL;
     //this->rightEquivalence = NULL;
-    //this->relationshipsLeft = NULL;
-    //this->relationshipsRight = NULL;
+    this->relationshipsLeft = Bitvector();
+    this->relationshipsRight = Bitvector();
     //rootOperator = NULL;
 }
 
