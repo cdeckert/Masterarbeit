@@ -1,18 +1,18 @@
 //
 //  main.cpp
-//  RuleBasedOptimizer
 //
 //  Created by Christian Deckert on 02/02/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #include <iostream>
+#include "TreeGenerator.h"
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    
+    std::cout << "Start!\n";
+    //Reservoir<Plan> * planReservoir = new Reservoir<Plan>(30);
+    //planReservoir->get_new_entry();
+    TreeGenerator::generate();
     
     return 0;
 }
