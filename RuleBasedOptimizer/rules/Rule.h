@@ -1,9 +1,6 @@
 //
 //  Rule.h
-//  RuleBasedOptimizer
 //
-//  Created by Christian Deckert on 04/02/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef __RuleBasedOptimizer__Rule__
@@ -12,6 +9,32 @@
 #include <stdio.h>
 #include <vector>
 
+
+
+template <typename EquivalenceClass, typename PlanNode>
+struct Rule
+{
+    
+    
+public:
+    bool isCommutativityApplicable(PlanNode *);
+    PlanNode * commutativity(PlanNode *);
+};
+
+
+
+template <typename EquivalenceClass, typename PlanNode>
+bool Rule<EquivalenceClass, PlanNode>::isCommutativityApplicable(PlanNode * planNode)
+{
+    return true;
+}
+
+
+template <typename EquivalenceClass, typename PlanNode>
+PlanNode * Rule<EquivalenceClass, PlanNode>::commutativity(PlanNode * planNode)
+{
+    return new PlanNode(planNode.getOperator(), planNode.getRight(), planNode.getLeft());
+}
 
 
 
@@ -36,7 +59,8 @@ public:
 };
 
 template <class Plan>
-struct RightAssociativity {
+struct RightAssociativity
+{
 public:
     bool isApplicable(Plan* plan)
     {
