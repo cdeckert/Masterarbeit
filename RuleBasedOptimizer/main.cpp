@@ -16,8 +16,9 @@ int main(int argc, const char * argv[]) {
     //planReservoir->get_new_entry();
      EquivalenceClass<Bitvector> * equivalence = TreeGenerator::generate();
     
+    typedef ExhaustiveTransformation<EquivalenceClass<Bitvector>, PlanNode<Bitvector>, Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>> Transformation;
     
-    ExhaustiveTransformation<EquivalenceClass<Bitvector>, PlanNode<Bitvector>, Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>> * transformation = new ExhaustiveTransformation<EquivalenceClass<Bitvector>, PlanNode<Bitvector>, Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>>::ExhaustiveTransformation(new Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>());
+    Transformation * transformation = new Transformation::ExhaustiveTransformation(new Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>());
     
     transformation->execute(equivalence);
     std::cout << "End!\n";
