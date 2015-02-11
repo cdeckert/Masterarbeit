@@ -44,6 +44,9 @@ public:
     PlanNode(Operator, EquivalenceClass<Bitvector> *, EquivalenceClass<Bitvector> *);
     PlanNode(Operator, Bitvector, Bitvector);
     Bitvector getRelationships();
+    Operator getOperator();
+    
+    std::vector<EquivalenceClass<Bitvector>*> getEquivalences();
 };
 
 
@@ -81,7 +84,11 @@ PlanNode<Bitvector>::PlanNode(Operator rootOperator, EquivalenceClass<Bitvector>
 
 
 
-
+template <typename Bitvector>
+Operator PlanNode<Bitvector>::getOperator()
+{
+    return this->rootOperator;
+}
 
 
 
@@ -90,8 +97,8 @@ PlanNode<Bitvector>::PlanNode(Operator rootOperator, EquivalenceClass<Bitvector>
 template <typename Bitvector>
 void PlanNode<Bitvector>::addLeft(int left)
 {
-    Bitvector leftVector(left);
-    this->addLeft(leftVector);
+    EquivalenceClass<Bitvector> * leftEquivalence = new EquivalenceClass<Bitvector>::EquivalenceClass(left);
+    this->addLeft(leftEquivalence);
 }
 
 template <typename Bitvector>
@@ -170,6 +177,12 @@ void PlanNode<Bitvector>::init()
     //this->relationshipsLeft = NULL;
     //this->relationshipsRight = NULL;
     //rootOperator = NULL;
+}
+
+template <typename Bitvector>
+std::vector<EquivalenceClass<Bitvector>*> PlanNode<Bitvector>::getEquivalences()
+{
+    return std::vector<EquivalenceClass<Bitvector>*>{leftEquivalence, rightEquivalence};
 }
 
 template <typename Bitvector>

@@ -31,6 +31,8 @@ public:
     Bitvector getRelationships();
     bool addNode(PlanNode<Bitvector>*);
     
+    std::unordered_set<PlanNode<Bitvector>*> getPlans();
+    
 };
 
 
@@ -66,7 +68,7 @@ template <typename Bitvector>
 EquivalenceClass<Bitvector>::EquivalenceClass(Bitvector relationships)
 {
     this->init();
-    this->setRelationships(relationships);
+    this->setRelationships();
 }
 
 
@@ -81,6 +83,12 @@ template <typename Bitvector>
 void EquivalenceClass<Bitvector>::setRelationships(Bitvector relationships)
 {
     this->relationships = relationships;
+}
+
+template <typename Bitvector>
+std::unordered_set<PlanNode<Bitvector>*> EquivalenceClass<Bitvector>::getPlans()
+{
+    return plans;
 }
 
 /**
