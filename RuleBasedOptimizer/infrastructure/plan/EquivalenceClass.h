@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <unordered_set>
 #include "PlanNode.h"
+#include <string>
 #include <iostream>
 
 
@@ -30,6 +31,8 @@ public:
     void setRelationships(Bitvector);
     Bitvector getRelationships();
     bool addNode(PlanNode<Bitvector>*);
+    
+    std::string toString();
     
     std::unordered_set<PlanNode<Bitvector>*> getPlans();
     
@@ -90,6 +93,19 @@ std::unordered_set<PlanNode<Bitvector>*> EquivalenceClass<Bitvector>::getPlans()
 {
     return plans;
 }
+
+
+template <typename Bitvector>
+std::string EquivalenceClass<Bitvector>::toString()
+{
+    std::string result = "EquivalenceClass:{";
+    for(PlanNode<Bitvector> * pn : this->plans)
+    {
+        result += pn->toString();
+    }
+    return result;
+}
+
 
 /**
  * @brief returns relationships

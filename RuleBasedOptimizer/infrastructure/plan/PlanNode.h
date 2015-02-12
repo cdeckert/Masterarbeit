@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "Hasher.h"
+#include <string>
 
 
 enum Operator {JOIN};
@@ -50,6 +51,7 @@ public:
     PlanNode(Operator, Bitvector, Bitvector);
     Bitvector getRelationships();
     Operator getOperator();
+    std::string toString();
     
     std::vector<EquivalenceClass<Bitvector>*> getEquivalences();
 };
@@ -191,6 +193,17 @@ void PlanNode<Bitvector>::init()
     this->relationshipsRight = Bitvector();
     //rootOperator = NULL;
 }
+
+
+template <typename Bitvector>
+std::string PlanNode<Bitvector>::toString()
+{
+    std::string result = "Plan:{" + this->leftEquivalence->toString()+","+this->rightEquivalence->toString()+"}";
+
+    return result;
+}
+
+
 
 template <typename Bitvector>
 std::vector<EquivalenceClass<Bitvector>*> PlanNode<Bitvector>::getEquivalences()
