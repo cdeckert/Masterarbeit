@@ -9,14 +9,25 @@
 #ifndef RuleBasedOptimizer_Commutativity_h
 #define RuleBasedOptimizer_Commutativity_h
 
+#include "Rule.h"
 
-template <typename Equivalence>
-class Commutativity
+template <typename PlanNode>
+class Commutativity: public Rule
 {
     
 public:
-    apply
+    Commutativity();
+    
+    PlanNode & apply(PlanNode& const);
 };
+
+
+template <typename PlanNode>
+PlanNode & Commutativity::apply(PlanNode& aPlanNode)
+{
+    return PlanNode(aPlanNode.getOperator(), aPlanNode.getRight(), aPlannode.getLeft());
+}
+
 
 
 #endif
