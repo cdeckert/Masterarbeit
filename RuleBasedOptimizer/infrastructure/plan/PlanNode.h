@@ -198,7 +198,7 @@ void PlanNode<Bitvector>::init()
 template <typename Bitvector>
 std::string PlanNode<Bitvector>::toString()
 {
-    std::string result = "Plan:{" + this->leftEquivalence->toString()+","+this->rightEquivalence->toString()+"}";
+    std::string result = "\", Plan:{" + this->leftEquivalence->toString()+","+this->rightEquivalence->toString()+"}";
 
     return result;
 }

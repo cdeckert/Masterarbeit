@@ -11,6 +11,7 @@
 #include "PlanNode.h"
 #include <string>
 #include <iostream>
+#include <sstream>
 
 
 
@@ -94,15 +95,25 @@ std::unordered_set<PlanNode<Bitvector>*> EquivalenceClass<Bitvector>::getPlans()
     return plans;
 }
 
+/**
+ * @brief converts DAG to String
+ */
 
+//To to: schlimm.. ostringstream
 template <typename Bitvector>
 std::string EquivalenceClass<Bitvector>::toString()
 {
+    std::ostringstream stream;
     std::string result = "EquivalenceClass:{";
+    
+    this->relationships.print(stream);
+    result += stream.str();
+    
     for(PlanNode<Bitvector> * pn : this->plans)
     {
-        result += pn->toString();
+        result += pn->toString()+",";
     }
+    result += "}\n";
     return result;
 }
 
@@ -113,12 +124,6 @@ std::string EquivalenceClass<Bitvector>::toString()
 template <typename Bitvector>
 Bitvector EquivalenceClass<Bitvector>::getRelationships()
 {
-    std::cout << "abc";
-    this->relationships.print(std::cout);
-    /*if(this->relationships == nullptr)
-    {
-        this->relationships = Bitvector();
-    }*/
     return this->relationships; // something is going wrong....
 }
 

@@ -9,7 +9,7 @@
 #include <vector>
 #include "EquivalenceClass.h"
 #include "BitvectorSmall.h"
-typedef BitVectorSmall<unsigned int> Bitvector;
+typedef BitVectorSmall<unsigned short> Bitvector;
 // TO-Do: Remove class!!!
 // Reservoir Implementierung nicht vergessen!!!
 class TreeGenerator {
