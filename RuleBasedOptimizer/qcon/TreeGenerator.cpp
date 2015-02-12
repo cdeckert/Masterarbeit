@@ -15,7 +15,7 @@ EquivalenceClass<Bitvector> * TreeGenerator::generate()
     for(int i = 3; i<5; ++i)
     {
         
-        node1 = new PlanNode<Bitvector>(JOIN, equivalence1, i);
+        node1 = new PlanNode<Bitvector>(JOIN, i, equivalence1);
         equivalence1 = new EquivalenceClass<Bitvector>::EquivalenceClass(node1);
     }
     

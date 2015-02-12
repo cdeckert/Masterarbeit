@@ -176,6 +176,14 @@ PlanNode<Bitvector>::PlanNode(Operator rootOperator,EquivalenceClass<Bitvector> 
 }
 
 template <typename Bitvector>
+PlanNode<Bitvector>::PlanNode(Operator rootOperator,int left, EquivalenceClass<Bitvector> * right)
+{
+    this->init();
+    this->addLeft(left);
+    this->addRight(right);
+}
+
+template <typename Bitvector>
 PlanNode<Bitvector>::PlanNode(Operator rootOperator, Bitvector  left, Bitvector  right)
 {
     this->init();
@@ -198,7 +206,7 @@ void PlanNode<Bitvector>::init()
 template <typename Bitvector>
 std::string PlanNode<Bitvector>::toString()
 {
-    std::string result = "\", Plan:{" + this->leftEquivalence->toString()+","+this->rightEquivalence->toString()+"}";
+    std::string result = "(" + this->leftEquivalence->toString()+" ⨝ "+this->rightEquivalence->toString()+")";
 
     return result;
 }

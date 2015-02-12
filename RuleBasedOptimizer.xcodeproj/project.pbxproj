@@ -35,7 +35,8 @@
 		AFECC5C21A8D01B100FA9D84 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/PlanNode.h; sourceTree = "<group>"; };
 		AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeGenerator.cpp; path = qcon/TreeGenerator.cpp; sourceTree = "<group>"; };
 		AFECC5C51A8D02C900FA9D84 /* TreeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeGenerator.h; path = qcon/TreeGenerator.h; sourceTree = "<group>"; };
-		AFECC5C71A8D031900FA9D84 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = rule/rules/Rule.h; sourceTree = "<group>"; };
+		AFECC5C81A8D03D100FA9D84 /* Commutativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commutativity.h; path = rule/rules/Commutativity.h; sourceTree = "<group>"; };
+		AFECC5CA1A8D041E00FA9D84 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = rule/rules/Rule.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +143,8 @@
 		AFECC5B71A8D00B600FA9D84 /* rules */ = {
 			isa = PBXGroup;
 			children = (
-				AFECC5C71A8D031900FA9D84 /* Rule.h */,
+				AFECC5C81A8D03D100FA9D84 /* Commutativity.h */,
+				AFECC5CA1A8D041E00FA9D84 /* Rule.h */,
 			);
 			name = rules;
 			sourceTree = "<group>";

@@ -104,7 +104,7 @@ template <typename Bitvector>
 std::string EquivalenceClass<Bitvector>::toString()
 {
     std::ostringstream stream;
-    std::string result = "EquivalenceClass:{";
+    std::string result = "{";
     
     this->relationships.print(stream);
     result += stream.str();
@@ -113,7 +113,7 @@ std::string EquivalenceClass<Bitvector>::toString()
     {
         result += pn->toString()+",";
     }
-    result += "}\n";
+    result += "}";
     return result;
 }
 

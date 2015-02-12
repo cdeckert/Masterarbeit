@@ -12,6 +12,14 @@
 
 int main(int argc, const char * argv[]) {
     std::cout << "Start!\n";
+    
+    
+    
+    Bitvector b(2^5-1);
+    b.print(std::cout);
+    
+    std::cout << "\n\n";
+    
     //Reservoir<Plan> * planReservoir = new Reservoir<Plan>(30);
     //planReservoir->get_new_entry();
      EquivalenceClass<Bitvector> * equivalence = TreeGenerator::generate();
@@ -21,6 +29,6 @@ int main(int argc, const char * argv[]) {
     Transformation * transformation = new Transformation::ExhaustiveTransformation(new Rule<EquivalenceClass<Bitvector>, PlanNode<Bitvector>>());
     
     transformation->execute(equivalence);
-    std::cout << "End!\n";
+    std::cout << "\nEnd!\n";
     return 0;
 }
