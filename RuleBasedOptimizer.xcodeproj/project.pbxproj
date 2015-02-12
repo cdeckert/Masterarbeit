@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
-		AFECA11F1A836CD800E940C8 /* TreeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFECA11D1A836CD800E940C8 /* TreeGenerator.cpp */; };
+		AFECC5C61A8D02C900FA9D84 /* TreeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,18 +24,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AF5158A31A822D500015542D /* Reservoir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reservoir.h; path = infrastructure/Reservoir.h; sourceTree = "<group>"; };
-		AF5158A71A825DF00015542D /* Rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = rules/Rule.h; sourceTree = "<group>"; };
-		AF5158AB1A82720C0015542D /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExhaustiveTransformation.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		AFECA11D1A836CD800E940C8 /* TreeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeGenerator.cpp; path = Tree/TreeGenerator.cpp; sourceTree = "<group>"; };
-		AFECA11E1A836CD800E940C8 /* TreeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeGenerator.h; path = Tree/TreeGenerator.h; sourceTree = "<group>"; };
-		AFECC5911A890D3800FA9D84 /* EquivalenceClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = infrastructure/plan/EquivalenceClass.h; sourceTree = "<group>"; };
-		AFECC5951A890E5500FA9D84 /* PlanNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = infrastructure/plan/PlanNode.h; sourceTree = "<group>"; };
-		AFECC5971A8912A500FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitvectorSmall.h; sourceTree = "<group>"; };
-		AFECC5AE1A8A6ECF00FA9D84 /* Hasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hasher.h; sourceTree = "<group>"; };
-		AFECC5AF1A8B92E900FA9D84 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitvectorSmall.h; path = infra/BitvectorSmall.h; sourceTree = "<group>"; };
+		AFECC5BD1A8D011A00FA9D84 /* Hasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hasher.h; path = infra/Hasher.h; sourceTree = "<group>"; };
+		AFECC5BE1A8D011A00FA9D84 /* Reservoir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Reservoir.h; path = infra/Reservoir.h; sourceTree = "<group>"; };
+		AFECC5BF1A8D011A00FA9D84 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Types.h; path = infra/Types.h; sourceTree = "<group>"; };
+		AFECC5C01A8D017200FA9D84 /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = pg/ExhaustiveTransformation.h; sourceTree = "<group>"; };
+		AFECC5C11A8D01B100FA9D84 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/EquivalenceClass.h; sourceTree = "<group>"; };
+		AFECC5C21A8D01B100FA9D84 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/PlanNode.h; sourceTree = "<group>"; };
+		AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeGenerator.cpp; path = qcon/TreeGenerator.cpp; sourceTree = "<group>"; };
+		AFECC5C51A8D02C900FA9D84 /* TreeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeGenerator.h; path = qcon/TreeGenerator.h; sourceTree = "<group>"; };
+		AFECC5C71A8D031900FA9D84 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = rule/rules/Rule.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,27 +49,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AF5158A51A822D590015542D /* infrastructure */ = {
-			isa = PBXGroup;
-			children = (
-				AFECC5931A890E2A00FA9D84 /* Tree */,
-				AF5158A31A822D500015542D /* Reservoir.h */,
-				AFECC5971A8912A500FA9D84 /* BitvectorSmall.h */,
-				AFECC5AE1A8A6ECF00FA9D84 /* Hasher.h */,
-				AFECC5AF1A8B92E900FA9D84 /* Types.h */,
-			);
-			name = infrastructure;
-			sourceTree = "<group>";
-		};
-		AF5158A91A826A140015542D /* rules */ = {
-			isa = PBXGroup;
-			children = (
-				AF5158A71A825DF00015542D /* Rule.h */,
-				AF5158AB1A82720C0015542D /* ExhaustiveTransformation.h */,
-			);
-			name = rules;
-			sourceTree = "<group>";
-		};
 		AF7515101A7F86430003FE5B = {
 			isa = PBXGroup;
 			children = (
@@ -89,22 +68,83 @@
 		AF75151B1A7F86440003FE5B /* RuleBasedOptimizer */ = {
 			isa = PBXGroup;
 			children = (
-				AF5158A91A826A140015542D /* rules */,
-				AF5158A51A822D590015542D /* infrastructure */,
+				AFECC5B21A8D007D00FA9D84 /* infra */,
+				AFECC5B11A8D007300FA9D84 /* op */,
+				AFECC5B51A8D00A100FA9D84 /* rule */,
+				AFECC5B41A8D009500FA9D84 /* pg */,
+				AFECC5B31A8D008500FA9D84 /* qcon */,
+				AFECC5B01A8D006B00FA9D84 /* plan */,
 				AF75151C1A7F86440003FE5B /* main.cpp */,
 			);
 			path = RuleBasedOptimizer;
 			sourceTree = "<group>";
 		};
-		AFECC5931A890E2A00FA9D84 /* Tree */ = {
+		AFECC5B01A8D006B00FA9D84 /* plan */ = {
 			isa = PBXGroup;
 			children = (
-				AFECA11D1A836CD800E940C8 /* TreeGenerator.cpp */,
-				AFECA11E1A836CD800E940C8 /* TreeGenerator.h */,
-				AFECC5911A890D3800FA9D84 /* EquivalenceClass.h */,
-				AFECC5951A890E5500FA9D84 /* PlanNode.h */,
+				AFECC5C11A8D01B100FA9D84 /* EquivalenceClass.h */,
+				AFECC5C21A8D01B100FA9D84 /* PlanNode.h */,
 			);
-			name = Tree;
+			name = plan;
+			sourceTree = "<group>";
+		};
+		AFECC5B11A8D007300FA9D84 /* op */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = op;
+			sourceTree = "<group>";
+		};
+		AFECC5B21A8D007D00FA9D84 /* infra */ = {
+			isa = PBXGroup;
+			children = (
+				AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */,
+				AFECC5BD1A8D011A00FA9D84 /* Hasher.h */,
+				AFECC5BE1A8D011A00FA9D84 /* Reservoir.h */,
+				AFECC5BF1A8D011A00FA9D84 /* Types.h */,
+			);
+			name = infra;
+			sourceTree = "<group>";
+		};
+		AFECC5B31A8D008500FA9D84 /* qcon */ = {
+			isa = PBXGroup;
+			children = (
+				AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */,
+				AFECC5C51A8D02C900FA9D84 /* TreeGenerator.h */,
+			);
+			name = qcon;
+			sourceTree = "<group>";
+		};
+		AFECC5B41A8D009500FA9D84 /* pg */ = {
+			isa = PBXGroup;
+			children = (
+				AFECC5C01A8D017200FA9D84 /* ExhaustiveTransformation.h */,
+			);
+			name = pg;
+			sourceTree = "<group>";
+		};
+		AFECC5B51A8D00A100FA9D84 /* rule */ = {
+			isa = PBXGroup;
+			children = (
+				AFECC5B71A8D00B600FA9D84 /* rules */,
+				AFECC5B61A8D00AB00FA9D84 /* rulesets */,
+			);
+			name = rule;
+			sourceTree = "<group>";
+		};
+		AFECC5B61A8D00AB00FA9D84 /* rulesets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = rulesets;
+			sourceTree = "<group>";
+		};
+		AFECC5B71A8D00B600FA9D84 /* rules */ = {
+			isa = PBXGroup;
+			children = (
+				AFECC5C71A8D031900FA9D84 /* Rule.h */,
+			);
+			name = rules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,7 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
-				AFECA11F1A836CD800E940C8 /* TreeGenerator.cpp in Sources */,
+				AFECC5C61A8D02C900FA9D84 /* TreeGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
