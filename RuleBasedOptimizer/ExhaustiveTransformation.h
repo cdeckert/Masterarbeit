@@ -58,13 +58,14 @@ std::vector<EquivalenceClass*> ExhaustiveTransformation<EquivalenceClass, PlanNo
     for(PlanNode * p : equivalence->getPlans())
     {
         PlanNode * pNew = ruleSet->commutativity(p);
-        if(equivalence->addNode(pNew))
+        /*if(equivalence->addNode(pNew))
         {
+            std::cout <<
             for(EquivalenceClass* e : pNew->getEquivalences())
             {
                 newEquivalences.push_back(e);
             }
-        }
+        }*/
         
         /*pNew = ruleSet->leftAssociativity(p);
         if(equivalence->addNode(pNew))

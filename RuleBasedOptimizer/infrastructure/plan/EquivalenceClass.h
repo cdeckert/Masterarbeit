@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <unordered_set>
 #include "PlanNode.h"
-
+#include <iostream>
 
 
 
@@ -97,11 +97,13 @@ std::unordered_set<PlanNode<Bitvector>*> EquivalenceClass<Bitvector>::getPlans()
 template <typename Bitvector>
 Bitvector EquivalenceClass<Bitvector>::getRelationships()
 {
+    std::cout << "abc";
+    this->relationships.print(std::cout);
     /*if(this->relationships == nullptr)
     {
         this->relationships = Bitvector();
     }*/
-    return this->relationships; // something is wrong....
+    return this->relationships; // something is going wrong....
 }
 
 /**

@@ -116,12 +116,11 @@ void PlanNode<Bitvector>::addLeft(EquivalenceClass<Bitvector> * euqivalence)
 }
 
 
-
 template <typename Bitvector>
 void PlanNode<Bitvector>::addRight(int right)
 {
-    Bitvector rightVector(right);
-    this->addRight(rightVector);
+    EquivalenceClass<Bitvector> * rightEquivalence = new typename EquivalenceClass<Bitvector>::EquivalenceClass(right);
+    this->addRight(rightEquivalence);
 }
 
 template <typename Bitvector>
@@ -137,6 +136,7 @@ void PlanNode<Bitvector>::addRight(EquivalenceClass<Bitvector> * euqivalence)
     this->rightEquivalence = euqivalence;
     this->addRight(euqivalence->getRelationships());
 }
+
 
 
 
