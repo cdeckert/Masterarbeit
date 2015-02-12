@@ -186,6 +186,7 @@ void PlanNode<Bitvector>::init()
 {
     //this->leftEquivalence = NULL;
     //this->rightEquivalence = NULL;
+    this->relationships = Bitvector();
     this->relationshipsLeft = Bitvector();
     this->relationshipsRight = Bitvector();
     //rootOperator = NULL;

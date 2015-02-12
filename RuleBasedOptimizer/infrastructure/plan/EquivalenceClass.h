@@ -97,7 +97,11 @@ std::unordered_set<PlanNode<Bitvector>*> EquivalenceClass<Bitvector>::getPlans()
 template <typename Bitvector>
 Bitvector EquivalenceClass<Bitvector>::getRelationships()
 {
-    return this->relationships;
+    /*if(this->relationships == nullptr)
+    {
+        this->relationships = Bitvector();
+    }*/
+    return this->relationships; // something is wrong....
 }
 
 /**
