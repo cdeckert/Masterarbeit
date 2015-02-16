@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF14C1DE1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF14C1DC1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp */; };
+		AF14C2451A9245D400A4AEEF /* TestEquivalenceClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF14C2431A9245D400A4AEEF /* TestEquivalenceClass.cpp */; };
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
 		AFECC5C61A8D02C900FA9D84 /* TreeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,8 @@
 		AF14C2401A91FD5A00A4AEEF /* Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tests.h; sourceTree = "<group>"; };
 		AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity.h; path = rule/rules/LeftAssociativity.h; sourceTree = "<group>"; };
 		AF14C2421A92040100A4AEEF /* BasicRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicRuleSet.h; path = rule/rulesets/BasicRuleSet.h; sourceTree = "<group>"; };
+		AF14C2431A9245D400A4AEEF /* TestEquivalenceClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestEquivalenceClass.cpp; path = tests/TestEquivalenceClass.cpp; sourceTree = "<group>"; };
+		AF14C2441A9245D400A4AEEF /* TestEquivalenceClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestEquivalenceClass.h; path = tests/TestEquivalenceClass.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitvectorSmall.h; path = infra/BitvectorSmall.h; sourceTree = "<group>"; };
@@ -64,6 +67,8 @@
 				AF14C1DC1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp */,
 				AF14C1DD1A91F4B200A4AEEF /* TestRuleSetGeneration.h */,
 				AF14C2401A91FD5A00A4AEEF /* Tests.h */,
+				AF14C2431A9245D400A4AEEF /* TestEquivalenceClass.cpp */,
+				AF14C2441A9245D400A4AEEF /* TestEquivalenceClass.h */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
+				AF14C2451A9245D400A4AEEF /* TestEquivalenceClass.cpp in Sources */,
 				AFECC5C61A8D02C900FA9D84 /* TreeGenerator.cpp in Sources */,
 				AF14C1DE1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp in Sources */,
 			);

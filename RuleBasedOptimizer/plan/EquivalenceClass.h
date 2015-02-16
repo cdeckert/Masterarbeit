@@ -8,140 +8,115 @@
 
 #include <stdio.h>
 #include <unordered_set>
-#include "PlanNode.h"
-#include <string>
-#include <iostream>
-#include <sstream>
+#include <iterator>
 
 
 
-
-template <typename Bitvector>
+template <typename Bitvector, typename PlanNode>
 struct EquivalenceClass
 {
-    void init();
-    Bitvector relationships; 
-    std::unordered_set<Bitvector, Hasher<Bitvector>> planSignatures;
-    std::unordered_set<PlanNode<Bitvector> *> plans;
+    typedef EquivalenceClass self_type;
+    typedef PlanNode *iterator;
+    typedef PlanNode valueType;
     
 public:
+    struct Iterator : public std::iterator<std::input_iterator_tag, PlanNode>
+    {
+        
+    private:
+        PlanNode * _current;
+    };
     EquivalenceClass();
-    EquivalenceClass(int);
-    EquivalenceClass(Bitvector);
-    EquivalenceClass(PlanNode<Bitvector>*);
-    void setRelationships(Bitvector);
-    Bitvector getRelationships();
-    bool addNode(PlanNode<Bitvector>*);
+    EquivalenceClass( PlanNode &);
+    PlanNode * begin() const;
+    PlanNode * end() const;
+    void push(PlanNode&);
     
-    std::string toString();
+    bool empty();
     
-    std::unordered_set<PlanNode<Bitvector>*> getPlans();
+    unsigned int getSize();
+    
+
+private:
+    void init();
+    Bitvector _relations;
+    const PlanNode * _begin;
+    PlanNode * _current;
+    PlanNode * _end;
+    unsigned int _size;
+    
+    
+    
     
 };
 
 
-template <typename Bitvector>
-void EquivalenceClass<Bitvector>::init()
+template <typename Bitvector, typename PlanNode>
+void EquivalenceClass<Bitvector, PlanNode>::init()
 {
-    this->relationships = Bitvector();
-    //this->plans = nullptr;
+    this->_relations = Bitvector();
+    _size = 0;
 }
+
+/*template <typename Bitvector, typename PlanNode>
+EquivalenceClass<Bitvector, PlanNode>::EquivalenceClass(const PlanNode & planNode)
+{
+    _relations = planNode.getRelations();
+    _begin = * planNode;
+    _current = _begin;
+    _end = _begin;
+
+}*/
+
+template <typename Bitvector, typename PlanNode>
+EquivalenceClass<Bitvector, PlanNode>::EquivalenceClass()
+{
+    init();
+}
+
+template <typename Bitvector, typename PlanNode>
+void EquivalenceClass<Bitvector, PlanNode>::push(PlanNode & planNode)
+{
+    if(_size == 0)
+    {
+        _begin = &planNode;
+        //_end = &planNode;
+        //_current = &planNode;
+    }
+    else
+    {
+        _end->_next = &planNode;
+    }
+    ++_size;
+    
+    //_end = _end->_next;
+}
+
+template <typename Bitvector, typename PlanNode>
+PlanNode * EquivalenceClass<Bitvector, PlanNode>::begin() const
+{
+    return _begin;
+}
+
+template <typename Bitvector, typename PlanNode>
+PlanNode * EquivalenceClass<Bitvector, PlanNode>::end() const
+{
+    return _end;
+}
+
+template <typename Bitvector, typename PlanNode>
+unsigned int EquivalenceClass<Bitvector, PlanNode>::getSize()
+{
+    return _size;
+}
+
+
+
 
 
 
 
 
 // Implementation
-
-
-
-template <typename Bitvector>
-EquivalenceClass<Bitvector>::EquivalenceClass()
-{
-    this->init();
-}
-
-template <typename Bitvector>
-EquivalenceClass<Bitvector>::EquivalenceClass(int nodeName)
-{
-    this->init();
-    this->setRelationships(Bitvector(nodeName));
-}
-
-template <typename Bitvector>
-EquivalenceClass<Bitvector>::EquivalenceClass(Bitvector relationships)
-{
-    this->init();
-    this->setRelationships(relationships);
-}
-
-
-template <typename Bitvector>
-EquivalenceClass<Bitvector>::EquivalenceClass(PlanNode<Bitvector> * planNode)
-{
-    this->init();
-    this->addNode(planNode);
-}
-
-template <typename Bitvector>
-void EquivalenceClass<Bitvector>::setRelationships(Bitvector relationships)
-{
-    this->relationships = relationships;
-}
-
-template <typename Bitvector>
-std::unordered_set<PlanNode<Bitvector>*> EquivalenceClass<Bitvector>::getPlans()
-{
-    return plans;
-}
-
-/**
- * @brief converts DAG to String
- */
-
-//To to: schlimm.. ostringstream
-template <typename Bitvector>
-std::string EquivalenceClass<Bitvector>::toString()
-{
-    std::ostringstream stream;
-    std::string result = "{";
-    
-    this->relationships.print(stream);
-    result += stream.str();
-    
-    for(PlanNode<Bitvector> * pn : this->plans)
-    {
-        result += pn->toString()+",";
-    }
-    result += "}";
-    return result;
-}
-
-
-/**
- * @brief returns relationships
- */
-template <typename Bitvector>
-Bitvector EquivalenceClass<Bitvector>::getRelationships()
-{
-    return this->relationships; // something is going wrong....
-}
-
-/**
- * @brief checks if plan is known and adds new plans to the equivalence
- */
-template <typename Bitvector>
-bool EquivalenceClass<Bitvector>::addNode(PlanNode<Bitvector> * planNode)
-{
-    if(this->planSignatures.empty())
-    {
-        this->planSignatures.insert(planNode->getRelationships());
-        this->plans.insert(planNode);
-        this->relationships += planNode->getRelationships();
-        return false;
-    }
-    return true;
-    
-}
 
 #endif /* defined(__RuleBasedOptimizer__EquivalenceClass__) */

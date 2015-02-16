@@ -10,6 +10,7 @@
 #define RuleBasedOptimizer_Tests_h
 
 #include "TestRuleSetGeneration.h"
+#include "TestEquivalenceClass.h"
 #include <iostream>
 
 class Tests {
@@ -23,6 +24,7 @@ public:
 void Tests::run()
 {
     std::cout << &TestRuleSetGeneration::runTests(std::cout << "");
+    std::cout << &TestEquivalenceClass::runTests(std::cout << "");
 }
 
 
