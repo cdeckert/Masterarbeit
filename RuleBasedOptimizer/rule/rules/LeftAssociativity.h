@@ -1,33 +1,31 @@
 //
-//  Commutativity.h
+//  LeftAssociativity.h
 //  RuleBasedOptimizer
 //
-//  Created by Christian Deckert on 12/02/15.
+//  Created by Christian Deckert on 16/02/15.
 //  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
-#ifndef RuleBasedOptimizer_Commutativity_h
-#define RuleBasedOptimizer_Commutativity_h
+#ifndef RuleBasedOptimizer_LeftAssociativity_h
+#define RuleBasedOptimizer_LeftAssociativity_h
 
-#include "Rule.h"
 
 template <typename PlanNode>
-class Commutativity: public Rule<PlanNode>
+class LeftAssociativity: public Rule<PlanNode>
 {
     
 public:
-    Commutativity(){};
+    LeftAssociativity(){};
     
     PlanNode apply(const PlanNode &) override;
 };
 
 
 template <typename PlanNode>
-PlanNode Commutativity<PlanNode>::apply(const PlanNode & aPlanNode)
+PlanNode LeftAssociativity<PlanNode>::apply(const PlanNode & aPlanNode)
 {
     return  PlanNode(aPlanNode.getOperator(), aPlanNode.getRight(), aPlanNode.getLeft());
 }
-
 
 
 #endif

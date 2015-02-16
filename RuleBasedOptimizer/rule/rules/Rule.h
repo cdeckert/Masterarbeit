@@ -9,7 +9,7 @@ template <typename PlanNode>
 class Rule
 {
 public:
-    Rule();
-    virtual PlanNode & apply(PlanNode& const) = 0;
+    Rule(){};
+    virtual PlanNode apply(const PlanNode&) = 0;
 };
 #endif
