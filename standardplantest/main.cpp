@@ -8,13 +8,8 @@
 
 #include <iostream>
 
-#include "PlanNode.h"
-#include "Bitvector.h"
-#include "EquivalenceClass.h"
+#include "Types.h"
 
-typedef Bitvector<unsigned int> Bitvector32_t;
-typedef PlanNode<int, Bitvector32_t> PlanNode_t;
-typedef EquivalenceClass<PlanNode_t, Bitvector32_t> EquivalenceClass_t;
 
 
 void abc(int & a) {
@@ -25,8 +20,10 @@ void abc(int & a) {
 int main(int argc, const char * argv[])
 {
     Bitvector32_t && bv = Bitvector32_t(3);
-    
-    bv.print();
+    Join_t join (bv, bv);
+    std::cout << "RELLLLL: ";
+    join.getRelations().print();
+    std::cout << std::endl;
     int &&i = 1;
     PlanNode_t && pn = PlanNode_t(i, bv);
     pn.print();
@@ -35,7 +32,6 @@ int main(int argc, const char * argv[])
     
     EquivalenceClass_t && eq = EquivalenceClass_t(pn);
     eq.getRelations().print();
-    //b;//.print();
     
     int number = 2;
     int *a = &number;
