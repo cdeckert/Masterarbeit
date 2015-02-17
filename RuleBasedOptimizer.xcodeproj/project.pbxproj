@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF14C1DE1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF14C1DC1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp */; };
-		AF14C2451A9245D400A4AEEF /* TestEquivalenceClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF14C2431A9245D400A4AEEF /* TestEquivalenceClass.cpp */; };
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
-		AFECC5C61A8D02C900FA9D84 /* TreeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */; };
+		AF99E4711A933B4F006D94C4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF99E4701A933B4F006D94C4 /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,28 +21,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		AF99E46C1A933B4F006D94C4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AF14C1DB1A91F3F000A4AEEF /* TestPlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TestPlanNode.h; path = tests/mocks/TestPlanNode.h; sourceTree = "<group>"; };
-		AF14C1DC1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestRuleSetGeneration.cpp; path = tests/TestRuleSetGeneration.cpp; sourceTree = "<group>"; };
-		AF14C1DD1A91F4B200A4AEEF /* TestRuleSetGeneration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestRuleSetGeneration.h; path = tests/TestRuleSetGeneration.h; sourceTree = "<group>"; };
-		AF14C2401A91FD5A00A4AEEF /* Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tests.h; sourceTree = "<group>"; };
 		AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity.h; path = rule/rules/LeftAssociativity.h; sourceTree = "<group>"; };
 		AF14C2421A92040100A4AEEF /* BasicRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicRuleSet.h; path = rule/rulesets/BasicRuleSet.h; sourceTree = "<group>"; };
-		AF14C2431A9245D400A4AEEF /* TestEquivalenceClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestEquivalenceClass.cpp; path = tests/TestEquivalenceClass.cpp; sourceTree = "<group>"; };
-		AF14C2441A9245D400A4AEEF /* TestEquivalenceClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestEquivalenceClass.h; path = tests/TestEquivalenceClass.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
+		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; };
+		AF99E4661A92A00C006D94C4 /* Bitvector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Bitvector.h; path = plan/standard/Bitvector.h; sourceTree = "<group>"; };
+		AF99E46E1A933B4F006D94C4 /* standardplantest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = standardplantest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF99E4701A933B4F006D94C4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../standardplantest/main.cpp; sourceTree = "<group>"; };
 		AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitvectorSmall.h; path = infra/BitvectorSmall.h; sourceTree = "<group>"; };
 		AFECC5BD1A8D011A00FA9D84 /* Hasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hasher.h; path = infra/Hasher.h; sourceTree = "<group>"; };
 		AFECC5BE1A8D011A00FA9D84 /* Reservoir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Reservoir.h; path = infra/Reservoir.h; sourceTree = "<group>"; };
 		AFECC5BF1A8D011A00FA9D84 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Types.h; path = infra/Types.h; sourceTree = "<group>"; };
-		AFECC5C01A8D017200FA9D84 /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = pg/ExhaustiveTransformation.h; sourceTree = "<group>"; };
-		AFECC5C11A8D01B100FA9D84 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/EquivalenceClass.h; sourceTree = "<group>"; };
-		AFECC5C21A8D01B100FA9D84 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/PlanNode.h; sourceTree = "<group>"; };
-		AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeGenerator.cpp; path = qcon/TreeGenerator.cpp; sourceTree = "<group>"; };
-		AFECC5C51A8D02C900FA9D84 /* TreeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeGenerator.h; path = qcon/TreeGenerator.h; sourceTree = "<group>"; };
 		AFECC5C81A8D03D100FA9D84 /* Commutativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commutativity.h; path = rule/rules/Commutativity.h; sourceTree = "<group>"; };
 		AFECC5CA1A8D041E00FA9D84 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = rule/rules/Rule.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,34 +58,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF99E46B1A933B4F006D94C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		AF14C1D91A91F35000A4AEEF /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				AF14C1DA1A91F3C900A4AEEF /* mocks */,
-				AF14C1DC1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp */,
-				AF14C1DD1A91F4B200A4AEEF /* TestRuleSetGeneration.h */,
-				AF14C2401A91FD5A00A4AEEF /* Tests.h */,
-				AF14C2431A9245D400A4AEEF /* TestEquivalenceClass.cpp */,
-				AF14C2441A9245D400A4AEEF /* TestEquivalenceClass.h */,
 			);
 			name = tests;
-			sourceTree = "<group>";
-		};
-		AF14C1DA1A91F3C900A4AEEF /* mocks */ = {
-			isa = PBXGroup;
-			children = (
-				AF14C1DB1A91F3F000A4AEEF /* TestPlanNode.h */,
-			);
-			name = mocks;
 			sourceTree = "<group>";
 		};
 		AF7515101A7F86430003FE5B = {
 			isa = PBXGroup;
 			children = (
 				AF75151B1A7F86440003FE5B /* RuleBasedOptimizer */,
+				AF99E46F1A933B4F006D94C4 /* standardplantest */,
 				AF75151A1A7F86440003FE5B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				AF7515191A7F86440003FE5B /* RuleBasedOptimizer */,
+				AF99E46E1A933B4F006D94C4 /* standardplantest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,11 +108,28 @@
 			path = RuleBasedOptimizer;
 			sourceTree = "<group>";
 		};
+		AF99E4671A933AB7006D94C4 /* standard */ = {
+			isa = PBXGroup;
+			children = (
+				AF99E4701A933B4F006D94C4 /* main.cpp */,
+				AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */,
+				AF99E4641A929CBB006D94C4 /* PlanNode.h */,
+				AF99E4661A92A00C006D94C4 /* Bitvector.h */,
+			);
+			name = standard;
+			sourceTree = "<group>";
+		};
+		AF99E46F1A933B4F006D94C4 /* standardplantest */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = standardplantest;
+			sourceTree = "<group>";
+		};
 		AFECC5B01A8D006B00FA9D84 /* plan */ = {
 			isa = PBXGroup;
 			children = (
-				AFECC5C11A8D01B100FA9D84 /* EquivalenceClass.h */,
-				AFECC5C21A8D01B100FA9D84 /* PlanNode.h */,
+				AF99E4671A933AB7006D94C4 /* standard */,
 			);
 			name = plan;
 			sourceTree = "<group>";
@@ -142,8 +155,6 @@
 		AFECC5B31A8D008500FA9D84 /* qcon */ = {
 			isa = PBXGroup;
 			children = (
-				AFECC5C41A8D02C900FA9D84 /* TreeGenerator.cpp */,
-				AFECC5C51A8D02C900FA9D84 /* TreeGenerator.h */,
 			);
 			name = qcon;
 			sourceTree = "<group>";
@@ -151,7 +162,6 @@
 		AFECC5B41A8D009500FA9D84 /* pg */ = {
 			isa = PBXGroup;
 			children = (
-				AFECC5C01A8D017200FA9D84 /* ExhaustiveTransformation.h */,
 			);
 			name = pg;
 			sourceTree = "<group>";
@@ -203,6 +213,23 @@
 			productReference = AF7515191A7F86440003FE5B /* RuleBasedOptimizer */;
 			productType = "com.apple.product-type.tool";
 		};
+		AF99E46D1A933B4F006D94C4 /* standardplantest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF99E4721A933B4F006D94C4 /* Build configuration list for PBXNativeTarget "standardplantest" */;
+			buildPhases = (
+				AF99E46A1A933B4F006D94C4 /* Sources */,
+				AF99E46B1A933B4F006D94C4 /* Frameworks */,
+				AF99E46C1A933B4F006D94C4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = standardplantest;
+			productName = standardplantest;
+			productReference = AF99E46E1A933B4F006D94C4 /* standardplantest */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -213,6 +240,9 @@
 				ORGANIZATIONNAME = "Christian Deckert";
 				TargetAttributes = {
 					AF7515181A7F86440003FE5B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					AF99E46D1A933B4F006D94C4 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -230,6 +260,7 @@
 			projectRoot = "";
 			targets = (
 				AF7515181A7F86440003FE5B /* RuleBasedOptimizer */,
+				AF99E46D1A933B4F006D94C4 /* standardplantest */,
 			);
 		};
 /* End PBXProject section */
@@ -240,9 +271,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
-				AF14C2451A9245D400A4AEEF /* TestEquivalenceClass.cpp in Sources */,
-				AFECC5C61A8D02C900FA9D84 /* TreeGenerator.cpp in Sources */,
-				AF14C1DE1A91F4B200A4AEEF /* TestRuleSetGeneration.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF99E46A1A933B4F006D94C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF99E4711A933B4F006D94C4 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +373,26 @@
 			};
 			name = Release;
 		};
+		AF99E4731A933B4F006D94C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AF99E4741A933B4F006D94C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -357,6 +413,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		AF99E4721A933B4F006D94C4 /* Build configuration list for PBXNativeTarget "standardplantest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF99E4731A933B4F006D94C4 /* Debug */,
+				AF99E4741A933B4F006D94C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

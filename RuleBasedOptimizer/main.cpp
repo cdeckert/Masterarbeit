@@ -5,15 +5,20 @@
 //
 
 #include <iostream>
-#include "Tests.h"
+
+
+
+
 
 
 int main(int argc, const char * argv[]) {
     std::cout << "Start!\n";
     
-    Tests::run();
+    
+    
     
     std::cout << "Tests end!";
+    
     
     
     

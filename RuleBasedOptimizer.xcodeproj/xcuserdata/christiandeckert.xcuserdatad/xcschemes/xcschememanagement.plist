@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>standardplantest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>AF7515181A7F86440003FE5B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AF99E46D1A933B4F006D94C4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
