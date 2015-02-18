@@ -13,7 +13,9 @@ int main()
 {
     
     Bitvector32_t &b = *getBitvectorAndSetElement(0);
-    
+    typedef PlanNode<Bitvector32_t> PlanNode_BV;
+    PlanNode_BV && p = PlanNode_BV(JOIN, b, b);
+    p.getRelations();
     
     
     b.print(std::cout);

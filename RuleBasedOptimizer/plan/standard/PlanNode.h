@@ -5,51 +5,86 @@
 #ifndef RuleBasedOptimizer_PlanNode_h
 #define RuleBasedOptimizer_PlanNode_h
 
-//typedef Bitvector<unsigned int> Bitvector_t;
-template <typename Operator_t, typename Bitvector_t>
+#include "Operator.h"
+#include "EquivalenceClass.h"
+
+/**
+ * @brief Equivalence Class is a collection of equivalent PlanNodes
+ */
+template <typename Bitvector_t>
 struct PlanNode
 {
-public:
-    //PlanNode(Bitvector_t & relation) : _relations(relation){};
-    PlanNode(Operator_t & op, Bitvector_t & relation) : _relations(op.getRelations()), _operator(op){
-        _next = nullptr;
-    };
-    PlanNode(const PlanNode &);
-    ~PlanNode(){};
+    typedef PlanNode<Bitvector_t> self_type;
+    typedef EquivalenceClass<self_type, Bitvector_t> EquivalenceClass_t;
 
+
+public:
+    PlanNode(Operator op, Bitvector_t & left, Bitvector_t & right):
+    _op(op),
+    _left(left),
+    _right(right)
+    
+    {
+        _leftEC = nullptr;
+        _rightEC = nullptr;
+        cacheRelations();
+    };
     
     
+    PlanNode(Operator op, EquivalenceClass_t & left, EquivalenceClass_t & right) :
+    _op(op),
+    _left(left.getRelations()),
+    _right(right.getRelations())
+    {
+        _leftEC = left;
+        _rightEC = right;
+        cacheRelations();
+    };
     
-    inline const Bitvector_t & getRelations()
+    PlanNode(Operator op, Bitvector_t & left, EquivalenceClass_t & right) :
+    _op(op),
+    _left(left),
+    _right(right.getRelations())
+    {
+        _rightEC = right;
+        cacheRelations();
+    };
+    
+    PlanNode(Operator op, EquivalenceClass_t & left, Bitvector_t & right) :
+    _op(op),
+    _left(left.getRelations()),
+    _right(right)
+    {
+        _leftEC = left;
+        cacheRelations();
+    };
+    
+    inline Bitvector_t & getRelations()
     {
         return _relations;
-    };
-    const int getPlanNumber() const;
-    
-    void print()
-    {
-        std::cout << "print" << std::endl << "RELS";
-        getRelations().print();
-        std::cout << std::endl;
-    }
-    void setNext(PlanNode & aPlanNode)
-    {
-        _next = &aPlanNode;
-    }
-    PlanNode * getNext()
-    {
-        return _next;
     }
     
     
     
-    
-    
-    
+
 private:
-    Bitvector_t & _relations;
-    Operator_t & _operator;
-    PlanNode * _next;
+    const Operator _op;
+    Bitvector_t & _left;
+    Bitvector_t &  _right;
+    
+    Bitvector_t _relations;
+    
+    EquivalenceClass_t * _leftEC;
+    EquivalenceClass_t * _rightEC;
+    
+    /**
+     * @brief caches relations from left and right
+     */
+    void cacheRelations()
+    {
+        _relations += _left;
+        _relations += _right;
+    };
 
 };
 
