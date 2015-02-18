@@ -22,8 +22,8 @@ public:
     PlanNode(const PlanNode &);
     ~PlanNode(){};
 
-    PlanNode & operator=(const PlanNode &);
-
+    
+    
     
     inline const Bitvector_t & getRelations(){ return _relations; };
     const int getPlanNumber() const;
@@ -34,6 +34,17 @@ public:
         getRelations().print();
         std::cout << std::endl;
     }
+    void setNext(PlanNode & aPlanNode)
+    {
+        _next = &aPlanNode;
+    }
+    PlanNode * getNext()
+    {
+        return _next;
+    }
+    
+    //PlanNode & operator= (const PlanNode & pn)
+    //{ return pn; };
     
     
     
@@ -42,6 +53,7 @@ public:
 private:
     Bitvector_t & _relations;
     Operator_t & _operator;
+    PlanNode * _next;
 
 };
 
