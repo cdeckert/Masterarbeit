@@ -4,7 +4,13 @@
 
 #ifndef RuleBasedOptimizer_Scanner_h
 #define RuleBasedOptimizer_Scanner_h
-#include "Excptions.h"
+
+#include <fstream>
+#include <sstream>
+#include <string>
+
+
+#include "Exceptions.h"
 
 struct TokenDelimiters
 {

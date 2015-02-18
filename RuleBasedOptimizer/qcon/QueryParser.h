@@ -10,16 +10,21 @@
 #define __RuleBasedOptimizer__QueryParser__
 
 #include <stdio.h>
+#include "Types.h"
+#include "Scanner.h"
+
+
 
 class QueryParser {
     
 public:
-    QueryParser(const std::string & fileName)
+    QueryParser(const std::string& aFilename) : _scanner(aFilename){};
+    ~QueryParser()
     {
-        
-    }
+        //delete _scanner;
+    };
 private:
-    const 
+    const Scanner _scanner;
 };
 
 

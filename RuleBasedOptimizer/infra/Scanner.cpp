@@ -108,7 +108,8 @@ bool Scanner::nextCharIsDelimiter()
             _next == TokenDelimiters::DOT);
 }
 
-bool Scanner::currentCharIsDelimiter() {
+bool Scanner::currentCharIsDelimiter()
+{
     return (_current == TokenDelimiters::COLON ||
             _current == TokenDelimiters::COMMA ||
             _current == TokenDelimiters::LEFTPAREN  ||

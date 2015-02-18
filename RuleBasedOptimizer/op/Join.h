@@ -20,7 +20,7 @@ public:
     {
         //_name = "JOIN";
     };
-    const Bitvector & getRelations() //override
+    const Bitvector getRelations() //override
     {
         return _leftRelations+_rightRelations;
     };
