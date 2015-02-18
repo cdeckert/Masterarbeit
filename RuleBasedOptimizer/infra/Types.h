@@ -12,11 +12,11 @@
 #include<stdint.h>
 
 #include "PlanNode.h"
-#include "Bitvector.h"
+#include "BitvectorSmall.h"
 #include "EquivalenceClass.h"
 #include "Join.h"
 
-typedef Bitvector<unsigned int> Bitvector32_t;
+typedef BitVectorSmall<unsigned int> Bitvector32_t;
 //typedef Operator<EquivalenceClass_t, Bitvector32_t> Operator_t;
 typedef PlanNode<int, Bitvector32_t> PlanNode_t;
 

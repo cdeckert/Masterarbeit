@@ -20,7 +20,10 @@ public:
     
     
     
-    inline const Bitvector_t & getRelations(){ return _relations; };
+    inline const Bitvector_t & getRelations()
+    {
+        return _relations;
+    };
     const int getPlanNumber() const;
     
     void print()

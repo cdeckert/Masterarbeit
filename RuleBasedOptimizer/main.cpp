@@ -1,61 +1,68 @@
-//
-//  main.cpp
-//
-//  Created by Christian Deckert on 02/02/15.
-//
-
-#include <iostream>
-#include <iterator>
 
 
-template <typename T> struct mylist_iterator;
-
-template <typename T> struct mylist_node;
+#include "Types.h"
+#include "QueryParser.h"
 
 
 
-template <typename T>
-class mylist {
-public:
-    typedef mylist_iterator<T> iterator;
-public:
-    mylist() : head(NULL), tail(NULL) {} // DONE
-    ~mylist() { delete head; }
-    bool empty() const { return head == NULL; }
-    void push_back(const T& elem);
-    iterator begin() { return mylist_iterator<T>(head); }
-    iterator end() { return mylist_iterator<T>(NULL); }
-private:
-    mylist_node<T> *head, *tail; // DONE
-};
+/*EquivalenceClass_t & generateSimpleTree() {
+ // generate Operator
+ Bitvector32_t && b1 = Bitvector32_t(1);
+ Bitvector32_t && b2 = Bitvector32_t(1);
+ Join_t && join1 = Join_t(b1, b2);
+ PlanNode_t && pn = PlanNode_t();
+ EquivalenceClass_t & eq = EquivalenceClass_t(pn);
+ return eq;
+ }*/
 
-
-
-
-
-template <typename T>
-struct mylist_iterator : public std::iterator<std::forward_iterator_tag, T> {
-    friend class mylist<T>;
-public:
-    T& operator*();
-    const mylist_iterator<T>& operator++();
-    bool operator!=(const mylist_iterator<T>& other) const;
-private:
-    mylist_node<T> *pointee;
-    mylist_iterator(mylist_node<T> *pointee) : pointee(pointee) {}
-};
-
-
-
-
-
-int main()
+void checkOperators()
 {
+    typedef Operator<int, int> & ExampleOperator_t;
+    typedef Join<int, std::string> ExampleJoin_t;
+    ExampleOperator_t & example = ExampleOperator_t("Operator");
+    ExampleJoin_t & exampleJoin = ExampleJoin_t(1, 1);
     
-    return 0;
+    
+}
+
+void checkPlanNode()
+{
+    //PlanNode_t & pn = PlanNode_t();
 }
 
 
 
 
-
+int main(int argc, const char * argv[])
+{
+    checkOperators();
+    checkPlanNode();
+    
+    
+    
+    /*Bitvector32_t && bv = Bitvector32_t(3);
+     Join_t join (bv, bv);
+     std::cout << "RELLLLL: ";
+     join.getRelations().print();
+     std::cout << std::endl;
+     int &&i = 1;
+     PlanNode_t && pn = PlanNode_t(i, bv);
+     pn.print();
+     
+     pn.getRelations().print();
+     
+     EquivalenceClass_t && eq = EquivalenceClass_t(pn);
+     PlanNode_t && pn2 = PlanNode_t(i, bv);
+     eq.push_back(pn);
+     eq.push_back(pn2);
+     eq.getRelations().print();
+     
+     int number = 2;
+     int *a = &number;
+     //abc(number);
+     std::cout << *a;
+     
+     */
+    
+    return 0;
+}
