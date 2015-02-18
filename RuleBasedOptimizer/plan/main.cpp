@@ -1,9 +1,5 @@
 //
 //  main.cpp
-//  standardplantest
-//
-//  Created by Christian Deckert on 2/17/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #include <iostream>
@@ -32,9 +28,9 @@ int main(int argc, const char * argv[])
     pn.getRelations().print();
     
     EquivalenceClass_t && eq = EquivalenceClass_t(pn);
-    //pn = PlanNode_t(i, bv);
+    PlanNode_t && pn2 = PlanNode_t(i, bv);
     eq.push(pn);
-    eq.push(pn);
+    eq.push(pn2);
     eq.getRelations().print();
     
     int number = 2;
