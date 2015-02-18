@@ -63,7 +63,9 @@ public:
     {
         return _relations;
     }
-    
+
+protected:
+    self_type * _next;
     
     
 

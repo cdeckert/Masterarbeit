@@ -23,7 +23,7 @@ int main()
     
     EquivalenceClass_t eq = EquivalenceClass_t();
     
-    EquivalenceClass_t::Iterator itr;
+    
     
     b.print(std::cout);
     
