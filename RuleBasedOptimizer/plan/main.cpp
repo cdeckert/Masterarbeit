@@ -18,6 +18,13 @@ int main()
     p.getRelations();
     
     
+    typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
+    
+    
+    EquivalenceClass_t eq = EquivalenceClass_t();
+    
+    EquivalenceClass_t::Iterator itr;
+    
     b.print(std::cout);
     
    /* Bitvector32_t &&t1 = Bitvector32_t();

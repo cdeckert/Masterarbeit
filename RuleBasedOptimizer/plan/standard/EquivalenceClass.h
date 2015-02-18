@@ -21,11 +21,11 @@ struct EquivalenceClass
 {
     typedef EquivalenceClass<PlanNode_t, Bitvector_t> self_type;
 public:
-    
+    EquivalenceClass(){};
 private:
     
-    
-    struct Iterator
+public:
+    struct Iterator : public std::iterator<std::forward_iterator_tag, self_type>
     {
         
     };
