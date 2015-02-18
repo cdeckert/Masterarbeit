@@ -16,13 +16,33 @@ class Join : public Operator<EquivalenceClass, Bitvector>
 {
     
 public:
-    Join(Bitvector & left, Bitvector & right) : Operator<EquivalenceClass, Bitvector>("name") , _leftRelations(left), _rightRelations(right)
+    Join(Bitvector & left, Bitvector & right) :
+    Operator<EquivalenceClass, Bitvector>("JOIN"),
+    _leftRelations(left),
+    _rightRelations(right)
+    {};
+    
+    
+    Join(EquivalenceClass & left, Bitvector & right) :  Operator<EquivalenceClass, Bitvector>("name") , _leftRelations(left.getRelations()), _rightRelations(right)
     {
-        //_name = "JOIN";
-    };
-    const Bitvector getRelations() //override
+        _left = &left;
+    }
+    
+    Join(Bitvector & left, EquivalenceClass & right) :  Operator<EquivalenceClass, Bitvector>("name") , _leftRelations(left), _rightRelations(right.getRelations())
     {
-        return _leftRelations+_rightRelations;
+        _right = &right;
+    }
+    
+    Join(EquivalenceClass & left, EquivalenceClass & right) :  Operator<EquivalenceClass, Bitvector>("name") , _leftRelations(left.getRelations()), _rightRelations(right.getRelations())
+    {
+        _right = &right;
+        _left = &left;
+    }
+    
+    
+    const Bitvector & getRelations() //override
+    {
+        return _leftRelations; //+_rightRelations;
     };
 
 private:

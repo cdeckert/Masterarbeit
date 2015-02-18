@@ -1,24 +1,19 @@
 //
 //  PlanNode.h
-//  RuleBasedOptimizer
-//
-//  Created by Christian Deckert on 2/16/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef RuleBasedOptimizer_PlanNode_h
 #define RuleBasedOptimizer_PlanNode_h
-
-#include "Bitvector.h"
 
 //typedef Bitvector<unsigned int> Bitvector_t;
 template <typename Operator_t, typename Bitvector_t>
 struct PlanNode
 {
 public:
-    PlanNode();
     //PlanNode(Bitvector_t & relation) : _relations(relation){};
-    PlanNode(Operator_t & op, Bitvector_t & relation) : _relations(relation), _operator(op){};
+    PlanNode(Operator_t & op, Bitvector_t & relation) : _relations(op.getRelations()), _operator(op){
+        _next = nullptr;
+    };
     PlanNode(const PlanNode &);
     ~PlanNode(){};
 
@@ -43,8 +38,6 @@ public:
         return _next;
     }
     
-    //PlanNode & operator= (const PlanNode & pn)
-    //{ return pn; };
     
     
     

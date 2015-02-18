@@ -19,14 +19,14 @@ class mylist {
 public:
     typedef mylist_iterator<T> iterator;
 public:
-    mylist() : head(NULL), tail(NULL) {}
+    mylist() : head(NULL), tail(NULL) {} // DONE
     ~mylist() { delete head; }
     bool empty() const { return head == NULL; }
     void push_back(const T& elem);
     iterator begin() { return mylist_iterator<T>(head); }
     iterator end() { return mylist_iterator<T>(NULL); }
 private:
-    mylist_node<T> *head, *tail;
+    mylist_node<T> *head, *tail; // DONE
 };
 
 

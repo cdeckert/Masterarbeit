@@ -17,7 +17,9 @@
 #include "Join.h"
 
 typedef Bitvector<unsigned int> Bitvector32_t;
+//typedef Operator<EquivalenceClass_t, Bitvector32_t> Operator_t;
 typedef PlanNode<int, Bitvector32_t> PlanNode_t;
+
 typedef EquivalenceClass<PlanNode_t, Bitvector32_t> EquivalenceClass_t;
 typedef Join<EquivalenceClass_t, Bitvector32_t> Join_t;
 

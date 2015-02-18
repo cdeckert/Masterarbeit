@@ -11,24 +11,71 @@
 
 #include <iterator>
 
+template <typename PlanNode_t, typename Bitvector_t> struct EuqivalenceClass;
+
+
+/**
+ * @brief Plan Node iterator
+ */
+/*template <typename PlanNode_t, typename Bitvector_t>
+struct PlanNodeIterator : public std::iterator<std::forward_iterator_tag, PlanNode_t>
+{
+    typedef PlanNodeIterator<PlanNode_t, Bitvector_t> self_type;
+    friend class EuqivalenceClass<PlanNode_t, Bitvector_t>;
+
+    
+public:
+    PlanNode_t& operator*();
+    const self_type& operator++();
+    bool operator!=(const self_type& other) const;
+
+private:
+    PlanNode_t * _nodePointer;
+    PlanNodeIterator(PlanNode_t * nodePoineter) : _nodePointer(nodePoineter){};
+};*/
+
+
+
+/**
+ * @brief
+ * Equivalence class is a collection of PlanNode
+ */
 template <typename PlanNode_t, typename Bitvector_t>
 struct EquivalenceClass
 {
     
 public:
-    inline EquivalenceClass(PlanNode_t & aPlanNode) : _first(aPlanNode) //, _last(aPlanNode)
-    {
-        _last = &_first;
-    };
+    inline EquivalenceClass(PlanNode_t & aPlanNode) : _first(aPlanNode) {};
+    ~EquivalenceClass() { /*delete _first;*/ }
+    
+    
     inline const Bitvector_t & getRelations()
     {
         return _first.getRelations();
     };
-    inline void push(PlanNode_t & aPlanNode)
+    
+    /**
+     * @brief push back of plan nodes
+     */
+    inline void push_back(const PlanNode_t & aPlanNode)
     {
-        _last->setNext(aPlanNode);
-        _last = _last->getNext();        
+        _last->setNext(_first);
+        _last = _last->getNext();
     };
+    /**
+     * @brief
+     */
+    inline PlanNode_t & begin()
+    {
+        return _first;
+    };
+    
+    inline PlanNode_t * end()
+    {
+        return _last;
+    };
+    
+    
     
     
     
