@@ -34,6 +34,7 @@ int main(int argc, const char * argv[])
     EquivalenceClass_t && eq = EquivalenceClass_t(pn);
     //pn = PlanNode_t(i, bv);
     eq.push(pn);
+    eq.push(pn);
     eq.getRelations().print();
     
     int number = 2;
