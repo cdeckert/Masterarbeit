@@ -1,9 +1,5 @@
 //
 //  EquivalenceClass.h
-//  RuleBasedOptimizer
-//
-//  Created by Christian Deckert on 2/16/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef RuleBasedOptimizer_EquivalenceClass_h
@@ -98,7 +94,7 @@ public:
         return _begin->getRelations();
     };
     
-    u_int size()
+    const u_int size()
     {
         u_int i = 0;
         for(Iterator itr = begin(); itr != end(); ++itr)

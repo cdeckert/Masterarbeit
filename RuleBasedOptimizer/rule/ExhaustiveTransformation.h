@@ -25,7 +25,7 @@ class ExhaustiveTransformation
     
 public:
     ExhaustiveTransformation(){};
-    void apply(EquivalenceClass_t & equivalenceClass)
+    void apply(const EquivalenceClass_t & equivalenceClass) const
     {
         std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownBitvectors;
         

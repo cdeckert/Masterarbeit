@@ -21,16 +21,16 @@ typedef RuleSet<Rule_t> RuleSet_t;
         Bitvector32_t &b1 = *getBitvectorAndSetElement(0);
         Bitvector32_t &b2 = *getBitvectorAndSetElement(1);
         
-        PlanNode_BV && p = PlanNode_BV(JOIN, b1, b2);
+        PlanNode_BV  *p = new PlanNode_BV(JOIN, b1, b2);
         
         
         EquivalenceClass_t *eq = new EquivalenceClass_t();
-        eq->push_back(p);
+        eq->push_back(*p);
         
-        for(int i = 2; i < 10; ++i)
+        for(int i = 2; i < 3; ++i)
         {
-            Bitvector32_t &b_new = *getBitvectorAndSetElement(i);
-            PlanNode_BV * pn = new PlanNode_BV(JOIN, b_new, *eq);
+            Bitvector32_t *b_new = getBitvectorAndSetElement(i);
+            PlanNode_BV * pn = new PlanNode_BV(JOIN, *b_new, *eq);
             pn->print(std::cout);
             std::cout << std::endl << std::endl << std::endl;
             std::cout.flush();
@@ -67,18 +67,19 @@ int main()
     ExhaustiveTransformation_t t;
     
     
-    std::cout << std::endl << "*************************************" << std::endl;
+    std::cout << std::endl << "*************************************";
     std::cout << std::endl << "*************************************" << std::endl;
     
     std::cout << eq.size() << std::endl;
     
+    eq.printFirst(std::cout);
     
     t.apply(eq);
     
+    std::cout << std::endl << "*************************************";
     std::cout << std::endl << "*************************************" << std::endl;
-    std::cout << std::endl << "*************************************" << std::endl;
+    std::cout << eq.size() << std::endl;
     
-    eq.printFirst(std::cout);
     
     //std::cout << eq.size() << std::endl;
 
