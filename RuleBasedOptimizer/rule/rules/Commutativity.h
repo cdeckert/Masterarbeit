@@ -25,7 +25,30 @@ public:
 template <typename PlanNode>
 PlanNode Commutativity<PlanNode>::apply(const PlanNode & aPlanNode)
 {
-    return  PlanNode(aPlanNode.getOperator(), aPlanNode.getRight(), aPlanNode.getLeft());
+    
+    if(aPlanNode.hasLeftEC())
+    {
+        if(aPlanNode.hasRightEC())
+        {
+            
+            return PlanNode(JOIN, aPlanNode.getRightEC(),  aPlanNode.getLeftEC());
+        }
+        else
+        {
+            return PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeftEC());
+        }
+    }
+    else
+    {
+        if(aPlanNode.hasRightEC())
+        {
+            return PlanNode(JOIN, aPlanNode.getRightEC(), aPlanNode.getLeft());
+        }
+        else
+        {
+            return PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
+        }
+    }
 }
 
 

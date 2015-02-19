@@ -12,33 +12,52 @@
 #include <unordered_set>
 #include "Hasher.h"
 #include "BasicRuleSet.h"
+#include "Commutativity.h"
+#include "LeftAssociativity.h"
 
 template <typename EquivalenceClass_t, typename Iterator, typename PlanNode_t, typename Bitvector_t>
-class ExhaustiveTransformation {
+class ExhaustiveTransformation
+{
     
     typedef ExhaustiveTransformation self_type;
     typedef Rule<PlanNode_t> Rule_t;
-    typedef BasicRuleSet<Rule_t> Ruleset_t;
+    typedef RuleSet<Rule_t> Ruleset_t;
     
 public:
-    ExhaustiveTransformation(Ruleset const & ruleset): _ruleset(ruleset){};
+    ExhaustiveTransformation(){};
     void apply(EquivalenceClass_t & equivalenceClass)
     {
         std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownBitvectors;
         
-        knownBitvectors.insert(equivalenceClass.begin()->getRelations());
-        for(Iterator itr = equivalenceClass.begin(); itr != equivalenceClass.end(); ++itr)
+        knownBitvectors.insert(equivalenceClass.begin()->getLeft());
+        
+        for(Iterator itr = equivalenceClass.begin(); itr != equivalenceClass.end() && itr._node != NULL; ++itr)
         {
-            for(Rule_t r : _ruleset.rules)
+            if(itr._node != NULL)
             {
-                PlanNode_t & planNode = r.apply(&itr);
+            PlanNode_t && comPlan = commutativity.apply(*itr._node);
+            if(knownBitvectors.count((comPlan).getLeft()) == 0)
+            {
+                equivalenceClass.push_back(comPlan);
             }
-            std::cout << itr->getRelations() << std::endl;
+            
+            
+            PlanNode_t && leftAPlan = leftAssociativity.apply(*itr._node);
+            if(knownBitvectors.count((leftAPlan).getLeft()) == 0)
+            {
+                equivalenceClass.push_back(leftAPlan);
+            }
+            }
+            
+            
+            //std::cout << itr->getRelations() << std::endl;
         }
     };
 
 private:
-    Ruleset_t & _ruleset;
+    Commutativity<PlanNode_t> commutativity;
+    
+    LeftAssociativity<PlanNode_t> leftAssociativity;
 };
 
 #endif

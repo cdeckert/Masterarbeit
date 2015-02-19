@@ -19,16 +19,36 @@ struct PlanNode
 
 
 public:
+    /*PlanNode(Operator op, const Bitvector_t & left, const Bitvector_t & right, EquivalenceClass_t & leftEC, EquivalenceClass_t & rightEC):
+    _op(op),
+    _left(left),
+    _right(right)
+    
+    {
+        _leftEC = &leftEC;
+        _rightEC = &rightEC;
+        _next = NULL;
+    };*/
+    
+    inline void init()
+    {
+        _leftEC = NULL;
+        _rightEC = NULL;
+        _next = NULL;
+    };
+    
     PlanNode(Operator op, Bitvector_t & left, Bitvector_t & right):
     _op(op),
     _left(left),
     _right(right)
     
     {
-        _leftEC = NULL;
-        _rightEC = NULL;
+        
+        init();
         cacheRelations();
     };
+    
+    
     
     
     PlanNode(Operator op, EquivalenceClass_t & left, EquivalenceClass_t & right) :
@@ -36,8 +56,9 @@ public:
     _left(left.getRelations()),
     _right(right.getRelations())
     {
-        _leftEC = left;
-        _rightEC = right;
+        init();
+        _leftEC = &left;
+        _rightEC = &right;
         cacheRelations();
     };
     
@@ -46,7 +67,7 @@ public:
     _left(left),
     _right(right.getRelations())
     {
-        _leftEC = NULL;
+        init();
         _rightEC = &right;
         cacheRelations();
     };
@@ -56,15 +77,26 @@ public:
     _left(left.getRelations()),
     _right(right)
     {
-        _rightEC = NULL;
-        _leftEC = left;
+        init();
+        _leftEC = &left;
         cacheRelations();
     };
     
     inline Bitvector_t & getRelations()
     {
         return _relations;
-    }
+    };
+    
+    inline bool hasLeftEC() const { return this != NULL && _leftEC != NULL; }
+    inline bool hasRightEC() const { return this != NULL && _rightEC != NULL; }
+    
+    Operator getOperator() { return _op; };
+    
+    Bitvector_t & getLeft() const { return _left; };
+    Bitvector_t & getRight() const { return _right; };
+    
+    EquivalenceClass_t & getLeftEC()  const { return *_leftEC; };
+    EquivalenceClass_t & getRightEC() const { return *_rightEC; };
     
     inline std::ostream& print(std::ostream& os) const
     {

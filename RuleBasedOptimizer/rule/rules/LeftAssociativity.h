@@ -24,7 +24,7 @@ public:
 template <typename PlanNode>
 PlanNode LeftAssociativity<PlanNode>::apply(const PlanNode & aPlanNode)
 {
-    return  PlanNode(aPlanNode.getOperator(), aPlanNode.getRight(), aPlanNode.getLeft());
+    return  PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
 }
 
 

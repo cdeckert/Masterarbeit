@@ -27,24 +27,33 @@ public:
     {
         _node = node;
     };
-    PlanNode_t& operator*()
+    PlanNode_t* operator*()
     {
         return _node;
     };
     
     const IteratorPlanNode<PlanNode_t>& operator++()
     {
-        _node = _node->_next;
-        return *this;
+        if(_node != nullptr && _node != NULL && _node->_next != NULL)
+        {
+            _node = _node->_next;
+            return *this;
+        }
+        else
+        {
+            _node = NULL;
+            return *this;
+        }
+        
     };
     
     inline bool operator!=(const IteratorPlanNode& x) const { return (_node != x._node); }
     inline PlanNode_t * operator->() const { return _node; }
     
     
-    
-private:
     PlanNode_t * _node;
+
+private:
 };
 
 
@@ -72,10 +81,13 @@ public:
         if(_begin == NULL)
         {
             _begin = &planNode;
-            _end = &planNode;
         }
         else
         {
+            if(_end == NULL)
+            {
+                _end = _begin;
+            }
             _end->_next = &planNode;
             _end = _end->_next;
         }
@@ -85,6 +97,16 @@ public:
     {
         return _begin->getRelations();
     };
+    
+    u_int size()
+    {
+        u_int i = 0;
+        for(Iterator itr = begin(); itr != end(); ++itr)
+        {
+            i++;
+        }
+        return i;
+    }
     
     std::ostream& printFirst(std::ostream& os) const
     {

@@ -8,14 +8,15 @@
 
 #include "TypeReservoirs.h"
 #include "ExhaustiveTransformation.h"
+#include "BasicRuleSet.h"
 
 typedef PlanNode<Bitvector32_t> PlanNode_BV;
 typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
 typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClass_t::Iterator, PlanNode_BV, Bitvector32_t> ExhaustiveTransformation_t;
+typedef Rule<PlanNode_BV> Rule_t;
+typedef RuleSet<Rule_t> RuleSet_t;
 
-
-
-    EquivalenceClass_t * generate()
+    EquivalenceClass_t & generate()
     {
         Bitvector32_t &b1 = *getBitvectorAndSetElement(0);
         Bitvector32_t &b2 = *getBitvectorAndSetElement(1);
@@ -49,7 +50,7 @@ typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClass_t::Iterato
         }
         
         eq->printFirst(std::cout);
-        return eq;
+        return *eq;
     }
 
 
@@ -61,12 +62,26 @@ typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClass_t::Iterato
 
 int main()
 {
-    EquivalenceClass_t *eq =  generate();
+    EquivalenceClass_t & eq =  generate();
     
     ExhaustiveTransformation_t t;
-    t.apply(*eq);
     
     
+    std::cout << std::endl << "*************************************" << std::endl;
+    std::cout << std::endl << "*************************************" << std::endl;
+    
+    std::cout << eq.size() << std::endl;
+    
+    
+    t.apply(eq);
+    
+    std::cout << std::endl << "*************************************" << std::endl;
+    std::cout << std::endl << "*************************************" << std::endl;
+    
+    eq.printFirst(std::cout);
+    
+    //std::cout << eq.size() << std::endl;
+
     /* Bitvector32_t &&t1 = Bitvector32_t();
      t1.set(3);
      Bitvector32_t &&t2 = Bitvector32_t();
