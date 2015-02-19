@@ -25,8 +25,8 @@ public:
     _right(right)
     
     {
-        _leftEC = nullptr;
-        _rightEC = nullptr;
+        _leftEC = NULL;
+        _rightEC = NULL;
         cacheRelations();
     };
     
@@ -46,7 +46,8 @@ public:
     _left(left),
     _right(right.getRelations())
     {
-        _rightEC = right;
+        _leftEC = NULL;
+        _rightEC = &right;
         cacheRelations();
     };
     
@@ -55,6 +56,7 @@ public:
     _left(left.getRelations()),
     _right(right)
     {
+        _rightEC = NULL;
         _leftEC = left;
         cacheRelations();
     };
@@ -63,8 +65,33 @@ public:
     {
         return _relations;
     }
+    
+    inline std::ostream& print(std::ostream& os) const
+    {
+        os << _op << "(";
+        if(_leftEC == NULL)
+        {
+            os << _left;
+        }
+        else
+        {
+            _leftEC->printFirst(os);
+        }
+        os << ",";
+        if(_rightEC == NULL)
+        {
+            os << _right;
+        }
+        else
+        {
+            _rightEC->printFirst(os);
+        }
+        os << ")";
+                      
+        return os;
+    }
 
-protected:
+public:
     self_type * _next;
     
     

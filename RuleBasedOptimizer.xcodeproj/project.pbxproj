@@ -38,6 +38,7 @@
 		AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity.h; path = rule/rules/LeftAssociativity.h; sourceTree = "<group>"; };
 		AF14C2421A92040100A4AEEF /* BasicRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicRuleSet.h; path = rule/rulesets/BasicRuleSet.h; sourceTree = "<group>"; };
 		AF14C2461A94CE0300A4AEEF /* TypeReservoirs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeReservoirs.h; sourceTree = "<group>"; };
+		AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = rule/ExhaustiveTransformation.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
@@ -183,6 +184,7 @@
 			children = (
 				AFECC5B71A8D00B600FA9D84 /* rules */,
 				AFECC5B61A8D00AB00FA9D84 /* rulesets */,
+				AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */,
 			);
 			name = rule;
 			sourceTree = "<group>";

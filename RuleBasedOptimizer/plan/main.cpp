@@ -8,24 +8,50 @@
 
 #include "TypeReservoirs.h"
 
+typedef PlanNode<Bitvector32_t> PlanNode_BV;
+typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
+
+/**
+ * @brief implements a right deep tree for tests
+ */
 
 int main()
 {
     
-    Bitvector32_t &b = *getBitvectorAndSetElement(0);
-    typedef PlanNode<Bitvector32_t> PlanNode_BV;
-    PlanNode_BV && p = PlanNode_BV(JOIN, b, b);
-    p.getRelations();
+    Bitvector32_t &b1 = *getBitvectorAndSetElement(0);
+    Bitvector32_t &b2 = *getBitvectorAndSetElement(1);
+    
+    PlanNode_BV && p = PlanNode_BV(JOIN, b1, b2);
     
     
-    typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
+    EquivalenceClass_t *eq = new EquivalenceClass_t();
+    eq->push_back(p);
+    
+    for(int i = 2; i < 10; ++i)
+    {
+        Bitvector32_t &b_new = *getBitvectorAndSetElement(i);
+        PlanNode_BV * pn = new PlanNode_BV(JOIN, b_new, *eq);
+        pn->print(std::cout);
+        std::cout << std::endl << std::endl << std::endl;
+        std::cout.flush();
+        eq = new EquivalenceClass_t();
+        eq->push_back(*pn);
+        
+        eq->printFirst(std::cout);
+        std::cout << std::endl << std::endl << std::endl;
+        std::cout.flush();
+
+    }
     
     
-    EquivalenceClass_t eq = EquivalenceClass_t();
+    for(EquivalenceClass_t::Iterator itr = eq->begin(); itr != eq->end(); ++itr)
+    {
+        std::cout << itr->getRelations() << std::endl;
+    }
+    
+    eq->printFirst(std::cout);
     
     
-    
-    b.print(std::cout);
     
    /* Bitvector32_t &&t1 = Bitvector32_t();
     t1.set(3);

@@ -1,68 +1,77 @@
+//
+//  main.cpp
+//
+
+#include <iostream>
+
+#include <iostream>
+
+#include "TypeReservoirs.h"
+#include "ExhaustiveTransformation.h"
+
+typedef PlanNode<Bitvector32_t> PlanNode_BV;
+typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
+typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClass_t::Iterator, PlanNode_BV, Bitvector32_t> ExhaustiveTransformation_t;
 
 
-#include "Types.h"
-#include "QueryParser.h"
+
+    EquivalenceClass_t * generate()
+    {
+        Bitvector32_t &b1 = *getBitvectorAndSetElement(0);
+        Bitvector32_t &b2 = *getBitvectorAndSetElement(1);
+        
+        PlanNode_BV && p = PlanNode_BV(JOIN, b1, b2);
+        
+        
+        EquivalenceClass_t *eq = new EquivalenceClass_t();
+        eq->push_back(p);
+        
+        for(int i = 2; i < 10; ++i)
+        {
+            Bitvector32_t &b_new = *getBitvectorAndSetElement(i);
+            PlanNode_BV * pn = new PlanNode_BV(JOIN, b_new, *eq);
+            pn->print(std::cout);
+            std::cout << std::endl << std::endl << std::endl;
+            std::cout.flush();
+            eq = new EquivalenceClass_t();
+            eq->push_back(*pn);
+            
+            eq->printFirst(std::cout);
+            std::cout << std::endl << std::endl << std::endl;
+            std::cout.flush();
+            
+        }
+        
+        
+        for(EquivalenceClass_t::Iterator itr = eq->begin(); itr != eq->end(); ++itr)
+        {
+            std::cout << itr->getRelations() << std::endl;
+        }
+        
+        eq->printFirst(std::cout);
+        return eq;
+    }
 
 
 
-/*EquivalenceClass_t & generateSimpleTree() {
- // generate Operator
- Bitvector32_t && b1 = Bitvector32_t(1);
- Bitvector32_t && b2 = Bitvector32_t(1);
- Join_t && join1 = Join_t(b1, b2);
- PlanNode_t && pn = PlanNode_t();
- EquivalenceClass_t & eq = EquivalenceClass_t(pn);
- return eq;
- }*/
 
-void checkOperators()
+/**
+ * @brief implements a right deep tree for tests
+ */
+
+int main()
 {
-    typedef Operator<int, int> & ExampleOperator_t;
-    typedef Join<int, std::string> ExampleJoin_t;
-    ExampleOperator_t & example = ExampleOperator_t("Operator");
-    ExampleJoin_t & exampleJoin = ExampleJoin_t(1, 1);
+    EquivalenceClass_t *eq =  generate();
+    
+    ExhaustiveTransformation_t t;
+    t.apply(*eq);
     
     
-}
-
-void checkPlanNode()
-{
-    //PlanNode_t & pn = PlanNode_t();
-}
-
-
-
-
-int main(int argc, const char * argv[])
-{
-    checkOperators();
-    checkPlanNode();
-    
-    
-    
-    /*Bitvector32_t && bv = Bitvector32_t(3);
-     Join_t join (bv, bv);
-     std::cout << "RELLLLL: ";
-     join.getRelations().print();
-     std::cout << std::endl;
-     int &&i = 1;
-     PlanNode_t && pn = PlanNode_t(i, bv);
-     pn.print();
-     
-     pn.getRelations().print();
-     
-     EquivalenceClass_t && eq = EquivalenceClass_t(pn);
-     PlanNode_t && pn2 = PlanNode_t(i, bv);
-     eq.push_back(pn);
-     eq.push_back(pn2);
-     eq.getRelations().print();
-     
-     int number = 2;
-     int *a = &number;
-     //abc(number);
-     std::cout << *a;
-     
-     */
-    
+    /* Bitvector32_t &&t1 = Bitvector32_t();
+     t1.set(3);
+     Bitvector32_t &&t2 = Bitvector32_t();
+     t2.set(4);
+     t1 += t2;
+     t1.print(std::cout);*/
     return 0;
 }
