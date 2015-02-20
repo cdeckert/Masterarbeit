@@ -10,6 +10,6 @@ class Rule
 {
 public:
     Rule(){};
-    virtual PlanNode apply(const PlanNode&) = 0;
+    virtual PlanNode * apply(PlanNode&) = 0;
 };
 #endif

@@ -24,29 +24,31 @@ class ExhaustiveTransformation
     typedef RuleSet<Rule_t> Ruleset_t;
     
 public:
-    ExhaustiveTransformation(){};
-    void apply(const EquivalenceClass_t & equivalenceClass) const
+    ExhaustiveTransformation()
+    {};
+    void apply(EquivalenceClass_t & equivalenceClass) const
     {
+        CommutativityRule<PlanNode_t>  && commutativity = CommutativityRule<PlanNode_t>();
         std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownBitvectors;
         
-        knownBitvectors.insert(equivalenceClass.begin()->getLeft());
+        knownBitvectors.insert(equivalenceClass.begin()._node->getLeft());
         
         for(Iterator itr = equivalenceClass.begin(); itr != equivalenceClass.end() && itr._node != NULL; ++itr)
         {
             if(itr._node != NULL)
             {
-            PlanNode_t && comPlan = commutativity.apply(*itr._node);
-            if(knownBitvectors.count((comPlan).getLeft()) == 0)
-            {
-                equivalenceClass.push_back(comPlan);
-            }
+                PlanNode_t * comPlan = commutativity.apply(*itr._node);
+                if(knownBitvectors.count(comPlan->getLeft()) == 0)
+                {
+                    equivalenceClass.push_back(*comPlan);
+                }
             
             
-            PlanNode_t && leftAPlan = leftAssociativity.apply(*itr._node);
+            /*PlanNode_t && leftAPlan = leftAssociativity.apply(*itr._node);
             if(knownBitvectors.count((leftAPlan).getLeft()) == 0)
             {
                 equivalenceClass.push_back(leftAPlan);
-            }
+            }*/
             }
             
             
@@ -55,7 +57,6 @@ public:
     };
 
 private:
-    Commutativity<PlanNode_t> commutativity;
     
     LeftAssociativity<PlanNode_t> leftAssociativity;
 };

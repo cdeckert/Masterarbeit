@@ -17,14 +17,14 @@ class LeftAssociativity: public Rule<PlanNode>
 public:
     LeftAssociativity(){};
     
-    PlanNode apply(const PlanNode &) override;
+    PlanNode * apply(PlanNode &) override;
 };
 
 
 template <typename PlanNode>
-PlanNode LeftAssociativity<PlanNode>::apply(const PlanNode & aPlanNode)
+PlanNode * LeftAssociativity<PlanNode>::apply(PlanNode & aPlanNode)
 {
-    return  PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
+    return  new PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
 }
 
 

@@ -12,18 +12,21 @@
 #include "Rule.h"
 
 template <typename PlanNode>
-class Commutativity: public Rule<PlanNode>
+class CommutativityRule: public Rule<PlanNode>
 {
     
 public:
-    Commutativity(){};
+    CommutativityRule(){};
     
-    PlanNode apply(const PlanNode &) override;
+    PlanNode * apply(PlanNode &) override;
+    void whatever(){
+        
+    };
 };
 
 
 template <typename PlanNode>
-PlanNode Commutativity<PlanNode>::apply(const PlanNode & aPlanNode)
+PlanNode * CommutativityRule<PlanNode>::apply(PlanNode & aPlanNode)
 {
     
     if(aPlanNode.hasLeftEC())
@@ -31,22 +34,22 @@ PlanNode Commutativity<PlanNode>::apply(const PlanNode & aPlanNode)
         if(aPlanNode.hasRightEC())
         {
             
-            return PlanNode(JOIN, aPlanNode.getRightEC(),  aPlanNode.getLeftEC());
+            return new PlanNode(JOIN, aPlanNode.getRightEC(),  aPlanNode.getLeftEC());
         }
         else
         {
-            return PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeftEC());
+            return new PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeftEC());
         }
     }
     else
     {
         if(aPlanNode.hasRightEC())
         {
-            return PlanNode(JOIN, aPlanNode.getRightEC(), aPlanNode.getLeft());
+            return new PlanNode(JOIN, aPlanNode.getRightEC(), aPlanNode.getLeft());
         }
         else
         {
-            return PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
+            return new PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
         }
     }
 }

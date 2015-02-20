@@ -43,6 +43,11 @@ public:
         
     };
     
+    inline const bool isNext()
+    {
+        return _node != NULL;
+    };
+    
     inline bool operator!=(const IteratorPlanNode& x) const { return (_node != x._node); }
     inline PlanNode_t * operator->() const { return _node; }
     
@@ -69,8 +74,8 @@ public:
         _begin = NULL;
         _end = NULL;
     };
-    Iterator begin(){ return Iterator(_begin);};
-    Iterator end(){ return Iterator(_end);};
+    Iterator begin() { return Iterator(_begin);};
+    Iterator end() { return Iterator(_end);};
     
     void push_back(PlanNode_t & planNode)
     {
@@ -97,9 +102,9 @@ public:
     const u_int size()
     {
         u_int i = 0;
-        for(Iterator itr = begin(); itr != end(); ++itr)
+        for(Iterator itr = begin(); itr.isNext(); ++itr)
         {
-            i++;
+            ++i;
         }
         return i;
     }

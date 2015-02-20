@@ -44,7 +44,7 @@ typedef RuleSet<Rule_t> RuleSet_t;
         }
         
         
-        for(EquivalenceClass_t::Iterator itr = eq->begin(); itr != eq->end(); ++itr)
+        for(EquivalenceClass_t::Iterator itr = eq->begin(); itr.isNext(); ++itr)
         {
             std::cout << itr->getRelations() << std::endl;
         }
@@ -79,7 +79,7 @@ int main()
     std::cout << std::endl << "*************************************";
     std::cout << std::endl << "*************************************" << std::endl;
     std::cout << eq.size() << std::endl;
-    
+    std::cout << std::endl << "*************************************";
     
     //std::cout << eq.size() << std::endl;
 
@@ -89,5 +89,5 @@ int main()
      t2.set(4);
      t1 += t2;
      t1.print(std::cout);*/
-    return 0;
+    return 1;
 }
