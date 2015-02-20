@@ -109,6 +109,23 @@ public:
         return i;
     }
     
+    const std::vector<self_type *> getChildECs()
+    {
+        std::vector<self_type *> eqs;
+        for(Iterator itr = begin(); itr.isNext(); ++itr)
+        {
+            if(itr->hasLeftEC())
+            {
+                eqs.push_back(& itr->getLeftEC());
+            }
+            if(itr->hasRightEC())
+            {
+                eqs.push_back(& itr->getRightEC());
+            }
+        }
+        return eqs;
+    };
+    
     std::ostream& printFirst(std::ostream& os) const
     {
         if(_begin != NULL)
@@ -120,7 +137,14 @@ public:
             return os;
         }
         
+    };
+    
+    PlanNode_t & node()
+    {
+        return *_begin;
     }
+    
+    
 private:
     PlanNode_t * _begin;
     PlanNode_t * _end;

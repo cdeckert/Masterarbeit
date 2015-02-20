@@ -30,7 +30,7 @@ typedef RuleSet<Rule_t> RuleSet_t;
         for(int i = 2; i < 3; ++i)
         {
             Bitvector32_t *b_new = getBitvectorAndSetElement(i);
-            PlanNode_BV * pn = new PlanNode_BV(JOIN, *b_new, *eq);
+            PlanNode_BV * pn = new PlanNode_BV(JOIN, *eq, *b_new);
             pn->print(std::cout);
             std::cout << std::endl << std::endl << std::endl;
             std::cout.flush();
@@ -78,7 +78,7 @@ int main()
     
     std::cout << std::endl << "*************************************";
     std::cout << std::endl << "*************************************" << std::endl;
-    std::cout << eq.size() << std::endl;
+    std::cout << eq.size();
     std::cout << std::endl << "*************************************";
     
     //std::cout << eq.size() << std::endl;

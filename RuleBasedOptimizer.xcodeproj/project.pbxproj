@@ -41,6 +41,7 @@
 		AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = rule/ExhaustiveTransformation.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/RightAssociativity.h; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
 		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; };
 		AF99E4661A92A00C006D94C4 /* Bitvector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Bitvector.h; path = plan/standard/Bitvector.h; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 				AFECC5C81A8D03D100FA9D84 /* Commutativity.h */,
 				AFECC5CA1A8D041E00FA9D84 /* Rule.h */,
 				AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */,
+				AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */,
 			);
 			name = rules;
 			sourceTree = "<group>";

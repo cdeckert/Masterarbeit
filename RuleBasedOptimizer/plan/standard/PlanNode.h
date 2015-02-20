@@ -98,6 +98,8 @@ public:
     EquivalenceClass_t & getLeftEC()  const { return *_leftEC; };
     EquivalenceClass_t & getRightEC() const { return *_rightEC; };
     
+    
+    
     inline std::ostream& print(std::ostream& os) const
     {
         os << _op << "(";
@@ -121,7 +123,7 @@ public:
         os << ")";
                       
         return os;
-    }
+    };
 
 public:
     self_type * _next;
