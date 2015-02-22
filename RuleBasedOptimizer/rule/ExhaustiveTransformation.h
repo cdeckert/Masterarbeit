@@ -31,16 +31,17 @@ public:
     {
         CommutativityRule<PlanNode_t>  && commutativity = CommutativityRule<PlanNode_t>();
         LeftAssociativity<PlanNode_t, EquivalenceClass_t>  && leftAssociativity = LeftAssociativity<PlanNode_t, EquivalenceClass_t>();
-        RightAssociativity<PlanNode_t, EquivalenceClass_t>  && rightAssociativity = RightAssociativity<PlanNode_t, EquivalenceClass_t>();
+        //RightAssociativity<PlanNode_t, EquivalenceClass_t>  && rightAssociativity = RightAssociativity<PlanNode_t, EquivalenceClass_t>();
         std::vector<EquivalenceClass_t *> eqs;
         eqs.push_back(&aEquivalenceClass);
+        std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownBitvectors;
         while(!eqs.empty())
         {
             EquivalenceClass_t * equivalenceClass = eqs.back();
             eqs.pop_back();
-            std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownBitvectors;
+            
         
-            knownBitvectors.insert(equivalenceClass->begin()._node->getLeft());
+            knownBitvectors.insert(equivalenceClass->begin()._node->getSignature());
         
             for(Iterator itr = equivalenceClass->begin(); itr != equivalenceClass->end() && itr._node != NULL; ++itr)
             {
@@ -48,7 +49,7 @@ public:
                 if(itr._node != NULL)
                 {
                     PlanNode_t * comPlan = commutativity.apply(*itr._node);
-                    if(knownBitvectors.count(comPlan->getLeft()) == 0)
+                    if(knownBitvectors.count(comPlan->getSignature()) == 0)
                     {
                         equivalenceClass->push_back(*comPlan);
                     }
@@ -56,21 +57,24 @@ public:
                     if(leftAssociativity.isApplicable(*itr._node))
                     {
                         PlanNode_t * leftAssoc = leftAssociativity.apply(*itr._node);
-                        if(knownBitvectors.count(leftAssoc->getLeft()) == 0)
+                        if(knownBitvectors.count(leftAssoc->getSignature()) == 0)
                         {
                             equivalenceClass->push_back(*leftAssoc);
                         }
+                        std::cout << leftAssoc->getSignature() << " ";
                     }
                     
-                    if(rightAssociativity.isApplicable(*itr._node))
+                    /*if(rightAssociativity.isApplicable(*itr._node))
                     {
                         PlanNode_t * rightAssoc = rightAssociativity.apply(*itr._node);
-                        if(knownBitvectors.count(rightAssoc->getLeft()) == 0)
+                        if(knownBitvectors.count(rightAssoc->getSignature()) == 0)
                         {
                             equivalenceClass->push_back(*rightAssoc);
                         }
-                    }
+                    }*/
             
+                
+                    
             
                 }
             
@@ -78,9 +82,12 @@ public:
             //std::cout << itr->getRelations() << std::endl;
                 for(EquivalenceClass_t * eq : equivalenceClass->getChildECs())
                 {
-                    if(knownBitvectors.count(eq->begin()._node->getLeft()) == 0)
+                    if(eq != NULL && knownBitvectors.count(eq->begin()._node->getSignature()) == 0)
                     {
-                        knownBitvectors.insert(eq->begin()._node->getLeft());
+                        knownBitvectors.insert(eq->begin()._node->getSignature());
+                        
+                        std::cout << "NEW" << eq->begin()._node->getSignature();
+                        std::cout.flush();
                         eqs.push_back(eq);
                     }
                     

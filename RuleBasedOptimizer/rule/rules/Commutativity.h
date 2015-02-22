@@ -29,29 +29,7 @@ template <typename PlanNode>
 PlanNode * CommutativityRule<PlanNode>::apply(PlanNode & aPlanNode)
 {
     
-    if(aPlanNode.hasLeftEC())
-    {
-        if(aPlanNode.hasRightEC())
-        {
-            
-            return new PlanNode(JOIN, aPlanNode.getRightEC(),  aPlanNode.getLeftEC());
-        }
-        else
-        {
-            return new PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeftEC());
-        }
-    }
-    else
-    {
-        if(aPlanNode.hasRightEC())
-        {
-            return new PlanNode(JOIN, aPlanNode.getRightEC(), aPlanNode.getLeft());
-        }
-        else
-        {
-            return new PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
-        }
-    }
+    return new PlanNode(JOIN, aPlanNode.getRight(),  aPlanNode.getLeft());
 }
 
 

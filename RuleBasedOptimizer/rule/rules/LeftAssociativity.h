@@ -24,56 +24,19 @@ public:
 
 template <typename PlanNode, typename EquivalenceClass>
 bool LeftAssociativity<PlanNode,EquivalenceClass>::isApplicable(PlanNode & aPlanNode) {
-    return aPlanNode.hasLeftEC();
+    return !aPlanNode.getLeft().isLeaf();
 }
 
 template <typename PlanNode, typename EquivalenceClass>
 PlanNode * LeftAssociativity<PlanNode, EquivalenceClass>::apply(PlanNode & aPlanNode)
 {
-    
-    
-    aPlanNode.getLeftEC().node().getLeftEC();
-    //PlanNode && leftNode = aPlanNode.getLeftEC().;
-    
     EquivalenceClass * newRight = new EquivalenceClass();
+    PlanNode * rightNode = new PlanNode(JOIN, aPlanNode.getLeft().getRight(), aPlanNode.getRight());
+    newRight->push_back(*rightNode);
     
-    if(aPlanNode.getLeftEC().node().hasRightEC())
-    {
-        if(aPlanNode.hasRightEC())
-        {
-            PlanNode * newRightPlan = new PlanNode(JOIN, aPlanNode.getLeftEC().node().getRightEC(), aPlanNode.getRightEC());
-            newRight->push_back(*newRightPlan);
-        }
-        else
-        {
-            PlanNode * newRightPlan = new PlanNode(JOIN, aPlanNode.getLeftEC().node().getRight(), aPlanNode.getRightEC());
-            newRight->push_back(*newRightPlan);
-        }
-    }
-    else
-    {
-        if(aPlanNode.hasRightEC())
-        {
-            PlanNode * newRightPlan = new PlanNode(JOIN, aPlanNode.getLeftEC().node().getRightEC(), aPlanNode.getRight());
-            newRight->push_back(*newRightPlan);
-        }
-        else
-        {
-            PlanNode * newRightPlan = new PlanNode(JOIN, aPlanNode.getLeftEC().node().getRight(), aPlanNode.getRight());
-            newRight->push_back(*newRightPlan);
-        }
-    }
     
-    if(aPlanNode.getLeftEC().node().hasLeftEC())
-    {
-        return new PlanNode(JOIN,  aPlanNode.getLeftEC().node().getLeftEC(), *newRight);
-    }
-    else
-    {
-        return new PlanNode(JOIN,  aPlanNode.getLeftEC().node().getLeft(), *newRight);
-    }
-    
-    return  &aPlanNode; //new PlanNode(JOIN, aPlanNode.getRight(), aPlanNode.getLeft());
+    return new PlanNode(JOIN, aPlanNode.getLeft().getLeft(), *PlanNode::getDescendant(*newRight));
+
 }
 
 

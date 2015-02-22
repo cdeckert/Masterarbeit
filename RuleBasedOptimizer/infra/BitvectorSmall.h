@@ -357,6 +357,9 @@ public:
     print(std::ostream& os, unsigned int aCapacity = (sizeof(uint_t) * 8)) const;
     
     std::ostream&
+    print2(std::ostream& os, unsigned int aCapacity = (sizeof(uint_t) * 8)) const;
+    
+    std::ostream&
     printReverse(std::ostream& os, unsigned int aCapacity = (sizeof(uint_t) * 8)) const;
     
     std::ostream&
@@ -380,7 +383,7 @@ typedef BitVectorSmall<bitvector64_t> Bitvector64;
 
 template<class uint_t>
 inline std::ostream&
-operator<<(std::ostream& os, const BitVectorSmall<uint_t>& x) { return x.print(os); }
+operator<<(std::ostream& os, const BitVectorSmall<uint_t>& x) { return x.print2(os); }
 
 template<class uint_t>
 int
@@ -558,6 +561,18 @@ std::ostream&
 BitVectorSmall<uint_t>::print(std::ostream& os, unsigned int aCapacity) const {
     for(unsigned int i = 0; i < aCapacity; ++i) {
         os << (test(i) ? '1' : '0');
+    }
+    return os;
+}
+
+template<class uint_t>
+std::ostream&
+BitVectorSmall<uint_t>::print2(std::ostream& os, unsigned int aCapacity) const {
+    for(unsigned int i = 0; i < aCapacity; ++i) {
+        if(test(i))
+        {
+            os << i;
+        }
     }
     return os;
 }

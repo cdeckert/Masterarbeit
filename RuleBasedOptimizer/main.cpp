@@ -15,41 +15,30 @@ typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
 typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClass_t::Iterator, PlanNode_BV, Bitvector32_t> ExhaustiveTransformation_t;
 typedef Rule<PlanNode_BV> Rule_t;
 typedef RuleSet<Rule_t> RuleSet_t;
-
+EquivalenceClass_t *eq;
     EquivalenceClass_t & generate()
     {
         Bitvector32_t &b1 = *getBitvectorAndSetElement(0);
         Bitvector32_t &b2 = *getBitvectorAndSetElement(1);
         
-        PlanNode_BV  *p = new PlanNode_BV(JOIN, b1, b2);
+        PlanNode_BV  *p = new PlanNode_BV(JOIN, *PlanNode_BV::getDescendant(b1), *PlanNode_BV::getDescendant(b2));
         
         
-        EquivalenceClass_t *eq = new EquivalenceClass_t();
+        eq = new EquivalenceClass_t();
         eq->push_back(*p);
         
-        for(int i = 2; i < 3; ++i)
+        
+        for(int i = 3; i < 5; ++i)
         {
-            Bitvector32_t *b_new = getBitvectorAndSetElement(i);
-            PlanNode_BV * pn = new PlanNode_BV(JOIN, *eq, *b_new);
-            pn->print(std::cout);
-            std::cout << std::endl << std::endl << std::endl;
-            std::cout.flush();
+            PlanNode_BV::Descendant * d1 = new PlanNode_BV::Descendant(*eq);
+            PlanNode_BV::Descendant * d2 = new PlanNode_BV::Descendant(*getBitvectorAndSetElement(i));
+            
+            p = new PlanNode_BV(JOIN, *d1, *d2);
             eq = new EquivalenceClass_t();
-            eq->push_back(*pn);
-            
-            eq->printFirst(std::cout);
-            std::cout << std::endl << std::endl << std::endl;
-            std::cout.flush();
-            
+            eq->push_back(*p);
+
         }
         
-        
-        for(EquivalenceClass_t::Iterator itr = eq->begin(); itr.isNext(); ++itr)
-        {
-            std::cout << itr->getRelations() << std::endl;
-        }
-        
-        eq->printFirst(std::cout);
         return *eq;
     }
 
@@ -72,7 +61,7 @@ int main()
     
     std::cout << eq.size() << std::endl;
     
-    eq.printFirst(std::cout);
+    //eq.printFirst(std::cout);
     
     t.apply(eq);
     
@@ -80,6 +69,14 @@ int main()
     std::cout << std::endl << "*************************************" << std::endl;
     std::cout << eq.size();
     std::cout << std::endl << "*************************************";
+    
+    unsigned int i = 0;
+    for(std::string s : eq.getStringVector())
+    {
+        std::cout  << std::endl << i << ":" << s;
+        i++;
+    }
+    
     
     //std::cout << eq.size() << std::endl;
 

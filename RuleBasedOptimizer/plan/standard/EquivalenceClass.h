@@ -7,6 +7,8 @@
 
 #include <iterator>
 #include <ostream>
+#include <sstream>
+#include <string>
 
 
 #include "Reservoir.h"
@@ -43,6 +45,8 @@ public:
         
     };
     
+    
+    
     inline const bool isNext()
     {
         return _node != NULL;
@@ -74,6 +78,14 @@ public:
         _begin = NULL;
         _end = NULL;
     };
+    
+    EquivalenceClass(self_type const & aEQ)
+    {
+        _begin = aEQ._begin;
+        _end = aEQ._end;
+    };
+    
+    
     Iterator begin() { return Iterator(_begin);};
     Iterator end() { return Iterator(_end);};
     
@@ -94,7 +106,7 @@ public:
         }
     };
     
-    Bitvector_t & getRelations()
+    Bitvector_t & getRelations() const
     {
         return _begin->getRelations();
     };
@@ -114,13 +126,13 @@ public:
         std::vector<self_type *> eqs;
         for(Iterator itr = begin(); itr.isNext(); ++itr)
         {
-            if(itr->hasLeftEC())
+            if(!itr->getLeft().isLeaf())
             {
-                eqs.push_back(& itr->getLeftEC());
+                eqs.push_back(itr->getLeft().getEC());
             }
-            if(itr->hasRightEC())
+            if(itr->getRight().isLeaf())
             {
-                eqs.push_back(& itr->getRightEC());
+                eqs.push_back(itr->getRight().getEC());
             }
         }
         return eqs;
@@ -142,6 +154,20 @@ public:
     PlanNode_t & node()
     {
         return *_begin;
+    }
+    
+    
+    inline std::vector<std::string> getStringVector()
+    {
+        std::vector<std::string> result;
+        for(Iterator itr = begin(); itr.isNext(); ++itr)
+        {
+            for(std::string r : itr->getStringVector())
+            {
+                result.push_back(r);
+            }
+        }
+        return result;
     }
     
     
