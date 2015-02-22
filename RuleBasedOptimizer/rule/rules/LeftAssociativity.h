@@ -10,10 +10,9 @@
 #define RuleBasedOptimizer_LeftAssociativity_h
 
 
-template <typename PlanNode, typename EquivalenceClass>
+template <typename PlanNode, typename EquivalenceClass, typename Descendant>
 class LeftAssociativity: public Rule<PlanNode>
 {
-    
 public:
     LeftAssociativity(){};
     
@@ -22,20 +21,25 @@ public:
 };
 
 
-template <typename PlanNode, typename EquivalenceClass>
-bool LeftAssociativity<PlanNode,EquivalenceClass>::isApplicable(PlanNode & aPlanNode) {
+template <typename PlanNode, typename EquivalenceClass, typename Descendant>
+bool LeftAssociativity<PlanNode,EquivalenceClass, Descendant>::isApplicable(PlanNode & aPlanNode) {
     return !aPlanNode.getLeft().isLeaf();
 }
 
-template <typename PlanNode, typename EquivalenceClass>
-PlanNode * LeftAssociativity<PlanNode, EquivalenceClass>::apply(PlanNode & aPlanNode)
+template <typename PlanNode, typename EquivalenceClass, typename Descendant>
+PlanNode * LeftAssociativity<PlanNode, EquivalenceClass, Descendant>::apply(PlanNode & aPlanNode)
 {
+    std::cout <<  aPlanNode.str() << std::endl;
+    std::cout.flush();
     EquivalenceClass * newRight = new EquivalenceClass();
     PlanNode * rightNode = new PlanNode(JOIN, aPlanNode.getLeft().getRight(), aPlanNode.getRight());
+    
+    std::cout << "rightNode.str()" << rightNode->str() << std::endl;
+    std::cout.flush();
     newRight->push_back(*rightNode);
     
     
-    return new PlanNode(JOIN, aPlanNode.getLeft().getLeft(), *PlanNode::getDescendant(*newRight));
+    return new PlanNode(JOIN, aPlanNode.getLeft().getLeft(), *new Descendant(newRight));
 
 }
 

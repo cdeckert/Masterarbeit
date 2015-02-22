@@ -23,6 +23,7 @@ class ExhaustiveTransformation
     typedef ExhaustiveTransformation self_type;
     typedef Rule<PlanNode_t> Rule_t;
     typedef RuleSet<Rule_t> Ruleset_t;
+    typedef Descendant<Bitvector_t, EquivalenceClass_t> Descendant_t;
     
 public:
     ExhaustiveTransformation()
@@ -30,7 +31,7 @@ public:
     void apply(EquivalenceClass_t & aEquivalenceClass) const
     {
         CommutativityRule<PlanNode_t>  && commutativity = CommutativityRule<PlanNode_t>();
-        LeftAssociativity<PlanNode_t, EquivalenceClass_t>  && leftAssociativity = LeftAssociativity<PlanNode_t, EquivalenceClass_t>();
+        LeftAssociativity<PlanNode_t, EquivalenceClass_t, Descendant_t>  && leftAssociativity = LeftAssociativity<PlanNode_t, EquivalenceClass_t, Descendant_t>();
         //RightAssociativity<PlanNode_t, EquivalenceClass_t>  && rightAssociativity = RightAssociativity<PlanNode_t, EquivalenceClass_t>();
         std::vector<EquivalenceClass_t *> eqs;
         eqs.push_back(&aEquivalenceClass);
@@ -43,25 +44,43 @@ public:
         
             knownBitvectors.insert(equivalenceClass->begin()._node->getSignature());
         
-            for(Iterator itr = equivalenceClass->begin(); itr != equivalenceClass->end() && itr._node != NULL; ++itr)
+            for(Iterator itr = equivalenceClass->begin(); itr.isNext(); ++itr)
             {
                 
-                if(itr._node != NULL)
-                {
                     PlanNode_t * comPlan = commutativity.apply(*itr._node);
                     if(knownBitvectors.count(comPlan->getSignature()) == 0)
                     {
                         equivalenceClass->push_back(*comPlan);
+                        
+                        
                     }
                     
                     if(leftAssociativity.isApplicable(*itr._node))
                     {
+                        std::cout << std::endl << "itr._node->str(): "<< itr._node->str() << " " << std::endl;
+                        
+                        
+                        
+                        
+                        std::cout << "BEFORE: " << itr._node;
+                        
+                        std::cout << "itr._node->_leftDecendent._ec->_begin->_leftDecendent._relations:\n"<< itr._node->_leftDecendent._ec->_begin->_leftDecendent._relations << "\n\n";
+                        std::cout.flush();
+                        
+                        
+                        
                         PlanNode_t * leftAssoc = leftAssociativity.apply(*itr._node);
                         if(knownBitvectors.count(leftAssoc->getSignature()) == 0)
                         {
+                            
                             equivalenceClass->push_back(*leftAssoc);
+                            std::cout  << "NEU NEU NEU" << leftAssoc->str() << std::endl;
                         }
                         std::cout << leftAssoc->getSignature() << " ";
+                        
+                        std::cout << "itr._node->_leftDecendent._ec->_begin->_leftDecendent._relations:\n"<< itr._node->_leftDecendent._ec->_begin->_leftDecendent._relations << "\n\n";
+                        std::cout.flush();
+
                     }
                     
                     /*if(rightAssociativity.isApplicable(*itr._node))
@@ -76,22 +95,22 @@ public:
                 
                     
             
-                }
+            
             
             
             //std::cout << itr->getRelations() << std::endl;
-                for(EquivalenceClass_t * eq : equivalenceClass->getChildECs())
+                /*for(EquivalenceClass_t * eq : equivalenceClass->getChildECs())
                 {
-                    if(eq != NULL && knownBitvectors.count(eq->begin()._node->getSignature()) == 0)
+                    if(eq != NULL && knownBitvectors.count(eq->getRelations()) == 0)
                     {
-                        knownBitvectors.insert(eq->begin()._node->getSignature());
+                        knownBitvectors.insert(eq->getRelations());
                         
-                        std::cout << "NEW" << eq->begin()._node->getSignature();
+                        std::cout << "NEW" << eq->getRelations() << std::endl;
                         std::cout.flush();
                         eqs.push_back(eq);
                     }
                     
-                }
+                }*/
                 
             }
         }

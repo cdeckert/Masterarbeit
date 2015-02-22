@@ -77,6 +77,7 @@ public:
     {
         _begin = NULL;
         _end = NULL;
+        abc = "def";
     };
     
     EquivalenceClass(self_type const & aEQ)
@@ -151,10 +152,7 @@ public:
         
     };
     
-    PlanNode_t & node()
-    {
-        return *_begin;
-    }
+    PlanNode_t & node() { return *_begin; }
     
     
     inline std::vector<std::string> getStringVector()
@@ -170,10 +168,27 @@ public:
         return result;
     }
     
+    std::vector<std::string> printLevel()
+    {
+        std::vector<std::string> result;
+        for(Iterator itr = begin(); itr.isNext(); ++itr)
+        {
+            std::stringstream ss;
+            ss << "(" << itr->getLeft().getRelations() <<"," << itr->getRight().getRelations() << ")";
+            result.push_back(ss.str());
+        }
+        return result;
+    }
     
+    PlanNode_t & getFirst()
+    {
+        return *_begin;
+    }
+        PlanNode_t * _begin;
+
 private:
-    PlanNode_t * _begin;
     PlanNode_t * _end;
+    std::string abc;
 
 };
 

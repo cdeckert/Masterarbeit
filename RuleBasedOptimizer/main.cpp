@@ -30,8 +30,8 @@ EquivalenceClass_t *eq;
         
         for(int i = 3; i < 5; ++i)
         {
-            PlanNode_BV::Descendant * d1 = new PlanNode_BV::Descendant(*eq);
-            PlanNode_BV::Descendant * d2 = new PlanNode_BV::Descendant(*getBitvectorAndSetElement(i));
+            PlanNode_BV::Decendant_t * d1 = new PlanNode_BV::Decendant_t(*eq);
+            PlanNode_BV::Decendant_t * d2 = new PlanNode_BV::Decendant_t(*getBitvectorAndSetElement(i));
             
             p = new PlanNode_BV(JOIN, *d1, *d2);
             eq = new EquivalenceClass_t();
@@ -71,7 +71,7 @@ int main()
     std::cout << std::endl << "*************************************";
     
     unsigned int i = 0;
-    for(std::string s : eq.getStringVector())
+    for(std::string s : eq.printLevel())
     {
         std::cout  << std::endl << i << ":" << s;
         i++;
