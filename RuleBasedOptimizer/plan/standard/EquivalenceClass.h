@@ -14,168 +14,73 @@
 #include "Reservoir.h"
 
 
-/**
- * @brief custom planNode Iterator
- */
-template <typename PlanNode_t>
-struct IteratorPlanNode : public std::iterator<std::forward_iterator_tag, PlanNode_t>
+template <typename Bitvector_t, typename PlanNode_t>
+class EquivalenceClassIterator
 {
+    typedef EquivalenceClassIterator self_type;
+    
+    
 public:
-    IteratorPlanNode(PlanNode_t * node)
-    {
-        _node = node;
-    };
-    PlanNode_t* operator*()
-    {
-        return _node;
-    };
+    EquivalenceClassIterator(PlanNode_t & aNode) : _node(aNode) {};
+    const bool hasNext() { return _node.hasNext(); };
     
-    const IteratorPlanNode<PlanNode_t>& operator++()
-    {
-        if(_node != nullptr && _node != NULL && _node->_next != NULL)
-        {
-            _node = _node->_next;
-            return *this;
-        }
-        else
-        {
-            _node = NULL;
-            return *this;
-        }
-        
-    };
+    
+   
     
     
     
-    inline const bool isNext()
-    {
-        return _node != NULL;
-    };
-    
-    inline bool operator!=(const IteratorPlanNode& x) const { return (_node != x._node); }
-    inline PlanNode_t * operator->() const { return _node; }
-    
-    
-    PlanNode_t * _node;
 
 private:
+    
+    PlanNode_t & _node;
 };
-
-
-/**
- * @brief collection of equivalent plan nodes
- *
- */
-template <typename PlanNode_t, typename Bitvector_t>
+template <typename Bitvector_t , typename PlanNode_t>
 struct EquivalenceClass
 {
-    typedef EquivalenceClass<PlanNode_t, Bitvector_t> self_type;
-    typedef IteratorPlanNode<PlanNode_t> Iterator;
-
+    typedef EquivalenceClass self_type;
+    typedef EquivalenceClassIterator<Bitvector_t, PlanNode_t> Iterator;
+    typedef Reservoir<self_type> Reservoir_t;
+    
+    friend Iterator;
+    
 public:
-    EquivalenceClass()
+    EquivalenceClass() { init(); };
+    inline Iterator & begin(){ return Iterator(_first); }
+    inline Iterator & end(){ return Iterator(_last); }
+    inline Bitvector_t & getRelations() { return _relations; };
+    void init()
     {
-        _begin = NULL;
-        _end = NULL;
+        _first = NULL;
+        _last = NULL;
+        _relations = NULL;
     };
     
-    EquivalenceClass(self_type const & aEQ)
+    void push_back(PlanNode_t & aPlanNode)
     {
-        _begin = aEQ._begin;
-        _end = aEQ._end;
-    };
-    
-    
-    Iterator begin() { return Iterator(_begin);};
-    Iterator end() { return Iterator(_end);};
-    
-    void push_back(PlanNode_t & planNode)
-    {
-        if(_begin == NULL)
+        if(_first == NULL)
         {
-            _begin = &planNode;
+            _first = &aPlanNode;
+            _last = &aPlanNode;
         }
         else
         {
-            if(_end == NULL)
-            {
-                _end = _begin;
-            }
-            _end->_next = &planNode;
-            _end = _end->_next;
-        }
-    };
-    
-    Bitvector_t & getRelations() const
-    {
-        return _begin->getRelations();
-    };
-    
-    const u_int size()
-    {
-        u_int i = 0;
-        for(Iterator itr = begin(); itr.isNext(); ++itr)
-        {
-            ++i;
-        }
-        return i;
-    }
-    
-    const std::vector<self_type *> getChildECs()
-    {
-        std::vector<self_type *> eqs;
-        for(Iterator itr = begin(); itr.isNext(); ++itr)
-        {
-            if(!itr->getLeft().isLeaf())
-            {
-                eqs.push_back(itr->getLeft().getEC());
-            }
-            if(itr->getRight().isLeaf())
-            {
-                eqs.push_back(itr->getRight().getEC());
-            }
-        }
-        return eqs;
-    };
-    
-    std::ostream& printFirst(std::ostream& os) const
-    {
-        if(_begin != NULL)
-        {
-            return _begin->print(os);
-        }
-        else
-        {
-            return os;
+            _last->setNext(aPlanNode);
+            _last = &aPlanNode;
         }
         
+    }
+    
+    std::ostream & print(std::ostream & os)
+    {
+        return os;
     };
     
-    PlanNode_t & node()
-    {
-        return *_begin;
-    }
-    
-    
-    inline std::vector<std::string> getStringVector()
-    {
-        std::vector<std::string> result;
-        for(Iterator itr = begin(); itr.isNext(); ++itr)
-        {
-            for(std::string r : itr->getStringVector())
-            {
-                result.push_back(r);
-            }
-        }
-        return result;
-    }
-    
+    inline std::ostream & operator<<(std::ostream& os, const EquivalenceClass& x) { return x.print(os); }
     
 private:
-    PlanNode_t * _begin;
-    PlanNode_t * _end;
-
+    Bitvector_t * _relations;
+    PlanNode_t * _first;
+    PlanNode_t * _last;
 };
-
 
 #endif

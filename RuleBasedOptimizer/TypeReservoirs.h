@@ -9,19 +9,12 @@
 #ifndef RuleBasedOptimizer_TypeReservoirs_h
 #define RuleBasedOptimizer_TypeReservoirs_h
 
-#include "Types.h"
 #include "Reservoir.h"
+#include "Types.h"
 
 
-
-Reservoir<Bitvector32_t> bitvectors(100);
-
-Bitvector32_t * getBitvectorAndSetElement(unsigned short element)
-{
-    Bitvector32_t * b = bitvectors.get_new_entry();
-    b->set_only(element);
-    return b;
-}
+Reservoir<EquivalenceClass_t> * reservoirEC = new Reservoir<EquivalenceClass_t>(300);
+Reservoir<PlanNode_t> * reservoirPN = new Reservoir<PlanNode_t>(600);
 
 
 

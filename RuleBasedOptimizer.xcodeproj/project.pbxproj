@@ -44,11 +44,9 @@
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/RightAssociativity.h; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
 		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; };
-		AF99E4661A92A00C006D94C4 /* Bitvector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Bitvector.h; path = plan/standard/Bitvector.h; sourceTree = "<group>"; };
 		AF99E46E1A933B4F006D94C4 /* standardplantest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = standardplantest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF99E4701A933B4F006D94C4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = plan/main.cpp; sourceTree = "<group>"; };
 		AF99E4751A93672B006D94C4 /* Operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operator.h; path = op/Operator.h; sourceTree = "<group>"; };
-		AF99E4771A9379F0006D94C4 /* PlanParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanParser.h; path = qcon/PlanParser.h; sourceTree = "<group>"; };
 		AF99E4781A93959C006D94C4 /* QueryParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QueryParser.cpp; path = qcon/QueryParser.cpp; sourceTree = "<group>"; };
 		AF99E4791A93959C006D94C4 /* QueryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryParser.h; path = qcon/QueryParser.h; sourceTree = "<group>"; };
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; };
@@ -127,8 +125,6 @@
 				AF99E4701A933B4F006D94C4 /* main.cpp */,
 				AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */,
 				AF99E4641A929CBB006D94C4 /* PlanNode.h */,
-				AF99E4661A92A00C006D94C4 /* Bitvector.h */,
-				AF99E4771A9379F0006D94C4 /* PlanParser.h */,
 			);
 			name = standard;
 			sourceTree = "<group>";

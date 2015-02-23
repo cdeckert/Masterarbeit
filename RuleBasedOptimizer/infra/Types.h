@@ -15,14 +15,9 @@
 #include "BitvectorSmall.h"
 #include "EquivalenceClass.h"
 
-typedef BitVectorSmall<unsigned int> Bitvector32_t;
-//typedef Operator<EquivalenceClass_t, Bitvector32_t> Operator_t;
-//typedef PlanNode<int, Bitvector32_t> PlanNode_t;
-
-//typedef EquivalenceClass<PlanNode_t, Bitvector32_t> EquivalenceClass_t;
-
-typedef uint32_t uint;
-typedef uint64_t uint64;
-
+typedef unsigned int u_int;
+typedef BitVectorSmall<u_int> Bitvector_t;
+typedef PlanNode<Bitvector_t> PlanNode_t;
+typedef EquivalenceClass<Bitvector_t, PlanNode_t> EquivalenceClass_t;
 
 #endif

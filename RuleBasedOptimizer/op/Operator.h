@@ -7,7 +7,8 @@
 
 enum Operator
 {
-    JOIN
+    JOIN,
+    SCAN
 };
 
 #endif
