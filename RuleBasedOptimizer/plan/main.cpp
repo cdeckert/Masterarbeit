@@ -15,6 +15,8 @@ typedef EquivalenceClass<PlanNode_BV, Bitvector32_t> EquivalenceClass_t;
  * @brief implements a right deep tree for tests
  */
 
+
+
 int main()
 {
     

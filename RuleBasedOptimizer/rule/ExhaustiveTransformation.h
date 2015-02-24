@@ -1,103 +1,96 @@
 //
 //  ExhaustiveTransformation.h
-//  RuleBasedOptimizer
-//
-//  Created by Christian Deckert on 19/02/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef RuleBasedOptimizer_ExhaustiveTransformation_h
 #define RuleBasedOptimizer_ExhaustiveTransformation_h
 
 #include <unordered_set>
-#include "Hasher.h"
-#include "BasicRuleSet.h"
+#include <iostream>
 #include "Commutativity.h"
+#include "Hasher.h"
+#include "Reservoir.h"
 #include "LeftAssociativity.h"
-#include "RightAssociativity.h"
 
-template <typename EquivalenceClass_t, typename Iterator, typename PlanNode_t, typename Bitvector_t>
+template <typename EquivalenceClass_t, typename Iterator, typename PlanNode_t, typename Bitvector_t, typename RuleSet_t>
 class ExhaustiveTransformation
 {
     
     typedef ExhaustiveTransformation self_type;
-    typedef Rule<PlanNode_t> Rule_t;
-    typedef RuleSet<Rule_t> Ruleset_t;
     
 public:
     ExhaustiveTransformation()
-    {};
+    {
+        planNodes = new Reservoir<PlanNode_t>(300);
+        com = new CommutativityRule<PlanNode_t>(planNodes);
+        leftAsso = new LeftAssociativity<PlanNode_t, EquivalenceClass_t>();
+    };
     void apply(EquivalenceClass_t & aEquivalenceClass) const
     {
-        CommutativityRule<PlanNode_t>  && commutativity = CommutativityRule<PlanNode_t>();
-        LeftAssociativity<PlanNode_t, EquivalenceClass_t>  && leftAssociativity = LeftAssociativity<PlanNode_t, EquivalenceClass_t>();
-        //RightAssociativity<PlanNode_t, EquivalenceClass_t>  && rightAssociativity = RightAssociativity<PlanNode_t, EquivalenceClass_t>();
-        std::vector<EquivalenceClass_t *> eqs;
-        eqs.push_back(&aEquivalenceClass);
-        std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownBitvectors;
-        while(!eqs.empty())
+        std::vector<EquivalenceClass_t> toDo;
+        std::vector<EquivalenceClass_t> done;
+        toDo.push_back(aEquivalenceClass);
+        
+        std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
+        
+        
+        while(!toDo.empty())
         {
-            EquivalenceClass_t * equivalenceClass = eqs.back();
-            eqs.pop_back();
-            
-        
-            knownBitvectors.insert(equivalenceClass->begin()._node->getSignature());
-        
-            for(Iterator itr = equivalenceClass->begin(); itr != equivalenceClass->end() && itr._node != NULL; ++itr)
+            std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
+            EquivalenceClass_t & eq = toDo.back();
+            for(Iterator itr = eq.begin(); itr.isOK(); ++ itr)
             {
                 
-                if(itr._node != NULL)
+                if(com->isApplicable(itr.node()))
                 {
-                    PlanNode_t * comPlan = commutativity.apply(*itr._node);
-                    if(knownBitvectors.count(comPlan->getSignature()) == 0)
+                    PlanNode_t * p = com->apply(itr.node());
+                    if(knownPlans.count(p->getSignature()) == 0)
                     {
-                        equivalenceClass->push_back(*comPlan);
-                    }
-                    
-                    if(leftAssociativity.isApplicable(*itr._node))
-                    {
-                        PlanNode_t * leftAssoc = leftAssociativity.apply(*itr._node);
-                        if(knownBitvectors.count(leftAssoc->getSignature()) == 0)
-                        {
-                            equivalenceClass->push_back(*leftAssoc);
-                        }
-                        std::cout << leftAssoc->getSignature() << " ";
-                    }
-                    
-                    /*if(rightAssociativity.isApplicable(*itr._node))
-                    {
-                        PlanNode_t * rightAssoc = rightAssociativity.apply(*itr._node);
-                        if(knownBitvectors.count(rightAssoc->getSignature()) == 0)
-                        {
-                            equivalenceClass->push_back(*rightAssoc);
-                        }
-                    }*/
-            
-                
-                    
-            
-                }
-            
-            
-            //std::cout << itr->getRelations() << std::endl;
-                for(EquivalenceClass_t * eq : equivalenceClass->getChildECs())
-                {
-                    if(eq != NULL && knownBitvectors.count(eq->begin()._node->getSignature()) == 0)
-                    {
-                        knownBitvectors.insert(eq->begin()._node->getSignature());
-                        
-                        std::cout << "NEW" << eq->begin()._node->getSignature();
+                        eq.push_back(* p);
+                        knownPlans.insert(p->getSignature());
+                        std::cout << std::endl << std::endl << "EQ";
                         std::cout.flush();
-                        eqs.push_back(eq);
                     }
-                    
                 }
+                
+                if(leftAsso->isApplicable(itr.node()))
+                {
+                    PlanNode_t * p = leftAsso->apply(itr.node());
+                    if(knownPlans.count(p->getSignature()) == 0)
+                    {
+                        eq.push_back(* p);
+                        knownPlans.insert(p->getSignature());
+                        std::cout << std::endl << std::endl << "EQ";
+                        std::cout.flush();
+                    }
+                }
+
+                
+                
+                
+                if(itr.node().hasLeft() && knownEQSignatures.count(itr.node().getLeft()->getSignature()) == 0)
+                {
+                    toDo.push_back(* itr.node().getLeft());
+                    knownEQSignatures.insert(itr.node().getLeft()->getSignature());
+                }
+                if(itr.node().hasRight() && knownEQSignatures.count(itr.node().getRight()->getSignature()) == 0)
+                {
+                    toDo.push_back(* itr.node().getRight());
+                    knownEQSignatures.insert(itr.node().getRight()->getSignature());
+                }
+                
+                done.push_back(eq);
+                toDo.pop_back();
                 
             }
         }
+        
     };
 
 private:
+    CommutativityRule<PlanNode_t> * com;
+    LeftAssociativity<PlanNode_t, EquivalenceClass_t> * leftAsso;
+    Reservoir<PlanNode_t> * planNodes;
 };
 
 #endif

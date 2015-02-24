@@ -9,6 +9,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <iostream>
 
 
 #include "Reservoir.h"
@@ -21,25 +22,31 @@ class EquivalenceClassIterator
     
     
 public:
-    EquivalenceClassIterator(PlanNode_t & aNode) : _node(aNode) {};
-    const bool hasNext() { return _node.hasNext(); };
+    EquivalenceClassIterator(PlanNode_t & aNode){ _node = &aNode; };
+    const bool hasNext() { return _node->hasNext(); };
+    const bool isOK() { return _node != NULL; };
+    PlanNode_t & node(){ return *_node; };
     
-    PlanNode_t & node(){ return _node; };
     
     self_type& operator++()
     {
-        _node = *_node.getNext();
+        _node = _node->getNext();
         return *this;
     };
-   
+    
+    
     
     
     
 
 private:
     
-    PlanNode_t & _node;
+    PlanNode_t * _node;
 };
+
+
+
+
 template <typename Bitvector_t , typename PlanNode_t>
 struct EquivalenceClass
 {
@@ -58,8 +65,14 @@ public:
     {
         _first = NULL;
         _last = NULL;
-        _relations = NULL;
+        //_relations.set(3);
+        std::cout << " _relations "<< _relations;
     };
+    
+    void setRelations(Bitvector_t & aRelations)
+    {
+        _relations+=aRelations;
+    }
     
     void push_back(PlanNode_t & aPlanNode)
     {
@@ -67,6 +80,8 @@ public:
         {
             _first = &aPlanNode;
             _last = &aPlanNode;
+            _relations += _first->getSignature();
+            std::cout << "_relations += _first->getSignature();" << _relations << std::endl;
         }
         else
         {
@@ -80,23 +95,57 @@ public:
     {
         if(hasPlanNodes())
         {
-            for(Iterator itr = begin(); itr.hasNext(); ++itr)
+            for(Iterator itr = begin(); itr.isOK(); ++itr)
             {
                 itr.node().print(os);
             }
         }
         else
         {
-            os << _relations;
+            _relations.print2(os);
+            /*os << "[";
+            _relations.print(os);
+            os << "]";*/
         }
         
         return os;
     };
+    
+    u_int getSize()
+    {
+        u_int size = 0;
+        if(_first == NULL)
+        {
+            return 1;
+        }
+        for(Iterator itr = begin(); itr.isOK(); ++itr)
+        {
+            size += itr.node().getSize();
+        }
+        return size;
+    }
+    
+    u_int getCount()
+    {
+        u_int count = 0;
+        for(Iterator itr = begin(); itr.isOK(); ++itr)
+        {
+            count += itr.node().getCount();
+        }
+        return count;
+    }
+    
+    Bitvector_t & getSignature()
+    {
+        return _relations;
+    }
+    
         
 private:
-    Bitvector_t * _relations;
+    Bitvector_t _relations;
     PlanNode_t * _first;
     PlanNode_t * _last;
+    
     
     bool hasPlanNodes()
     {

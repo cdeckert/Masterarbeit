@@ -26,6 +26,13 @@ public:
         _right = &aRightEC;
     };
     
+    void set(Operator anOperator, EquivalenceClass_t & aLeftEC)
+    {
+        _op = anOperator;
+        _left = &aLeftEC;
+        _right = NULL;
+    };
+    
     bool hasNext()
     {
         return _next != NULL;
@@ -33,7 +40,55 @@ public:
     
     std::ostream & print(std::ostream & os)
     {
+        if(_op == JOIN)
+        {
+            os << "JOIN";
+        }
+        else
+        {
+            os << "SCAN";
+        }
+        os << "(";
+        
+        if(_left != NULL)
+        {
+            _left->print(os);
+        }
+        
+        if(_right != NULL)
+        {
+            os << ",";
+            _right->print(os);
+        }
+        
+        os << ")";
         return os;
+    }
+    
+    bool hasLeft() { return _left != NULL; }
+    bool hasRight() { return _right != NULL; }
+    
+    u_int getSize()
+    {
+        u_int size = 0;
+        size += _left->getSize();
+        if(_right != NULL)
+        {
+            size = size * _right->getSize();
+        }
+        return size;
+    }
+    
+    inline Operator getOperator(){ return _op; };
+    
+    inline EquivalenceClass_t * getRight()
+    {
+        return _right;
+    }
+    
+    inline EquivalenceClass_t * getLeft()
+    {
+        return _left;
     }
     
 private:
@@ -42,7 +97,7 @@ private:
         _next = NULL;
         _left = NULL;
         _right = NULL;
-        //_relations = new Bitvector_t(0);
+        //_relations = &new Bitvector_t(0);
     };
     Operator _op;
     self_type * _next;

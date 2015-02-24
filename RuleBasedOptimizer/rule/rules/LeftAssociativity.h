@@ -24,18 +24,21 @@ public:
 
 template <typename PlanNode, typename EquivalenceClass>
 bool LeftAssociativity<PlanNode,EquivalenceClass>::isApplicable(PlanNode & aPlanNode) {
-    return !aPlanNode.getLeft().isLeaf();
+    return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft()->begin().node().getOperator() == JOIN;
 }
 
 template <typename PlanNode, typename EquivalenceClass>
 PlanNode * LeftAssociativity<PlanNode, EquivalenceClass>::apply(PlanNode & aPlanNode)
 {
-    EquivalenceClass * newRight = new EquivalenceClass();
-    PlanNode * rightNode = new PlanNode(JOIN, aPlanNode.getLeft().getRight(), aPlanNode.getRight());
-    newRight->push_back(*rightNode);
     
+    PlanNode * p = new PlanNode();
+    p->set(JOIN, *aPlanNode.getLeft()->begin().node().getRight(), *aPlanNode.getRight());
+    EquivalenceClass *eq = new EquivalenceClass();
+    eq->push_back(*p);
     
-    return new PlanNode(JOIN, aPlanNode.getLeft().getLeft(), *PlanNode::getDescendant(*newRight));
+    PlanNode *resultP = new PlanNode();
+    resultP->set(JOIN, *aPlanNode.getLeft()->begin().node().getLeft(), *eq);
+    return resultP;
 
 }
 

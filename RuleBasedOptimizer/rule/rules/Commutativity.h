@@ -16,20 +16,28 @@ class CommutativityRule: public Rule<PlanNode>
 {
     
 public:
-    CommutativityRule(){};
+    CommutativityRule(Reservoir<PlanNode> * planNodes)
+    {
+        _planNodes = planNodes;
+    };
     
     PlanNode * apply(PlanNode &) override;
-    void whatever(){
-        
-    };
+    bool isApplicable(PlanNode & aPlanNode)
+    {
+        return aPlanNode.getOperator() != SCAN;
+    }
+    
+private:
+    Reservoir<PlanNode> * _planNodes;
 };
 
 
 template <typename PlanNode>
 PlanNode * CommutativityRule<PlanNode>::apply(PlanNode & aPlanNode)
 {
-    
-    return new PlanNode(JOIN, aPlanNode.getRight(),  aPlanNode.getLeft());
+    PlanNode * p = _planNodes->get_new_entry();
+    p->set(aPlanNode.getOperator(), *aPlanNode.getRight(), *aPlanNode.getLeft());
+    return p;
 }
 
 

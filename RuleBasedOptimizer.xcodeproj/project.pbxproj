@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
 		AF99E4711A933B4F006D94C4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF99E4701A933B4F006D94C4 /* main.cpp */; };
-		AF99E47A1A93959C006D94C4 /* QueryParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF99E4781A93959C006D94C4 /* QueryParser.cpp */; };
 		AF99E47F1A939EA3006D94C4 /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF99E47E1A939EA3006D94C4 /* Scanner.cpp */; };
 /* End PBXBuildFile section */
 
@@ -39,16 +38,16 @@
 		AF14C2421A92040100A4AEEF /* BasicRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicRuleSet.h; path = rule/rulesets/BasicRuleSet.h; sourceTree = "<group>"; };
 		AF14C2461A94CE0300A4AEEF /* TypeReservoirs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeReservoirs.h; sourceTree = "<group>"; };
 		AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = rule/ExhaustiveTransformation.h; sourceTree = "<group>"; };
+		AF6883841A9CB17300B6D1D7 /* RS_B0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B0.h; path = rule/rulesets/RS_B0.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/RightAssociativity.h; sourceTree = "<group>"; };
+		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
 		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; };
 		AF99E46E1A933B4F006D94C4 /* standardplantest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = standardplantest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF99E4701A933B4F006D94C4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = plan/main.cpp; sourceTree = "<group>"; };
 		AF99E4751A93672B006D94C4 /* Operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operator.h; path = op/Operator.h; sourceTree = "<group>"; };
-		AF99E4781A93959C006D94C4 /* QueryParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QueryParser.cpp; path = qcon/QueryParser.cpp; sourceTree = "<group>"; };
-		AF99E4791A93959C006D94C4 /* QueryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryParser.h; path = qcon/QueryParser.h; sourceTree = "<group>"; };
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; };
 		AF99E47C1A939673006D94C4 /* Scanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scanner.h; path = qcon/Scanner.h; sourceTree = "<group>"; };
 		AF99E47D1A939D0D006D94C4 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Types.h; path = infra/Types.h; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 				AFECC5B01A8D006B00FA9D84 /* plan */,
 				AF75151C1A7F86440003FE5B /* main.cpp */,
 				AF99E4801A93B0B0006D94C4 /* testJoin */,
+				AF997E121A9CD5F400560932 /* Executor.h */,
 			);
 			path = RuleBasedOptimizer;
 			sourceTree = "<group>";
@@ -163,8 +163,6 @@
 		AFECC5B31A8D008500FA9D84 /* qcon */ = {
 			isa = PBXGroup;
 			children = (
-				AF99E4781A93959C006D94C4 /* QueryParser.cpp */,
-				AF99E4791A93959C006D94C4 /* QueryParser.h */,
 			);
 			name = qcon;
 			sourceTree = "<group>";
@@ -190,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				AF14C2421A92040100A4AEEF /* BasicRuleSet.h */,
+				AF6883841A9CB17300B6D1D7 /* RS_B0.h */,
 			);
 			name = rulesets;
 			sourceTree = "<group>";
@@ -284,7 +283,6 @@
 			files = (
 				AF99E47F1A939EA3006D94C4 /* Scanner.cpp in Sources */,
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
-				AF99E47A1A93959C006D94C4 /* QueryParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
