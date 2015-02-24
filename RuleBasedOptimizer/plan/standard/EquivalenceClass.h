@@ -24,7 +24,13 @@ public:
     EquivalenceClassIterator(PlanNode_t & aNode) : _node(aNode) {};
     const bool hasNext() { return _node.hasNext(); };
     
+    PlanNode_t & node(){ return _node; };
     
+    self_type& operator++()
+    {
+        _node = *_node.getNext();
+        return *this;
+    };
    
     
     
@@ -45,8 +51,8 @@ struct EquivalenceClass
     
 public:
     EquivalenceClass() { init(); };
-    inline Iterator & begin(){ return Iterator(_first); }
-    inline Iterator & end(){ return Iterator(_last); }
+    inline Iterator begin(){ return Iterator(*_first); }
+    inline Iterator & end(){ return Iterator(*_last); }
     inline Bitvector_t & getRelations() { return _relations; };
     void init()
     {
@@ -72,15 +78,30 @@ public:
     
     std::ostream & print(std::ostream & os)
     {
+        if(hasPlanNodes())
+        {
+            for(Iterator itr = begin(); itr.hasNext(); ++itr)
+            {
+                itr.node().print(os);
+            }
+        }
+        else
+        {
+            os << _relations;
+        }
+        
         return os;
     };
-    
-    inline std::ostream & operator<<(std::ostream& os, const EquivalenceClass& x) { return x.print(os); }
-    
+        
 private:
     Bitvector_t * _relations;
     PlanNode_t * _first;
     PlanNode_t * _last;
+    
+    bool hasPlanNodes()
+    {
+        return _first != NULL;
+    }
 };
 
 #endif

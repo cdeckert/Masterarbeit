@@ -26,6 +26,16 @@ public:
         _right = &aRightEC;
     };
     
+    bool hasNext()
+    {
+        return _next != NULL;
+    }
+    
+    std::ostream & print(std::ostream & os)
+    {
+        return os;
+    }
+    
 private:
     void init()
     {
