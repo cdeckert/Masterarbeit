@@ -111,6 +111,29 @@ public:
         return os;
     };
     
+    std::ostream & printEndl(std::ostream & os)
+    {
+        int i = 0;
+        if(hasPlanNodes())
+        {
+            for(Iterator itr = begin(); itr.isOK(); ++itr)
+            {
+                i++;
+                os << i << ": ";
+                itr.node().print(os) << std::endl;
+            }
+        }
+        else
+        {
+            _relations.print2(os);
+            /*os << "[";
+             _relations.print(os);
+             os << "]";*/
+        }
+        
+        return os;
+    };
+    
     u_int getSize()
     {
         u_int size = 0;

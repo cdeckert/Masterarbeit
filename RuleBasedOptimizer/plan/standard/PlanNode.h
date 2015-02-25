@@ -64,6 +64,7 @@ public:
         os << ")";
         return os;
     }
+
     
     bool hasLeft() { return _left != NULL; }
     bool hasRight() { return _right != NULL; }

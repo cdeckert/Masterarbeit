@@ -58,7 +58,7 @@ void execute(EquivalenceClass_t & e)
     t.apply(e);
     
     std::cout << std::endl << std::endl << "output: " << std::endl;
-    e.print(std::cout);
+    e.printEndl(std::cout);
     
     std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
 }
