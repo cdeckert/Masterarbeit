@@ -17,6 +17,7 @@
 #include "ExhaustiveTransformation.h"
 #include "BasicRuleSet.h"
 #include "RS_B0.h"
+#include "Operations.h"
 
 
 typedef unsigned int u_int;
@@ -27,6 +28,8 @@ typedef EquivalenceClassIterator<Bitvector_t, PlanNode_t> EquivalenceClassIterat
 typedef Rule<PlanNode_t> Rule_t;
 typedef RS_B0<Rule_t> RS_B0_t;
 typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClassIterator_t, PlanNode_t, Bitvector_t, RS_B0_t> ExhaustiveTransformation_t;
+
+typedef Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int> Operations_t;
 
 
 

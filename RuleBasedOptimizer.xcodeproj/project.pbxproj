@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
-		AF99E4711A933B4F006D94C4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF99E4701A933B4F006D94C4 /* main.cpp */; };
 		AF99E47F1A939EA3006D94C4 /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF99E47E1A939EA3006D94C4 /* Scanner.cpp */; };
 /* End PBXBuildFile section */
 
@@ -43,10 +42,10 @@
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/RightAssociativity.h; sourceTree = "<group>"; };
 		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; };
+		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Operations.h; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
 		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; };
 		AF99E46E1A933B4F006D94C4 /* standardplantest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = standardplantest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF99E4701A933B4F006D94C4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = plan/main.cpp; sourceTree = "<group>"; };
 		AF99E4751A93672B006D94C4 /* Operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operator.h; path = op/Operator.h; sourceTree = "<group>"; };
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; };
 		AF99E47C1A939673006D94C4 /* Scanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scanner.h; path = qcon/Scanner.h; sourceTree = "<group>"; };
@@ -122,7 +121,6 @@
 		AF99E4671A933AB7006D94C4 /* standard */ = {
 			isa = PBXGroup;
 			children = (
-				AF99E4701A933B4F006D94C4 /* main.cpp */,
 				AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */,
 				AF99E4641A929CBB006D94C4 /* PlanNode.h */,
 			);
@@ -141,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				AF99E4751A93672B006D94C4 /* Operator.h */,
+				AF997E131A9F5EFC00560932 /* Operations.h */,
 			);
 			name = op;
 			sourceTree = "<group>";
@@ -290,7 +289,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF99E4711A933B4F006D94C4 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

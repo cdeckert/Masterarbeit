@@ -23,44 +23,44 @@
 
 
 
-EquivalenceClass_t & scan(u_int i)
+EquivalenceClass_t * scan(u_int i)
 {
-    Bitvector_t *b = Bitvector(i);
+    Bitvector_t * b = Bitvector(i);
     
     EquivalenceClass_t *eq = reservoirEC->get_new_entry();
     eq->setRelations(*b);
-    PlanNode_t & t = * reservoirPN->get_new_entry();
-    t.set(SCAN, *eq);
+    PlanNode_t * t = reservoirPN->get_new_entry();
+    t->set(SCAN, eq);
     eq = reservoirEC->get_new_entry();
     
     eq->push_back(t);
-    return *eq;
-}
-
-EquivalenceClass_t & join(EquivalenceClass_t &e1, EquivalenceClass_t &e2)
-{
-    PlanNode_t & t = * reservoirPN->get_new_entry();
-    t.set(JOIN, e1, e2);
-    EquivalenceClass_t & eq = * reservoirEC->get_new_entry();
-    eq.push_back(t);
     return eq;
 }
 
-void execute(EquivalenceClass_t & e)
+EquivalenceClass_t * join(EquivalenceClass_t *e1, EquivalenceClass_t *e2)
+{
+    PlanNode_t * t = reservoirPN->get_new_entry();
+    t->set(JOIN, e1, e2);
+    EquivalenceClass_t * eq = reservoirEC->get_new_entry();
+    eq->push_back(t);
+    return eq;
+}
+
+void execute(EquivalenceClass_t * e)
 {
     
     std::cout << "input: " << std::endl;
-    e.print(std::cout);
+    e->print(std::cout);
     
-    std::cout  << std::endl << "SIZE: "<< e.getSize();
+    std::cout  << std::endl << "SIZE: "<< e->getSize();
     
-    ExhaustiveTransformation_t t = *new ExhaustiveTransformation_t();
+    ExhaustiveTransformation_t t = * new ExhaustiveTransformation_t();
     t.apply(e);
     
     std::cout << std::endl << std::endl << "output: " << std::endl;
-    e.printEndl(std::cout);
+    e->printEndl(std::cout);
     
-    std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
+    std::cout  << std::endl << "SIZE: "<< e->getSize() << std::endl;
 }
 
 

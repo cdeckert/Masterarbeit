@@ -25,10 +25,10 @@ public:
         com = new CommutativityRule<PlanNode_t>(planNodes);
         leftAsso = new LeftAssociativity<PlanNode_t, EquivalenceClass_t>();
     };
-    void apply(EquivalenceClass_t & aEquivalenceClass) const
+    void apply(EquivalenceClass_t * aEquivalenceClass) const
     {
-        std::vector<EquivalenceClass_t> toDo;
-        std::vector<EquivalenceClass_t> done;
+        std::vector<EquivalenceClass_t *> toDo;
+        std::vector<EquivalenceClass_t *> done;
         toDo.push_back(aEquivalenceClass);
         
         std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
@@ -37,28 +37,30 @@ public:
         while(!toDo.empty())
         {
             std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
-            EquivalenceClass_t & eq = toDo.back();
-            for(Iterator itr = eq.begin(); itr.isOK(); ++ itr)
+            EquivalenceClass_t * eq = toDo.back();
+            toDo.pop_back();
+            for(Iterator itr = eq->begin(); itr.isOK(); ++ itr)
             {
                 
-                if(com->isApplicable(itr.node()))
+                if(com->isApplicable(*itr.node()))
                 {
+                    knownPlans.insert(itr.node()->getSignature());
                     PlanNode_t * p = com->apply(itr.node());
                     if(knownPlans.count(p->getSignature()) == 0)
                     {
-                        eq.push_back(* p);
-                        knownPlans.insert(p->getSignature());
+                        eq->push_back(p);
+                        knownPlans.insert(p->getLeft()->getSignature());
                         std::cout << std::endl << std::endl << "EQ";
                         std::cout.flush();
                     }
                 }
                 
-                if(leftAsso->isApplicable(itr.node()))
+                if(leftAsso->isApplicable(*itr.node()))
                 {
                     PlanNode_t * p = leftAsso->apply(itr.node());
-                    if(knownPlans.count(p->getSignature()) == 0)
+                    if(knownPlans.count(p->getLeft()->getSignature()) == 0)
                     {
-                        eq.push_back(* p);
+                        eq->push_back(p);
                         knownPlans.insert(p->getSignature());
                         std::cout << std::endl << std::endl << "EQ";
                         std::cout.flush();
@@ -68,19 +70,19 @@ public:
                 
                 
                 
-                if(itr.node().hasLeft() && knownEQSignatures.count(itr.node().getLeft()->getSignature()) == 0)
+                if(itr.node()->hasLeft() && knownEQSignatures.count(itr.node()->getLeft()->getSignature()) == 0)
                 {
-                    toDo.push_back(* itr.node().getLeft());
-                    knownEQSignatures.insert(itr.node().getLeft()->getSignature());
+                    toDo.push_back(itr.node()->getLeft());
+                    knownEQSignatures.insert(itr.node()->getLeft()->getSignature());
                 }
-                if(itr.node().hasRight() && knownEQSignatures.count(itr.node().getRight()->getSignature()) == 0)
+                if(itr.node()->hasRight() && knownEQSignatures.count(itr.node()->getRight()->getSignature()) == 0)
                 {
-                    toDo.push_back(* itr.node().getRight());
-                    knownEQSignatures.insert(itr.node().getRight()->getSignature());
+                    toDo.push_back(itr.node()->getRight());
+                    knownEQSignatures.insert(itr.node()->getRight()->getSignature());
                 }
                 
                 done.push_back(eq);
-                toDo.pop_back();
+                
                 
             }
         }

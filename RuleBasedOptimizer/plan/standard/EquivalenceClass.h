@@ -25,7 +25,7 @@ public:
     EquivalenceClassIterator(PlanNode_t & aNode){ _node = &aNode; };
     const bool hasNext() { return _node->hasNext(); };
     const bool isOK() { return _node != NULL; };
-    PlanNode_t & node(){ return *_node; };
+    PlanNode_t * node(){ return _node; };
     
     
     self_type& operator++()
@@ -65,8 +65,6 @@ public:
     {
         _first = NULL;
         _last = NULL;
-        //_relations.set(3);
-        std::cout << " _relations "<< _relations;
     };
     
     void setRelations(Bitvector_t & aRelations)
@@ -74,19 +72,20 @@ public:
         _relations+=aRelations;
     }
     
-    void push_back(PlanNode_t & aPlanNode)
+    void push_back(PlanNode_t * aPlanNode)
     {
         if(_first == NULL)
         {
-            _first = &aPlanNode;
-            _last = &aPlanNode;
-            _relations += _first->getSignature();
-            std::cout << "_relations += _first->getSignature();" << _relations << std::endl;
+            _first = aPlanNode;
+            _last = aPlanNode;
+            _relations += _first->getRelations();
         }
         else
         {
+           
             _last->setNext(aPlanNode);
-            _last = &aPlanNode;
+            _last = aPlanNode;
+            _relations += _last->getSignature();
         }
         
     }
@@ -97,7 +96,7 @@ public:
         {
             for(Iterator itr = begin(); itr.isOK(); ++itr)
             {
-                itr.node().print(os);
+                itr.node()->print(os);
             }
         }
         else
@@ -120,7 +119,7 @@ public:
             {
                 i++;
                 os << i << ": ";
-                itr.node().print(os) << std::endl;
+                itr.node()->print(os) << std::endl;
             }
         }
         else
@@ -136,15 +135,15 @@ public:
     
     u_int getSize()
     {
+                
+        
         u_int size = 0;
-        if(_first == NULL)
-        {
-            return 1;
-        }
         for(Iterator itr = begin(); itr.isOK(); ++itr)
         {
-            size += itr.node().getSize();
+            size += itr.node()->getSize();
         }
+        
+        
         return size;
     }
     

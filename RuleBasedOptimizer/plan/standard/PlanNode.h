@@ -16,20 +16,29 @@ class PlanNode {
 public:
     PlanNode(){ init(); };
     self_type * getNext() const { return _next; }
-    void setNext(self_type & aNode) {_next = &aNode; };
-    Bitvector_t getSignature() { return _left->getRelations(); }
+    void setNext(self_type * aNode) {_next = aNode; };
     
-    void set(Operator anOperator, EquivalenceClass_t & aLeftEC, EquivalenceClass_t & aRightEC)
+    Bitvector_t getSignature() { return _left->getRelations(); }
+    Bitvector_t getRelations()
+    {
+        Bitvector_t b;
+        b += _left->getRelations();
+        if(_right != NULL)
+        b += _right->getRelations();
+        return b;
+    }
+    
+    void set(Operator anOperator, EquivalenceClass_t * aLeftEC, EquivalenceClass_t * aRightEC)
     {
         _op = anOperator;
-        _left = &aLeftEC;
-        _right = &aRightEC;
+        _left = aLeftEC;
+        _right = aRightEC;
     };
     
-    void set(Operator anOperator, EquivalenceClass_t & aLeftEC)
+    void set(Operator anOperator, EquivalenceClass_t * aLeftEC)
     {
         _op = anOperator;
-        _left = &aLeftEC;
+        _left = aLeftEC;
         _right = NULL;
     };
     
@@ -71,13 +80,20 @@ public:
     
     u_int getSize()
     {
-        u_int size = 0;
-        size += _left->getSize();
-        if(_right != NULL)
+        if(_op == SCAN)
         {
-            size = size * _right->getSize();
+            return 0;
         }
-        return size;
+        if(_op == JOIN)
+        {
+            u_int size = 0;
+            size += _left->getSize();
+            size += _right->getSize();
+            if(size == 0) return 1;
+            return size;
+        }
+        return 0;
+        
     }
     
     inline Operator getOperator(){ return _op; };

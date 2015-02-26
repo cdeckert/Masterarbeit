@@ -12,7 +12,7 @@
 #include "Rule.h"
 
 template <typename PlanNode>
-class CommutativityRule: public Rule<PlanNode>
+class CommutativityRule //: public Rule<PlanNode>
 {
     
 public:
@@ -21,7 +21,7 @@ public:
         _planNodes = planNodes;
     };
     
-    PlanNode * apply(PlanNode &) override;
+    PlanNode * apply(PlanNode *); // override;
     bool isApplicable(PlanNode & aPlanNode)
     {
         return aPlanNode.getOperator() != SCAN;
@@ -33,10 +33,10 @@ private:
 
 
 template <typename PlanNode>
-PlanNode * CommutativityRule<PlanNode>::apply(PlanNode & aPlanNode)
+PlanNode * CommutativityRule<PlanNode>::apply(PlanNode * aPlanNode)
 {
-    PlanNode * p = _planNodes->get_new_entry();
-    p->set(aPlanNode.getOperator(), *aPlanNode.getRight(), *aPlanNode.getLeft());
+    PlanNode * p = new PlanNode;
+    p->set(aPlanNode->getOperator(), aPlanNode->getRight(), aPlanNode->getLeft());
     return p;
 }
 

@@ -11,33 +11,33 @@
 
 
 template <typename PlanNode, typename EquivalenceClass>
-class LeftAssociativity: public Rule<PlanNode>
+class LeftAssociativity //: public Rule<PlanNode>
 {
     
 public:
     LeftAssociativity(){};
     
-    PlanNode * apply(PlanNode &) override;
+    PlanNode * apply(PlanNode *); // override;
     bool isApplicable(PlanNode &);
 };
 
 
 template <typename PlanNode, typename EquivalenceClass>
 bool LeftAssociativity<PlanNode,EquivalenceClass>::isApplicable(PlanNode & aPlanNode) {
-    return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft()->begin().node().getOperator() == JOIN;
+    return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft()->begin().node()->getOperator() == JOIN;
 }
 
 template <typename PlanNode, typename EquivalenceClass>
-PlanNode * LeftAssociativity<PlanNode, EquivalenceClass>::apply(PlanNode & aPlanNode)
+PlanNode * LeftAssociativity<PlanNode, EquivalenceClass>::apply(PlanNode * aPlanNode)
 {
     
     PlanNode * p = new PlanNode();
-    p->set(JOIN, *aPlanNode.getLeft()->begin().node().getRight(), *aPlanNode.getRight());
+    p->set(JOIN, aPlanNode->getLeft()->begin().node()->getRight(), aPlanNode->getRight());
     EquivalenceClass *eq = new EquivalenceClass();
-    eq->push_back(*p);
+    eq->push_back(p);
     
     PlanNode *resultP = new PlanNode();
-    resultP->set(JOIN, *aPlanNode.getLeft()->begin().node().getLeft(), *eq);
+    resultP->set(JOIN, aPlanNode->getLeft()->begin().node()->getLeft(), eq);
     return resultP;
 
 }
