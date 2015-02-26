@@ -12,7 +12,9 @@
 #include "Reservoir.h"
 #include "LeftAssociativity.h"
 
-template <typename EquivalenceClass_t, typename Iterator, typename PlanNode_t, typename Bitvector_t, typename RuleSet_t>
+template <typename EquivalenceClass_t, typename Iterator,
+typename PlanNode_t, typename Bitvector_t,
+typename RuleSet_t, typename Operations_t>
 class ExhaustiveTransformation
 {
     
@@ -21,49 +23,44 @@ class ExhaustiveTransformation
 public:
     ExhaustiveTransformation()
     {
-        planNodes = new Reservoir<PlanNode_t>(300);
-        com = new CommutativityRule<PlanNode_t>(planNodes);
-        leftAsso = new LeftAssociativity<PlanNode_t, EquivalenceClass_t>();
+        com = CommutativityRule<PlanNode_t, Operations_t>();
+        leftAsso = LeftAssociativity<PlanNode_t, Operations_t>();
     };
     void apply(EquivalenceClass_t * aEquivalenceClass) const
     {
+        // toDo List
         std::vector<EquivalenceClass_t *> toDo;
-        std::vector<EquivalenceClass_t *> done;
-        toDo.push_back(aEquivalenceClass);
-        
         std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
         
-        
+        // add new equivalence to todo list
+        toDo.push_back(aEquivalenceClass);
+        std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
         while(!toDo.empty())
         {
-            std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
+            
             EquivalenceClass_t * eq = toDo.back();
             toDo.pop_back();
             for(Iterator itr = eq->begin(); itr.isOK(); ++ itr)
             {
                 
-                if(com->isApplicable(*itr.node()))
+                if(com.isApplicable(*itr.node()))
                 {
                     knownPlans.insert(itr.node()->getSignature());
-                    PlanNode_t * p = com->apply(itr.node());
+                    PlanNode_t * p = com.apply(itr.node());
                     if(knownPlans.count(p->getSignature()) == 0)
                     {
                         eq->push_back(p);
                         knownPlans.insert(p->getLeft()->getSignature());
-                        std::cout << std::endl << std::endl << "EQ";
-                        std::cout.flush();
                     }
                 }
                 
-                if(leftAsso->isApplicable(*itr.node()))
+                if(leftAsso.isApplicable(*itr.node()))
                 {
-                    PlanNode_t * p = leftAsso->apply(itr.node());
+                    PlanNode_t * p = leftAsso.apply(itr.node());
                     if(knownPlans.count(p->getLeft()->getSignature()) == 0)
                     {
                         eq->push_back(p);
                         knownPlans.insert(p->getSignature());
-                        std::cout << std::endl << std::endl << "EQ";
-                        std::cout.flush();
                     }
                 }
 
@@ -81,7 +78,6 @@ public:
                     knownEQSignatures.insert(itr.node()->getRight()->getSignature());
                 }
                 
-                done.push_back(eq);
                 
                 
             }
@@ -90,9 +86,8 @@ public:
     };
 
 private:
-    CommutativityRule<PlanNode_t> * com;
-    LeftAssociativity<PlanNode_t, EquivalenceClass_t> * leftAsso;
-    Reservoir<PlanNode_t> * planNodes;
+    CommutativityRule<PlanNode_t, Operations_t> com;
+    LeftAssociativity<PlanNode_t, Operations_t> leftAsso;
 };
 
 #endif

@@ -19,33 +19,6 @@
 
 
 
-
-
-
-
-EquivalenceClass_t * scan(u_int i)
-{
-    Bitvector_t * b = Bitvector(i);
-    
-    EquivalenceClass_t *eq = reservoirEC->get_new_entry();
-    eq->setRelations(*b);
-    PlanNode_t * t = reservoirPN->get_new_entry();
-    t->set(SCAN, eq);
-    eq = reservoirEC->get_new_entry();
-    
-    eq->push_back(t);
-    return eq;
-}
-
-EquivalenceClass_t * join(EquivalenceClass_t *e1, EquivalenceClass_t *e2)
-{
-    PlanNode_t * t = reservoirPN->get_new_entry();
-    t->set(JOIN, e1, e2);
-    EquivalenceClass_t * eq = reservoirEC->get_new_entry();
-    eq->push_back(t);
-    return eq;
-}
-
 void execute(EquivalenceClass_t * e)
 {
     

@@ -11,34 +11,29 @@
 
 #include "Rule.h"
 
-template <typename PlanNode>
-class CommutativityRule //: public Rule<PlanNode>
+
+template <typename PlanNode, typename Operations_t>
+class CommutativityRule : public Rule<PlanNode, Operations_t>
 {
-    
+    typedef Rule<PlanNode, Operations_t> Rule_t;
 public:
-    CommutativityRule(Reservoir<PlanNode> * planNodes)
-    {
-        _planNodes = planNodes;
-    };
     
-    PlanNode * apply(PlanNode *); // override;
-    bool isApplicable(PlanNode & aPlanNode)
+    /**
+     * @brief checks whether or not commutativity is applicable
+     */
+    bool isApplicable(PlanNode & aPlanNode) const override
     {
         return aPlanNode.getOperator() != SCAN;
     }
     
-private:
-    Reservoir<PlanNode> * _planNodes;
+    /**
+     * @brief apply commutativity
+     */
+    PlanNode * apply(PlanNode * aPlanNode) const override
+    {
+        return Rule_t::o->joinPN(aPlanNode->getRight(), aPlanNode->getLeft());
+    }
 };
-
-
-template <typename PlanNode>
-PlanNode * CommutativityRule<PlanNode>::apply(PlanNode * aPlanNode)
-{
-    PlanNode * p = new PlanNode;
-    p->set(aPlanNode->getOperator(), aPlanNode->getRight(), aPlanNode->getLeft());
-    return p;
-}
 
 
 
