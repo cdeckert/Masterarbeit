@@ -15,11 +15,10 @@ public:
     
     PlanNode * apply(PlanNode * aPlanNode) const override
     {
-    return Rule_t::o->joinPN(aPlanNode->getLeft()->begin().node()->getLeft(), Rule_t::o->join(aPlanNode->getLeft()->begin().node()->getRight(), aPlanNode->getRight()));
-        //return Rule_t::o->joinPN(
-        //                         aPlanNode->getLeft()->begin().node()->getLeft(),
-        //                         Rule_t::o->join(aPlanNode->getLeft()->begin().node()->getRight(), aPlanNode->getRight())
-              //                   );
+        return Rule_t::o->joinPN(
+                                 aPlanNode->getLeft()->begin().node()->getLeft(),
+                                 Rule_t::o->join(aPlanNode->getLeft()->begin().node()->getRight(), aPlanNode->getRight())
+                                 );
     
     
     };
