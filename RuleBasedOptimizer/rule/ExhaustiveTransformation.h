@@ -7,24 +7,23 @@
 
 #include <unordered_set>
 #include <iostream>
-#include "Commutativity.h"
+#include "RS_B0.h"
 #include "Hasher.h"
-#include "Reservoir.h"
-#include "LeftAssociativity.h"
+
 
 template <typename EquivalenceClass_t, typename Iterator,
 typename PlanNode_t, typename Bitvector_t,
-typename RuleSet_t, typename Operations_t>
+typename Operations_t, typename Rule_t>
 class ExhaustiveTransformation
 {
+    typedef RuleSet<Rule_t, PlanNode_t, Operations_t> RuleSet_t;
     
     typedef ExhaustiveTransformation self_type;
     
 public:
     ExhaustiveTransformation()
     {
-        com = CommutativityRule<PlanNode_t, Operations_t>();
-        leftAsso = LeftAssociativity<PlanNode_t, Operations_t>();
+        _rulset = RS_B0<Rule_t, PlanNode_t, Operations_t>();
     };
     void apply(EquivalenceClass_t * aEquivalenceClass) const
     {
@@ -43,39 +42,31 @@ public:
             for(Iterator itr = eq->begin(); itr.isOK(); ++ itr)
             {
                 
-                if(com.isApplicable(*itr.node()))
+                for(unsigned int i = 0; i < _rulset._size; ++i)
                 {
-                    knownPlans.insert(itr.node()->getSignature());
-                    PlanNode_t * p = com.apply(itr.node());
-                    if(knownPlans.count(p->getSignature()) == 0)
+                    if(_rulset._rules[i]->isApplicable(*itr.node()))
                     {
-                        eq->push_back(p);
-                        knownPlans.insert(p->getLeft()->getSignature());
+                        knownPlans.insert(itr->getSignature());
+                         PlanNode_t * p = _rulset._rules[i]->apply(itr.node());
+                         if(knownPlans.count(p->getSignature()) == 0)
+                         {
+                             eq->push_back(p);
+                             knownPlans.insert(p->getLeft()->getSignature());
+                         }
                     }
                 }
                 
-                if(leftAsso.isApplicable(*itr.node()))
+                
+                
+                if(itr->hasLeft() && knownEQSignatures.count(itr->getLeft()->getSignature()) == 0)
                 {
-                    PlanNode_t * p = leftAsso.apply(itr.node());
-                    if(knownPlans.count(p->getLeft()->getSignature()) == 0)
-                    {
-                        eq->push_back(p);
-                        knownPlans.insert(p->getSignature());
-                    }
+                    toDo.push_back(itr->getLeft());
+                    knownEQSignatures.insert(itr->getLeft()->getSignature());
                 }
-
-                
-                
-                
-                if(itr.node()->hasLeft() && knownEQSignatures.count(itr.node()->getLeft()->getSignature()) == 0)
+                if(itr->hasRight() && knownEQSignatures.count(itr->getRight()->getSignature()) == 0)
                 {
-                    toDo.push_back(itr.node()->getLeft());
-                    knownEQSignatures.insert(itr.node()->getLeft()->getSignature());
-                }
-                if(itr.node()->hasRight() && knownEQSignatures.count(itr.node()->getRight()->getSignature()) == 0)
-                {
-                    toDo.push_back(itr.node()->getRight());
-                    knownEQSignatures.insert(itr.node()->getRight()->getSignature());
+                    toDo.push_back(itr->getRight());
+                    knownEQSignatures.insert(itr->getRight()->getSignature());
                 }
                 
                 
@@ -86,8 +77,7 @@ public:
     };
 
 private:
-    CommutativityRule<PlanNode_t, Operations_t> com;
-    LeftAssociativity<PlanNode_t, Operations_t> leftAsso;
+    RuleSet_t _rulset;
 };
 
 #endif

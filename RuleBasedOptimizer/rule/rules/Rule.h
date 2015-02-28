@@ -19,6 +19,7 @@ public:
     virtual bool isApplicable(PlanNode &) const = 0;
     
     
+    
 protected:
     Operations_t * o;
 

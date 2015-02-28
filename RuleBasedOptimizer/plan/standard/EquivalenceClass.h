@@ -34,6 +34,10 @@ public:
         return *this;
     };
     
+    inline PlanNode_t * operator->() const
+    {
+        return _node;
+    };
     
     
     
