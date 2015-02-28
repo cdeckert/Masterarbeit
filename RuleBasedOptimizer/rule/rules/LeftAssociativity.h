@@ -9,23 +9,30 @@
 template <typename PlanNode, typename Operations_t>
 class LeftAssociativity : public Rule<PlanNode, Operations_t>
 {
-    typedef Rule<PlanNode, Operations_t> Rule_t;
+    
     
 public:
-    
-    PlanNode * apply(PlanNode * aPlanNode) const override
+    /**
+     * @brief checks whether or not leftAssociativity is applicable
+     */
+    bool isApplicable(PlanNode & aPlanNode) const override
     {
-        return Rule_t::o->joinPN(
-                                 aPlanNode->getLeft()->begin().node()->getLeft(),
-                                 Rule_t::o->join(aPlanNode->getLeft()->begin().node()->getRight(), aPlanNode->getRight())
+        return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft()->begin()->getOperator() == JOIN;
+    };
+
+    /**
+     * @brief apply left associativity
+     */
+    PlanNode * apply(PlanNode & aPlanNode) const override
+    {
+        return this->o.joinPN(
+                                 aPlanNode.getLeft()->begin()->getLeft(),
+                                 this->o.join(aPlanNode.getLeft()->begin()->getRight(), aPlanNode.getRight())
                                  );
     
     
     };
-    bool isApplicable(PlanNode & aPlanNode) const override
-    {
-        return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft()->begin().node()->getOperator() == JOIN;
-    };
+
 };
 
 

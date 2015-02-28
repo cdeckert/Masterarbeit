@@ -10,7 +10,8 @@
 
 
 template <typename Bitvector_t>
-class PlanNode {
+class PlanNode
+{
     typedef PlanNode self_type;
     typedef EquivalenceClass<Bitvector_t, self_type> EquivalenceClass_t;
 public:
@@ -19,7 +20,8 @@ public:
     void setNext(self_type * aNode) {_next = aNode; };
     
     Bitvector_t getSignature() { return _left->getRelations(); }
-    Bitvector_t getRelations()
+	
+	Bitvector_t getRelations()
     {
         Bitvector_t b;
         b += _left->getRelations();
@@ -27,7 +29,8 @@ public:
         b += _right->getRelations();
         return b;
     }
-    
+	
+	
     void set(Operator anOperator, EquivalenceClass_t * aLeftEC, EquivalenceClass_t * aRightEC)
     {
         _op = anOperator;
@@ -35,12 +38,7 @@ public:
         _right = aRightEC;
     };
     
-    void set(Operator anOperator, EquivalenceClass_t * aLeftEC)
-    {
-        _op = anOperator;
-        _left = aLeftEC;
-        _right = NULL;
-    };
+	
     
     bool hasNext()
     {

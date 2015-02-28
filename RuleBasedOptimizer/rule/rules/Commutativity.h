@@ -15,7 +15,6 @@
 template <typename PlanNode, typename Operations_t>
 class CommutativityRule : public Rule<PlanNode, Operations_t>
 {
-    typedef Rule<PlanNode, Operations_t> Rule_t;
 public:
     
     /**
@@ -29,9 +28,9 @@ public:
     /**
      * @brief apply commutativity
      */
-    PlanNode * apply(PlanNode * aPlanNode) const override
+    PlanNode * apply(PlanNode & aPlanNode) const override
     {
-        return Rule_t::o->joinPN(aPlanNode->getRight(), aPlanNode->getLeft());
+        return this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft());
     }
 };
 

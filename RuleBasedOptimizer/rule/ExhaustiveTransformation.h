@@ -7,7 +7,7 @@
 
 #include <unordered_set>
 #include <iostream>
-#include "RS_B0.h"
+#include "RS_B1.h"
 #include "Hasher.h"
 
 
@@ -23,7 +23,7 @@ class ExhaustiveTransformation
 public:
     ExhaustiveTransformation()
     {
-        _rulset = RS_B0<Rule_t, PlanNode_t, Operations_t>();
+        _rulset = RS_B1<Rule_t, PlanNode_t, Operations_t>();
     };
     void apply(EquivalenceClass_t * aEquivalenceClass) const
     {
@@ -33,10 +33,10 @@ public:
         
         // add new equivalence to todo list
         toDo.push_back(aEquivalenceClass);
-        std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
+        
         while(!toDo.empty())
         {
-            
+            std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
             EquivalenceClass_t * eq = toDo.back();
             toDo.pop_back();
             for(Iterator itr = eq->begin(); itr.isOK(); ++ itr)
@@ -47,7 +47,7 @@ public:
                     if(_rulset._rules[i]->isApplicable(*itr.node()))
                     {
                         knownPlans.insert(itr->getSignature());
-                         PlanNode_t * p = _rulset._rules[i]->apply(itr.node());
+                         PlanNode_t * p = _rulset._rules[i]->apply(*itr.node());
                          if(knownPlans.count(p->getSignature()) == 0)
                          {
                              eq->push_back(p);

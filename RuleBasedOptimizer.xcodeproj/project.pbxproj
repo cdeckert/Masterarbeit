@@ -37,6 +37,7 @@
 		AF14C2421A92040100A4AEEF /* BasicRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicRuleSet.h; path = rule/rulesets/BasicRuleSet.h; sourceTree = "<group>"; };
 		AF14C2461A94CE0300A4AEEF /* TypeReservoirs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeReservoirs.h; sourceTree = "<group>"; };
 		AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = rule/ExhaustiveTransformation.h; sourceTree = "<group>"; };
+		AF3B90A51AA2733900468CB5 /* RS_B1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RS_B1.h; sourceTree = "<group>"; };
 		AF6883841A9CB17300B6D1D7 /* RS_B0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B0.h; path = rule/rulesets/RS_B0.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -44,7 +45,7 @@
 		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; };
 		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Operations.h; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
-		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; };
+		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF99E46E1A933B4F006D94C4 /* standardplantest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = standardplantest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF99E4751A93672B006D94C4 /* Operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operator.h; path = op/Operator.h; sourceTree = "<group>"; };
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 			children = (
 				AF14C2421A92040100A4AEEF /* BasicRuleSet.h */,
 				AF6883841A9CB17300B6D1D7 /* RS_B0.h */,
+				AF3B90A51AA2733900468CB5 /* RS_B1.h */,
 			);
 			name = rulesets;
 			sourceTree = "<group>";

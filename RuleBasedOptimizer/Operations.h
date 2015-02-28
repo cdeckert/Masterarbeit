@@ -18,11 +18,15 @@ public:
         bitvectors = new Reservoir<Bitvector_t>(900);
     }
     
-    Bitvector_t * getBitVector(u_int i){
+    Operations(const Operations &);
+    
+    Bitvector_t * getBitVector(u_int i)
+    {
         Bitvector_t * b = new Bitvector_t();
         b->set(i);
         return b;
-    };
+    }
+    ;
     EquivalenceClass_t * scan(u_int i)
     {
         Bitvector_t * b = getBitVector(i);
@@ -30,7 +34,7 @@ public:
         EquivalenceClass_t *eq = reservoirEC->get_new_entry();
         eq->setRelations(*b);
         PlanNode_t * t = reservoirPN->get_new_entry();
-        t->set(SCAN, eq);
+        t->set(SCAN, eq, NULL);
         eq = reservoirEC->get_new_entry();
         
         eq->push_back(t);
