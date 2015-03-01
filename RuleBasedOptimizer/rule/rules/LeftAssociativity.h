@@ -17,7 +17,7 @@ public:
      */
     bool isApplicable(PlanNode & aPlanNode) const override
     {
-        return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft()->begin()->getOperator() == JOIN;
+        return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft().begin()->getOperator() == JOIN;
     };
 
     /**
@@ -25,9 +25,9 @@ public:
      */
     PlanNode * apply(PlanNode & aPlanNode) const override
     {
-        return this->o.joinPN(
-                                 aPlanNode.getLeft()->begin()->getLeft(),
-                                 this->o.join(aPlanNode.getLeft()->begin()->getRight(), aPlanNode.getRight())
+        return & this->o.joinPN(
+                                 aPlanNode.getLeft().begin()->getLeft(),
+                                 this->o.join(aPlanNode.getLeft().begin()->getRight(), aPlanNode.getRight())
                                  );
     
     

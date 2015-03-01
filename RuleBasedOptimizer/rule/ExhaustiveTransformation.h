@@ -7,8 +7,8 @@
 
 #include <unordered_set>
 #include <iostream>
-#include "RS_B1.h"
 #include "Hasher.h"
+#include "RuleSet.h"
 
 
 template <typename EquivalenceClass_t, typename Iterator,
@@ -21,18 +21,18 @@ class ExhaustiveTransformation
     typedef ExhaustiveTransformation self_type;
     
 public:
-    ExhaustiveTransformation()
+    ExhaustiveTransformation(RuleSet_t aRuleSet)
     {
-        _rulset = RS_B1<Rule_t, PlanNode_t, Operations_t>();
+        _rulset = aRuleSet;
     };
-    void apply(EquivalenceClass_t * aEquivalenceClass) const
+    void apply(EquivalenceClass_t & aEquivalenceClass) const
     {
         // toDo List
         std::vector<EquivalenceClass_t *> toDo;
         std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
         
         // add new equivalence to todo list
-        toDo.push_back(aEquivalenceClass);
+        toDo.push_back(& aEquivalenceClass);
         
         while(!toDo.empty())
         {
@@ -51,22 +51,22 @@ public:
                          if(knownPlans.count(p->getSignature()) == 0)
                          {
                              eq->push_back(p);
-                             knownPlans.insert(p->getLeft()->getSignature());
+                             knownPlans.insert(p->getLeft().getSignature());
                          }
                     }
                 }
                 
                 
                 
-                if(itr->hasLeft() && knownEQSignatures.count(itr->getLeft()->getSignature()) == 0)
+                if(itr->hasLeft() && knownEQSignatures.count(itr->getLeft().getSignature()) == 0)
                 {
-                    toDo.push_back(itr->getLeft());
-                    knownEQSignatures.insert(itr->getLeft()->getSignature());
+                    toDo.push_back(&itr->getLeft());
+                    knownEQSignatures.insert(itr->getLeft().getSignature());
                 }
-                if(itr->hasRight() && knownEQSignatures.count(itr->getRight()->getSignature()) == 0)
+                if(itr->hasRight() && knownEQSignatures.count(itr->getRight().getSignature()) == 0)
                 {
-                    toDo.push_back(itr->getRight());
-                    knownEQSignatures.insert(itr->getRight()->getSignature());
+                    toDo.push_back(&itr->getRight());
+                    knownEQSignatures.insert(itr->getRight().getSignature());
                 }
                 
                 

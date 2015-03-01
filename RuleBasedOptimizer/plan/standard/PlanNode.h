@@ -96,14 +96,14 @@ public:
     
     inline Operator getOperator(){ return _op; };
     
-    inline EquivalenceClass_t * getRight()
+    inline EquivalenceClass_t & getRight()
     {
-        return _right;
+        return * _right;
     }
     
-    inline EquivalenceClass_t * getLeft()
+    inline EquivalenceClass_t & getLeft()
     {
-        return _left;
+        return * _left;
     }
     
 private:
@@ -112,7 +112,6 @@ private:
         _next = NULL;
         _left = NULL;
         _right = NULL;
-        //_relations = &new Bitvector_t(0);
     };
     Operator _op;
     self_type * _next;

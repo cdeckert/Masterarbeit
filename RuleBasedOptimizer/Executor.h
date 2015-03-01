@@ -19,21 +19,39 @@
 
 
 
-void execute(EquivalenceClass_t * e)
+
+void execute(EquivalenceClass_t & e)
 {
     
     std::cout << "input: " << std::endl;
-    e->print(std::cout);
+    e.print(std::cout);
     
-    std::cout  << std::endl << "SIZE: "<< e->getSize();
+    std::cout  << std::endl << "SIZE: "<< e.getSize();
     
-    ExhaustiveTransformation_t t = * new ExhaustiveTransformation_t();
+    ExhaustiveTransformation_t t = * new ExhaustiveTransformation_t(RS_B0_t());
     t.apply(e);
     
     std::cout << std::endl << std::endl << "output: " << std::endl;
-    e->printEndl(std::cout);
+    e.printEndl(std::cout);
     
-    std::cout  << std::endl << "SIZE: "<< e->getSize() << std::endl;
+    std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
+    
+    
+    t = * new ExhaustiveTransformation_t(RS_B1_t());
+    t.apply(e);
+    
+    std::cout << std::endl << std::endl << "output: " << std::endl;
+    e.printEndl(std::cout);
+    
+    std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
+    
+    t = * new ExhaustiveTransformation_t(RS_B1_t());
+    t.apply(e);
+    
+    std::cout << std::endl << std::endl << "output: " << std::endl;
+    e.printEndl(std::cout);
+    
+    std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
 }
 
 

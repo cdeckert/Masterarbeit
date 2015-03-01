@@ -5,7 +5,7 @@
 #ifndef RuleBasedOptimizer_RS_B0_h
 #define RuleBasedOptimizer_RS_B0_h
 
-#include "BasicRuleSet.h"
+#include "RuleSet.h"
 #include "Rule.h"
 #include "Commutativity.h"
 #include "LeftAssociativity.h"

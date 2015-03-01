@@ -20,14 +20,14 @@ public:
     
     Operations(const Operations &);
     
-    Bitvector_t * getBitVector(u_int i)
+    Bitvector_t * getBitVector(u_int i) const
     {
         Bitvector_t * b = new Bitvector_t();
         b->set(i);
         return b;
     }
     ;
-    EquivalenceClass_t * scan(u_int i)
+    EquivalenceClass_t & scan(u_int i) const
     {
         Bitvector_t * b = getBitVector(i);
         
@@ -38,22 +38,22 @@ public:
         eq = reservoirEC->get_new_entry();
         
         eq->push_back(t);
+        return * eq;
+    }
+    
+    EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
+    {
+        PlanNode_t * t = reservoirPN->get_new_entry();
+        t->set(JOIN, &e1, &e2);
+        EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
+        eq.push_back(t);
         return eq;
     }
     
-    EquivalenceClass_t * join(EquivalenceClass_t * e1, EquivalenceClass_t * e2)
+    PlanNode_t & joinPN(EquivalenceClass_t & e1, EquivalenceClass_t & e2)
     {
-        PlanNode_t * t = reservoirPN->get_new_entry();
-        t->set(JOIN, e1, e2);
-        EquivalenceClass_t * eq = reservoirEC->get_new_entry();
-        eq->push_back(t);
-        return eq;
-    }
-    
-    PlanNode_t * joinPN(EquivalenceClass_t * e1, EquivalenceClass_t * e2)
-    {
-        PlanNode_t * t = reservoirPN->get_new_entry();
-        t->set(JOIN, e1, e2);
+        PlanNode_t & t = * reservoirPN->get_new_entry();
+        t.set(JOIN, &e1, &e2);
         return t;
     }
 private:
