@@ -137,6 +137,12 @@ public:
         return os;
     };
     
+    self_type & on(unsigned int left, unsigned right)
+    {
+        _first->on(left, right);
+        return *this;
+    }
+    
     u_int getSize()
     {
                 

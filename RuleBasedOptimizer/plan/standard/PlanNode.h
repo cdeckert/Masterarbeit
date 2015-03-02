@@ -9,11 +9,19 @@
 #include "EquivalenceClass.h"
 
 
+
+
+
 template <typename Bitvector_t>
 class PlanNode
 {
     typedef PlanNode self_type;
     typedef EquivalenceClass<Bitvector_t, self_type> EquivalenceClass_t;
+	struct Predicate
+	{
+		unsigned int _rightAttribute;
+		unsigned int _leftAttribute;
+	};
 public:
     PlanNode(){ init(); };
     self_type * getNext() const { return _next; }
@@ -105,6 +113,23 @@ public:
     {
         return * _left;
     }
+	
+	inline self_type & on(unsigned int left, unsigned int right)
+	{
+		_predicate._leftAttribute = left;
+		_predicate._rightAttribute = right;
+		return * this;
+	};
+	
+	inline unsigned int getLeftAttribute() const
+	{
+		return _predicate._leftAttribute;
+	}
+	
+	inline unsigned int getRightAttribute() const
+	{
+		return _predicate._rightAttribute;
+	}
     
 private:
     void init()
@@ -112,12 +137,15 @@ private:
         _next = NULL;
         _left = NULL;
         _right = NULL;
+		_predicate = Predicate();
     };
     Operator _op;
     self_type * _next;
     EquivalenceClass_t * _left;
     EquivalenceClass_t * _right;
     Bitvector_t * _relations;
+	Predicate _predicate;
+	
 };
 
 
