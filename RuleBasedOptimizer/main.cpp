@@ -8,10 +8,19 @@
 #include "Executor.h"
 
 Operations_t * o = Operations_t::exemplar();
+
+EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2)
+{
+    return o->join(e1, e2);
+}
+EquivalenceClass_t & scan(unsigned int i)
+{
+    return o->scan(i);
+}
+
 int main()
 {
-    
-    EquivalenceClass_t & eq = o->join(o->scan(3), o->join(o->scan(1),o->scan(2)).on(1,2)).on(1,2); //join(scan(3),join(scan(1), join(scan(2), scan(5))));
+    EquivalenceClass_t & eq = join(scan(1), join(scan(2), scan(3)).on(10, 11)).on(11,12);
                                  
     execute(eq);
     return 1;

@@ -17,8 +17,9 @@ public:
      */
     bool isApplicable(PlanNode & aPlanNode) const override
     {
-        return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft().begin()->getOperator() == JOIN &&
-        aPlanNode.getRightAttribute() == aPlanNode.getLeft().begin()->getLeftAttribute();
+        // IF ((A ⨝ B) ⨝ C)
+        return aPlanNode.getOperator() == JOIN && aPlanNode.getLeft().getOperator() == JOIN &&
+        aPlanNode.getRightAttribute() == aPlanNode.getLeft().getLeftAttribute();
     };
 
     /**
@@ -26,12 +27,19 @@ public:
      */
     PlanNode * apply(PlanNode & aPlanNode) const override
     {
+        // join(join(a, b).on(a.1, b.1), c).on(b.1, c.1) => join(a, join(b,c).on(b.1, c.1)).on(a.1, b.1)
+        auto & a = aPlanNode.getLeft().getLeft();
+        unsigned int a_joinP = aPlanNode.getLeft().getLeftAttribute();
+
+        auto & b = aPlanNode.getLeft().getRight();
+        unsigned int b_joinP = aPlanNode.getLeft().getRightAttribute();
+
+        auto & c = aPlanNode.getRight();
+        unsigned int c_joinP = aPlanNode.getRightAttribute();
+
         return & this->o.joinPN(
-                                 aPlanNode.getLeft().begin()->getLeft(),
-                                 this->o.join(aPlanNode.getLeft().begin()->getRight(), aPlanNode.getRight())
-                                 );
-    
-    
+            a, this->o.join(b,c).on(b_joinP, c_joinP)
+        ).on(a_joinP, b_joinP);
     };
 
 };

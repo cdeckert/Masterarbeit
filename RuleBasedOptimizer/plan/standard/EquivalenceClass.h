@@ -62,8 +62,8 @@ struct EquivalenceClass
     
 public:
     EquivalenceClass() { init(); };
-    inline Iterator begin(){ return Iterator(*_first); }
-    inline Iterator & end(){ return Iterator(*_last); }
+    inline Iterator begin()const { return Iterator(*_first); }
+    inline Iterator & end() const { return Iterator(*_last); }
     inline Bitvector_t & getRelations() { return _relations; };
     void init()
     {
@@ -76,25 +76,25 @@ public:
         _relations+=aRelations;
     }
     
-    void push_back(PlanNode_t * aPlanNode)
+    void push_back(PlanNode_t & aPlanNode)
     {
         if(_first == NULL)
         {
-            _first = aPlanNode;
-            _last = aPlanNode;
+            _first = &aPlanNode;
+            _last = &aPlanNode;
             _relations += _first->getRelations();
         }
         else
         {
            
-            _last->setNext(aPlanNode);
-            _last = aPlanNode;
+            _last->setNext(&aPlanNode);
+            _last = &aPlanNode;
             _relations += _last->getSignature();
         }
         
     }
     
-    std::ostream & print(std::ostream & os)
+    std::ostream & print(std::ostream & os) const
     {
         if(hasPlanNodes())
         {
@@ -114,7 +114,7 @@ public:
         return os;
     };
     
-    std::ostream & printEndl(std::ostream & os)
+    std::ostream & printEndl(std::ostream & os) const
     {
         int i = 0;
         if(hasPlanNodes())
@@ -143,7 +143,7 @@ public:
         return *this;
     }
     
-    u_int getSize()
+    u_int getSize() const
     {
                 
         
@@ -157,7 +157,7 @@ public:
         return size;
     }
     
-    u_int getCount()
+    u_int getCount() const
     {
         u_int count = 0;
         for(Iterator itr = begin(); itr.isOK(); ++itr)
@@ -172,6 +172,32 @@ public:
         return _relations;
     }
     
+    Operator getOperator() const
+    {
+        return begin()->getOperator();
+    }
+    
+    self_type & getLeft() const
+    {
+        return begin()->getLeft();
+    }
+    
+    self_type & getRight() const
+    {
+        return begin()->getRight();
+    }
+    
+    unsigned int getLeftAttribute() const
+    {
+        return begin()->getLeftAttribute();
+    }
+    
+    unsigned int getRightAttribute() const
+    {
+        return begin()->getRightAttribute();
+    }
+    
+    
         
 private:
     Bitvector_t _relations;
@@ -179,7 +205,7 @@ private:
     PlanNode_t * _last;
     
     
-    bool hasPlanNodes()
+    bool hasPlanNodes() const
     {
         return _first != NULL;
     }

@@ -6,32 +6,46 @@
 #ifndef RuleBasedOptimizer_RightAssociativity_h
 #define RuleBasedOptimizer_RightAssociativity_h
 
-template <typename PlanNode, typename EquivalenceClass>
-class RightAssociativity: public Rule<PlanNode>
+template <typename PlanNode, typename Operations_t>
+class RightAssociativity : public Rule<PlanNode, Operations_t>
 {
+    
     
 public:
-    RightAssociativity(){};
-    
-    PlanNode * apply(PlanNode &) override;
-    bool isApplicable(PlanNode &);
+    /**
+     * @brief checks whether or not leftAssociativity is applicable
+     */
+    bool isApplicable(PlanNode & aPlanNode) const override
+    {
+    // IF (A ⨝ (B ⨝ C))
+    return aPlanNode.getOperator() == JOIN && aPlanNode.getRight().begin()->getOperator() == JOIN &&
+    aPlanNode.getLeftAttribute() == aPlanNode.getLeft().begin()->getLeftAttribute();
 };
 
-
-template <typename PlanNode, typename EquivalenceClass>
-bool RightAssociativity<PlanNode,EquivalenceClass>::isApplicable(PlanNode & aPlanNode) {
-    return !aPlanNode.getRight().isLeaf();
-}
-
-template <typename PlanNode, typename EquivalenceClass>
-PlanNode * RightAssociativity<PlanNode, EquivalenceClass>::apply(PlanNode & aPlanNode)
+/**
+ * @brief apply left associativity
+ */
+PlanNode * apply(PlanNode & aPlanNode) const override
 {
-    EquivalenceClass * newLeft = new EquivalenceClass();
-    PlanNode * leftNode = new PlanNode(JOIN, aPlanNode.getLeft(), aPlanNode.getRight().getLeft());
-    newLeft->push_back(*leftNode);
-    
-    
-    return new PlanNode(JOIN, PlanNode::getDescendant(*newLeft), aPlanNode.getLeft().getRight().getRight());
-}
+
+    auto & a = aPlanNode.getLeft().begin()->getLeft();
+    unsigned int a_joinP = aPlanNode.getLeftAttribute();
+
+    auto & b = aPlanNode.getRight().begin()->getLeft();
+    unsigned int b_joinP = aPlanNode.getRight().begin()->getLeftAttribute();
+
+    auto & c = aPlanNode.getRight().begin()->getRight();
+    unsigned int c_joinP = aPlanNode.getRight().begin()->getRightAttribute();
+
+
+
+    return & this->o.joinPN(
+        this->o.join(a, b).on(a_joinP, b_joinP), c
+    ).on(b_joinP, c_joinP);
+
+};
+
+};
+
 
 #endif

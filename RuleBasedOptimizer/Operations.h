@@ -31,20 +31,21 @@ public:
     {
         Bitvector_t * b = getBitVector(i);
         
-        EquivalenceClass_t *eq = reservoirEC->get_new_entry();
-        eq->setRelations(*b);
-        PlanNode_t * t = reservoirPN->get_new_entry();
-        t->set(SCAN, eq, NULL);
-        eq = reservoirEC->get_new_entry();
+        EquivalenceClass_t & eqN = * reservoirEC->get_new_entry();
+        eqN.setRelations(*b);
+        PlanNode_t & t = * reservoirPN->get_new_entry();
+        t.set(SCAN, &eqN, NULL);
+        EquivalenceClass_t & eq = * reservoirEC->get_new_entry();
         
-        eq->push_back(t);
-        return * eq;
+        eq.push_back(t);
+        return eq;
     }
+    
     
     EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
     {
-        PlanNode_t * t = reservoirPN->get_new_entry();
-        t->set(JOIN, &e1, &e2);
+        PlanNode_t & t = * reservoirPN->get_new_entry();
+        t.set(JOIN, &e1, &e2);
         EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
         eq.push_back(t);
         return eq;

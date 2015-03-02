@@ -30,7 +30,7 @@ public:
      */
     PlanNode * apply(PlanNode & aPlanNode) const override
     {
-        return & this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft());
+        return & this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft()).on(aPlanNode.getRightAttribute(), aPlanNode.getLeftAttribute());
     }
 };
 

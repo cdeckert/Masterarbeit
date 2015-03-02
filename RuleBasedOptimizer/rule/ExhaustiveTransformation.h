@@ -50,7 +50,7 @@ public:
                          PlanNode_t * p = _rulset._rules[i]->apply(*itr.node());
                          if(knownPlans.count(p->getSignature()) == 0)
                          {
-                             eq->push_back(p);
+                             eq->push_back(*p);
                              knownPlans.insert(p->getLeft().getSignature());
                          }
                     }
