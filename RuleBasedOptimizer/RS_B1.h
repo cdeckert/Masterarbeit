@@ -5,8 +5,6 @@
 #ifndef RuleBasedOptimizer_RS_B1_h
 #define RuleBasedOptimizer_RS_B1_h
 
-
-
 #include "RuleSet.h"
 #include "Rule.h"
 #include "Commutativity.h"
@@ -24,6 +22,7 @@
 template <typename PlanNode_t, typename Operations_t>
 class RS_B1 : public RuleSet<Rule<PlanNode_t, Operations_t>>
 {
+    typedef RS_B1 self_type;
     typedef Rule<PlanNode_t, Operations_t> Rule_t;
     typedef RuleSet<Rule_t> RuleSet_t;
     typedef CommutativityRule<PlanNode_t, Operations_t> Commutativity_t;

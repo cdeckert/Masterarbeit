@@ -22,6 +22,11 @@ class PlanNode
 {
 	typedef PlanNode self_type;
 	typedef EquivalenceClass<Bitvector_t, self_type> EquivalenceClass_t;
+
+	/**
+	 * @brief Predicate represents in a join the predicate attribute
+	 * @details Join on LEFT = RIght
+	 */
 	struct Predicate
 	{
 		unsigned int _rightAttribute;
@@ -30,10 +35,18 @@ class PlanNode
 public:
 	PlanNode(){ init(); };
 	
-	
+	/**
+	 * @brief return signature of a plan node 
+	 * @details based on relations (left)
+	 * @return signature as a bitvector
+	 */
 	inline Bitvector_t getSignature() const { return _left->getRelations(); }
 	
-	Bitvector_t getRelations()
+	/**
+	 * @brief returns relations associated
+	 * @return all relations associated with the current plan node
+	 */
+	Bitvector_t getRelations() const
 	{
 		Bitvector_t b;
 		b += _left->getRelations();
@@ -42,22 +55,54 @@ public:
 		return b;
 	}
 	
-	
-	void set(Operator anOperator, EquivalenceClass_t * aLeftEC, EquivalenceClass_t * aRightEC)
+	/**
+	 * @brief sets operators and left and right equivalence for a new plan node
+	 * @details the method is called only once to set left and right 
+	 * euqivalences
+	 * 
+	 * @param anOperator e.g. join, scan
+	 * @param aLeftEC a equivalence which represents the left part of a join / scan
+	 * @param aRightEC a equivalence which represents the right part of a join
+	 * the parameter can be null
+	 */
+	inline void set(Operator anOperator, EquivalenceClass_t * aLeftEC, EquivalenceClass_t * aRightEC)
 	{
 		_op = anOperator;
 		_left = aLeftEC;
 		_right = aRightEC;
 	};
 	
-	self_type * getNext() const { return _next; }
-	void setNext(self_type * aNode) {_next = aNode; };
-	
-	bool hasNext()
+
+
+
+	/**
+	 * @brief Checks whether or not a the next node is filled (like in a linked list)
+	 * @return true in case the next node is available
+	 */
+	bool hasNext() const
 	{
 		return _next != NULL;
 	}
+
+	/**
+	 * @brief sets the next node
+	 *
+	 * @param aNode the node which will be the next node
+	 */
+	void setNext(self_type * aNode) {_next = aNode; };
 	
+	/**
+	 * @brief Accessor for the next node
+	 * @return a pointer to the next ndoe
+	 */
+	inline self_type * getNext() const { return _next; }
+	
+	/**
+	 * @brief prints nodes
+	 * 
+	 * @param os stream which is used for printing the node structure
+	 * @return a stream which can be used for method chaining
+	 */
 	std::ostream & print(std::ostream & os)
 	{
 		if(_op == JOIN)
@@ -85,12 +130,25 @@ public:
 		return os;
 	}
 	
+	/**
+	 * @brief checks weather or not the left node exists
+	 * @return true in case left is exists
+	 */
+	bool hasLeft() const { return _left != NULL; }
+
+	/**
+	 * @brief checks weather or not the right node exists
+	 * @return true in case right is exists
+	 */
+	bool hasRight() const { return _right != NULL; }
 	
-	bool hasLeft() { return _left != NULL; }
-	bool hasRight() { return _right != NULL; }
-	
-	
-	u_int getSize()
+	/**
+	 * @brief Calculates size based on all subordinary nodes
+	 * @details [long description]
+	 * 
+	 * @return integer which represents the number of explored plans
+	 */
+	u_int getSize() const
 	{
 		if(_op == SCAN)
 		{
@@ -107,19 +165,41 @@ public:
 		return 0;
 		
 	}
+
+	/**
+	 * @brief Accessor for operation (e.g. join)
+	 * @return enum
+	 */
+	inline Operator getOperator()const { return _op; };
 	
-	inline Operator getOperator(){ return _op; };
-	
-	inline EquivalenceClass_t & getRight()
+
+	/**
+	 * @brief Accessor for right equivalences
+	 * @return pointer to right equivalence
+	 */
+	inline EquivalenceClass_t & getRight() const
 	{
 		return * _right;
 	}
 	
-	inline EquivalenceClass_t & getLeft()
+	/**
+	 * @brief Accessor for left equivalences
+	 * @return pointer to left equivalence
+	 */
+	inline EquivalenceClass_t & getLeft() const
 	{
 		return * _left;
 	}
 	
+	/**
+	 * @brief Represents the "on" part of a given join operation
+	 * @detail the predicate of a given join is set by this method
+	 * 
+	 * @param int left attribute
+	 * @param int right attribute
+	 * 
+	 * @return existing plan node for Method chaining
+	 */
 	inline self_type & on(unsigned int left, unsigned int right)
 	{
 		_predicate._leftAttribute = left;
@@ -127,17 +207,34 @@ public:
 		return * this;
 	};
 	
+	/**
+	 * @brief Accessor for predicate attributes
+	 * @details Assessor for predicate attribute (right)
+	 * @return a number which represents the field which is used as 
+	 * a join predicate attribute
+	 */
 	inline unsigned int getLeftAttribute() const
 	{
 		return _predicate._leftAttribute;
 	}
-	
+
+	/**
+	 * @brief Accessor for predicate attributes
+	 * @details Assessor for predicate attribute (right)
+	 * @return a number which represents the field which is used as 
+	 * a join predicate attribute
+	 */
 	inline unsigned int getRightAttribute() const
 	{
 		return _predicate._rightAttribute;
 	}
 	
 private:
+
+	/**
+	 * @brief Initalizes all variables
+	 * @details Standard init method
+	 */
 	void init()
 	{
 		_next = NULL;

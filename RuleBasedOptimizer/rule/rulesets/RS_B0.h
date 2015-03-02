@@ -22,8 +22,8 @@
 template <typename PlanNode_t, typename Operations_t>
 class RS_B0 : public RuleSet< Rule<PlanNode_t, Operations_t>>
 {
-    typedef Rule<PlanNode_t, Operations_t> Rule_t;
     typedef RS_B0 self_type;
+    typedef Rule<PlanNode_t, Operations_t> Rule_t;
     typedef RuleSet<Rule_t> RuleSet_t;
     typedef CommutativityRule<PlanNode_t, Operations_t> Commutativity_t;
     typedef LeftAssociativity<PlanNode_t, Operations_t> LeftAssociativity_t;
