@@ -35,7 +35,6 @@
 /* Begin PBXFileReference section */
 		AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity.h; path = rule/rules/LeftAssociativity.h; sourceTree = "<group>"; };
 		AF14C2421A92040100A4AEEF /* RuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RuleSet.h; path = rule/rulesets/RuleSet.h; sourceTree = "<group>"; };
-		AF14C2461A94CE0300A4AEEF /* TypeReservoirs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeReservoirs.h; sourceTree = "<group>"; };
 		AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = rule/ExhaustiveTransformation.h; sourceTree = "<group>"; };
 		AF3B90A51AA2733900468CB5 /* RS_B1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RS_B1.h; sourceTree = "<group>"; };
 		AF6883841A9CB17300B6D1D7 /* RS_B0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B0.h; path = rule/rulesets/RS_B0.h; sourceTree = "<group>"; };
@@ -43,7 +42,7 @@
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/RightAssociativity.h; sourceTree = "<group>"; };
 		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; };
-		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Operations.h; sourceTree = "<group>"; };
+		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operations.h; path = op/Operations.h; sourceTree = "<group>"; };
 		AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EquivalenceClass.h; path = plan/standard/EquivalenceClass.h; sourceTree = "<group>"; };
 		AF99E4641A929CBB006D94C4 /* PlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanNode.h; path = plan/standard/PlanNode.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF99E46E1A933B4F006D94C4 /* standardplantest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = standardplantest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,7 +154,6 @@
 				AF99E47C1A939673006D94C4 /* Scanner.h */,
 				AF99E47D1A939D0D006D94C4 /* Types.h */,
 				AF99E47E1A939EA3006D94C4 /* Scanner.cpp */,
-				AF14C2461A94CE0300A4AEEF /* TypeReservoirs.h */,
 			);
 			name = infra;
 			sourceTree = "<group>";

@@ -16,7 +16,7 @@ typename PlanNode_t, typename Bitvector_t,
 typename Operations_t, typename Rule_t>
 class ExhaustiveTransformation
 {
-    typedef RuleSet<Rule_t, PlanNode_t, Operations_t> RuleSet_t;
+    typedef RuleSet<Rule_t> RuleSet_t;
     
     typedef ExhaustiveTransformation self_type;
     

@@ -28,8 +28,8 @@ typedef EquivalenceClass<Bitvector_t, PlanNode_t> EquivalenceClass_t;
 typedef EquivalenceClassIterator<Bitvector_t, PlanNode_t> EquivalenceClassIterator_t;
 typedef Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int> Operations_t;
 typedef Rule<PlanNode_t, Operations_t> Rule_t;
-typedef RS_B0<Rule_t, PlanNode_t, Operations_t> RS_B0_t;
-typedef RS_B1<Rule_t, PlanNode_t, Operations_t> RS_B1_t;
+typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
+typedef RS_B1<PlanNode_t, Operations_t> RS_B1_t;
 
 typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClassIterator_t, PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 

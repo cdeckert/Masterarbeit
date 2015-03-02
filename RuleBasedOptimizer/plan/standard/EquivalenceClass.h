@@ -14,7 +14,13 @@
 
 #include "Reservoir.h"
 
-
+/**
+ * @brief Iterator to through each plan node
+ * @details The iterator allows to iterate through all existing plan nodes
+ *
+ * @tparam Bitvector_t [description]
+ * @tparam PlanNode_t [description]
+ */
 template <typename Bitvector_t, typename PlanNode_t>
 class EquivalenceClassIterator
 {
@@ -23,17 +29,39 @@ class EquivalenceClassIterator
     
 public:
     EquivalenceClassIterator(PlanNode_t & aNode){ _node = &aNode; };
-    const bool hasNext() { return _node->hasNext(); };
-    const bool isOK() { return _node != NULL; };
-    PlanNode_t * node(){ return _node; };
+    /**
+     * @brief checks whether or not the next node is the last one
+     * @details chacks based on the current node if the next node is available
+     * @return true in case the next node is availiable
+     */
+    inline const bool hasNext() { return _node->hasNext(); };
     
+    /**
+     * @brief checks wheather or not the current node can be used for further operations
+     * @details checks if a given iterator points to a node
+     * @return true in case the current node is not NULL
+     */
+    inline const bool isOK() { return _node != NULL; };
     
-    self_type& operator++()
+    /**
+     * @brief accessor that returns the current node
+     * @return current node
+     */
+    inline PlanNode_t * node(){ return _node; };
+    
+    /**
+     * @brief Increments iterator by 1
+     * @details replaces the current node with the next node
+     */
+    inline self_type& operator++()
     {
         _node = _node->getNext();
         return *this;
     };
     
+    /**
+     * @brief Convinience operator to access the node without calling node()
+     */
     inline PlanNode_t * operator->() const
     {
         return _node;
@@ -42,7 +70,7 @@ public:
     
     
     
-
+    
 private:
     
     PlanNode_t * _node;
@@ -50,7 +78,13 @@ private:
 
 
 
-
+/**
+ * @brief [brief description]
+ * @details [long description]
+ *
+ * @tparam Bitvector_t  [description]
+ * @tparam PlanNode_t [description]
+ */
 template <typename Bitvector_t , typename PlanNode_t>
 struct EquivalenceClass
 {
@@ -86,7 +120,7 @@ public:
         }
         else
         {
-           
+            
             _last->setNext(&aPlanNode);
             _last = &aPlanNode;
             _relations += _last->getSignature();
@@ -106,9 +140,6 @@ public:
         else
         {
             _relations.print2(os);
-            /*os << "[";
-            _relations.print(os);
-            os << "]";*/
         }
         
         return os;
@@ -145,7 +176,7 @@ public:
     
     u_int getSize() const
     {
-                
+        
         
         u_int size = 0;
         for(Iterator itr = begin(); itr.isOK(); ++itr)
@@ -198,7 +229,7 @@ public:
     }
     
     
-        
+    
 private:
     Bitvector_t _relations;
     PlanNode_t * _first;
