@@ -10,7 +10,7 @@
  * @details The operations class is used to execute methods like Join or scan.
  * The methods are using reservoirs to reduce the effort for instanciation of
  * new objects.
- *
+ * 
  * @tparam Bitvector_t the standard Bitvector
  * @tparam EquivalenceClass_t the equivalence class
  * @tparam PlanNode_t the standard plan Node

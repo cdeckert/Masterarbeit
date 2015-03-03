@@ -38,7 +38,10 @@ public:
 	aPlanNode.getOperator() == JOIN &&
 	aPlanNode.getLeft().getOperator() == JOIN &&
 	aPlanNode.getRight().getOperator() == JOIN &&
-	aPlanNode.getLeftAttribute() == aPlanNode.getLeft().getLeftAttribute();
+	
+	
+	aPlanNode.getLeft().getRightAttribute() == aPlanNode.getLeftAttribute() &&
+	aPlanNode.getRight().getRightAttribute() == aPlanNode.getRightAttribute();
 };
 
 	/**
@@ -63,13 +66,11 @@ public:
 		unsigned int c_pred = aPlanNode.getRight().getLeftAttribute();
 		unsigned int d_pred = aPlanNode.getRight().getRightAttribute();
 
-		unsigned int main_left = aPlanNode.getLeftAttribute();
-		unsigned int main_right = aPlanNode.getRightAttribute();
 
 		PlanNode & p = this->o.joinPN(
 							this->o.join(a, d).on(a_pred, d_pred),
 							this->o.join(c,b).on(c_pred, b_pred)
-							  ).on(main_left, main_right);
+							  ).on(d_pred, b_pred);
 		p.disableAllAndEnableCommutativity();
 		return & p;
 
