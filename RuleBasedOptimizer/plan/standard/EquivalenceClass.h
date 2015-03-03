@@ -18,13 +18,13 @@
  * @brief Iterator to through each plan node
  * @details The iterator allows to iterate through all existing plan nodes
  *
- * @tparam Bitvector_t [description]
  * @tparam PlanNode_t [description]
  */
-template <typename Bitvector_t, typename PlanNode_t>
+template <typename PlanNode_t>
 class EquivalenceClassIterator
 {
 	typedef EquivalenceClassIterator self_type;
+	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
 	
 	
 public:
@@ -86,11 +86,12 @@ private:
  * @tparam Bitvector_t  [description]
  * @tparam PlanNode_t [description]
  */
-template <typename Bitvector_t , typename PlanNode_t>
+template <typename PlanNode_t>
 struct EquivalenceClass
 {
 	typedef EquivalenceClass self_type;
-	typedef EquivalenceClassIterator<Bitvector_t, PlanNode_t> Iterator;
+	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	typedef EquivalenceClassIterator<PlanNode_t> Iterator;
 	typedef Reservoir<self_type> Reservoir_t;
 	
 	friend Iterator;

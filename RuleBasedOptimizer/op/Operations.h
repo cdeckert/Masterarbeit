@@ -16,10 +16,12 @@
  * @tparam PlanNode_t the standard plan Node
  * @tparam u_int an unsigned integer
  */
-template <typename Bitvector_t, typename EquivalenceClass_t, typename PlanNode_t, typename u_int>
+template <typename PlanNode_t, typename u_int>
 class Operations
 {
     typedef Operations self_type;
+	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
     
 public:
     static self_type * exemplar();
@@ -118,12 +120,12 @@ private:
     
 };
 
-template <typename Bitvector_t, typename EquivalenceClass_t, typename PlanNode_t, typename u_int>
-Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int> * Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int>::instance;
+template <typename PlanNode_t, typename u_int>
+Operations<PlanNode_t, u_int> * Operations<PlanNode_t, u_int>::instance;
 
 
-template <typename Bitvector_t, typename EquivalenceClass_t, typename PlanNode_t, typename u_int>
-Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int> * Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int>::exemplar()
+template <typename PlanNode_t, typename u_int>
+Operations<PlanNode_t, u_int> * Operations<PlanNode_t, u_int>::exemplar()
 {
     if(instance == NULL)
     {

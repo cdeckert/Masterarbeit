@@ -18,12 +18,10 @@
  *
  * @tparam Bitvector_t a new Bitvector
  */
-template <typename Bitvector_t>
+template <typename Bitvector>
 class PlanNode
 {
-	typedef PlanNode self_type;
-	typedef EquivalenceClass<Bitvector_t, self_type> EquivalenceClass_t;
-
+	
 	/**
 	 * @brief Predicate represents in a join the predicate attribute
 	 * @details Join on LEFT = RIght
@@ -34,6 +32,10 @@ class PlanNode
 		unsigned int _leftAttribute;
 	};
 public:
+	typedef PlanNode self_type;
+	typedef Bitvector Bitvector_t;
+	typedef EquivalenceClass<self_type> EquivalenceClass_t;
+
 	PlanNode(){ init(); };
 	
 	/**
