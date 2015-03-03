@@ -35,9 +35,9 @@ public:
 			aPlanNode.getRightAttribute() == aPlanNode.getLeft().getLeftAttribute();
 	};
 
-/**
- * @brief apply left associativity
- */
+	/**
+	* @brief apply left associativity
+	*/
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
 		// join(join(a, b).on(a.1, b.1), c).on(b.1, c.1) => join(a, join(b,c).on(b.1, c.1)).on(a.1, b.1)
