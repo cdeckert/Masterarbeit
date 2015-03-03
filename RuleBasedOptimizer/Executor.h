@@ -37,7 +37,7 @@ void execute(EquivalenceClass_t & e)
     std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
     
     */
-    ExhaustiveTransformation_t t = * new ExhaustiveTransformation_t(RS_B1_t());
+    ExhaustiveTransformation_t t = * new ExhaustiveTransformation_t(RS_B2_t());
     t.apply(e);
     
     std::cout << std::endl << std::endl << "output: " << std::endl;

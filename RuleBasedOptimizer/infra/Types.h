@@ -14,6 +14,7 @@
 #include "RuleSet.h"
 #include "RS_B0.h"
 #include "RS_B1.h"
+#include "RS_B2.h"
 #include "Operations.h"
 
 
@@ -26,6 +27,7 @@ typedef Operations<Bitvector_t, EquivalenceClass_t, PlanNode_t, u_int> Operation
 typedef Rule<PlanNode_t, Operations_t> Rule_t;
 typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
 typedef RS_B1<PlanNode_t, Operations_t> RS_B1_t;
+typedef RS_B2<PlanNode_t, Operations_t> RS_B2_t;
 
 typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClassIterator_t, PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 

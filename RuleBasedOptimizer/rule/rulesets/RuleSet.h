@@ -32,6 +32,7 @@ public:
         _rules = new Rule_t*[size];
         _size = size;
     };
+	
     /**
      * @brief getter for rules
      * @return an array of rules
@@ -39,7 +40,8 @@ public:
     Rule_t ** getRules()
     {
         return _rules;
-    }
+	};
+	
 
     Rule_t ** _rules;
     unsigned int _size;
