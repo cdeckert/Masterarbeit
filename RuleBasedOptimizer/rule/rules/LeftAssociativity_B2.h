@@ -54,7 +54,7 @@ public:
 							a, this->o.join(b,c).on(b_joinP, c_joinP)
 							).on(a_joinP, b_joinP);
 		p.disableAllAndEnableCommutativity();
-		return p;
+		return & p;
 	};
 
 };
