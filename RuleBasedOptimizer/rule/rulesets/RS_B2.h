@@ -30,7 +30,7 @@ class RS_B2 : public RuleSet<Rule<PlanNode_t, Operations_t>>
     typedef CommutativityRule_B2<PlanNode_t, Operations_t> Commutativity_t;
     typedef LeftAssociativity_B2<PlanNode_t, Operations_t> LeftAssociativity_t;
     typedef RightAssociativity_B2<PlanNode_t, Operations_t> RightAssociativity_t;
-	// typedef Exchange_B2<PlanNode_t, Operations_t> Exchange_t;
+	typedef Exchange_B2<PlanNode_t, Operations_t> Exchange_t;
     
 public:
     RS_B2() : RuleSet<Rule_t>(4)
@@ -38,7 +38,7 @@ public:
         this->_rules[0] = new Commutativity_t();
         this->_rules[1] = new LeftAssociativity_t();
         this->_rules[2] = new RightAssociativity_t();
-		//this->_rules[3] = new Exchange_t();
+		this->_rules[3] = new Exchange_t();
     };
     
 private:
