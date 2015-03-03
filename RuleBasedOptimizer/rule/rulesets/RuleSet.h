@@ -22,7 +22,8 @@ public:
     RuleSet(){};
     /**
      * @brief Rule Set constructor initalized by size
-     * @details A rule set constructor which initalizes an array of rule pointers
+     * @details A rule set constructor which initalizes an array of 
+	 * rule pointers
      * 
      * @param int size of array
      */

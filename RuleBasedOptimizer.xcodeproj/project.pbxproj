@@ -57,6 +57,11 @@
 		AFECC5BE1A8D011A00FA9D84 /* Reservoir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Reservoir.h; path = infra/Reservoir.h; sourceTree = "<group>"; };
 		AFECC5C81A8D03D100FA9D84 /* Commutativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commutativity.h; path = rule/rules/Commutativity.h; sourceTree = "<group>"; };
 		AFECC5CA1A8D041E00FA9D84 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = rule/rules/Rule.h; sourceTree = "<group>"; };
+		AFFF644A1AA5B11D0034AD55 /* RS_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B2.h; path = rule/rulesets/RS_B2.h; sourceTree = "<group>"; };
+		AFFF644B1AA5B1B20034AD55 /* Commutativity_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commutativity_B2.h; path = rule/rules/Commutativity_B2.h; sourceTree = "<group>"; };
+		AFFF644C1AA5B1C80034AD55 /* LeftAssociativity_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity_B2.h; path = rule/rules/LeftAssociativity_B2.h; sourceTree = "<group>"; usesTabs = 1; };
+		AFFF644D1AA5B1E40034AD55 /* RightAssociativity_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity_B2.h; path = rule/rules/RightAssociativity_B2.h; sourceTree = "<group>"; };
+		AFFF644E1AA5C11E0034AD55 /* Exchange_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exchange_B2.h; path = rule/rules/Exchange_B2.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +193,7 @@
 				AF14C2421A92040100A4AEEF /* RuleSet.h */,
 				AF6883841A9CB17300B6D1D7 /* RS_B0.h */,
 				AF3B90A51AA2733900468CB5 /* RS_B1.h */,
+				AFFF644A1AA5B11D0034AD55 /* RS_B2.h */,
 			);
 			name = rulesets;
 			sourceTree = "<group>";
@@ -199,6 +205,10 @@
 				AFECC5CA1A8D041E00FA9D84 /* Rule.h */,
 				AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */,
 				AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */,
+				AFFF644B1AA5B1B20034AD55 /* Commutativity_B2.h */,
+				AFFF644C1AA5B1C80034AD55 /* LeftAssociativity_B2.h */,
+				AFFF644D1AA5B1E40034AD55 /* RightAssociativity_B2.h */,
+				AFFF644E1AA5C11E0034AD55 /* Exchange_B2.h */,
 			);
 			name = rules;
 			sourceTree = "<group>";

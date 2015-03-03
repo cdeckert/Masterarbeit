@@ -13,7 +13,8 @@
 
 /**
  * @brief Plan Node a node of a given plan
- * @details The plan node is used to connect up to 2 equivalence classes with each other
+ * @details The plan node is used to connect up to 2 equivalence 
+ * classes with each other
  *
  * @tparam Bitvector_t a new Bitvector
  */
@@ -61,11 +62,12 @@ public:
 	 * euqivalences
 	 * 
 	 * @param anOperator e.g. join, scan
-	 * @param aLeftEC a equivalence which represents the left part of a join / scan
-	 * @param aRightEC a equivalence which represents the right part of a join
+	 * @param aLeftEC equivalence which represents the left part of a join/scan
+	 * @param aRightEC equivalence which represents the right part of a join
 	 * the parameter can be null
 	 */
-	inline void set(Operator anOperator, EquivalenceClass_t * aLeftEC, EquivalenceClass_t * aRightEC)
+	inline void set(Operator anOperator, EquivalenceClass_t * aLeftEC,
+					EquivalenceClass_t * aRightEC)
 	{
 		_op = anOperator;
 		_left = aLeftEC;
@@ -76,7 +78,8 @@ public:
 
 
 	/**
-	 * @brief Checks whether or not a the next node is filled (like in a linked list)
+	 * @brief Checks whether or not a the next node is filled
+	 * (like  a linked list)
 	 * @return true in case the next node is available
 	 */
 	bool hasNext() const
@@ -229,7 +232,76 @@ public:
 		return _predicate._rightAttribute;
 	}
 	
+	/**
+	 * @brief disables all rules
+	 * @details used by B2 rule set
+	 */
+	inline void disableAllRules()
+	{
+		_commutativityEnabled = false;
+		_leftAssociativityEnabled = false;
+		_rightAssociativityEnabled = false;
+		_exchangeEnabled = false;
+	};
+	
+	/**
+	 * @brief disables all rules and enables commutativity
+	 * @details used by B2 rule set
+	 */
+	inline void disableAllAndEnableCommutativity()
+	{
+		disableAllRules();
+		_commutativityEnabled = true;
+	};
+	
+
+	/**
+	 * @brief checks whether or not commutativity is enabled
+	 * @details check is performed by B2 ruleset
+	 * @return the value of the corresponding variable
+	 */
+	inline bool isCommutativityEnabled() const
+	{ return _commutativityEnabled; };
+
+	/**
+	 * @brief checks whether or not left associativity is enabled
+	 * @details check is performed by B2 ruleset
+	 * @return the value of the corresponding variable
+	 */
+	inline bool isLeftAssociativityEnabled() const
+	{ return _leftAssociativityEnabled; };
+
+	/**
+	 * @brief checks whether or not right associativity is enabled
+	 * @details check is performed by B2 ruleset
+	 * @return the value of the corresponding variable
+	 */
+	inline bool isRightAssociativityEnabled() const
+	{ return _rightAssociativityEnabled; };
+
+	/**
+	 * @brief checks whether or not exchange is enabled
+	 * @details check is performed by B2 ruleset
+	 * @return the value of the corresponding variable
+	 */
+	inline bool isExchangeEnabled() const
+	{ return _exchangeEnabled; };
+	
+	
+	
 private:
+	
+	Operator _op;
+	self_type * _next;
+	EquivalenceClass_t * _left;
+	EquivalenceClass_t * _right;
+	Bitvector_t * _relations;
+	Predicate _predicate;
+	
+	bool _commutativityEnabled = true;
+	bool _leftAssociativityEnabled = true;
+	bool _rightAssociativityEnabled = true;
+	bool _exchangeEnabled = true;
 
 	/**
 	 * @brief Initalizes all variables
@@ -242,12 +314,8 @@ private:
 		_right = NULL;
 		_predicate = Predicate();
 	};
-	Operator _op;
-	self_type * _next;
-	EquivalenceClass_t * _left;
-	EquivalenceClass_t * _right;
-	Bitvector_t * _relations;
-	Predicate _predicate;
+	
+
 	
 };
 

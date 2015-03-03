@@ -17,22 +17,22 @@
 template <typename PlanNode, typename Operations_t>
 class Rule
 {
-    
+	
 public:
 
-    Rule() : o(*Operations_t::exemplar()){};
-    /**
-     * @brief checks whether or not a rule is applicable
-     * @details the actual implementation is done in a different class
-     * 
-     * @param e a specific plan node
-     * @return true in case the rule is applicable
-     */
-    virtual bool isApplicable(PlanNode &) const = 0;
-    virtual PlanNode * apply(PlanNode&) const = 0;
-    
+	Rule() : o(*Operations_t::exemplar()){};
+	/**
+	 * @brief checks whether or not a rule is applicable
+	 * @details the actual implementation is done in a different class
+	 * 
+	 * @param e a specific plan node
+	 * @return true in case the rule is applicable
+	 */
+	virtual bool isApplicable(PlanNode &) const = 0;
+	virtual PlanNode * apply(PlanNode&) const = 0;
+	
 protected:
-    Operations_t & o;
+	Operations_t & o;
 
 };
 #endif
