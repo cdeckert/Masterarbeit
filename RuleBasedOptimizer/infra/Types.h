@@ -11,7 +11,7 @@
 #include "BitvectorSmall.h"
 #include "EquivalenceClass.h"
 #include "ExhaustiveTransformation.h"
-#include "BetterTransformation.h"
+//#include "BetterTransformation.h"
 #include "RuleSet.h"
 #include "RS_B0.h"
 #include "RS_B1.h"
@@ -33,7 +33,7 @@ typedef RS_B2<PlanNode_t, Operations_t> RS_B2_t;
 typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClassIterator_t,
 PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 
-typedef BetterTransformation<PlanNode_t, Rule_t> BetterTransformation_t;
+//typedef BetterTransformation<PlanNode_t, Rule_t> BetterTransformation_t;
 
 
 

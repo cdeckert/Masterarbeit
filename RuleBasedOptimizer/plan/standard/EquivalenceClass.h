@@ -309,10 +309,7 @@ private:
 	}
 	
 	
-	bool hasPlanNodes() const
-	{
-		return _first != NULL;
-	}
+	bool hasPlanNodes() const { return _first != NULL; }
 };
 
 #endif
