@@ -64,18 +64,12 @@ public:
 	/**
 	 * @brief Convinience operator to access the node without calling node()
 	 */
-	inline PlanNode_t * operator->() const
-	{
-		return _node;
-	};
-	
-	
-	
-	
+	inline PlanNode_t * operator->() const { return _node; };
 	
 private:
 	PlanNode_t * _node;
 };
+
 
 
 
@@ -103,7 +97,7 @@ public:
 	 * @details the method references the first node of the equivalence class
 	 * @return an iterator
 	 */
-	inline Iterator begin() const { return Iterator(*_first); }
+	inline Iterator begin() const { return Iterator(*_first); };
 	
 	/**
 	 * @brief Accessor for relations
@@ -114,68 +108,13 @@ public:
 	inline Bitvector_t & getRelations() { return _relations; };
 	
 	
-	void setRelations(Bitvector_t & aRelations)
-	{
-		_relations+=aRelations;
-	}
+	void setRelations(Bitvector_t & aRelations) { _relations+=aRelations; }
 	
-	void push_back(PlanNode_t & aPlanNode)
-	{
-		if(_first == NULL)
-		{
-			_first = &aPlanNode;
-			_last = &aPlanNode;
-			_relations += _first->getRelations();
-		}
-		else
-		{
-			_explored = true;
-			_last->setNext(&aPlanNode);
-			_last = &aPlanNode;
-			_relations += _last->getSignature();
-		}
-		
-	}
+	void push_back(PlanNode_t & aPlanNode);
+
 	
-	std::ostream & print(std::ostream & os) const
-	{
-		if(hasPlanNodes())
-		{
-			for(Iterator itr = begin(); itr.isOK(); ++itr)
-			{
-				itr.node()->print(os);
-			}
-		}
-		else
-		{
-			_relations.print2(os);
-		}
-		
-		return os;
-	};
-	
-	std::ostream & printEndl(std::ostream & os) const
-	{
-		int i = 0;
-		if(hasPlanNodes())
-		{
-			for(Iterator itr = begin(); itr.isOK(); ++itr)
-			{
-				i++;
-				os << i << ": ";
-				itr.node()->print(os) << std::endl;
-			}
-		}
-		else
-		{
-			_relations.print2(os);
-			/*os << "[";
-			 _relations.print(os);
-			 os << "]";*/
-		}
-		
-		return os;
-	};
+	std::ostream & print(std::ostream & os) const;
+	std::ostream & printEndl(std::ostream & os) const;
 	
 	/**
 	 * @brief setter for predicate attributes
@@ -198,45 +137,24 @@ public:
 	 * @brief Measures the number of all explored plans
 	 * @return the number of already explored plans
 	 */
-	u_int getSize() const
-	{
-		
-		
-		u_int size = 0;
-		for(Iterator itr = begin(); itr.isOK(); ++itr)
-		{
-			size += itr.node()->getSize();
-		}
-		
-		return size;
-	}
+	u_int getSize() const;
 	
-	u_int getCount() const
-	{
-		u_int count = 0;
-		for(Iterator itr = begin(); itr.isOK(); ++itr)
-		{
-			count += itr.node().getCount();
-		}
-		return count;
-	}
 	
-	Bitvector_t & getSignature()
-	{
-		return _relations;
-	}
+	u_int getCount() const;
+	
+	Bitvector_t & getSignature() { return _relations; };
 	
 	Operator getOperator() const
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getOperator();
-	}
+	};
 	
 	self_type & getLeft() const
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getLeft();
-	}
+	};
 	
 	/**
 	 * @brief Accessor to get access to the first equivalenceclass
@@ -249,7 +167,7 @@ public:
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getRight();
-	}
+	};
 	
 	/**
 	 * @brief Accessor for predicate attributes
@@ -260,7 +178,7 @@ public:
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getLeftAttribute();
-	}
+	};
 	
 	/**
 	 * @brief Accessor for predicate attributes
@@ -271,7 +189,7 @@ public:
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getRightAttribute();
-	}
+	};
 	
 	
 	
@@ -309,7 +227,108 @@ private:
 	}
 	
 	
-	bool hasPlanNodes() const { return _first != NULL; }
+	bool hasPlanNodes() const { return _first != NULL; };
+};
+
+
+/**
+ *
+ * Implementation
+ *
+ */
+
+
+template <typename PlanNode_t>
+void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t & aPlanNode)
+{
+	if(_first == NULL)
+	{
+		_first = &aPlanNode;
+		_last = &aPlanNode;
+		_relations += _first->getRelations();
+	}
+	else
+	{
+		_explored = true;
+		_last->setNext(&aPlanNode);
+		_last = &aPlanNode;
+		_relations += _last->getSignature();
+	}
+	
+};
+
+template <typename PlanNode_t>
+u_int EquivalenceClass<PlanNode_t>::getSize() const
+{
+	u_int size = 0;
+	for(Iterator itr = begin(); itr.isOK(); ++itr)
+	{
+		size += itr.node()->getSize();
+	}
+	
+	return size;
+};
+
+template <typename PlanNode_t>
+u_int EquivalenceClass<PlanNode_t>::getCount() const
+{
+	u_int count = 0;
+	for(Iterator itr = begin(); itr.isOK(); ++itr)
+	{
+		count += itr.node().getCount();
+	}
+	return count;
+};
+
+
+
+
+
+
+
+
+
+template <typename PlanNode_t>
+std::ostream & EquivalenceClass<PlanNode_t>::print(std::ostream & os) const
+{
+	if(hasPlanNodes())
+	{
+		for(Iterator itr = begin(); itr.isOK(); ++itr)
+		{
+			itr.node()->print(os);
+		}
+	}
+	else
+	{
+		_relations.print2(os);
+	}
+	
+	return os;
+};
+
+
+template <typename PlanNode_t>
+std::ostream & EquivalenceClass<PlanNode_t>::printEndl(std::ostream & os) const
+{
+	int i = 0;
+	if(hasPlanNodes())
+	{
+		for(Iterator itr = begin(); itr.isOK(); ++itr)
+		{
+			i++;
+			os << i << ": ";
+			itr.node()->print(os) << std::endl;
+		}
+	}
+	else
+	{
+		_relations.print2(os);
+		/*os << "[";
+		 _relations.print(os);
+		 os << "]";*/
+	}
+	
+	return os;
 };
 
 #endif
