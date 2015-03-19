@@ -26,10 +26,7 @@ public:
      * @param aPlanNode a given plan node
      * @return true in case the rule is applicable
      */
-    bool isApplicable(PlanNode_t & aPlanNode) const override
-    {
-    return aPlanNode.isCommutativityEnabled() && aPlanNode.getOperator() != SCAN;
-}
+	bool isApplicable(PlanNode_t & aPlanNode) const override;
 
 
     /**
@@ -40,13 +37,24 @@ public:
      * @param aPlanNode a given plan node
      * @return a new plan node, which is logical equal to the given plan node
     */
-    PlanNode_t * apply(PlanNode_t & aPlanNode) const override
-    {
-    PlanNode_t & p = this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft()).
-        on(aPlanNode.getRightAttribute(), aPlanNode.getLeftAttribute());
-		p.disableAllRules();
-        return &p;
-    };
+    PlanNode_t * apply(PlanNode_t & aPlanNode) const override;
 };
+
+template <typename PlanNode_t, typename Operations_t>
+bool CommutativityRule_B2<PlanNode_t, Operations_t>::isApplicable(PlanNode_t & aPlanNode) const
+{
+	return aPlanNode.isCommutativityEnabled() && aPlanNode.getOperator() != SCAN;
+};
+
+template <typename PlanNode_t, typename Operations_t>
+PlanNode_t * CommutativityRule_B2<PlanNode_t, Operations_t>::apply(PlanNode_t & aPlanNode) const
+{
+	PlanNode_t & p = this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft()).
+	on(aPlanNode.getRightAttribute(), aPlanNode.getLeftAttribute());
+	p.disableAllRules();
+	return &p;
+};
+
+
 
 #endif
