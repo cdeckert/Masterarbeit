@@ -39,7 +39,7 @@ void execute(EquivalenceClass_t & e)
     */
 		// ExhaustiveTransformation_t t = * new ExhaustiveTransformation_t(RS_B2_t());
 	
-	ExhaustiveTransformation_t t2 = * new ExhaustiveTransformation_t(RS_B2_t());
+	ExhaustiveTransformation_t t2 = * new ExhaustiveTransformation_t(RS_B0_t());
     t2.apply(e);
     
     std::cout << std::endl << std::endl << "output: " << std::endl;

@@ -30,11 +30,11 @@ class RS_B0 : public RuleSet< Rule<PlanNode_t, Operations_t>>
     typedef RightAssociativity<PlanNode_t, Operations_t> RightAssociativity_t;
     
 public:
-    RS_B0() : RuleSet<Rule_t>(3)
+    RS_B0() : RuleSet<Rule_t>()
     {
-        this->_rules[0] = new Commutativity_t();
-        this->_rules[1] = new LeftAssociativity_t();
-        this->_rules[2] = new RightAssociativity_t();
+        this->push_back(new Commutativity_t());
+		this->push_back(new LeftAssociativity_t());
+		this->push_back(new RightAssociativity_t());
     };
     
 private:

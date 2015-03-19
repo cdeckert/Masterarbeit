@@ -29,10 +29,10 @@ class RS_B1 : public RuleSet<Rule<PlanNode_t, Operations_t>>
     typedef LeftAssociativity<PlanNode_t, Operations_t> LeftAssociativity_t;
     
 public:
-    RS_B1() : RuleSet<Rule_t>(2)
+    RS_B1() : RuleSet<Rule_t>()
     {
-        this->_rules[0] = new Commutativity_t();
-        this->_rules[1] = new LeftAssociativity_t();
+		this->_rules.push_back(new Commutativity_t());
+		this->_rules.push_back(new LeftAssociativity_t());
     };
     
 private:

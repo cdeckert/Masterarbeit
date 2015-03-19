@@ -23,7 +23,7 @@ class ExhaustiveTransformation
 public:
     ExhaustiveTransformation(RuleSet_t aRuleSet)
     {
-        _rulset = aRuleSet;
+        _ruleset = aRuleSet;
     };
     void apply(EquivalenceClass_t & aEquivalenceClass) const
     {
@@ -39,45 +39,40 @@ public:
             std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownPlans;
             EquivalenceClass_t * eq = toDo.back();
             toDo.pop_back();
-            for(Iterator itr = eq->begin(); itr.isOK(); ++ itr)
-            {
-                
-                for(unsigned int i = 0; i < _rulset._size; ++i)
-                {
-                    if(_rulset._rules[i]->isApplicable(*itr.node()))
-                    {
-                        knownPlans.insert(itr->getSignature());
-                         PlanNode_t * p = _rulset._rules[i]->apply(*itr.node());
-                         if(knownPlans.count(p->getSignature()) == 0)
-                         {
-                             eq->push_back(*p);
-                             knownPlans.insert(p->getLeft().getSignature());
-                         }
-                    }
-                }
-                
-                
-                
-                if(itr->hasLeft() && knownEQSignatures.count(itr->getLeft().getSignature()) == 0)
-                {
-                    toDo.push_back(&itr->getLeft());
-                    knownEQSignatures.insert(itr->getLeft().getSignature());
-                }
-                if(itr->hasRight() && knownEQSignatures.count(itr->getRight().getSignature()) == 0)
-                {
-                    toDo.push_back(&itr->getRight());
-                    knownEQSignatures.insert(itr->getRight().getSignature());
-                }
-                
-                
-                
-            }
+			for(Iterator itr = eq->begin(); itr.isOK(); ++ itr)
+			{
+				for(Rule_t * r: _ruleset.getRules())
+				{
+					if(r->isApplicable(*itr.node()))
+					{
+						knownPlans.insert(itr->getSignature());
+						PlanNode_t * p = r->apply(*itr.node());
+						if(knownPlans.count(p->getSignature()) == 0)
+						{
+							eq->push_back(*p);
+							knownPlans.insert(p->getLeft().getSignature());
+						}
+					}
+				}
+				
+				if(itr->hasLeft() && knownEQSignatures.count(itr->getLeft().getSignature()) == 0)
+				{
+					toDo.push_back(&itr->getLeft());
+					knownEQSignatures.insert(itr->getLeft().getSignature());
+				}
+				if(itr->hasRight() && knownEQSignatures.count(itr->getRight().getSignature()) == 0)
+				{
+					toDo.push_back(&itr->getRight());
+					knownEQSignatures.insert(itr->getRight().getSignature());
+				}
+
+			}
         }
         
     };
 
 private:
-    RuleSet_t _rulset;
+    RuleSet_t _ruleset;
 };
 
 #endif
