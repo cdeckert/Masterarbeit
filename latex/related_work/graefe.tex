@@ -1,0 +1,83 @@
+\subsection{Exodus, Volcano, Cascades}
+Dieses Kapitel beschäftigt sich mit den Projekten Exodus, Volcano und Cascades. Alle drei Projekte wurde massgeblich von Graefe entwickelt und bildeten jeweils die Grundlage für das nächste Projekt.
+
+
+
+\subsection{Query Optimizer Generator}
+Um einen passenden Optimierungsgenerator für eine grosse Menge an Daten Modellen zu erstellen muss dieser auf Abstraktion beruhen. Daher wurde für das EXODUS Projekt entschieden sowohl Anfragen- als auch Access-Pläne als Bäume darzustellen. Es wird dabei davon ausgegangen, dass eine komplexe Anfrage durch die Verschachteln von kleinteiligen Prozeduren erreicht werden kann. Jeder Knoten eines Baumes wird mit einem Operator und seinen Argumenten versehen.
+
+Die Erstellung des Anfragebaums wird bei EXODUS durch einen Query Parser übernommen. Dieser Anfragebaum wird dem Optimierer übergeben und von ihm in Access-Pläne übertragen. Dieser Output kann entweder direkt durch rekursive Prozeduren interpretiert oder weiter transformiert werden.
+
+In den meisten Datenbanksystemen findet sich für einen Algorithmus (!!!<- Ich glaube es geht um Operatoren !!!) unterschiedliche logische Operatoren. Beispielweise kann ein relational join nicht nur eine Art von Join Methode nutzen. Daher unterscheidet EXODUS zwischen atomaren Operatoren, Operatoren, die nicht mehr in andere kleinteigigere Operatoren zerlegt werden können, und komplexen Operatoren, die in kleinere atomare Operatoren aufgeteilt werden können. Solange sich die Implementierung um das Datenbank Schema selbst dreht spricht man von einer Algebraic Optimization.
+
+\subsection{Interpretation vs. Compilierung}
+
+Bei der Implementierung eines Optimierer kommen grundsätzlich zwei mögliche Ansätze in Frage: (1) interpretierte und (2) kompilierte Programmiersprachen. Bei EXODUS wurde zuerst die Implementierung mittels sog. "AI" Sprachen versucht. In einem Prototypen wurde mit Hilfe von Prolog ein Optimierer entwickelt. Für Prolog wurde sich entschieden, da diese Sprache Pattern Matching und eine Search Engine bereitstellt. (Auch unification konnte zum Einsatz gebracht werden, um elegant Query Trees zu erstellen.) Der Hauptvorteil eines interpretierten Ansatzes war aus Sicht von EXODUS die Möglichkeit neue Regeln zur Laufzeit des Programms hinzuzufügen. Trotz dieser Vorteile wurde der Ansatz als zu langsam verworfen. Auch der Vorteil Regeln während der Laufzeit hinzuzufügen, wird in der Literatur (QUELLE) als wenig nützlich bewertet. Statt dieses Ansatzes wurde in der Folge auf die Erstellung eines Generators, der in C geschrieben wurde, gesetzt. Der Generator erstellt basierend auf Regeln einen Optimierer in C, der wiederum kompiliert werden kann. Zwar war die Entwicklung des C Generators aufwendiger als die Implementierung in Prolog, jedoch konnte auf applikationsspezifische Notwendigkeiten, wie die Implementierung von speziellen Suchverfahren, Punkt genau eingegangen werden.
+
+\subsection{Die Funktion des EXODUS} Anfragenoptimierungsgenerators basiert auf Operatoren, Methoden und Alegraischen Regeln für die Transformation eines Query Trees und Regeln, die die Beziehung zwischen Operatoren und Methoden beschreiben. Diese Information wird in einem sog. „model description file“ vorgehalten. Bei der Erstellung des Datenbanksystems, erstellt der Optimierer basierend auf dem Datenbank model einen speziellen Optimierer basierend auf den vorher gegebenen Angaben. Zur Laufzeit wird dann eine Anfrage von dem Optimierer transformiert.
+
+Der generierte Optimierer funktioniert so, dass er den Anfragenbaum Schritt für Schritt transformiert. Die Information über bereits erstellte Baum-Alternativen wird in einer Datenstruktur namens MESH gespeichert. MESH wird auserdem genutzt um plänge für Anfragenbäume zu speichern, die nicht beschnitten werden von der Daten Struktur. Zu jedem Zeitpunkt während der Optimiererung kann eine grosse Menge an weiteren möglichen Transformationen. Diese wird in der Datenstruktur „OPEN“ gespeichert. Sie ist eine Priority Queue. OPEN ist initalizisiert mit Transformationen, die auf den initalen Tree angewendet werden können. Grundsätzlich funktioniert der Algorithmus wie folgt:
+
+While (OPEN is not empty)
+	SELECT a transformation from OPEN
+	Apply it to the correct node(s) in MESH
+	DO method selection and cost analysis for the new nodes
+	Add newly enabled transformations to OPEN
+
+\subsubsection{Input des Query Optimierer Generators}
+
+Um mit Hilfe des Generators einen Optimierer für ein neues Datenmodell zu erstllen, muss der DBI eine beschreibung des Modells und mehere C Prozeduren erstellen. Der Optimierer nutzt die Daten, die durch das Description File bereit gestellt werden und erzeugt daraus, ein spezifisches C program. Es wird gemeinsam mit C Prozeduren für die spezielle Optimierung, die vom DBI speziell entwickelt wurden  compiliert.
+Im Datenmodell beschreibungs File, Gibt der DBI mehrere Operatoren des Datenmodells und methoden ein, die zur Implementierung einem Accessplans benötigt werden, termed tranformation rule und Regeln, die die Arbeit zwischen Operatoren und Methoden beschreiben, sie werden implementation rules genannt.
+
+Das Mdell Beschreibungs files. Besteht aus zweit teilen. Der erste Teil wird genutzt um den Operator und die Methoden des Datenmodells zu beschreiben. Er kann auch C code oder C preprocessor delarationen entahletn, die zur erstellung von Code genutzt werden. Der zweite Teil besteht aus Transformations und Implementierungsregeln. Optional ist ein dritter Teil bestehend aus C code der an den generierten Code angehängt wird. Dieser Teil wird später weiter diskutiert.
+
+Der erste Teil wir delatration Part genannt, die operatoren und methoden des Modells werden deklariert. Dazu werden Keywords wie %operator und %method.
+
+Syntax: %operator 2 join // 2 input parameter
+%method 2 has_join loops_join cartesian_product // 3 methoden. 
+
+
+Neben den Operatur und Methoden declaration, die der erste Teil der Beschreibung sind beinhaltet das file auch C code der wird in ein Output File des Optimierers gesteckt. 
+
+
+Neben der beschreibung von Operatoren und Deklarationen werden im Description Teil auch noch C funktionalitäten genutzt, um die folgenden 4 typen zu übermitteln. OPER_ARGUMENT, METH_ARGUMENT; OBER_PROPERTY and METH_PROPERTY. Diese Typen werden genutzt um eine Struktur Definition der Knoten für einen Anfragenbaum, Accessplan und MESH um die Speicherung von Argumenten der Operatoren und Methoden zu gewährleisten. (zB Prädikate und Argumente) die vom DBI mit Knoten Assoziiert werden können. In jedem MESH node der 
+
+
+These types are used in the structure definition of nodes for query trees, access plans, and MESH to store the arguments of operators and methods, eg. predicates, and "properties" that the DBI can associate with a node. In each MESH node, the proper operator argu- ments and method arguments are inserted by calling procedures provided by the DBI, and they are stored in memory locations of type OPER_ARGUMENT for the operator and of type METH_ARGUMENT for the method. If the DBI wishes to do so, it is possible to store information about a subtree in its root node, eg. relation cardinality, tuple width, etc. In each node in MESH, there are two fields provided for this information, oper_property of type OPER_PROPERTY and meth_property of type METH_PROPERTY. The contents of the former field depends only on the operator. while the latter depends on the method chosen for the node. For example, in our relational proto- types we store the schema of the intermediate relation in oper_property and the sort order in meth_property.
+
+Der Zweite teil des beschreibungs Files wird RULE PART genannt und besteht aus transformationsregeln und der Implementations regeln. Diese Regeln bestehen aus zwei ausdrücken und einer optinalen Kondition. Zwischen den ausdrücken sind das Keyword „by“ für die Implementierende Regel und ein pfeil für die Transformationsregel verwendet. Der Pfeil zeigt an, dass die Richtung legal ist für die Transformation. Ein Pfeil kann nach links, ach rechts oder auf beide seiten zeigen. Wenn eine Seite ein Ausrufezeichen hat, dann kann eine Regel für einen Query Tree nicht mehr angewendet werden, derbereits vorhanden ist. Dieses Feature soll nur zur Perfromance aber niemals zur Korrektheit genutzt werden. Ein Typische Situation wo dies die optimierungsgeschwindigkeit beeinflussenkann ist die Commutativitäts regel. Nimmt man die Resultate zwei der Urspr¨nglichen Optimierer so zeigt sihc, dass sie genau das selbe erstellen (Duplikation…)
+
+Jede Transformative Regel besteht auf der Linken Seite aus einem operator und einer Parametr liste. Jeder Parameter kann ein anderer Ausdruck oder eine Zahl sein. Die Zahl zeigt an den Input Stream oder eine Subquery. Der Ausdruck auf der Rechten Seite einer Implementierungsregel besteht aus einer methode und einer liste an inputs.
+
+Manchmal taucht der sebe name zweimal in einem Adruck aus. Beispielsweise in associative Regeln. In diesem Falle ist es notwendig zu identifizieren die Operatoren so dass die Arumente (join predicates) transferred werden können richtig. Zur identification werden Operatoren in einem Ausdruck von einer Nummer gefolgt. Diese selbe nummer tauch auf mit dem Operator oder auf der seite des Pfeils das Argument wird kopiert zwischen den beiden Operatoren. Der DBI wünscht es, dass per default die daten zwiscehn diesen COPY ARG deklariert werden im C Preprocessor. Dies wird benätit für Query into HESH und MESH into final access plan. Der DBI kann die funktionen COPY IN und COUPY OUT definieren.  
+
+
+\subsubsection{Search Strategies and learning}
+
+\subsubsection{Volcano}
+
+\subsection{Ziele}
+Für den Volcano Optimizer Generator wurden vier Ziel festgelegt, die ihn überlegen gegenüber dem EXODUS Optimizer Generator machen.
+
+Der Optimizer Generator sollte sowohl mit anderen Volcano Komponenten als auch als standalone Tool nutzbar werden. Zweitens das neue System sollte eine höhere Effizienz, sowohl bzgl. der Optimization Zeit als auch des genutzten Arbeitsspeichers. Drittens, es musste einen effektiven, effizienten und erweiterbare Unterstützung für physische Eigenschaften wie sort order und compressions status bieten. Viertens, es hatte die Nutzung von Heueristiken und Daten Model semantik zu beachten und das schneiden nutzloser Teile des Such Raums. 5. es musste flexible kostenmodelle erlauben und die Generierung von dynamischen planen fürunvollständig spezifizierte Anfragen bieten.
+
+
+
+\subsubsection{Cascades}
+
+
+
+
+
+
+
+
+Eine Reihe von Forschungsprojekten hat und hatte zum Ziel erweiterbare Databank Systeme zu entwickeln. Zu diesen Projekten gehören neben Grafes EXODUS, auf dessen Grundlage sich Volcano und später Cascades entwickelte, IBMs STARBUST und GENESIS der Universität Texas. Das Ziel dieser Projekte, die Entwicklung einer erweiterteren Datenbank, ist prinzipiell gleich, wobei unterschiedliche Ansätze gewählt werden das Ziel zu erreichen. Die Gemeinsamkeiten all dieser Projekte werden insbesondere klar im Vergleich zu Datenbanksystemen wie POSTGRES. Bei POSTGRES handelt es sich um ein vollständiges Datenbank Management System (\ac{DBMS}) mit einer eigenen Abfragesprache (POSTQUEL), Datenbank Triggern und Alerts. Es kann zwar durch neue Datentypen, neue Access Methoden und eine Vereinfachte Recocery Mechanismus erweitert werden, jedoch ist das Grundsätzliche Ziel mit so wenigen Veränerungen wie möglich das Relationale Modell zu nutzen. Im gegensatz zu Postgress bietet PROBE überstützung für complexe Objekte und Operationen. 
+
+
+Überblick über die Exodus Architektur
+Das Ziel von Exodus ist es Erweiterbarkeit zu bieten ohne dabei auf Performance zu verzichten. Im Gegesatz zu anderen Projekten wie Postgress oder Starbust bietet Exodus kein vollständiges Datenbank System, das durch den Datenbank Engeneer angepasst werden kann, sondern hält das Werkzeug zu Erstellung einer spezifischen Datenbank bereit.
+Um die Ziele der Erweiterbarkeit und Performance zu erreichen setzt Exodus auf eine generische Lösung, die von mehreren applikationsspezifischen Datenbanksystemen verwendet werden kann. Den Grundstein eines mit Hilfe von EXODUS erstellten \ac{DBMS} legt der Storage Manager, er von allen applikationsspezfischen Systemen gleichermassen genutzt werden kann. Die Erstellung einer generischen und für alle Applikatinen anwendbaren Anfragesprache wurde im EXODUS Projekt als unpassend eingestuft und die Anwendung von Applikationsspezifischen Sprachen  vorangetriebn. Mit Hilfe des EXODUS Query Optimizer Generators kann ein Datenbank  Engeneer einen Optimierer Generieren, der für einen speziellen Fall geeignet ist. Dieser Optimierer ist Regel basiert. 
+
+Der Query Optimizer
+

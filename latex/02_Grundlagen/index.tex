@@ -1,0 +1,14 @@
+\newpage
+\section{Grundlagen}
+
+
+In diesem Kapitel werden die Grundlagen erläutert und bereits bekannte Implementierungen erkläutert.  Das Kapitel beginnt mit einer kurzen Übersicht über die Funktionsweise von Datenbanksystemen vor dem Hintergrund der Anfrageoptimierung. Im Zentrum stehen die Komponenten Query Optimizer und Query Execution Engine. Beide Teile sind integraler Bestandteil eines Datenbanksystems. Im weiteren wird der für die Anfragenoptimierung wichtige Begriff des Search Spaces eingegangen. Das Kapitel wird fortgesetzt mit einer Übersicht über bereits bestehende Datenbanksysteme und deren Optimierer. Es wird konkret auf IBMs Starburst-Projekt und das EXODUS Projekt \cite{graefe1987exodus}, \cite{carey1990exodus} mit seinen Nachfolgern Volcano \cite{graefe1990parallelizing}, \cite{graefe1990encapsulation}, \cite{graefe1993volcano}, \cite{graefe1994volcano} und Cascades \cite{graefe1995cascades} eingegangen. Abgerundet wird das Kapitel mit einer Erklärung der von Pellenkoft zusammengestellten Regelsets \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate}. Alle Komponenten zusammen bilden die Grundlage für die im nächsten Kapitel besprochene Implementierung der Planexpanders.
+
+
+\input{02_Grundlagen/Grundbegriffe.tex}
+
+\input{02_Grundlagen/Starburst.tex}
+
+\input{02_Grundlagen/Exodus_Volcano_Cascades.tex}
+
+\input{02_Grundlagen/Pellenkoft_RuleSet.tex}

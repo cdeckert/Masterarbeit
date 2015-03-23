@@ -1,0 +1,36 @@
+In diesem Kapitel wird die Implementierung des prototypischen Plan Generators beschrieben, der in dieser Arbeit zum Einsatz gekommen ist.
+
+\subsection{Knoten und Equivalenzklassen}
+
+Am Beginn der Planoptimierung steht ein Plan. Ein Plan in der Form eines Query Graphen. Bei dem Query Graphen handelt es sich um einen gerichteten, azyklischen Graphen. Jeder Knoten des Graphen repräsentiert einen 
+
+
+
+\subsection{Regelsets und Regeln}
+
+Im Regelmodul werden Transformationsregeln implementiert. Ihre Aufgabe ist es basierend auf einer gegebenen Äquivalenzklasse Pläne zu erzeugen. Die Anwendung der Regel geschieht in zwei Schritten: Zuerst  wird, ähnlich wie bei Starburst, geprüft, ob eine Regel anwendbar ist, danach kommt die Regel gegebenenfalls zur Anwendung und Pläne werden erzeugt.
+
+Um sicherzustellen, dass jede Regel auf einem abstrakten Level gleich implementiert wird, erben alle Regeln von einer Basis Regelklasse. In ihr ist das Interface für externe Module definiert, mit deren Hilfe sowohl geprüft werden kann, ob eine Regel anwendbar ist und diese dann angewendet werden kann.
+
+Um Regeln zu Gruppieren werden sog. Regelsets verwendet. Sie sind Sammlungen von Regeln, die gemeinsam oder nach einander auf eine Äquivalenzklasse angewendet werden. Ebenso wie Regeln erbt das Regelset seine Struktur von einer übergeordneten Klasse. Ein Regelset ist dabei immer so aufgebaut, dass sie auf eine Anzahl von Regelinstanzen zeigt, die zum Set gehören.
+
+Das Projekt kommt bereits mit einigen vorgefertigten Regeln zu diesen zählen neben den von Pellenkoft \cite{} beschriebenen Regeln auch [XY] Regeln. Ebenfalls sind die Pellenkoft Regelsets vorhanden. Sie dienen als Benchmark für eine spätere Messung neuer Regeln.
+
+
+\subsection{Exektionsmodul}
+
+Das Ausführungsmodul beinhaltet Strategien zur Anwendung der Regeln. Das Modul wird mit einem Regelset initialisiert. QueryTrees in Form von Äquivalenzklassen werden durch das Ausführungsmodul expandiert und der Suchraum so exploriert.
+
+Eine der bereits vorhandenen Ausführungsstrategien ist die Exhaustive Transformation. Dabei kommen alle Regeln so lange zur Anwendung, bis keine neuen Pläne mehr generiert werden können.
+
+
+\subsection{Plankonten und Äquivalenzklassen}
+
+Plankonten und Äquivalenzklassen sind für die Repräsentation von Query Graphen zuständig. Eine Äuquivalenzklasse bezeichnet eine Menge von Planknoten, die für sich logisch äquivalent zu einander sind. Jeder Planknoten für sich repräsentiert eine Methode (beispielsweise JOIN oder SCAN) und stellt eine Verbindung zu bis zu wie Äquivalenzklassen her, die die Linke und Rechte Seite eines Joins darstellen.
+
+Die Einfachste Form einer Äquivalenzklasse ist ein Scan auf eine Relation. Hierzu wird eine Äquivalenzklasse gebildet, deren Inhalt ein Planknoten ist, der einen Scan auf eine Äquivalenzklasse durchführt. Die Äquivalenzklasse repräsentiert hierbei die Relation.
+
+Das minimale konstrukt besteht also aus 2 Äuqivalenzklassen und einem Planknoten.
+
+
+Das Modul der Äquivalenzklasse und Planknoten kann erweitert bzw. ersetzt werden. Die vorhandene Implementierung ist wie folgt aufgebaut.

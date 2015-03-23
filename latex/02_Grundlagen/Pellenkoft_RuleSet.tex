@@ -1,0 +1,62 @@
+\subsection{Pellenkoft Rulsets}
+
+Bei der Erforschung eines Search Spaces kommen in Transformations-basierten Query Optimierern Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelsets zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
+
+Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt die Eingabe dar. Auf Ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln auch angewendet wurden werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. 
+
+Mehrere Transformationsregeln werden gemeinsam als Regelsets bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelsets, die Pläne mehrfach generieren können und Regelsets, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat wiederum der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelsets vorgestellt, die Duplikate bilden und ein Regelset, das duplikatsfrei ist.
+
+
+\subsubsection{Regelset mit Duplikaten}
+
+Eines der Regelsets, das zur Erzeugung eines Bushy Space genutzt werden kann, ist RS-B0. Es besteht aus drei Regeln:
+
+\begin{itemize}
+\item Kommutativität: $$ A \Join B \to B \Join A$$
+\item Rechte Assoziativität: $$(A \Join B) \Join C \to A \Join (B \Join C) $$
+\item Linke Assoziativität: $$A \Join (B \Join C) \to (A \Join B) \Join C$$
+\end{itemize}
+
+Das Regelset ist redundant, da mit Hilfe von Kommutativität und rechter Assoziativität. linke Assoziatvität (und vis-à-vis) erzeugt werden kann. Das daraus abgeleitete Regelset RS-B1 besteht daher aus folgenden Regeln:
+
+\begin{itemize}
+\item Swap
+\item Bottom Commutativitity
+\end{itemize}
+
+Durch die Anwendung der Regeln aus RS-B0 und RS-B1 können Pläne doppelt erzeugt werden. Am einfachsten ist dies an Hand von Kommutativität zu zeigen. Wird auf den Plan a JOIN b Kommutativität angewendet entsteht b JOIN a, dann entsteht durch  die erneute Anwendung von Kommutativität auf den neuen Plan B JOIN A wieder der ursprüngliche Plan.
+
+Ebenfalls kann sich bei komplexeren Plänen Teilpläne gleichen. Beispielsweise enthält der Plan (A JOIN B) JOIN C den gleichen Subplan wie C JOIN (A JOIN B). Um solche Duplikate zu verhindern, wird von Pellenkoft das Prinzip der Äquivalenzklasse  angewendet.
+
+
+
+\subsubsection{Duplikatfreie Regelsets}
+Durch die Anwendung on RS-B0 bzw. RS-B1 ist es möglich, dass Varianten des Plans erneut erzeugt werden. Dieser Gefahr trägt das Regelset RS-B2 Rechnung. Es sieht vor, dass eine Regel nur genau einmal ausgeführt und andere Regeln nur einmal pro Operator ausgeführt werden dürfen. Dieses Regelset besteht aus:
+
+
+\begin{itemize}
+\item Kommutativität: $$ A \Join B \to B \Join A$$
+\item Rechte Assoziativität: $$(A \Join B) \Join C \to A \Join (B \Join C) $$
+\item Linke Assoziativität: $$A \Join (B \Join C) \to (A \Join B) \Join C$$
+
+\item Exchange $$A$$
+\end{itemize}
+
+\subsubsection{Äuqivalenzklassen}
+
+Um die Menge von gespeicherten Plänen zu reduzieren, redundante Transformation zu vermeiden und die Menge an Duplikaten zu verringern werden in Vulcano Äquivalenzklassen genutzt. Eine Äquivalenzklasse (auch kurz: Klasse) bezeichnet eine Menge von (Sub-)Plänen, die untereinander äquivalent sind. Für jeden Operator wird bei dieser Methode eine eigene Äquivalenzklasse erzeugt.
+
+Zu Beginn wird aus dem Ursprungsplan mehrere Äquivalenzklassen gebildet. Jeder Operator des Ursprungsplans wird einer eigenen Äquivalenzklasse zugeordnet, die wiederum das Argument eines anderen Operators bildet. Auf jeden Plan der Klasse werden jeweils die Regeln des Regelsets angewendet und so neue Pläne und Äuqivalenzklassen erzeugt. Sobald auf alle Pläne und neuerzeugten Äquivalenzklassen alle Regeln angewendet wurden und dadurch auch keine neuen Pläne entstehen können, ist der Suchraum erforscht.
+
+Basierend auf der Menge der Äquivalenzklassen kann durch einen rekursiven Aufruf alle Pläne des Suchraums erzeugt und ausgegeben werden.
+
+
+\subsubsection{Vollständigkeit von Rulesets}
+
+\cite{shanbhag2014optimizing}
+
+\subsubsection{Unvollständigkeit von RS-02}
+
+\subsubsection{Vorschlag von RS-Graph}
+
+\cite{shanbhag2014optimizing}
