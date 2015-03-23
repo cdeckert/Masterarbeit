@@ -110,7 +110,9 @@ public:
 	
 	void setRelations(Bitvector_t & aRelations) { _relations+=aRelations; }
 	
-	bool hasSameNeighbor(Bitvector_t b){ return _neighbors.contains(b); };
+	bool isOverlapping(Bitvector_t b){ return _relations.overlap(b); };
+	
+	bool isOverlapping(self_type b){ return _neighbors.overlap(b.getRelations()); };
 	
 	
 	void push_back(PlanNode_t & aPlanNode);

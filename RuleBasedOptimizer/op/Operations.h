@@ -102,6 +102,7 @@ public:
      *
      * @param e1 Left relation
      * @param e2 Right relation
+	 * @param joinOnRelations neighborhood
      *
      * @return equivalence class with a single plan
      */
@@ -115,6 +116,24 @@ public:
         eq.push_back(t);
         return eq;
     }
+	
+	/**
+	 * @brief Creates a Equivalence Class which represents a join operation
+	 * @details The Equivalence class is initalized with a simple plan (operation Join)
+	 * to initalize the predicate, please use the "on" method
+	 *
+	 * @param e1 Left relation
+	 * @param e2 Right relation
+	 *
+	 * @return equivalence class with a single plan
+	 */
+	EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
+	{
+		PlanNode_t & t = joinPN(e1, e2);
+		EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
+		eq.push_back(t);
+		return eq;
+	}
 private:
     Reservoir<EquivalenceClass_t> * reservoirEC;
     Reservoir<Bitvector_t> * bitvectors;
