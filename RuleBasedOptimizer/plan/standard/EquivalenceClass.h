@@ -108,7 +108,10 @@ public:
 	inline Bitvector_t & getRelations() { return _relations; };
 	
 	
-	void setRelations(Bitvector_t & aRelations) { _relations+=aRelations; }
+	void setRelations(Bitvector_t & aRelations) { _neighbors+=aRelations; }
+	
+	bool hasSameNeighbor(Bitvector_t b){ return _neighbors.contains(b); };
+	
 	
 	void push_back(PlanNode_t & aPlanNode);
 
@@ -138,7 +141,6 @@ public:
 	 * @return the number of already explored plans
 	 */
 	u_int getSize() const;
-	
 	
 	u_int getCount() const;
 	
@@ -195,6 +197,7 @@ public:
 	
 private:
 	Bitvector_t _relations;
+	Bitvector_t _neighbors;
 	PlanNode_t * _first;
 	PlanNode_t * _last;
 
@@ -228,6 +231,8 @@ private:
 	
 	
 	bool hasPlanNodes() const { return _first != NULL; };
+	
+	void setNeighbors(Bitvector_t aNeighbor) { _neighbors += aNeighbor; }
 };
 
 
@@ -323,9 +328,6 @@ std::ostream & EquivalenceClass<PlanNode_t>::printEndl(std::ostream & os) const
 	else
 	{
 		_relations.print2(os);
-		/*os << "[";
-		 _relations.print(os);
-		 os << "]";*/
 	}
 	
 	return os;
