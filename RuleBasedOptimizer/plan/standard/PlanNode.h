@@ -22,15 +22,6 @@ template <typename Bitvector>
 class PlanNode
 {
 	
-	/**
-	 * @brief Predicate represents in a join the predicate attribute
-	 * @details Join on LEFT = RIght
-	 */
-	struct Predicate
-	{
-		unsigned int _rightAttribute;
-		unsigned int _leftAttribute;
-	};
 public:
 	typedef PlanNode self_type;
 	typedef Bitvector Bitvector_t;
@@ -197,44 +188,6 @@ public:
 	}
 	
 	/**
-	 * @brief Represents the "on" part of a given join operation
-	 * @detail the predicate of a given join is set by this method
-	 * 
-	 * @param int left attribute
-	 * @param int right attribute
-	 * 
-	 * @return existing plan node for Method chaining
-	 */
-	inline self_type & on(unsigned int left, unsigned int right)
-	{
-		_predicate._leftAttribute = left;
-		_predicate._rightAttribute = right;
-		return * this;
-	};
-	
-	/**
-	 * @brief Accessor for predicate attributes
-	 * @details Assessor for predicate attribute (right)
-	 * @return a number which represents the field which is used as 
-	 * a join predicate attribute
-	 */
-	inline unsigned int getLeftAttribute() const
-	{
-		return _predicate._leftAttribute;
-	}
-
-	/**
-	 * @brief Accessor for predicate attributes
-	 * @details Assessor for predicate attribute (right)
-	 * @return a number which represents the field which is used as 
-	 * a join predicate attribute
-	 */
-	inline unsigned int getRightAttribute() const
-	{
-		return _predicate._rightAttribute;
-	}
-	
-	/**
 	 * @brief disables all rules
 	 * @details used by B2 rule set
 	 */
@@ -298,7 +251,6 @@ private:
 	EquivalenceClass_t * _left;
 	EquivalenceClass_t * _right;
 	Bitvector_t * _relations;
-	Predicate _predicate;
 	
 	bool _commutativityEnabled = true;
 	bool _leftAssociativityEnabled = true;
@@ -314,7 +266,6 @@ private:
 		_next = NULL;
 		_left = NULL;
 		_right = NULL;
-		_predicate = Predicate();
 	};
 	
 

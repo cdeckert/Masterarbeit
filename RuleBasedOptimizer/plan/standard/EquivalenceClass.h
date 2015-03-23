@@ -119,22 +119,6 @@ public:
 	std::ostream & print(std::ostream & os) const;
 	std::ostream & printEndl(std::ostream & os) const;
 	
-	/**
-	 * @brief setter for predicate attributes
-	 * @details The setter for predicate attributes is mainly used to represent 
-	 * database columns which are used to join relations based on them
-	 * 
-	 * @param left left relationship column
-	 * @param right right relationship column
-	 * 
-	 * @return Equivalence class to allow method chaining 
-	 */
-	self_type & on(unsigned int left, unsigned right)
-	{
-		throwExceptionInCaseEqWasExpended();
-		_first->on(left, right);
-		return *this;
-	}
 	
 	/**
 	 * @brief Measures the number of all explored plans
@@ -171,27 +155,6 @@ public:
 		return _first->getRight();
 	};
 	
-	/**
-	 * @brief Accessor for predicate attributes
-	 * 
-	 * @return returns a number which represents a database column
-	 */
-	unsigned int getLeftAttribute() const
-	{
-		throwExceptionInCaseEqWasExpended();
-		return _first->getLeftAttribute();
-	};
-	
-	/**
-	 * @brief Accessor for predicate attributes
-	 * 
-	 * @return returns a number which represents a database column
-	 */
-	unsigned int getRightAttribute() const
-	{
-		throwExceptionInCaseEqWasExpended();
-		return _first->getRightAttribute();
-	};
 	
 	
 	
@@ -250,14 +213,14 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t & aPlanNode)
 	{
 		_first = &aPlanNode;
 		_last = &aPlanNode;
-		_relations += _first->getRelations();
+		//_relations += _first->getRelations();
 	}
 	else
 	{
 		_explored = true;
 		_last->setNext(&aPlanNode);
 		_last = &aPlanNode;
-		_relations += _last->getSignature();
+		//_relations += _last->getSignature();
 	}
 	
 };
@@ -305,7 +268,7 @@ std::ostream & EquivalenceClass<PlanNode_t>::print(std::ostream & os) const
 	}
 	else
 	{
-		_relations.print2(os);
+		//_relations.print2(os);
 	}
 	
 	return os;

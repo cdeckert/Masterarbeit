@@ -30,8 +30,7 @@ public:
 	{
 		// IF ((A ⨝ B) ⨝ C)
 		return aPlanNode.getOperator() == JOIN &&
-		aPlanNode.getLeft().getOperator() == JOIN &&
-		aPlanNode.getRightAttribute() == aPlanNode.getLeft().getLeftAttribute();
+		aPlanNode.getLeft().getOperator() == JOIN;
 	};
 
 	/**
@@ -39,18 +38,7 @@ public:
 	 */
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
-		auto & a = aPlanNode.getLeft().getLeft();
-		unsigned int a_joinP = aPlanNode.getLeft().getLeftAttribute();
-
-		auto & b = aPlanNode.getLeft().getRight();
-		unsigned int b_joinP = aPlanNode.getLeft().getRightAttribute();
-
-		auto & c = aPlanNode.getRight();
-		unsigned int c_joinP = aPlanNode.getRightAttribute();
-
-		return & this->o.joinPN(
-			a, this->o.join(b,c).on(b_joinP, c_joinP)
-		).on(a_joinP, b_joinP);
+		return &aPlanNode;
 	};
 
 };

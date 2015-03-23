@@ -42,8 +42,7 @@ public:
 	 */
 	PlanNode_t * apply(PlanNode_t & aPlanNode) const override
 	{
-		return & this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft()).
-		on(aPlanNode.getRightAttribute(), aPlanNode.getLeftAttribute());
+		return & aPlanNode;
 	};
 };
 
