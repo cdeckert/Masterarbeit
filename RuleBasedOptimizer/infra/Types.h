@@ -39,9 +39,9 @@ PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 
 Operations_t * o = Operations_t::exemplar();
 
-EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2)
+EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2, Bitvector_t joinOn)
 {
-    return o->join(e1, e2);
+    return o->join(e1, e2, joinOn);
 }
 EquivalenceClass_t & scan(unsigned int i)
 {

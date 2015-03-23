@@ -155,12 +155,13 @@ public:
 		return _first->getRight();
 	};
 	
+	void setNeighbors(Bitvector_t aNeighbor) { _neighbors.set_to_difference(aNeighbor, getRelations()) ; }
 	
 	
-	
+	Bitvector_t _neighbors;
 private:
 	Bitvector_t _relations;
-	Bitvector_t _neighbors;
+	
 	PlanNode_t * _first;
 	PlanNode_t * _last;
 
@@ -195,7 +196,7 @@ private:
 	
 	bool hasPlanNodes() const { return _first != NULL; };
 	
-	void setNeighbors(Bitvector_t aNeighbor) { _neighbors += aNeighbor; }
+	
 };
 
 

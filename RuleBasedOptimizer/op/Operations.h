@@ -105,9 +105,13 @@ public:
      *
      * @return equivalence class with a single plan
      */
-    EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
+    EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2, Bitvector_t & joinOnRelation) const
     {
-        PlanNode_t & t = joinPN(e1, e2);
+		//Bitvector_t * t = joinOnRelation - e1.getRelations();
+		e1.setNeighbors(joinOnRelation);
+		e2.setNeighbors(joinOnRelation);
+
+		PlanNode_t & t = joinPN(e1, e2);
         EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
         eq.push_back(t);
         return eq;
