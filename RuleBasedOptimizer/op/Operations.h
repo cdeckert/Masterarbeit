@@ -107,7 +107,6 @@ public:
      */
     EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2, Bitvector_t & joinOnRelation) const
     {
-		//Bitvector_t * t = joinOnRelation - e1.getRelations();
 		e1.setNeighbors(joinOnRelation);
 		e2.setNeighbors(joinOnRelation);
 

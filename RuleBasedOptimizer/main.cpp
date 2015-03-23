@@ -11,20 +11,11 @@
 
 int main()
 {
-	Bitvector_t & a = * new Bitvector_t();
-	a.set(1);
-	
-	Bitvector_t & b = * new Bitvector_t();
-	b.set(3);
-	b.set(2);
-	b.set(1);
-	b.union_with(a);
-	Bitvector_t c;
-	c.set_to_difference(b, a);
-	//Bitvector_t & c = b-a;
+	Bitvector_t neighbourhood;
+	neighbourhood.set(1).set(2);
 	
 	
-	EquivalenceClass_t & eq = join(scan(1), scan(2), c);
+	EquivalenceClass_t & eq = join(scan(1), scan(2), neighbourhood);
 	
 	
     execute(eq);

@@ -250,7 +250,6 @@ private:
 	self_type * _next;
 	EquivalenceClass_t * _left;
 	EquivalenceClass_t * _right;
-	Bitvector_t * _relations;
 	
 	bool _commutativityEnabled = true;
 	bool _leftAssociativityEnabled = true;

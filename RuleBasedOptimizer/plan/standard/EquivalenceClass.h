@@ -108,7 +108,7 @@ public:
 	inline Bitvector_t & getRelations() { return _relations; };
 	
 	
-	void setRelations(Bitvector_t & aRelations) { _neighbors+=aRelations; }
+	void setRelations(Bitvector_t & aRelations) { _relations+=aRelations; }
 	
 	bool hasSameNeighbor(Bitvector_t b){ return _neighbors.contains(b); };
 	
@@ -155,11 +155,12 @@ public:
 		return _first->getRight();
 	};
 	
-	void setNeighbors(Bitvector_t aNeighbor) { _neighbors.set_to_difference(aNeighbor, getRelations()) ; }
+	void setNeighbors(Bitvector_t aNeighbor) { _neighbors.set_to_difference(aNeighbor, getRelations()) ; std::cout << _neighbors; }
 	
 	
-	Bitvector_t _neighbors;
+	
 private:
+	Bitvector_t _neighbors;
 	Bitvector_t _relations;
 	
 	PlanNode_t * _first;
@@ -214,14 +215,14 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t & aPlanNode)
 	{
 		_first = &aPlanNode;
 		_last = &aPlanNode;
-		//_relations += _first->getRelations();
+		_relations += _first->getRelations();
 	}
 	else
 	{
 		_explored = true;
 		_last->setNext(&aPlanNode);
 		_last = &aPlanNode;
-		//_relations += _last->getSignature();
+		_relations += _last->getSignature();
 	}
 	
 };
@@ -269,7 +270,7 @@ std::ostream & EquivalenceClass<PlanNode_t>::print(std::ostream & os) const
 	}
 	else
 	{
-		//_relations.print2(os);
+		_relations.print2(os);
 	}
 	
 	return os;
