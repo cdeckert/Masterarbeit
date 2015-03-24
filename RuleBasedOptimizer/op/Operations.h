@@ -63,20 +63,31 @@ public:
      * @param i the scanned relation
      * @return [description]
      */
-    EquivalenceClass_t & scan(u_int i) const
+    EquivalenceClass_t & scan(EquivalenceClass_t & relation) const
     {
-        Bitvector_t * b = getBitVector(i);
-        
-        EquivalenceClass_t & eqN = * reservoirEC->get_new_entry();
-        eqN.setRelations(*b);
         PlanNode_t & t = * reservoirPN->get_new_entry();
-        t.set(SCAN, &eqN, NULL);
+        t.set(SCAN, &relation, NULL);
         EquivalenceClass_t & eq = * reservoirEC->get_new_entry();
         
         eq.push_back(t);
         return eq;
     }
-    
+	
+	
+	EquivalenceClass_t * rel(u_int i, std::initializer_list<u_int> neighbors) const
+	{
+		Bitvector_t * b = getBitVector(i);
+		Bitvector_t * neighbors_bit = bitvectors->get_new_entry();
+		for(u_int n : neighbors)
+		{
+			neighbors_bit->set(n);
+		}
+		EquivalenceClass_t * eqN = reservoirEC->get_new_entry();
+		eqN->setRelations(*b);
+		eqN->setNeighbors(*neighbors_bit);
+		return eqN;
+	}
+	
     
     /**
      * @brief Creates a planNode, which represents a join operation
@@ -106,10 +117,8 @@ public:
      *
      * @return equivalence class with a single plan
      */
-    EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2, Bitvector_t & joinOnRelation) const
+    EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
     {
-		e1.setNeighbors(joinOnRelation);
-		e2.setNeighbors(joinOnRelation);
 
 		PlanNode_t & t = joinPN(e1, e2);
         EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
@@ -117,23 +126,6 @@ public:
         return eq;
     }
 	
-	/**
-	 * @brief Creates a Equivalence Class which represents a join operation
-	 * @details The Equivalence class is initalized with a simple plan (operation Join)
-	 * to initalize the predicate, please use the "on" method
-	 *
-	 * @param e1 Left relation
-	 * @param e2 Right relation
-	 *
-	 * @return equivalence class with a single plan
-	 */
-	EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
-	{
-		PlanNode_t & t = joinPN(e1, e2);
-		EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
-		eq.push_back(t);
-		return eq;
-	}
 private:
     Reservoir<EquivalenceClass_t> * reservoirEC;
     Reservoir<Bitvector_t> * bitvectors;

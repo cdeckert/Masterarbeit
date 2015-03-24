@@ -161,7 +161,7 @@ public:
 	
 	inline self_type & r() const { return getRight(); };
 	
-	void setNeighbors(Bitvector_t aNeighbor) { _neighbors.set_to_difference(aNeighbor, getRelations()) ; std::cout << _neighbors; }
+	void setNeighbors(Bitvector_t & neighbors) { _neighbors=neighbors; }
 	
 	
 	

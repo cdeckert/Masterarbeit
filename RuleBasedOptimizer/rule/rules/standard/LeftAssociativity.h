@@ -40,7 +40,7 @@ public:
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
 
-		joinPN(aPlanNode.l().l(), join(aPlanNode.l().r(), aPlanNode.r(), neighborhood);
+		//joinPN(aPlanNode.l().l(), join(aPlanNode.l().r(), aPlanNode.r());
 		return &aPlanNode;
 	};
 

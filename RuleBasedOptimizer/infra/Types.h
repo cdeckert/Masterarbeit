@@ -41,55 +41,22 @@ PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 
 Operations_t * o = Operations_t::exemplar();
 
-EquivalenceClass_t & scan(unsigned int i)
+EquivalenceClass_t & rel(unsigned int i, std::initializer_list<unsigned int> neighbors)
 {
-	return o->scan(i);
+	return o->rel(i, neighbors);
 }
 
-EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2, Bitvector_t joinOn)
+EquivalenceClass_t & scan(EquivalenceClass_t & rel)
 {
-    return o->join(e1, e2, joinOn);
+	return o->scan(rel);
 }
 
-EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2, std::initializer_list<unsigned int> aNeighborhood)
+EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2)
 {
-	Bitvector_t joinOn;
-	for(unsigned int neighbor : aNeighborhood)
-	{
-		joinOn.set(neighbor);
-	}
-	return o->join(e1, e2, joinOn);
+    return o->join(e1, e2);
 }
 
-EquivalenceClass_t & join(unsigned int e1, unsigned int e2, std::initializer_list<unsigned int> aNeighborhood)
-{
-	Bitvector_t joinOn;
-	for(unsigned int neighbor : aNeighborhood)
-	{
-		joinOn.set(neighbor);
-	}
-	return o->join(o->scan(e1), o->scan(e2), joinOn);
-}
 
-EquivalenceClass_t & join(EquivalenceClass_t e1, unsigned int e2, std::initializer_list<unsigned int> aNeighborhood)
-{
-	Bitvector_t joinOn;
-	for(unsigned int neighbor : aNeighborhood)
-	{
-		joinOn.set(neighbor);
-	}
-	return o->join(e1, o->scan(e2), joinOn);
-}
-
-EquivalenceClass_t & join(unsigned int e1, EquivalenceClass_t e2, std::initializer_list<unsigned int> aNeighborhood)
-{
-	Bitvector_t joinOn;
-	for(unsigned int neighbor : aNeighborhood)
-	{
-		joinOn.set(neighbor);
-	}
-	return o->join(o->scan(e1), e2, joinOn);
-}
 
 
 

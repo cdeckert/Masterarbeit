@@ -10,19 +10,15 @@
 
 
 int main()
-{	
-	EquivalenceClass_t & eq =
-	join
-	(
-		join
-		(
-			join(1,2,{1,2}),
-			3,
-			{2,3}
-		),
-		4,
-		{2,3,4}
-	 );
+{
+	typedef EquivalenceClass_t Ec;
+	
+	Ec & rel1 = rel(1, {2,3});
+	Ec & rel2 = rel(2, {1});
+	Ec & rel3= rel(3, {1});
+	
+	
+	Ec & eq = join(rel1, rel2);
 	
 	
     execute(eq);
