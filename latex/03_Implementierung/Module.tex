@@ -4,7 +4,19 @@ In diesem Kapitel wird die Implementierung des prototypischen Plan Generators be
 
 Am Beginn der Planoptimierung steht ein Plan. Ein Plan in der Form eines Query Graphen. Bei dem Query Graphen handelt es sich um einen gerichteten, azyklischen Graphen. Jeder Knoten des Graphen repräsentiert einen 
 
+\subsection{Prinzipien}
 
+Das  Single-Responsibility-Prinzip (SRP) ist 
+
+Das Gesetz von Demeter
+
+
+
+
+Der für diese Arbeit erstellte Plangenerator besteht aus mehreren Komponenten, die für sich unabhängig sind. In diesem Kapitel werden zuerst die einzelnen Komponenten beschrieben und auf Ihre technische Umsetzung eingegangen.
+
+
+Das System besteht aus X Modulen. Jedes Modul kann für sich ausgetauscht oder erweitert werden. Zu den Modulen zählen: Ausführung, Regel und Regelset, Messung, Anfragebaum. Neben diesen Modulen existiert noch ein Service Modul, das anderen Modulen Dienstleistungen bereitstellt.
 
 \subsection{Regelsets und Regeln}
 

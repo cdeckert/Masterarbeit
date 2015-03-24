@@ -24,9 +24,9 @@ Das Regelset ist redundant, da mit Hilfe von Kommutativität und rechter Assozia
 \item Bottom Commutativitity
 \end{itemize}
 
-Durch die Anwendung der Regeln aus RS-B0 und RS-B1 können Pläne doppelt erzeugt werden. Am einfachsten ist dies an Hand von Kommutativität zu zeigen. Wird auf den Plan a JOIN b Kommutativität angewendet entsteht b JOIN a, dann entsteht durch  die erneute Anwendung von Kommutativität auf den neuen Plan B JOIN A wieder der ursprüngliche Plan.
+Durch die Anwendung der Regeln aus RS-B0 und RS-B1 können Pläne doppelt erzeugt werden. Am einfachsten ist dies an Hand von Kommutativität zu zeigen. Wird auf den Plan a JOIN b Kommutativität angewendet, entsteht b JOIN a, dann entsteht durch  die erneute Anwendung von Kommutativität auf den neuen Plan B JOIN A wieder der ursprüngliche Plan.
 
-Ebenfalls kann sich bei komplexeren Plänen Teilpläne gleichen. Beispielsweise enthält der Plan (A JOIN B) JOIN C den gleichen Subplan wie C JOIN (A JOIN B). Um solche Duplikate zu verhindern, wird von Pellenkoft das Prinzip der Äquivalenzklasse  angewendet.
+Ebenfalls können sich bei komplexeren Plänen Teilpläne gleichen. Beispielsweise enthält der Plan (A JOIN B) JOIN C den gleichen Subplan wie C JOIN (A JOIN B). Um solche Duplikate zu verhindern, wird von Pellenkoft das Prinzip der Äquivalenzklasse  angewendet.
 
 
 
@@ -46,7 +46,7 @@ Durch die Anwendung on RS-B0 bzw. RS-B1 ist es möglich, dass Varianten des Plan
 
 Um die Menge von gespeicherten Plänen zu reduzieren, redundante Transformation zu vermeiden und die Menge an Duplikaten zu verringern werden in Vulcano Äquivalenzklassen genutzt. Eine Äquivalenzklasse (auch kurz: Klasse) bezeichnet eine Menge von (Sub-)Plänen, die untereinander äquivalent sind. Für jeden Operator wird bei dieser Methode eine eigene Äquivalenzklasse erzeugt.
 
-Zu Beginn wird aus dem Ursprungsplan mehrere Äquivalenzklassen gebildet. Jeder Operator des Ursprungsplans wird einer eigenen Äquivalenzklasse zugeordnet, die wiederum das Argument eines anderen Operators bildet. Auf jeden Plan der Klasse werden jeweils die Regeln des Regelsets angewendet und so neue Pläne und Äuqivalenzklassen erzeugt. Sobald auf alle Pläne und neuerzeugten Äquivalenzklassen alle Regeln angewendet wurden und dadurch auch keine neuen Pläne entstehen können, ist der Suchraum erforscht.
+Zu Beginn werden aus dem Ursprungsplan mehrere Äquivalenzklassen gebildet. Jeder Operator des Ursprungsplans wird einer eigenen Äquivalenzklasse zugeordnet, die wiederum das Argument eines anderen Operators bildet. Auf jeden Plan der Klasse werden jeweils die Regeln des Regelsets angewendet und so neue Pläne und Äuqivalenzklassen erzeugt. Sobald auf alle Pläne und neuerzeugten Äquivalenzklassen alle Regeln angewendet wurden und dadurch auch keine neuen Pläne entstehen können, ist der Suchraum erforscht.
 
 Basierend auf der Menge der Äquivalenzklassen kann durch einen rekursiven Aufruf alle Pläne des Suchraums erzeugt und ausgegeben werden.
 

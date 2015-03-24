@@ -14,7 +14,7 @@ Bei der Ausführung einer Anfrage mit Hilfe von Starburst wird grob zwischen zwe
 
 Zur Comile-Time wird eine gegebene Anfrage auf semantische Korrektheit geprüft und in ein Query Graph Model (QGM) übersetzt. Basierend auf diesem QGM wird die Optimierungen der Anfrage durch zuerst einen Query Rewriter, einen Plan Optimierer und einen Plan Refiner durchgeführt.
 
-Der Query Rewriter hat zwei konkrete Aufgaben: Auf der einen Seite soll die Anfrage in eine möglichst deklarative Form umgewandelt werden. Hierbei werden insbesondere Anfragen entschachtelt. Auf der anderen Seite sollen weithin in der Forschung akzeptierte Heuristiken (beispielweise der Push-Down von Argumenten) angewandt werden.
+Der Query Rewriter hat zwei konkrete Aufgaben: Auf der einen Seite soll die Anfrage in eine möglichst deklarative Form umgewandelt werden, hierbei werden insbesondere Anfragen entschachtelt. Auf der anderen Seite sollen weithin in der Forschung akzeptierte Heuristiken, beispielweise der Push-Down von Argumenten, angewandt werden.
 Bei der Planoptimierung durchläuft der Plan vom QGM hin zu einem QEM drei Stationen. Die drei wesentlichen Aspekte sind der Plan Generator, die Berechnung der Plankosten und die Suchstrategie. 
 
 \subsubsection{Regel-Maschine}
@@ -27,7 +27,7 @@ Zur Ausführung von Optimierungen wurde für die Starburst Datenbank eine eigene
 \item Bei der Nutzung eines GQMs kann entweder eine Tiefen- als auch eine Breitensuche zur Anwendung kommen. Diese Art der Suche ist weder an die Regel noch an das Regel-Set geknüpft, sondern mit dem QGM selbst verbunden.
 
 
-\item Die Regeln werden bei Starburst in Regelsets unterteilt. Ein Regel-Sets besteht aus mehreren Regeln, die entweder sequenziell, nach einer vorab vergebenen Priorität oder einem statistischen Verfahren. Jede Regel und jedes Regel-Set kann andere Regeln und Regel-Sets als Teil einer Subroutine ausführen. Neben der Funktion der Zusammenfassung der Regeln ist es Aufgabe der Regel-Sets.
+\item Die Regeln werden bei Starburst in Regelsets unterteilt. Ein Regel-Set besteht aus mehreren Regeln, die entweder sequenziell, nach einer vorab vergebenen Priorität oder einem statistischen Verfahren aufgerufen werden. Jede Regel und jedes Regel-Set kann andere Regeln und Regel-Sets als Teil einer Subroutine ausführen. _Neben der Funktion der Zusammenfassung der Regeln ist es Aufgabe der Regel-Sets._
 
 \item Um die Ausführung von Transformationen zu limitieren, insbesondere bei der Ausführung des Rewriters, kann ein Budget vorgeschrieben werden. Sobald dieses Zeitbudget aufgebraucht ist, wird die Ausführung von Transformationsregeln abgebrochen. Es ist für diese Funktion unbedingt notwendig, dass Regeln immer vollständige QGMs zurückliefern, da sonst ein unvollständiger QGM als Resultat des Optimierers entstehen kann.
 
@@ -39,7 +39,7 @@ Zur Ausführung von Optimierungen wurde für die Starburst Datenbank eine eigene
 Der Plan Optimierer generiert basierend auf einem QGM mehrere alternative Query Evaluation Plans (QEPs). Für jeden dieser QEPs werden die Kosten geschätzt und der günstigste für die Weiterverarbeitung ausgewählt. Um die Erweiterbarkeit des Optimierers zu gewährleisten wurden die drei Komponenten (Plangenerierung, Kostenschätzung und Suchstrategie) von einander soweit getrennt, dass sie einzeln erweitert und verändert werden können. 
 
 \subsubsection{Starburst Plan Generator}
-
+$$HIER ÜBERARBEITEN$$
 Der Plangenerator des Starburst Projekts, der für die Generierung von Planalternativen verantwortlich ist, bedient sich eines "Build Block"-Ansatzes[Lohm88] und einem Regel-Set, das auf einer eigenen Grammatik basiert.  
 
 Als Build Block werden low-level-Datenbankoperationen (wie Access, Join und Sort) zu high-level Operationen kombiniert. Diese können wiederverwendet werden. Dank des Konzepts der Build Blocks ist es möglich die Erstellung und Verarbeitung in zwei wesendlichen Aspekten zu vereinfachen:
@@ -50,13 +50,13 @@ Als Build Block werden low-level-Datenbankoperationen (wie Access, Join und Sort
 
 \item Die Regeln sind leichter von einem DBI zu lesen und zu verstehen, da die Fülle an Information mit Hilfe von Build Blocks aggregiert wurde.
 
-\item Das Ausführen von Regeln wird effizienter. Da nicht mehr ganze Graphen nach Pattern durchsucht werden müssen, sondern direkt über Build Blocks erkannt werden, erleichtert sich die Ausführung. Ebenfalls ist dank der Nutzung von Macro Expandern möglich die Geschwindigkeit zu verbessern.
+\item Das Ausführen von Regeln wird effizienter. Da nicht mehr ganze Graphen nach Pattern durchsucht werden müssen, sondern direkt über Build Blocks erkannt werden, erleichtert sich die Ausführung. Ebenfalls ist es dank der Nutzung von Macro-Expandern möglich, die Geschwindigkeit zu verbessern.
 
 
 \end{enumerate}
 
 
-
+$$TEXT$$
 Jede Regel erlabt es, dass aus ihr sowohl eine als auch mehrere Graphen entstehen können. In diesem Falle spricht man von Sets von Alternativen Plänen (SAP). 
 
 
