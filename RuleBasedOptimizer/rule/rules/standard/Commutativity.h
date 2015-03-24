@@ -29,7 +29,7 @@ public:
 	bool isApplicable(PlanNode_t & aPlanNode) const override
 	{
 		return aPlanNode.getOperator() != SCAN &&
-			aPlanNode.getRight().isOverlapping(aPlanNode.getLeft());
+			aPlanNode.r().isOverlapping(aPlanNode.l());
 	}
 
 
@@ -44,7 +44,7 @@ public:
 	PlanNode_t * apply(PlanNode_t & aPlanNode) const override
 	{
 
-		return & this->o.joinPN(aPlanNode.getRight(), aPlanNode.getLeft());
+		return & this->o.joinPN(aPlanNode.r(), aPlanNode.l());
 	};
 };
 

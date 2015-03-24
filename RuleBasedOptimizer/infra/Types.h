@@ -6,6 +6,7 @@
 #define RuleBasedOptimizer_Types_h
 
 #include<stdint.h>
+#include <initializer_list>
 
 #include "PlanNode.h"
 #include "BitvectorSmall.h"
@@ -17,6 +18,7 @@
 #include "RS_B1.h"
 #include "RS_B2.h"
 #include "Operations.h"
+
 
 
 typedef unsigned int u_int;
@@ -39,14 +41,58 @@ PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 
 Operations_t * o = Operations_t::exemplar();
 
+EquivalenceClass_t & scan(unsigned int i)
+{
+	return o->scan(i);
+}
+
 EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2, Bitvector_t joinOn)
 {
     return o->join(e1, e2, joinOn);
 }
-EquivalenceClass_t & scan(unsigned int i)
+
+EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2, std::initializer_list<unsigned int> aNeighborhood)
 {
-    return o->scan(i);
+	Bitvector_t joinOn;
+	for(unsigned int neighbor : aNeighborhood)
+	{
+		joinOn.set(neighbor);
+	}
+	return o->join(e1, e2, joinOn);
 }
+
+EquivalenceClass_t & join(unsigned int e1, unsigned int e2, std::initializer_list<unsigned int> aNeighborhood)
+{
+	Bitvector_t joinOn;
+	for(unsigned int neighbor : aNeighborhood)
+	{
+		joinOn.set(neighbor);
+	}
+	return o->join(o->scan(e1), o->scan(e2), joinOn);
+}
+
+EquivalenceClass_t & join(EquivalenceClass_t e1, unsigned int e2, std::initializer_list<unsigned int> aNeighborhood)
+{
+	Bitvector_t joinOn;
+	for(unsigned int neighbor : aNeighborhood)
+	{
+		joinOn.set(neighbor);
+	}
+	return o->join(e1, o->scan(e2), joinOn);
+}
+
+EquivalenceClass_t & join(unsigned int e1, EquivalenceClass_t e2, std::initializer_list<unsigned int> aNeighborhood)
+{
+	Bitvector_t joinOn;
+	for(unsigned int neighbor : aNeighborhood)
+	{
+		joinOn.set(neighbor);
+	}
+	return o->join(o->scan(e1), e2, joinOn);
+}
+
+
+
 
 
 #endif

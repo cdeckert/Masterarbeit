@@ -144,6 +144,8 @@ public:
 		return _first->getLeft();
 	};
 	
+	self_type & l() const { return getLeft(); };
+	
 	/**
 	 * @brief Accessor to get access to the first equivalenceclass
 	 * @details [long description]
@@ -151,11 +153,13 @@ public:
 	 * @param begin [description]
 	 * @return [description]
 	 */
-	self_type & getRight() const
+	inline self_type & getRight() const
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getRight();
 	};
+	
+	inline self_type & r() const { return getRight(); };
 	
 	void setNeighbors(Bitvector_t aNeighbor) { _neighbors.set_to_difference(aNeighbor, getRelations()) ; std::cout << _neighbors; }
 	

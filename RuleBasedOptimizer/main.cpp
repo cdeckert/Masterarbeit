@@ -10,12 +10,19 @@
 
 
 int main()
-{
-	Bitvector_t neighbourhood;
-	neighbourhood.set(1).set(2);
-	
-	
-	EquivalenceClass_t & eq = join(scan(1), scan(2), neighbourhood);
+{	
+	EquivalenceClass_t & eq =
+	join
+	(
+		join
+		(
+			join(1,2,{1,2}),
+			3,
+			{2,3}
+		),
+		4,
+		{2,3,4}
+	 );
 	
 	
     execute(eq);

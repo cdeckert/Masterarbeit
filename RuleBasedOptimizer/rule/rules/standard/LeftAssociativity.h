@@ -30,7 +30,8 @@ public:
 	{
 		// IF ((A ⨝ B) ⨝ C)
 		return aPlanNode.getOperator() == JOIN &&
-		aPlanNode.getLeft().getOperator() == JOIN;
+		aPlanNode.l().getOperator() == JOIN &&
+		aPlanNode.r().isOverlapping(aPlanNode.l().r());
 	};
 
 	/**
@@ -38,6 +39,8 @@ public:
 	 */
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
+
+		joinPN(aPlanNode.l().l(), join(aPlanNode.l().r(), aPlanNode.r(), neighborhood);
 		return &aPlanNode;
 	};
 

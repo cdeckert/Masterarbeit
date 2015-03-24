@@ -10,4 +10,14 @@
 #define RuleBasedOptimizer_ConvenientPlanNode_h
 
 
+#include "PlanNode.h"
+
+template <typename Bitvector>
+class ConvenientPlanNode : public PlanNode<Bitvector>
+{
+public:
+	ConvenientPlanNode() : PlanNode();
+};
+
+
 #endif

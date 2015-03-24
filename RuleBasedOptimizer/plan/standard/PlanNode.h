@@ -173,19 +173,18 @@ public:
 	 * @brief Accessor for right equivalences
 	 * @return pointer to right equivalence
 	 */
-	inline EquivalenceClass_t & getRight() const
-	{
-		return * _right;
-	}
+	inline EquivalenceClass_t & getRight() const { return * _right; };
+	
+	inline EquivalenceClass_t & r() const { return getRight(); };
 	
 	/**
 	 * @brief Accessor for left equivalences
 	 * @return pointer to left equivalence
 	 */
-	inline EquivalenceClass_t & getLeft() const
-	{
-		return * _left;
-	}
+	inline EquivalenceClass_t & getLeft() const { return * _left; }
+	
+	
+	inline EquivalenceClass_t & l() const { return getLeft(); };
 	
 	/**
 	 * @brief disables all rules
