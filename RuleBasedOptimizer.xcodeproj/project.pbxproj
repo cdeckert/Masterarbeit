@@ -53,7 +53,6 @@
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; };
 		AF99E47D1A939D0D006D94C4 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Types.h; path = infra/Types.h; sourceTree = "<group>"; };
 		AF99E4801A93B0B0006D94C4 /* testJoin */ = {isa = PBXFileReference; lastKnownFileType = text; name = testJoin; path = queries/testJoin; sourceTree = "<group>"; };
-		AFBB98B51AC022A100EC24E3 /* PlanConstructor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlanConstructor.h; path = plan/standard/PlanConstructor.h; sourceTree = "<group>"; };
 		AFBB98B61AC1632900EC24E3 /* ConvenientPlanNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConvenientPlanNode.h; path = plan/convenient/ConvenientPlanNode.h; sourceTree = "<group>"; };
 		AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitvectorSmall.h; path = infra/BitvectorSmall.h; sourceTree = "<group>"; };
 		AFECC5BD1A8D011A00FA9D84 /* Hasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hasher.h; path = infra/Hasher.h; sourceTree = "<group>"; };
@@ -159,7 +158,6 @@
 			children = (
 				AF99E4631A9287DB006D94C4 /* EquivalenceClass.h */,
 				AF99E4641A929CBB006D94C4 /* PlanNode.h */,
-				AFBB98B51AC022A100EC24E3 /* PlanConstructor.h */,
 			);
 			name = standard;
 			sourceTree = "<group>";
