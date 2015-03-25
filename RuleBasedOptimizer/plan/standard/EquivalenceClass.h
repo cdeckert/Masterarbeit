@@ -106,6 +106,8 @@ public:
 	 * @return a bitvector
 	 */
 	inline Bitvector_t & getRelations() { return _relations; };
+    
+    inline Bitvector_t & getNeighbors() {return _neighbors; };
 	
 	
 	void setRelations(Bitvector_t & aRelations) { _relations+=aRelations; }
@@ -224,6 +226,8 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t & aPlanNode)
 		_first = &aPlanNode;
 		_last = &aPlanNode;
 		_relations += _first->getRelations();
+        _neighbors += _first->getNeighbors();
+        _neighbors.set_to_difference(_neighbors, _relations);
 	}
 	else
 	{

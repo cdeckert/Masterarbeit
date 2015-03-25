@@ -49,6 +49,15 @@ public:
 		return b;
 	}
 	
+	Bitvector_t getNeighbors() const
+	{
+		Bitvector_t b;
+		b += _left->getNeighbors();
+		if(_right != NULL)
+			b += _right->getNeighbors();
+		return b;
+	}
+	
 	/**
 	 * @brief sets operators and left and right equivalence for a new plan node
 	 * @details the method is called only once to set left and right 

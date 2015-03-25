@@ -24,6 +24,7 @@ public:
     
     JSONAdaptor(){};
     EquivalenceClass_t * parse(std::string);
+    json11::Json dump(EquivalenceClass_t *);
     
 private:
     RelationsMap_t getRelations(json11::Json);
@@ -84,6 +85,8 @@ typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t * JSONAdaptor<PlanNode_t>::
     
     return createJoinTree(json["query"]);
 }
+
+
 
 
 #endif
