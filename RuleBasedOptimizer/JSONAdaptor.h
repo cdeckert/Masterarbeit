@@ -27,6 +27,7 @@ public:
     
 private:
     RelationsMap_t getRelations(json11::Json);
+    EquivalenceClass_t * createJoinTree(RelationsMap_t relationMap, json11::Json query);
     Operations_t * o = Operations_t::exemplar();
     
 };
@@ -54,6 +55,19 @@ typename JSONAdaptor<PlanNode_t>::RelationsMap_t JSONAdaptor<PlanNode_t>::getRel
 
 
 
+template <typename PlanNode_t>
+typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t * JSONAdaptor<PlanNode_t>::createJoinTree(RelationsMap_t relationMap, json11::Json query)
+{
+    if(query["op"].string_value() == "scan")
+    {
+        return o->scan(* relationMap.at(query["l"].int_value()));
+    }
+    else
+    {
+        return o->join( * createJoinTree(relationMap, query["l"]), * createJoinTree(relationMap, query["l"]));
+    }
+    return relationMap.at(1);
+}
 
 
 
@@ -67,13 +81,7 @@ typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t * JSONAdaptor<PlanNode_t>::
     std::cout << json.dump() << err;
     RelationsMap_t relationMap = getRelations(json);
     
-    //std::string query = json["query"].string_value();
-    
-    
-    
-    
-    
-    return relationMap.at(1);
+    return createJoinTree(relationMap,json["query"]);
 }
 
 

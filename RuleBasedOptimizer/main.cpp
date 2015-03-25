@@ -18,7 +18,7 @@ int main()
     
     JSONAdaptor<PlanNode_t> adaptor;
     
-    std::string input = "{\"relations\":[1,2,3],\"joinEdges\":[{\"from\":1, \"to\":2},{\"from\":1, \"to\":3}],\"query\":{}}";
+    std::string input = "{\"relations\":[1,2,3],\"joinEdges\":[{\"from\":1,\"to\":2},{\"from\":1,\"to\":3}],\"query\":{\"op\":\"join\",\"l\":{\"op\":\"scan\",\"l\":1},\"r\":{\"op\":\"join\",\"l\":{\"op\":\"scan\",\"rel\":2},\"r\":{\"op\":\"scan\",\"rel\":3}}}}";
 
     Ec * ecs = adaptor.parse(input);
 

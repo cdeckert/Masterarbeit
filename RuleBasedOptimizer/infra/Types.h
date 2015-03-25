@@ -47,12 +47,12 @@ Operations_t * o = Operations_t::exemplar();
     return NULL; //o->rel(i, neighbors);
 }
 */
-EquivalenceClass_t & scan(EquivalenceClass_t & rel)
+EquivalenceClass_t * scan(EquivalenceClass_t & rel)
 {
 	return o->scan(rel);
 }
 
-EquivalenceClass_t & join(EquivalenceClass_t e1, EquivalenceClass_t e2)
+EquivalenceClass_t * join(EquivalenceClass_t e1, EquivalenceClass_t e2)
 {
     return o->join(e1, e2);
 }

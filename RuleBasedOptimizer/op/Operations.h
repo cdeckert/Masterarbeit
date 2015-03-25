@@ -63,13 +63,13 @@ public:
      * @param i the scanned relation
      * @return [description]
      */
-    EquivalenceClass_t & scan(EquivalenceClass_t & relation) const
+    EquivalenceClass_t * scan(EquivalenceClass_t & relation) const
     {
         PlanNode_t & t = * reservoirPN->get_new_entry();
         t.set(SCAN, &relation, NULL);
-        EquivalenceClass_t & eq = * reservoirEC->get_new_entry();
+        EquivalenceClass_t * eq = reservoirEC->get_new_entry();
         
-        eq.push_back(t);
+        eq->push_back(t);
         return eq;
     }
 	EquivalenceClass_t * rel(u_int i)
@@ -124,12 +124,12 @@ public:
      *
      * @return equivalence class with a single plan
      */
-    EquivalenceClass_t & join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
+    EquivalenceClass_t * join(EquivalenceClass_t & e1, EquivalenceClass_t & e2) const
     {
 
 		PlanNode_t & t = joinPN(e1, e2);
-        EquivalenceClass_t  & eq = * reservoirEC->get_new_entry();
-        eq.push_back(t);
+        EquivalenceClass_t  * eq = reservoirEC->get_new_entry();
+        eq->push_back(t);
         return eq;
     }
 	
