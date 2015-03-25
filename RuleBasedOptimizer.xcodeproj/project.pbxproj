@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
+		AF865C1D1AC2C05A00D301D9 /* json11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF865C1B1AC2C05A00D301D9 /* json11.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,9 @@
 		AF6883841A9CB17300B6D1D7 /* RS_B0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B0.h; path = rule/rulesets/RS_B0.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONAdaptor.h; sourceTree = "<group>"; };
+		AF865C1B1AC2C05A00D301D9 /* json11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json11.cpp; path = lib/json11/json11.cpp; sourceTree = "<group>"; };
+		AF865C1C1AC2C05A00D301D9 /* json11.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json11.hpp; path = lib/json11/json11.hpp; sourceTree = "<group>"; };
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/standard/RightAssociativity.h; sourceTree = "<group>"; };
 		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; };
 		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operations.h; path = op/Operations.h; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 		AF75151B1A7F86440003FE5B /* RuleBasedOptimizer */ = {
 			isa = PBXGroup;
 			children = (
+				AF865C191AC2C00100D301D9 /* lib */,
+				AF865C171AC2BE2C00D301D9 /* adaptor */,
 				AF14C1D91A91F35000A4AEEF /* tests */,
 				AFECC5B21A8D007D00FA9D84 /* infra */,
 				AFECC5B11A8D007300FA9D84 /* op */,
@@ -121,6 +127,31 @@
 				AF997E121A9CD5F400560932 /* Executor.h */,
 			);
 			path = RuleBasedOptimizer;
+			sourceTree = "<group>";
+		};
+		AF865C171AC2BE2C00D301D9 /* adaptor */ = {
+			isa = PBXGroup;
+			children = (
+				AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */,
+			);
+			name = adaptor;
+			sourceTree = "<group>";
+		};
+		AF865C191AC2C00100D301D9 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				AF865C1A1AC2C04700D301D9 /* json11 */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		AF865C1A1AC2C04700D301D9 /* json11 */ = {
+			isa = PBXGroup;
+			children = (
+				AF865C1B1AC2C05A00D301D9 /* json11.cpp */,
+				AF865C1C1AC2C05A00D301D9 /* json11.hpp */,
+			);
+			name = json11;
 			sourceTree = "<group>";
 		};
 		AF99E4671A933AB7006D94C4 /* standard */ = {
@@ -308,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
+				AF865C1D1AC2C05A00D301D9 /* json11.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

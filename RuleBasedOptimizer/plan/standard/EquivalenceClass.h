@@ -162,6 +162,8 @@ public:
 	inline self_type & r() const { return getRight(); };
 	
 	void setNeighbors(Bitvector_t & neighbors) { _neighbors=neighbors; }
+    
+    void addNeighbor(u_int neighbor){ _neighbors.set(neighbor); };
 	
 	
 	

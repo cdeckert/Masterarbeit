@@ -41,11 +41,12 @@ PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 
 Operations_t * o = Operations_t::exemplar();
 
-EquivalenceClass_t & rel(unsigned int i, std::initializer_list<unsigned int> neighbors)
+/*
+ EquivalenceClass_t & rel(unsigned int i, std::initializer_list<unsigned int> neighbors)
 {
-	return o->rel(i, neighbors);
+    return NULL; //o->rel(i, neighbors);
 }
-
+*/
 EquivalenceClass_t & scan(EquivalenceClass_t & rel)
 {
 	return o->scan(rel);

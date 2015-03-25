@@ -72,7 +72,14 @@ public:
         eq.push_back(t);
         return eq;
     }
-	
+	EquivalenceClass_t * rel(u_int i)
+    {
+        Bitvector_t * b = getBitVector(i);
+        EquivalenceClass_t * eqN = reservoirEC->get_new_entry();
+        eqN->setRelations(*b);
+        return eqN;
+
+    }
 	
 	EquivalenceClass_t * rel(u_int i, std::initializer_list<u_int> neighbors) const
 	{
