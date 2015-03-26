@@ -29,6 +29,7 @@ public:
 private:
     RelationsMap_t getRelations(json11::Json);
     EquivalenceClass_t * createJoinTree(json11::Json);
+    std::vector<json11::Json> writeJson(EquivalenceClass_t *);
     Operations_t * o = Operations_t::exemplar();
     RelationsMap_t relationMap;
     
@@ -85,6 +86,54 @@ typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t * JSONAdaptor<PlanNode_t>::
     
     return createJoinTree(json["query"]);
 }
+
+
+template <typename PlanNode_t>
+json11::Json JSONAdaptor<PlanNode_t>::dump(EquivalenceClass_t * input){
+    json11::Json result;
+    
+    std::vector<json11::Json> plans = writeJson(input);
+    result = json11::Json::array(plans);
+    std::cout << result.dump();
+    return result;
+}
+
+
+template <typename PlanNode_t>
+std::vector<json11::Json> JSONAdaptor<PlanNode_t>::writeJson(EquivalenceClass_t * input)
+{
+    std::vector<json11::Json> plans;
+    typedef typename EquivalenceClass_t::Iterator EItr;
+    if(input->getOperator() == Operator::SCAN)
+    {
+        int rel = input->getRel();
+        json11::Json plan = json11::Json::object{{"op", input->getOperatorAsString()}, {"l", rel}};
+        plans.push_back(plan);
+    }
+    else
+    {
+        for(EItr eq = input->begin(); eq.isOK(); ++eq)
+        {
+        
+            {
+                for(json11::Json left : writeJson(& eq->l()))
+                {
+            
+                    for(json11::Json right : writeJson(& eq->r()))
+                    {
+                        json11::Json plan = json11::Json::object{{"op", eq->getOperatorAsString()}, {"l", left}, {"r", right}};
+                        plans.push_back(plan);
+                    }
+                }
+            }
+        }
+    }
+    
+    return plans;
+}
+
+
+
 
 
 

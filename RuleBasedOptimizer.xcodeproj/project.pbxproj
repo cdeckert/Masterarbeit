@@ -40,6 +40,7 @@
 		AF6883841A9CB17300B6D1D7 /* RS_B0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B0.h; path = rule/rulesets/RS_B0.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AF8222BF1AC425E600861B51 /* DotAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DotAdaptor.h; sourceTree = "<group>"; };
 		AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONAdaptor.h; sourceTree = "<group>"; };
 		AF865C1B1AC2C05A00D301D9 /* json11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json11.cpp; path = lib/json11/json11.cpp; sourceTree = "<group>"; };
 		AF865C1C1AC2C05A00D301D9 /* json11.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json11.hpp; path = lib/json11/json11.hpp; sourceTree = "<group>"; };
@@ -132,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */,
+				AF8222BF1AC425E600861B51 /* DotAdaptor.h */,
 			);
 			name = adaptor;
 			sourceTree = "<group>";

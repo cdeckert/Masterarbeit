@@ -23,5 +23,7 @@ int main()
     Ec * ecs = adaptor.parse(input);
 	
     execute(*ecs);
+    
+    adaptor.dump(ecs);
     return 1;
 }

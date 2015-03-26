@@ -8,7 +8,12 @@
 enum Operator
 {
     JOIN,
-    SCAN
+    SCAN,
+    SIZE_OF_ENUM
 };
+
+static const char* operatorname[SIZE_OF_ENUM] = { "join", "scan"};
+
+
 
 #endif

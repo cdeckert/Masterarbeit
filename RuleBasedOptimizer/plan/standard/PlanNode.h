@@ -177,6 +177,13 @@ public:
 	 */
 	inline Operator getOperator()const { return _op; };
 	
+	
+	/**
+	 * @brief Accessor for operation (e.g. join)
+	 * @return operator string
+	 */
+	inline std::string getOperatorAsString()const { return operatorname[_op]; };
+	
 
 	/**
 	 * @brief Accessor for right equivalences

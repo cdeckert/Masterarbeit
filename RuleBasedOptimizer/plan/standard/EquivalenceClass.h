@@ -139,6 +139,13 @@ public:
 		throwExceptionInCaseEqWasExpended();
 		return _first->getOperator();
 	};
+    
+    /**
+     * @brief Accessor for operation (e.g. join)
+     * @return operator string
+     */
+    inline std::string getOperatorAsString()const { throwExceptionInCaseEqWasExpended();
+        return _first->getOperatorAsString(); };
 	
 	self_type & getLeft() const
 	{
@@ -160,6 +167,11 @@ public:
 		throwExceptionInCaseEqWasExpended();
 		return _first->getRight();
 	};
+    
+    inline unsigned int getRel()
+    {
+        return _relations.log2();
+    }
 	
 	inline self_type & r() const { return getRight(); };
 	
@@ -167,6 +179,8 @@ public:
     
     void addNeighbor(u_int neighbor){ _neighbors.set(neighbor); };
 	
+    
+    bool hasPlanNodes() const { return _first != NULL; };
 	
 	
 private:
@@ -200,12 +214,12 @@ private:
 	{
 		if(_explored)
 		{
-			throw;
+			//throw;
 		}
 	}
 	
 	
-	bool hasPlanNodes() const { return _first != NULL; };
+	
 	
 	
 };
