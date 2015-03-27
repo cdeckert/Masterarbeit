@@ -28,10 +28,11 @@ public:
 	 */
 	bool isApplicable(PlanNode & aPlanNode) const override
 	{
-	// IF (A ⨝ (B ⨝ C))
-	return aPlanNode.getOperator() == JOIN &&
-	aPlanNode.getRight().begin()->getOperator() == JOIN;
-};
+        // IF (A ⨝ (B ⨝ C))
+        return aPlanNode.getOperator() == JOIN &&
+        aPlanNode.r().getOperator() == JOIN &&
+        aPlanNode.l().isOverlapping(aPlanNode.r().l());
+    };
 
 /**
  * @brief [brief description]
@@ -43,8 +44,7 @@ public:
 PlanNode * apply(PlanNode & aPlanNode) const override
 {
 
-return & aPlanNode;
-
+        return & this->o.joinPN(*this->o.join(aPlanNode.l(), aPlanNode.r().l()), aPlanNode.r().r());
 };
 
 };

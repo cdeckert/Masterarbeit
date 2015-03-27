@@ -43,7 +43,7 @@ public:
 	 */
 	PlanNode_t * apply(PlanNode_t & aPlanNode) const override
 	{
-
+    
 		return & this->o.joinPN(aPlanNode.r(), aPlanNode.l());
 	};
 };

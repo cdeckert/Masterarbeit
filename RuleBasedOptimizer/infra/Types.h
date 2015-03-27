@@ -57,6 +57,11 @@ EquivalenceClass_t * join(EquivalenceClass_t e1, EquivalenceClass_t e2)
     return o->join(e1, e2);
 }
 
+PlanNode_t * joinPN(EquivalenceClass_t e1, EquivalenceClass_t e2)
+{
+    return (o->join(e1, e2))->getFirst();
+}
+
 
 
 

@@ -181,6 +181,8 @@ public:
 	
     
     bool hasPlanNodes() const { return _first != NULL; };
+    
+    PlanNode_t * getFirst(){ return _first; };
 	
 	
 private:
