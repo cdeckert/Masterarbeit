@@ -24,7 +24,7 @@ void execute(EquivalenceClass_t & e)
 {
     
     std::cout << "input: " << std::endl;
-    e.print(std::cout);
+    //e.print(std::cout);
     
     std::cout  << std::endl << "SIZE: "<< e.getSize();
     
@@ -43,7 +43,7 @@ void execute(EquivalenceClass_t & e)
     t2.apply(e);
     
     std::cout << std::endl << std::endl << "output: " << std::endl;
-    e.printEndl(std::cout);
+    //e.printEndl(std::cout);
     
     std::cout  << std::endl << "SIZE: "<< e.getSize() << std::endl;
     /*

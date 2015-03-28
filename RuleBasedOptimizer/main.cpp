@@ -9,6 +9,7 @@
 #include <string>
 
 #include "JSONAdaptor.h"
+#include "StringAdaptor.h"
 
 
 
@@ -25,5 +26,9 @@ int main()
     execute(*ecs);
     
     adaptor.dump(ecs);
+    
+    StringAdaptor<PlanNode_t> stringAdaptor;
+    
+    std::cout << stringAdaptor.dump(ecs);
     return 1;
 }

@@ -49,6 +49,11 @@ public:
 		return b;
 	}
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * @return [description]
+	 */
 	Bitvector_t getNeighbors() const
 	{
 		Bitvector_t b;
@@ -230,32 +235,28 @@ public:
 	 * @details check is performed by B2 ruleset
 	 * @return the value of the corresponding variable
 	 */
-	inline bool isCommutativityEnabled() const
-	{ return _commutativityEnabled; };
+	inline bool isCommutativityEnabled() const { return _commutativityEnabled; };
 
 	/**
 	 * @brief checks whether or not left associativity is enabled
 	 * @details check is performed by B2 ruleset
 	 * @return the value of the corresponding variable
 	 */
-	inline bool isLeftAssociativityEnabled() const
-	{ return _leftAssociativityEnabled; };
+	inline bool isLeftAssociativityEnabled() const { return _leftAssociativityEnabled; };
 
 	/**
 	 * @brief checks whether or not right associativity is enabled
 	 * @details check is performed by B2 ruleset
 	 * @return the value of the corresponding variable
 	 */
-	inline bool isRightAssociativityEnabled() const
-	{ return _rightAssociativityEnabled; };
+	inline bool isRightAssociativityEnabled() const { return _rightAssociativityEnabled; };
 
 	/**
 	 * @brief checks whether or not exchange is enabled
 	 * @details check is performed by B2 ruleset
 	 * @return the value of the corresponding variable
 	 */
-	inline bool isExchangeEnabled() const
-	{ return _exchangeEnabled; };
+	inline bool isExchangeEnabled() const { return _exchangeEnabled; };
 	
 	
 	

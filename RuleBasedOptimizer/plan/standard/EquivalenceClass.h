@@ -106,21 +106,59 @@ public:
 	 * @return a bitvector
 	 */
 	inline Bitvector_t & getRelations() { return _relations; };
-    
-    inline Bitvector_t & getNeighbors() {return _neighbors; };
 	
+	inline Bitvector_t & getNeighbors() {return _neighbors; };
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param aRelations [description]
+	 */
 	void setRelations(Bitvector_t & aRelations) { _relations+=aRelations; }
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param b [description]
+	 * @return [description]
+	 */
 	bool isOverlapping(Bitvector_t b){ return _relations.overlap(b); };
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param b [description]
+	 * @return [description]
+	 */
 	bool isOverlapping(self_type b){ return _neighbors.overlap(b.getRelations()); };
 	
-	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param aPlanNode [description]
+	 */
 	void push_back(PlanNode_t & aPlanNode);
 
-	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param os [description]
+	 * @return [description]
+	 */
 	std::ostream & print(std::ostream & os) const;
+
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param os [description]
+	 * @return [description]
+	 */
 	std::ostream & printEndl(std::ostream & os) const;
 	
 	
@@ -130,29 +168,57 @@ public:
 	 */
 	u_int getSize() const;
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * @return [description]
+	 */
 	u_int getCount() const;
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * @return [description]
+	 */
 	Bitvector_t & getSignature() { return _relations; };
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param d [description]
+	 * @return [description]
+	 */
 	Operator getOperator() const
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getOperator();
 	};
-    
-    /**
-     * @brief Accessor for operation (e.g. join)
-     * @return operator string
-     */
-    inline std::string getOperatorAsString()const { throwExceptionInCaseEqWasExpended();
-        return _first->getOperatorAsString(); };
 	
+	/**
+	 * @brief Accessor for operation (e.g. join)
+	 * @return operator string
+	 */
+	inline std::string getOperatorAsString()const { throwExceptionInCaseEqWasExpended();
+		return _first->getOperatorAsString(); };
+	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param d [description]
+	 * @return [description]
+	 */
 	self_type & getLeft() const
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getLeft();
 	};
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 */
 	self_type & l() const { return getLeft(); };
 	
 	/**
@@ -167,22 +233,54 @@ public:
 		throwExceptionInCaseEqWasExpended();
 		return _first->getRight();
 	};
-    
-    inline unsigned int getRel()
-    {
-        return _relations.log2();
-    }
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param _relations [description]
+	 * @return [description]
+	 */
+	inline unsigned int getRel()
+	{
+		return _relations.log2();
+	}
+	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 */
 	inline self_type & r() const { return getRight(); };
 	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param neighbors [description]
+	 */
 	void setNeighbors(Bitvector_t & neighbors) { _neighbors=neighbors; }
-    
-    void addNeighbor(u_int neighbor){ _neighbors.set(neighbor); };
 	
-    
-    bool hasPlanNodes() const { return _first != NULL; };
-    
-    PlanNode_t * getFirst(){ return _first; };
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * 
+	 * @param neighbor [description]
+	 */
+	void addNeighbor(u_int neighbor){ _neighbors.set(neighbor); };
+	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * @return [description]
+	 */
+	bool hasPlanNodes() const { return _first != NULL; };
+	
+	/**
+	 * @brief [brief description]
+	 * @details [long description]
+	 * @return [description]
+	 */
+	PlanNode_t * getFirst(){ return _first; };
 	
 	
 private:
@@ -219,11 +317,6 @@ private:
 			//throw;
 		}
 	}
-	
-	
-	
-	
-	
 };
 
 
@@ -242,8 +335,8 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t & aPlanNode)
 		_first = &aPlanNode;
 		_last = &aPlanNode;
 		_relations += _first->getRelations();
-        _neighbors += _first->getNeighbors();
-        _neighbors.set_to_difference(_neighbors, _relations);
+		_neighbors += _first->getNeighbors();
+		_neighbors.set_to_difference(_neighbors, _relations);
 	}
 	else
 	{
@@ -305,25 +398,6 @@ std::ostream & EquivalenceClass<PlanNode_t>::print(std::ostream & os) const
 };
 
 
-template <typename PlanNode_t>
-std::ostream & EquivalenceClass<PlanNode_t>::printEndl(std::ostream & os) const
-{
-	int i = 0;
-	if(hasPlanNodes())
-	{
-		for(Iterator itr = begin(); itr.isOK(); ++itr)
-		{
-			i++;
-			os << i << ": ";
-			itr.node()->print(os) << std::endl;
-		}
-	}
-	else
-	{
-		_relations.print2(os);
-	}
-	
-	return os;
-};
+
 
 #endif
