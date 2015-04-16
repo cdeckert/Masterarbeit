@@ -10,6 +10,7 @@
 		AF07D15A1AD3CF620020A35A /* DotParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF07D1581AD3CF620020A35A /* DotParser.cpp */; };
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
 		AF865C1D1AC2C05A00D301D9 /* json11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF865C1B1AC2C05A00D301D9 /* json11.cpp */; };
+		AFE455CA1ADEBF500064F8CF /* Stopwatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE455C81ADEBF500064F8CF /* Stopwatch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,8 @@
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF99E47D1A939D0D006D94C4 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Types.h; path = infra/Types.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF99E4801A93B0B0006D94C4 /* testJoin */ = {isa = PBXFileReference; lastKnownFileType = text; name = testJoin; path = queries/testJoin; sourceTree = "<group>"; };
+		AFE455C81ADEBF500064F8CF /* Stopwatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stopwatch.cpp; path = infra/Stopwatch.cpp; sourceTree = "<group>"; };
+		AFE455C91ADEBF500064F8CF /* Stopwatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stopwatch.h; path = infra/Stopwatch.h; sourceTree = "<group>"; };
 		AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitvectorSmall.h; path = infra/BitvectorSmall.h; sourceTree = "<group>"; };
 		AFECC5BD1A8D011A00FA9D84 /* Hasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hasher.h; path = infra/Hasher.h; sourceTree = "<group>"; };
 		AFECC5BE1A8D011A00FA9D84 /* Reservoir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Reservoir.h; path = infra/Reservoir.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -207,6 +210,8 @@
 				AFECC5BE1A8D011A00FA9D84 /* Reservoir.h */,
 				AF99E47B1A93964D006D94C4 /* Exceptions.h */,
 				AF99E47D1A939D0D006D94C4 /* Types.h */,
+				AFE455C81ADEBF500064F8CF /* Stopwatch.cpp */,
+				AFE455C91ADEBF500064F8CF /* Stopwatch.h */,
 			);
 			name = infra;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
 				AF07D15A1AD3CF620020A35A /* DotParser.cpp in Sources */,
 				AF865C1D1AC2C05A00D301D9 /* json11.cpp in Sources */,
+				AFE455CA1ADEBF500064F8CF /* Stopwatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
