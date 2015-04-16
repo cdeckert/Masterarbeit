@@ -1,0 +1,7 @@
+digraph structs
+{
+	node [shape=record];
+
+	a->b
+	c->d
+}

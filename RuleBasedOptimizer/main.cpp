@@ -9,12 +9,19 @@
 #include <string>
 
 #include "JSONAdaptor.h"
+#include "DotAdaptor.h"
 #include "StringAdaptor.h"
 
+#include "CostEstimator.h"
+
+
+#include "Statistics.h"
+#include "Stopwatch.h"
 
 
 int main()
 {
+	
 	typedef EquivalenceClass_t Ec;
     
     JSONAdaptor<PlanNode_t> adaptor;
@@ -23,12 +30,30 @@ int main()
 
     Ec * ecs = adaptor.parse(input);
 	
+	Stopwatch watch;
+	
+	
+	
+	Statistics<Bitvector_t> * s = new Statistics<Bitvector_t>();
+	
+	CostEstimator<PlanNode_t>* c = new CostEstimator<PlanNode_t>(*s);
+	watch.start();
+	c->getCheapestPlan(ecs);
+	
+	watch.stop();
+	
     execute(*ecs);
     
     adaptor.dump(ecs);
     
     StringAdaptor<PlanNode_t> stringAdaptor;
-    
-    std::cout << stringAdaptor.dump(ecs);
-    return 1;
+	
+	
+	std::cout << stringAdaptor.dump(ecs);
+	
+	
+	
+	std::cout << std::endl << "NANO SECS: " << watch.getTime();
+	
+	return 1;
 }
