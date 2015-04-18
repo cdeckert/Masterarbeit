@@ -20,8 +20,8 @@ Eines der Regelsets, das zur Erzeugung eines Bushy Space genutzt werden kann, is
 Das Regelset ist redundant, da mit Hilfe von Kommutativität und rechter Assoziativität. linke Assoziatvität (und vis-à-vis) erzeugt werden kann. Das daraus abgeleitete Regelset RS-B1 besteht daher aus folgenden Regeln:
 
 \begin{itemize}
-\item Swap
-\item Bottom Commutativitity
+\item Swap $$ (A \Join B) \Join C \to (A \Join C) \Join B $$
+\item Bottom Commutativitity $$ B_1 \Join B_2 \to B_2 \Join B_1$$
 \end{itemize}
 
 Durch die Anwendung der Regeln aus RS-B0 und RS-B1 können Pläne doppelt erzeugt werden. Am einfachsten ist dies an Hand von Kommutativität zu zeigen. Wird auf den Plan a JOIN b Kommutativität angewendet, entsteht b JOIN a, dann entsteht durch  die erneute Anwendung von Kommutativität auf den neuen Plan B JOIN A wieder der ursprüngliche Plan.
@@ -39,23 +39,43 @@ Durch die Anwendung on RS-B0 bzw. RS-B1 ist es möglich, dass Varianten des Plan
 \item Rechte Assoziativität: $$(A \Join B) \Join C \to A \Join (B \Join C) $$
 \item Linke Assoziativität: $$A \Join (B \Join C) \to (A \Join B) \Join C$$
 
-\item Exchange $$A$$
+\item Exchange $$(A \Join B) \Join (C \Join D) \to (A \Join D) \Join (C \Join B) $$
 \end{itemize}
 
-\subsubsection{Äuqivalenzklassen}
-
-Um die Menge von gespeicherten Plänen zu reduzieren, redundante Transformation zu vermeiden und die Menge an Duplikaten zu verringern werden in Vulcano Äquivalenzklassen genutzt. Eine Äquivalenzklasse (auch kurz: Klasse) bezeichnet eine Menge von (Sub-)Plänen, die untereinander äquivalent sind. Für jeden Operator wird bei dieser Methode eine eigene Äquivalenzklasse erzeugt.
-
-Zu Beginn werden aus dem Ursprungsplan mehrere Äquivalenzklassen gebildet. Jeder Operator des Ursprungsplans wird einer eigenen Äquivalenzklasse zugeordnet, die wiederum das Argument eines anderen Operators bildet. Auf jeden Plan der Klasse werden jeweils die Regeln des Regelsets angewendet und so neue Pläne und Äuqivalenzklassen erzeugt. Sobald auf alle Pläne und neuerzeugten Äquivalenzklassen alle Regeln angewendet wurden und dadurch auch keine neuen Pläne entstehen können, ist der Suchraum erforscht.
-
-Basierend auf der Menge der Äquivalenzklassen kann durch einen rekursiven Aufruf alle Pläne des Suchraums erzeugt und ausgegeben werden.
 
 
-\subsubsection{Vollständigkeit von Rulesets}
+\subsubsection{Kreuzproduktfreie Regelsets und Vollständigkeit}
 
-\cite{shanbhag2014optimizing}
+Die bisherigen Regelsets können zu Kreuzprodukten führen. Ebenfalls ist nicht geklärt, ob die Regelsets vollständig sind und alle möglichen kreuzproduktfreien Bäume erzeugen. Im Folgenden wird zuerst der Begriff der Kreuzproduktfreiheit eingeführt und basierend auf diesem Begriff die Vollständigkeit erläutert.
+
+Ein Kreuprodukt kann bei den vorliegenden Plänen dann entstehen, wenn durch die Anwendung einer Regel ein Join zwischen zwei Relationen gebildet wird, die zuvor keine Kante auf einem gegeben Join Tree hatten.
+
+Eine Technik um kreuzproduktfreiheit bei den bisherigen Regelsets herzustellen, ist die Unterdrückung von Kreuprodukten die auch als \ac{CPS} bezeichnet wird. Der Ansatz funktioniert so, dass eine Regel, falls sie ein Kreuzprodukt erzeugt zwar als ausgeführt markiert, jedoch nicht der Baum in den Search Space aufgenommen wird. Somit werden Kreuzprodukte zwar erzeugt, aber nicht in den Suchrraum aufgenommen. Regelsets, die diese Art von Kreuzproduktunterdrückung anwenden, erhalten das Suffix CPS. Somit entstehen aus den Regelsets RS-B0, RS-B1 und RS-B2 die Regelsets RS-B0-CPS, RS-B1-CPS und RS-B2-CPS.
+
+
+Eine andere wichtige Eigenschaft von Regelsets ist Vollständigkeit. Sie setzt voraus, dass Kreuzproduktfreiheit gegeben ist. Vollständigkeit liegt dann vor, wenn alle kreuzproduktfreien Pläne in einem Suchrraum erzeugt wurden.
+
 
 \subsubsection{Unvollständigkeit von RS-02}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{03_Related_Work/Incompleteness_RS-B2-CPS.png}
+  \caption{Incompletness of RS-B2-CPS}
+  \label{Incompleteness_RS-B2-CPS}
+\end{figure}
+
+
+\cite{shanbhag2014optimizing} stellt fest, dass RS-B0-CPS und RS-B1-CPS vollständig sind. Die Vollständigkeit von RS-B2-CPS wird jedoch in Frage gestellt und die Unvollständigkeit mit Hilfe eines Beispiels belegt. Als Beispiel dient eine Menge von Relationen, die mit Hilfe des Jointrees J (\ref{fig:Incompleteness_RS-B2-CPS}) miteinander gejoint sind. Der Initale Anfragebaum $Q1$ ist in \ref{fig:Incompleteness_RS-B2-CPS} dargestellt. Das gewünschte Ergebnis nach einer Transformation $Q2$  findet sich in \ref{fig:Incompleteness_RS-B2-CPS}. 
+
+Bei RS-B2-CPS dürfen die Regeln R2, R3, R4 nur jeweils einmal auf einen Join-Operator angewendet werden. Keine der Regeln darf danach auf den neu generierten Operator angewendet werden. Die In \ref{fig:Q1} und \ref{fig:Q2} zeichnet sich dadurch aus, dass die Relationen $R1$ und $R4$ vertauscht sind.
+
+
+
+
+
+
 
 \subsubsection{Vorschlag von RS-Graph}
 

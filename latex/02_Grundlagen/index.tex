@@ -1,10 +1,24 @@
 \newpage
-\section{Grundlagen / Related Work}
+\section{Grundlagen}
+
+In diesem Kapitel wird zuerst grob die Architektur eines \ac{DBMS} besprochen. Anhand dieser Architektur werden wichtige Begriffe und Funktionen, die für die weitere Arbeit wichtig sind hervorgehoben.
+
+Das Kapitel startet mit der Architektur, die sich aus \ac{CTS} und \ac{RTS} zusammensetzt. Inbesondere sind Teile des \ac{CTS} für die weitere Arbeit relevant und werden daher weiter besprochen. 
 
 
-In diesem Kapitel werden die Grundlagen erläutert und bereits bekannte Implementierungen erklärt.  Das Kapitel beginnt mit einer kurzen Übersicht über die Funktionsweise von Datenbanksystemen vor dem Hintergrund der Anfrageoptimierung. Im Zentrum stehen die Komponenten Query Optimizer und Query Execution Engine. Beide Teile sind integraler Bestandteil eines Datenbanksystems. Im weiteren wird der für die Anfragenoptimierung wichtige Begriff des Search Spaces eingegangen. Das Kapitel wird fortgesetzt mit einer Übersicht über bereits bestehende Datenbanksysteme und deren Optimierer. Es wird konkret auf IBMs Starburst-Projekt und das EXODUS Projekt \cite{graefe1987exodus}, \cite{carey1990exodus} mit seinen Nachfolgern Volcano \cite{graefe1990parallelizing}, \cite{graefe1990encapsulation}, \cite{graefe1993volcano}, \cite{graefe1994volcano} und Cascades \cite{graefe1995cascades} eingegangen. Abgerundet wird das Kapitel mit einer Erklärung der von Pellenkoft zusammengestellten Regelsets \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate}. Alle Komponenten zusammen bilden die Grundlage für die im nächsten Kapitel besprochene Implementierung der Planexpanders.
+\input{02_Grundlagen/Architektur.tex}
 
 
-\input{02_Grundlagen/Grundbegriffe.tex}
+
+\subsection{Grundbegriffe}
+Im Folgenden werden die Grundbegriffe des Search Spaces genauer erklärt. 
+
+
+\input{02_Grundlagen/SearchSpace.tex}
+
+
+
+
+
 
 

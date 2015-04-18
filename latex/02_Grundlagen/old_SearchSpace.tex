@@ -1,0 +1,10 @@
+\subsubsection{alt}
+
+
+
+
+Der Search Space bildet die Grundlage, innerhalb derer der Optimizer nach einem optimalen Plan suchen kann. Der Suchraum ist abhängig davon welche algebraischen Transformationen zur Anwendung kommen und welche physischen Operatoren durch den Optimierer unterstützt werden. Die Transformation von Plänen sorgt dabei nicht per se für einen optimierten und optimaleren Baum, sondern bildet nur Alternativen. Aus diesen wird mittels Kostenfunktionen und Enummeratoren der optimale Plan ausgewählt.
+
+Einige Optimierer nutzen während der Verarbeitung einer Anfrage unterschiedliche Repräsentationsformen. Als initiale Repräsentationsform steht meist eine geparste Anfrage zur Verfügung. Das Resultat ist i.d.R. ein Operatorenbaum. Während der Verarbeitung durch den Optimierer kann zwischendurch auch ein logischer Operatorenbaum (auch Query Tree) genutzt werden.
+
+Einige Systeme nutzen auch kalkülorientierte Repräsentationsformen zur Analyse der Struktur einer Anfrage. Solche Anfragen lassen sich in der Form von Query Graphen darstellen, deren Knoten Relationen repräsentieren und deren Kanten mit Join Prädikaten gekennzeichnet sind. So einfach diese Repräsentationsform ist, so schwierig ist diese in der Umsetzung. Diese Prädikate Graphen repräsentieren nur einen Teil der möglichen Operationen. Ein solcher Graph kann zwar natürliche Joins darstellen, die Repräsentation von UNION ist nicht möglich. Ebenfalls lassen sich verschachtelte Anfragen nicht darstellen. Diesem Nachteil tritt der GQM des Starburst Projektes entgegen. Ein GQM ist eine erweiterte Form der Query Graphen. Der GQM erlaubt es mit Hilfe von Building blocks einfache SQL Statements zu repräsetieren und weitere nested Query als Subgraphen darzustellen. Im Gegensatz dazu nutzt EXODUS und seine Nachfolger von vornherein einen uniformen Querybaum und Operatorenbaun für alle Phasen der Optimierung.
