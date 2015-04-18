@@ -24,9 +24,9 @@ public:
 		return _cardinality.at(rel1) * _cardinality.at(rel2) * _selectivity.at(rel1+rel2);
 	}
 	
-	double getSelectivity(Bitvector_t rel1, Bitvector_t rel2)
+	double getSelectivity(Bitvector_t & rel1, Bitvector_t & rel2)
 	{
-		return 1;
+		return 0.75;
 	}
 };
 

@@ -118,6 +118,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "PlanNode&lt;BitVectorSmall&lt;unsigned int&gt; &gt;::PlanNode()"
                   moduleName = "RuleBasedOptimizer"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/christiandeckert/Desktop/Masterarbeit_develop/RuleBasedOptimizer/plan/standard/PlanNode.h"
                   timestampString = "447087091.61001"
                   startingColumnNumber = "9223372036854775807"
@@ -132,6 +133,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "PlanNode&lt;BitVectorSmall&lt;unsigned int&gt; &gt;::PlanNode()"
                   moduleName = "RuleBasedOptimizer"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/christiandeckert/Desktop/Masterarbeit_develop/RuleBasedOptimizer/plan/standard/PlanNode.h"
                   timestampString = "447087091.610362"
                   startingColumnNumber = "9223372036854775807"
@@ -199,6 +201,38 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
             endingLineNumber = "109">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/cost/CostEstimator.h"
+            timestampString = "451042955.645897"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "findCheapestPlan(PlanNode_t * planNode)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/cost/CostEstimator.h"
+            timestampString = "451042955.645897"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "calcPrice(PlanNode_t * planNode)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

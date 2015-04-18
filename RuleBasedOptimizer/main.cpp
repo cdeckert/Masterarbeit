@@ -38,13 +38,14 @@ int main()
 	
 	CostEstimator<PlanNode_t>* c = new CostEstimator<PlanNode_t>(*s);
 	watch.start();
+	execute(*ecs);
 	c->getCheapestPlan(ecs);
 	
 	watch.stop();
 	
-    execute(*ecs);
+	
     
-    adaptor.dump(ecs);
+    //adaptor.dump(ecs);
     
     StringAdaptor<PlanNode_t> stringAdaptor;
 	
