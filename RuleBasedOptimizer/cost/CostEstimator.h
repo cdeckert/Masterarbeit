@@ -24,23 +24,14 @@ public:
 	 */
 	CostEstimator(Statistics_t stats): _statistic(stats)
 	{
-		_minCardinality.insert(
-		{
+		_minCardinality.insert({
 			{Bitvector_t(1), 1}, {Bitvector_t(2), 2}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
 		});
 		printMap();
 	};
-	/**
-	 * @brief [brief description]
-	 * @details [long description]
-	 *
-	 * @param planNode [description]
-	 * @return [description]
-	 */
-	double calcPlanCost(PlanNode_t &planNode)
-	{
-		planNode.l().getSignature();
-	};
+	
+	
+	
 	/**
 	 * @brief [brief description]
 	 * @details [long description]
@@ -49,12 +40,60 @@ public:
 	 */
 	void getCheapestPlan(EquivalenceClass_t *input)
 	{
+		double optimalPrice = 0.0;
 		for (EItr eq = input->begin(); eq.isOK(); ++eq)
 		{
-			findCheapestPlan(eq.node());
+			
+			double price = calcCardinality(eq.node());
+			if(!input->isBest())
+			{
+				optimalPrice = price;
+				input->setBest(eq.node());
+				_minCardinality.insert({{input->getRelations(), optimalPrice}});
+			}
+			if(optimalPrice > price)
+			{
+				optimalPrice = price;
+				input->setBest(eq.node());
+				_minCardinality.insert({{input->getRelations(), optimalPrice}});
+			}
+			
+			
+			
 		}
 	}
 
+	
+	double calcCardinality(PlanNode_t * planNode)
+	{
+		double cardinality = 1.0;
+		if (_minCardinality.count(planNode->l().getRelations()) == 0)
+		{
+			getCheapestPlan(&planNode->l());
+		}
+		if (planNode->hasRight() && _minCardinality.count(planNode->r().getRelations()) == 0)
+		{
+			getCheapestPlan(&planNode->r());
+		}
+		
+		cardinality *= _minCardinality.at(planNode->l().getRelations());
+		
+		if(planNode->hasRight())
+		{
+			cardinality *= _minCardinality.at(planNode->r().getRelations());
+		}
+		
+		if(planNode->hasRight())
+		{
+			cardinality *= _statistic.getSelectivity(planNode);
+		}
+		
+		
+		
+		std::cout << "cardinality: " << cardinality << std::endl;
+
+		return cardinality;
+	}
 
 	/**
 	 * @brief [brief description]
@@ -94,10 +133,11 @@ public:
 
 		if (givenCardinality == 0 || givenCardinality > minCardinality)
 		{
-			_minCardinality.insert(
-			{
+			_minCardinality.insert({
 				{planNode->getRelations(), minCardinality}
 			});
+			
+			
 			printMap();
 		}
 

@@ -1,9 +1,5 @@
 //
 //  Statistics.h
-//  RuleBasedOptimizer
-//
-//  Created by Christian Deckert on 07/04/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef RuleBasedOptimizer_Statistics_h
@@ -46,8 +42,13 @@ public:
 	 *
 	 * @return [description]
 	 */
-	double getSelectivity(Bitvector_t &rel1, Bitvector_t &rel2)
+	double getSelectivity(PlanNode_t * pn)
 	{
+		if(!pn->hasRight())
+		{
+			return 1.0;
+		}
+		
 		return 0.75;
 	}
 };

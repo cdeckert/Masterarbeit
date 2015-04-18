@@ -241,10 +241,7 @@ public:
 	 * @param _relations [description]
 	 * @return [description]
 	 */
-	inline unsigned int getRel()
-	{
-		return _relations.log2();
-	}
+	inline unsigned int getRel(){ return _relations.log2(); };
 	
 	/**
 	 * @brief [brief description]
@@ -258,7 +255,7 @@ public:
 	 * 
 	 * @param neighbors [description]
 	 */
-	void setNeighbors(Bitvector_t & neighbors) { _neighbors=neighbors; }
+	void setNeighbors(Bitvector_t & neighbors) { _neighbors=neighbors; };
 	
 	/**
 	 * @brief [brief description]
@@ -280,7 +277,15 @@ public:
 	 * @details [long description]
 	 * @return [description]
 	 */
-	PlanNode_t * getFirst(){ return _first; };
+	inline PlanNode_t * getFirst(){ return _first; };
+	
+	
+	inline PlanNode_t getBest() { return _best; };
+	
+	inline void setBest(PlanNode_t * pn){ _best = pn; };
+	
+	
+	inline bool isBest(){ return _best != NULL; };
 	
 	
 private:
@@ -289,6 +294,8 @@ private:
 	
 	PlanNode_t * _first;
 	PlanNode_t * _last;
+	
+	PlanNode_t * _best;
 
 	bool _explored;
 
