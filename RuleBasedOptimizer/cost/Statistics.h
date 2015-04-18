@@ -18,20 +18,12 @@ public:
 	 * @brief [brief description]
 	 * @details [long description]
 	 */
-	Statistics() {};
-	/**
-	 * @brief [brief description]
-	 * @details [long description]
-	 *
-	 * @param rel1 [description]
-	 * @param rel2 [description]
-	 *
-	 * @return [description]
-	 */
-	double calcCost(Bitvector_t rel1, Bitvector_t rel2)
+	Statistics()
 	{
-		return _cardinality.at(rel1) * _cardinality.at(rel2) * _selectivity.at(rel1 + rel2);
-	}
+		_selectivity.insert({
+			{Bitvector_t(1), 0.5}, {Bitvector_t(2), 0.75}, {Bitvector_t(4), 0.25}, {Bitvector_t(8), 0.25}
+		});
+	};
 
 	/**
 	 * @brief [brief description]
@@ -44,12 +36,28 @@ public:
 	 */
 	double getSelectivity(PlanNode_t * pn)
 	{
+		double selectivity = 1.0;
 		if(!pn->hasRight())
 		{
-			return 1.0;
+			return selectivity;
 		}
 		
-		return 0.75;
+		for(u_int i = 0; i< pn->l().getRelations().capacity(); ++i)
+		{
+			for(u_int j = 0; j < pn->r().getRelations().capacity(); ++j)
+			{
+				Bitvector_t b;
+				b.set(i);
+				b.set(j);
+				if(_selectivity.count(b) > 0)
+				{
+					selectivity *= _selectivity.at(b);
+				}
+				
+			}
+		}
+			
+		return selectivity;
 	}
 };
 

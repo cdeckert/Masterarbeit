@@ -34,9 +34,8 @@ int main()
 	
 	
 	
-	Statistics<Bitvector_t> * s = new Statistics<Bitvector_t>();
 	
-	CostEstimator<PlanNode_t>* c = new CostEstimator<PlanNode_t>(*s);
+	CostEstimator<PlanNode_t>* c = new CostEstimator<PlanNode_t>();
 	watch.start();
 	execute(*ecs);
 	c->getCheapestPlan(ecs);
