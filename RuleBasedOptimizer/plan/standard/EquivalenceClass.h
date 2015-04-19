@@ -280,7 +280,7 @@ public:
 	inline PlanNode_t * getFirst(){ return _first; };
 	
 	
-	inline PlanNode_t getBest() { return _best; };
+	inline PlanNode_t getBest() { return *_best; };
 	
 	inline void setBest(PlanNode_t * pn){ _best = pn; };
 	

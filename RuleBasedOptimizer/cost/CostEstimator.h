@@ -24,11 +24,14 @@ public:
 	CostEstimator()
 	{
 		_cardinality.insert({
-			{Bitvector_t(1), 1}, {Bitvector_t(2), 2}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
+			{Bitvector_t(1), 1}, {Bitvector_t(2), 5}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
+		});
+		_cost.insert({
+			{Bitvector_t(1), 1}, {Bitvector_t(2), 5}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
 		});
 		
 		_selectivity.insert({
-			{Bitvector_t(1), 0.5}, {Bitvector_t(2), 0.75}, {Bitvector_t(4), 0.25}, {Bitvector_t(8), 0.25}
+			{Bitvector_t(1), 0.05}, {Bitvector_t(2), 0.75}, {Bitvector_t(4), 0.25}, {Bitvector_t(8), 0.25}
 		});
 		printMap();
 	};
@@ -43,22 +46,24 @@ public:
 	 */
 	void getCheapestPlan(EquivalenceClass_t *input)
 	{
-		double optimalPrice = 0.0;
+		double optimalCost = 0.0;
 		for (EItr eq = input->begin(); eq.isOK(); ++eq)
 		{
 			
-			double price = calcCardinality(eq.node());
+			double newCardinality = calcCardinality(eq.node());
+			double newCost = calcCost(eq.node());
 			if(!input->isBest())
 			{
-				optimalPrice = price;
 				input->setBest(eq.node());
-				_cardinality.insert({{input->getRelations(), optimalPrice}});
+				_cardinality.insert({{input->getRelations(), newCardinality}});
+				_cost.insert({{input->getRelations(), newCost}});
 			}
-			if(optimalPrice > price)
+			if(optimalCost > newCost)
 			{
-				optimalPrice = price;
+				optimalCost = newCost;
 				input->setBest(eq.node());
-				_cardinality.insert({{input->getRelations(), optimalPrice}});
+				_cardinality.insert({{input->getRelations(), newCardinality}});
+				_cost.insert({{input->getRelations(), optimalCost}});
 			}
 			
 			
@@ -69,6 +74,7 @@ public:
 	
 	double calcCardinality(PlanNode_t * planNode)
 	{
+		
 		double cardinality = 1.0;
 		if (_cardinality.count(planNode->l().getRelations()) == 0)
 		{
@@ -91,11 +97,37 @@ public:
 			cardinality *= getSelectivity(planNode);
 		}
 		
-		
-		
 		std::cout << "cardinality: " << cardinality << std::endl;
-
+		
 		return cardinality;
+	}
+	
+	double calcCost(PlanNode_t * planNode)
+	{
+		double cost = 0.0;
+		
+		if (_cost.count(planNode->l().getRelations()) == 0)
+		{
+			getCheapestPlan(&planNode->l());
+		}
+		if (planNode->hasRight() && _cost.count(planNode->r().getRelations()) == 0)
+		{
+			getCheapestPlan(&planNode->r());
+		}
+		
+		cost += _cost.at(planNode->l().getRelations());
+		
+		if(planNode->hasRight())
+		{
+			cost += _cost.at(planNode->r().getRelations());
+		}
+		
+		
+		cost += calcCardinality(planNode);
+
+		std::cout << "COST: " << cost << std::endl;
+		
+		return cost;
 	}
 
 	/**
@@ -178,7 +210,7 @@ public:
 				Bitvector_t b;
 				b.set(i);
 				b.set(j);
-				if(_selectivity.count(b) > 0)
+				if(_selectivity.count(b) != 0)
 				{
 					selectivity *= _selectivity.at(b);
 				}
