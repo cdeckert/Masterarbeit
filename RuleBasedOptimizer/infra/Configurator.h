@@ -8,8 +8,11 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 #include "Configuration.h"
+#include "json11.hpp"
 
 struct Configurator
 {

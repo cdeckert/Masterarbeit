@@ -25,14 +25,14 @@ typedef EquivalenceClass_t Ec;
 
 std::string getConfigPath(int argc, char* argv[])
 {
-	std::string configPath;
+	std::string configPath = "/Users/christiandeckert/Desktop/Masterarbeit_develop/config.json";
 	if(argc == 0)
 	{
-		configPath = "config.json";
+		
 	}
 	else
 	{
-		for(int i = 0; i < argc; ++i)
+		/*for(int i = 0; i < argc; ++i)
 		{
 			if (argv[i] == "-c")
 			{
@@ -42,7 +42,7 @@ std::string getConfigPath(int argc, char* argv[])
 			{
 				std::cout << "help";
 			}
-		}
+		}*/
 	}
 	return configPath;
 }
@@ -51,8 +51,7 @@ std::string getConfigPath(int argc, char* argv[])
 
 
 int main(int argc, char* argv[])
-{
-	
+{	
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
 	Configurator configManager;

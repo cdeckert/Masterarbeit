@@ -23,15 +23,11 @@ struct Configuration
 		std::string _name;
 		std::string _ruleset;
 	};
-	
-	
-	
-	
 	typedef std::vector<TestAlgorithm> AlgorithmVector_t;
 public:
 	BvDoubleMap_t _cardinality;
 	BvDoubleMap_t _selectivity;
-	AlgorithmVector_t _algorithms;
+	StringVector_t _algorithms;
 	
 private:
 };
