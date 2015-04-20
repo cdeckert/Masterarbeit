@@ -15,7 +15,6 @@
 #include "CostEstimator.h"
 
 
-#include "Statistics.h"
 #include "Stopwatch.h"
 
 
@@ -35,7 +34,9 @@ int main()
 	
 	
 	
-	CostEstimator<PlanNode_t>* c = new CostEstimator<PlanNode_t>();
+	CostEstimator<PlanNode_t>* c = new CostEstimator<PlanNode_t>({
+		{Bitvector_t(1), 1}, {Bitvector_t(2), 5}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
+	});
 	watch.start();
 	execute(*ecs);
 	c->getCheapestPlan(ecs);

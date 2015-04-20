@@ -5,8 +5,6 @@
 #ifndef RuleBasedOptimizer_CostEstimator_h
 #define RuleBasedOptimizer_CostEstimator_h
 
-#include "Statistics.h"
-
 
 template <typename PlanNode_t>
 class CostEstimator
@@ -14,6 +12,8 @@ class CostEstimator
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	typedef typename EquivalenceClass_t::Iterator EItr;
 	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	
+	typedef std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> BvDoubleMap_t;
 public:
 	/**
 	 * @brief [brief description]
@@ -21,14 +21,10 @@ public:
 	 *
 	 * @param stats [description]
 	 */
-	CostEstimator()
+	CostEstimator(BvDoubleMap_t cardinality)
 	{
-		_cardinality.insert({
-			{Bitvector_t(1), 1}, {Bitvector_t(2), 5}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
-		});
-		_cost.insert({
-			{Bitvector_t(1), 1}, {Bitvector_t(2), 5}, {Bitvector_t(4), 3}, {Bitvector_t(8), 4}
-		});
+		_cardinality.insert(cardinality);
+		_cost.insert(cardinality);
 		
 		_selectivity.insert({
 			{Bitvector_t(1), 0.05}, {Bitvector_t(2), 0.75}, {Bitvector_t(4), 0.25}, {Bitvector_t(8), 0.25}
@@ -222,9 +218,9 @@ public:
 	}
 private:
 
-	std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> _cardinality;
-	std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> _selectivity;
-	std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> _cost;
+	BvDoubleMap_t _cardinality;
+	BvDoubleMap_t _selectivity;
+	BvDoubleMap_t _cost;
 
 
 };
