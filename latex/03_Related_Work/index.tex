@@ -1,6 +1,22 @@
+\newpage
 \section{Related Work}
+
+
+In diesem Kapitel werden die Grundlagen erläutert und bereits bekannte Implementierungen erklärt.  Das Kapitel beginnt mit einer kurzen Übersicht über die Funktionsweise von Datenbanksystemen vor dem Hintergrund der Anfrageoptimierung. Im Zentrum stehen die Komponenten Query Optimizer und Query Execution Engine. Beide Teile sind integraler Bestandteil eines Datenbanksystems. Im weiteren wird der für die Anfragenoptimierung wichtige Begriff des Search Spaces eingegangen. Das Kapitel wird fortgesetzt mit einer Übersicht über bereits bestehende Datenbanksysteme und deren Optimierer. Es wird konkret auf IBMs Starburst-Projekt und das EXODUS Projekt \cite{graefe1987exodus}, \cite{carey1990exodus} mit seinen Nachfolgern Volcano \cite{graefe1990parallelizing}, \cite{graefe1990encapsulation}, \cite{graefe1993volcano}, \cite{graefe1994volcano} und Cascades \cite{graefe1995cascades} eingegangen. Abgerundet wird das Kapitel mit einer Erklärung der von Pellenkoft zusammengestellten Regelsets \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate}. Alle Komponenten zusammen bilden die Grundlage für die im nächsten Kapitel besprochene Implementierung der Planexpanders.
+
+
+\subsection{Historischer Überblick}
+Der Grundstein für Anfragenoptimierung wurde durch System R gelegt. Das System beinhaltet einen Algorithmus, der mit Hilfe von dynamischer Programmierung, eine optimale Join Order für eine Anfrage bildet. Das System prägte auch das Konzept der Interesting orders for exploiting available ordering. Bei späteren System wurde die Menge der optimierten Operatoren weiter vergrössert und regelbasierte Optimierungstechiken eingeführt. Ein Beispiel für dieses Systeme ist Starburst, das im folgenden weiter besprochen wird, es ist die weiterentwicklung von System R bei IBM und ist der Prototyp für DB2. Starburst bekann meherere Interne Repräsentationen der Anfrage einzuführen genauso wie Grammer-like Regeln zur Kombination von LOLEPOPs in Execution Plans. Ähnlich wie System R nutzt es einen Buttom-up Approach. Eine andere Familie an Optimierern fusst auf der Arbeit an EXODUS, aus dem Volcano und schliesslich Cascades entsand. Im gegensatz zu dem Bottom-up approach nutzt Voplcano einen Transformaiven Top down optimierungs Ansatz mit Memorization. 
+
+
+
+\input{03_Related_Work/SystemR.tex}
+
+
 \input{03_Related_Work/Starburst.tex}
 
 \input{03_Related_Work/Exodus_Volcano_Cascades.tex}
+
+\input{03_Related_Work/Oracle.tex}
 
 \input{03_Related_Work/Pellenkoft_RuleSet.tex}

@@ -33,60 +33,39 @@ private:
     std::vector<std::string> writeString(EquivalenceClass_t *);
     Operations_t * o = Operations_t::exemplar();
     RelationsMap_t relationMap;
-    
+	
+	std::string getBestPlan(EquivalenceClass_t *);
+	
 };
 
 
 
-/*template <typename PlanNode_t>
-typename StringAdaptor<PlanNode_t>::RelationsMap_t StringAdaptor<PlanNode_t>::getRelations(json11::Json json)
-{
-    RelationsMap_t relations;
-    
-    for(json11::Json rel : json["relations"].array_items())
-    {
-        unsigned int relName = rel.int_value();
-        relations.insert({{relName, o->rel(relName)}});
-    }
-    
-    for(json11::Json edge : json["joinEdges"].array_items())
-    {
-        relations.at(edge["from"].int_value())->addNeighbor(edge["to"].int_value());
-        relations.at(edge["to"].int_value())->addNeighbor(edge["from"].int_value());
-    }
-    return relations;
-}*/
-
-
-
-/*template <typename PlanNode_t>
-typename StringAdaptor<PlanNode_t>::EquivalenceClass_t * StringAdaptor<PlanNode_t>::createJoinTree(json11::Json query)
-{
-    if(query["op"].string_value() == "scan")
-    {
-        return o->scan(* relationMap.at(query["l"].int_value()));
-    }
-    else
-    {
-        return o->join( * createJoinTree(query["l"]), * createJoinTree(query["r"]));
-    }
-}*/
 
 
 
 
 
-/*
 template <typename PlanNode_t>
-typename StringAdaptor<PlanNode_t>::EquivalenceClass_t * StringAdaptor<PlanNode_t>::parse(std::string input){
-    std::string err;
-    json11::Json json = json11::Json::parse(input, err);
-    std::cout << json.dump() << err;
-    std::cout.flush();
-    relationMap = getRelations(json);
-    
-    return createJoinTree(json["query"]);
-}*/
+std::string StringAdaptor<PlanNode_t>::getBestPlan(EquivalenceClass_t * input){
+	if(input->getOperator() == Operator::SCAN)
+	{
+		int rel = input->getRel();
+		std::string plan =  input->getOperatorAsString() +"(" + std::to_string(rel) + ")";
+		return plan;
+	}
+	else
+	{
+		std::string result = "";
+		result = input->getBest().getOperatorAsString() + "("+ getBestPlan(&input->getBest().l());
+		if(input->getBest().hasRight())
+		{
+			result += "," + getBestPlan(&input->getBest().r());
+		}
+		result += ")";
+		return result;
+
+	}
+	};
 
 
 template <typename PlanNode_t>
@@ -94,10 +73,13 @@ std::string StringAdaptor<PlanNode_t>::dump(EquivalenceClass_t * input){
     std::string result = "";
     
     std::vector<std::string> plans = writeString(input);
+	
     for(std::string p : plans)
     {
         result += "\n" + p;
     }
+	
+	result += "\n\n****BEST PLAN: \n"+getBestPlan(input);
     return result;
 }
 
@@ -131,6 +113,8 @@ std::vector<std::string> StringAdaptor<PlanNode_t>::writeString(EquivalenceClass
             }
         }
     }
+	
+	
     
     return plans;
 }

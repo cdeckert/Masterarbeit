@@ -383,7 +383,7 @@ typedef BitVectorSmall<bitvector64_t> Bitvector64;
 
 template<class uint_t>
 inline std::ostream&
-operator<<(std::ostream& os, const BitVectorSmall<uint_t>& x) { return x.print2(os); }
+operator<<(std::ostream& os, const BitVectorSmall<uint_t>& x) { return x.print(os); }
 
 template<class uint_t>
 int

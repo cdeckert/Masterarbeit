@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF07D15A1AD3CF620020A35A /* DotParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF07D1581AD3CF620020A35A /* DotParser.cpp */; };
+		AF6AE2E01AE4F2FF00BDBC5F /* Configurator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF6AE2DE1AE4F2FF00BDBC5F /* Configurator.cpp */; };
 		AF75151D1A7F86440003FE5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF75151C1A7F86440003FE5B /* main.cpp */; };
 		AF865C1D1AC2C05A00D301D9 /* json11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF865C1B1AC2C05A00D301D9 /* json11.cpp */; };
 		AFE455CA1ADEBF500064F8CF /* Stopwatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE455C81ADEBF500064F8CF /* Stopwatch.cpp */; };
@@ -38,12 +39,14 @@
 		AF07D1581AD3CF620020A35A /* DotParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DotParser.cpp; path = adaptor/DotParser.cpp; sourceTree = "<group>"; };
 		AF07D1591AD3CF620020A35A /* DotParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DotParser.h; path = adaptor/DotParser.h; sourceTree = "<group>"; };
 		AF07D15C1AD3DD9E0020A35A /* CostEstimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CostEstimator.h; path = cost/CostEstimator.h; sourceTree = "<group>"; };
-		AF07D15D1AD3DDC90020A35A /* Statistics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Statistics.h; path = cost/Statistics.h; sourceTree = "<group>"; };
 		AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity.h; path = rule/rules/standard/LeftAssociativity.h; sourceTree = "<group>"; };
 		AF14C2421A92040100A4AEEF /* RuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RuleSet.h; path = rule/rulesets/RuleSet.h; sourceTree = "<group>"; };
 		AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExhaustiveTransformation.h; path = rule/ExhaustiveTransformation.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF3B90A51AA2733900468CB5 /* RS_B1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B1.h; path = rule/rulesets/RS_B1.h; sourceTree = "<group>"; };
 		AF6883841A9CB17300B6D1D7 /* RS_B0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RS_B0.h; path = rule/rulesets/RS_B0.h; sourceTree = "<group>"; };
+		AF6AE2DE1AE4F2FF00BDBC5F /* Configurator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Configurator.cpp; path = infra/Configurator.cpp; sourceTree = "<group>"; };
+		AF6AE2DF1AE4F2FF00BDBC5F /* Configurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Configurator.h; path = infra/Configurator.h; sourceTree = "<group>"; };
+		AF6AE2E11AE4F85700BDBC5F /* Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Configuration.h; path = infra/Configuration.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		AF8222BF1AC425E600861B51 /* DotAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DotAdaptor.h; path = adaptor/DotAdaptor.h; sourceTree = "<group>"; };
@@ -98,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				AF07D15C1AD3DD9E0020A35A /* CostEstimator.h */,
-				AF07D15D1AD3DDC90020A35A /* Statistics.h */,
 			);
 			name = cost;
 			sourceTree = "<group>";
@@ -212,6 +214,9 @@
 				AF99E47D1A939D0D006D94C4 /* Types.h */,
 				AFE455C81ADEBF500064F8CF /* Stopwatch.cpp */,
 				AFE455C91ADEBF500064F8CF /* Stopwatch.h */,
+				AF6AE2DE1AE4F2FF00BDBC5F /* Configurator.cpp */,
+				AF6AE2DF1AE4F2FF00BDBC5F /* Configurator.h */,
+				AF6AE2E11AE4F85700BDBC5F /* Configuration.h */,
 			);
 			name = infra;
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF75151D1A7F86440003FE5B /* main.cpp in Sources */,
+				AF6AE2E01AE4F2FF00BDBC5F /* Configurator.cpp in Sources */,
 				AF07D15A1AD3CF620020A35A /* DotParser.cpp in Sources */,
 				AF865C1D1AC2C05A00D301D9 /* json11.cpp in Sources */,
 				AFE455CA1ADEBF500064F8CF /* Stopwatch.cpp in Sources */,

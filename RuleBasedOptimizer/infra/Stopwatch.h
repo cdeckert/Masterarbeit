@@ -1,9 +1,5 @@
 //
 //  Stopwatch.h
-//  RuleBasedOptimizer
-//
-//  Created by Christian Deckert on 15/04/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef __RuleBasedOptimizer__Stopwatch__
