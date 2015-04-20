@@ -114,7 +114,6 @@ double CostEstimator<PlanNode_t>::getSelectivity(PlanNode_t * pn){
 			
 		}
 	}
-	
 	return selectivity;
 };
 
@@ -149,19 +148,18 @@ double CostEstimator<PlanNode_t>::calcCost(PlanNode_t * planNode)
 template <typename PlanNode_t>
 double CostEstimator<PlanNode_t>::calcCardinality(PlanNode_t * planNode)
 {
-	
 	double cardinality = 1.0;
 	if (_cardinality.count(planNode->l().getRelations()) == 0)
 	{
 		getCheapestPlan(&planNode->l());
 	}
+	
 	if (planNode->hasRight() && _cardinality.count(planNode->r().getRelations()) == 0)
 	{
 		getCheapestPlan(&planNode->r());
 	}
 	
 	cardinality *= _cardinality.at(planNode->l().getRelations());
-	
 	if(planNode->hasRight())
 	{
 		cardinality *= _cardinality.at(planNode->r().getRelations());
@@ -178,10 +176,6 @@ template <typename PlanNode_t>
 void CostEstimator<PlanNode_t>::findCheapestPlan(PlanNode_t *planNode)
 {
 	u_int givenCardinality;
-	
-	
-	std::cout << std::endl << "find Cheapest Plan";
-	
 	if (_cardinality.count(planNode->getRelations()) > 0)
 	{
 		givenCardinality = _cardinality.at(planNode->getRelations());
@@ -191,20 +185,17 @@ void CostEstimator<PlanNode_t>::findCheapestPlan(PlanNode_t *planNode)
 		givenCardinality = 0;
 	}
 	
-	
 	if (_cardinality.count(planNode->l().getRelations()) == 0)
 	{
 		getCheapestPlan(&planNode->l());
-		
-		std::cout << "getCheapestPlan(&planNode->l());" << std::endl;
 	}
+	
 	if (planNode->hasRight() && _cardinality.count(planNode->r().getRelations()) == 0)
 	{
 		getCheapestPlan(&planNode->r());
 	}
 	
 	u_int minCardinality = calcPrice(planNode);
-	
 	if (givenCardinality == 0 || givenCardinality > minCardinality)
 	{
 		_cardinality.insert({
@@ -212,10 +203,6 @@ void CostEstimator<PlanNode_t>::findCheapestPlan(PlanNode_t *planNode)
 		});
 		
 	}
-	
-	std::cout << std::endl << "END: find Cheapest Plan";
-	
-	
 };
 
 #endif

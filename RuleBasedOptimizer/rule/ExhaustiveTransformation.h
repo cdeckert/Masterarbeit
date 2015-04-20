@@ -17,7 +17,6 @@ typename Operations_t, typename Rule_t>
 class ExhaustiveTransformation
 {
     typedef RuleSet<Rule_t> RuleSet_t;
-    
     typedef ExhaustiveTransformation self_type;
     
 public:
