@@ -1,0 +1,35 @@
+[{
+	"name": "config A",
+	"relations":
+	[
+		{
+			"id": 1,
+			"cardinality": 10
+		},
+		{
+			"id": 2,
+			"cardinality": 15
+		},
+		{
+			"id": 3,
+			"cardinality": 25
+		}
+	],
+	"joinEdges":
+	[
+		{
+			"from": 1,
+			"to": 2,
+			"selectivity": 0.5
+		},
+		{
+			"from": 2,
+			"to": 3,
+			"selectivity": 0.5
+		}
+	],
+	"algorithms":
+	[
+		"RS_0", "RS_1", "RS_2"
+	]
+}]
