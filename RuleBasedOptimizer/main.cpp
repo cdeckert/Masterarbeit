@@ -55,11 +55,13 @@ int main(int argc, char* argv[])
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
 	Configurator<PlanNode_t> configManager;
-	for(Configuration<PlanNode_t> c : configManager.getConfigurations(_configPath))
+	for(Configuration<PlanNode_t> & c : configManager.getConfigurations(_configPath))
 	{
-		// execute configurations
-		//Executor exec = Executor(c);
-		//exec.run();
+		std::cout << "RUN";
+		//execute configurations
+		Executor<PlanNode_t> exec(c);
+		std::cout << "RUN";
+		exec.run();
 	}
 	return 1;
 	
@@ -71,7 +73,7 @@ int main(int argc, char* argv[])
 	
 	// return 1
 	
-    
+    /*
     JSONAdaptor<PlanNode_t> adaptor;
     
     std::string input = "{\"relations\":[1,2,3],\"joinEdges\":[{\"from\":1,\"to\":2},{\"from\":2,\"to\":3}],\"query\":{\"op\":\"join\",\"l\":{\"op\":\"scan\",\"l\":1},\"r\":{\"op\":\"join\",\"l\":{\"op\":\"scan\",\"l\":2},\"r\":{\"op\":\"scan\",\"l\":3}}}}";
@@ -107,8 +109,8 @@ int main(int argc, char* argv[])
 	
 	std::cout << std::endl << "NANO SECS: " << watch.getTime();
 	
-	return 1;
-}
+	return 1;*/
+};
 
 
 

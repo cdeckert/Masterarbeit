@@ -31,5 +31,18 @@
 	"algorithms":
 	[
 		"RS_0", "RS_1", "RS_2"
-	]
+	],
+	"inital_tree":
+	{
+		"op": "join",
+		"l": {
+			"op": "scan",
+			"l": 1
+		},
+		"r": {
+			"op": "join",
+			"l": 2,
+			"r": 3
+		}
+	}
 }]
