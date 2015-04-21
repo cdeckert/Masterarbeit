@@ -54,8 +54,8 @@ int main(int argc, char* argv[])
 {	
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
-	Configurator configManager;
-	for(Configuration c : configManager.getConfigurations(_configPath))
+	Configurator<PlanNode_t> configManager;
+	for(Configuration<PlanNode_t> c : configManager.getConfigurations(_configPath))
 	{
 		// execute configurations
 		//Executor exec = Executor(c);
