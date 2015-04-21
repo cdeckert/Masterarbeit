@@ -2,6 +2,8 @@
 //  Configurator.h
 //
 
+
+// todo combine with Configuration.h
 #ifndef __RuleBasedOptimizer__Configurator__
 #define __RuleBasedOptimizer__Configurator__
 
@@ -39,29 +41,23 @@ template <typename PlanNode_t>
 typename Configurator<PlanNode_t>::ConfigurationVector_t Configurator<PlanNode_t>::getConfigurations(std::string configPath)
 {
 	ConfigurationVector_t configurations;
-	std::cout << "Config Vector" << std::endl;
-	std::cout << configPath;
+	
+	// read file
 	std::ifstream configFile(configPath);
-	std::stringstream contents;
-	contents << configFile.rdbuf();
+	std::stringstream contents; contents << configFile.rdbuf();
 	configFile.close();
 	
 	
 	
 	
 	std::string err;
-	auto inputJson = json11::Json::parse(contents.str(), err);
+	json11::Json inputJson = json11::Json::parse(contents.str(), err);
 	
-	std::cout << "inputJson.is_array()" << inputJson.dump();
 	for(json11::Json aConfigJson : inputJson.array_items())
 	{
 		Configuration_t config(aConfigJson);
-		
-		
-		std::cout << "CONF";
 		configurations.push_back(config);
 	}
-	std::cout.flush();
 	return configurations;
 };
 
