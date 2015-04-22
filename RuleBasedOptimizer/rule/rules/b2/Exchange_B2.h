@@ -1,9 +1,5 @@
 //
 //  Exchange_B2.h
-//  RuleBasedOptimizer
-//
-//  Created by Christian Deckert on 03/03/15.
-//  Copyright (c) 2015 Christian Deckert. All rights reserved.
 //
 
 #ifndef RuleBasedOptimizer_Exchange_B2_h
@@ -33,17 +29,14 @@ public:
 	 */
 	bool isApplicable(PlanNode & aPlanNode) const override
 	{
-	// IF (A ⨝ (B ⨝ C))
-	return aPlanNode.isExchangeEnabled() &&
-	aPlanNode.getOperator() == JOIN &&
-	aPlanNode.getLeft().getOperator() == JOIN &&
-	aPlanNode.getRight().getOperator() == JOIN &&
+		// IF (A ⨝ B) ⨝ (C ⨝ D) <-> (A ⨝ D) ⨝ (C ⨝ B)
+		return aPlanNode.isExchangeEnabled() &&
+		aPlanNode.getOperator() == JOIN &&
+		aPlanNode.l().getOperator() == JOIN &&
+		aPlanNode.r().getOperator() == JOIN &&
+		aPlanNode.l().r().isOverlapping(aPlanNode.r().r());
+	};
 	
-	
-	aPlanNode.getLeft().getRightAttribute() == aPlanNode.getLeftAttribute() &&
-	aPlanNode.getRight().getRightAttribute() == aPlanNode.getRightAttribute();
-};
-
 	/**
 	 * @brief [brief description]
 	 * @details [long description]
@@ -53,34 +46,13 @@ public:
 	 */
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
-
-		// (A⨝B) ⨝ (C⨝D)
-
-		auto & a = aPlanNode.getLeft().getLeft();
-		auto & b = aPlanNode.getLeft().getRight();
-		auto & c = aPlanNode.getRight().getLeft();
-		auto & d = aPlanNode.getRight().getRight();
-
-		unsigned int a_pred = aPlanNode.getLeft().getLeftAttribute();
-		unsigned int b_pred = aPlanNode.getLeft().getRightAttribute();
-		unsigned int c_pred = aPlanNode.getRight().getLeftAttribute();
-		unsigned int d_pred = aPlanNode.getRight().getRightAttribute();
-
-
-		PlanNode & p = this->o.joinPN(
-							this->o.join(a, d).on(a_pred, d_pred),
-							this->o.join(c,b).on(c_pred, b_pred)
-							  ).on(d_pred, b_pred);
-		p.disableAllAndEnableCommutativity();
-		return & p;
-
-
-
-		return NULL;
-
+		PlanNode & pn = this->o.joinPN(* this->o.join(aPlanNode.l().l(),  aPlanNode.r().r()), * this->o.join(aPlanNode.r().l(), aPlanNode.l().r()));
+		pn.disableAllAndEnableCommutativity();
+		return & pn;
 	};
-
+	
 };
+
 
 
 

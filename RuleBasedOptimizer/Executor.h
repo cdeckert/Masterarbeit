@@ -33,18 +33,18 @@ class Executor
 	typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
 	typedef RS_B1<PlanNode_t, Operations_t> RS_B1_t;
 	typedef RS_B2<PlanNode_t, Operations_t> RS_B2_t;
-	
+
 	typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClassIterator_t,
-	PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
+			PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 	//typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
-	
+
 public:
 	Executor();
-	Executor(Configuration_t & config) : _configuration(config){};
+	Executor(Configuration_t &config) : _configuration(config) {};
 	void run() const;
 
 private:
-	Configuration_t & _configuration;
+	Configuration_t &_configuration;
 };
 
 
@@ -53,49 +53,50 @@ template <typename PlanNode_t>
 void Executor<PlanNode_t>::run() const
 {
 	std::cout << "RUN";
-	
-	for(std::string algo : _configuration.getAlgorithms())
+
+	for (std::string algo : _configuration.getAlgorithms())
 	{
 		uint64_t duration = 0;
-		for(int i = 0; i < 1000; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
-		ExhaustiveTransformation_t * t1 = 0;
-		if(algo == "RS_B0")
-		{
-			t1 = new ExhaustiveTransformation_t(RS_B0_t());
-		}else
-		if(algo == "RS_B1")
-		{
-			t1 = new ExhaustiveTransformation_t(RS_B1_t());
-		}else
-		{
-			t1 = new ExhaustiveTransformation_t(RS_B0_t());
-		}
-		
-		EquivalenceClass_t * eq = _configuration.getInitalTree();
-		StringAdaptor<PlanNode_t> adaptor;
-		CostEstimator<PlanNode_t> c(_configuration.getCardinality(), _configuration.getSelectivity());
-		
-		Stopwatch watch;
-		
-		watch.start();
-		t1->apply(*eq);
-		c.getCheapestPlan(eq);
-		watch.stop();
-		
-		
-		
-		
+			ExhaustiveTransformation_t *t1 = 0;
+			if (algo == "RS_B0")
+			{
+				t1 = new ExhaustiveTransformation_t(RS_B0_t());
+			}
+			else if (algo == "RS_B1")
+			{
+				t1 = new ExhaustiveTransformation_t(RS_B1_t());
+			}
+			else
+			{
+				t1 = new ExhaustiveTransformation_t(RS_B2_t());
+			}
+
+			EquivalenceClass_t *eq = _configuration.getInitalTree();
+			StringAdaptor<PlanNode_t> adaptor;
+			CostEstimator<PlanNode_t> c(_configuration.getCardinality(), _configuration.getSelectivity());
+
+			Stopwatch watch;
+
+			watch.start();
+			t1->apply(*eq);
+			c.getCheapestPlan(eq);
+			watch.stop();
+
+
+
+
 			duration += watch.getDuration();
-			// std::cout << adaptor.dump(eq);
+			std::cout << adaptor.dump(eq);
 		}
 		duration = duration / 1000;
 		std::cout << std::endl << "TIME:"  << duration << std::endl;
 	}
-	
-	
-	
-	
+
+
+
+
 };
 
 
