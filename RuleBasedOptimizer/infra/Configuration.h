@@ -19,7 +19,7 @@ class Configuration
 {
 	typedef unsigned int u_int;
 	typedef typename json11::Json Json;
-	typedef Operations<PlanNode_t, unsigned int> Operations_t;
+	typedef Operations<PlanNode_t, u_int> Operations_t;
 	typedef std::vector<std::string> StringVector_t;
 	typedef BitVectorSmall<u_int> Bitvector_t;
 	typedef std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> BvDoubleMap_t;
@@ -29,6 +29,9 @@ class Configuration
 public:
 	Configuration(Json);
 	EquivalenceClass_t * getInitalTree();
+	
+	BvDoubleMap_t getSelectivity(){ return _selectivity; };
+	BvDoubleMap_t getCardinality(){ return _cardinality; };
 	
 	
 private:
@@ -48,7 +51,6 @@ private:
 // Implementation
 //
 
-
 template <typename PlanNode_t>
 Configuration<PlanNode_t>::Configuration(Json configuration)
 {
@@ -66,7 +68,7 @@ Configuration<PlanNode_t>::Configuration(Json configuration)
 		Bitvector_t b;
 		b.set(sel["from"].int_value());
 		b.set(sel["to"].int_value());
-		_cardinality.insert({{b, sel["selectivtity"].number_value()}});
+		_selectivity.insert({{b, sel["selectivtity"].number_value()}});
 	}
 	
 	for(json11::Json algo : _configuration["algorithms"].array_items())
@@ -74,6 +76,7 @@ Configuration<PlanNode_t>::Configuration(Json configuration)
 		_algorithms.push_back(algo.string_value());
 	}
 };
+
 template <typename PlanNode_t>
 void Configuration<PlanNode_t>::createRelations()
 {
@@ -104,10 +107,10 @@ typename Configuration<PlanNode_t>::EquivalenceClass_t * Configuration<PlanNode_
 	}
 }
 
-
 template <typename PlanNode_t>
 typename Configuration<PlanNode_t>::EquivalenceClass_t * Configuration<PlanNode_t>::getInitalTree()
 {
+	// someone can argue that it is not nessesary to store relations in a specific map... :)
 	createRelations();
 	return createJoinTree(_configuration["inital_tree"]);
 };

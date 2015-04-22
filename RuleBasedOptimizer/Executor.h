@@ -14,6 +14,9 @@
 #include "ExhaustiveTransformation.h"
 #include "Configuration.h"
 #include "RS_B0.h"
+#include "StringAdaptor.h"
+#include "CostEstimator.h"
+#include "Stopwatch.h"
 
 template <typename PlanNode_t>
 class Executor
@@ -50,8 +53,22 @@ void Executor<PlanNode_t>::run()
 	std::cout << "RUN";
 	_configuration.getInitalTree();
 	ExhaustiveTransformation_t t1((RS_B0_t()));
-	//t1.apply(* _configuration.getInitalTree());
+	EquivalenceClass_t * eq = _configuration.getInitalTree();
+	StringAdaptor<PlanNode_t> adaptor;
+	CostEstimator<PlanNode_t> c(_configuration.getCardinality(), _configuration.getSelectivity());
 	
+	Stopwatch watch;
+	
+	watch.start();
+	t1.apply(*eq);
+	c.getCheapestPlan(eq);
+	watch.stop();
+	
+	std::cout << std::endl << "TIME:"  << watch.getDuration() << std::endl;
+	
+	
+	
+	std::cout << adaptor.dump(eq);
 };
 
 
