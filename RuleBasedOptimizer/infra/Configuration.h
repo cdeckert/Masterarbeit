@@ -28,11 +28,12 @@ class Configuration
 	
 public:
 	Configuration(Json);
+	
 	EquivalenceClass_t * getInitalTree();
 	
-	BvDoubleMap_t getSelectivity(){ return _selectivity; };
-	BvDoubleMap_t getCardinality(){ return _cardinality; };
-	
+	inline BvDoubleMap_t getSelectivity() const { return _selectivity; };
+	inline BvDoubleMap_t getCardinality() const { return _cardinality; };
+	inline StringVector_t getAlgorithms() const { return _algorithms; };
 	
 private:
 	Operations_t *o = Operations_t::exemplar();

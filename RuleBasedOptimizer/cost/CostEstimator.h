@@ -78,7 +78,7 @@ void CostEstimator<PlanNode_t>::getCheapestPlan(EquivalenceClass_t *input)
 			_cardinality.insert({{input->getRelations(), newCardinality}});
 			_cost.insert({{input->getRelations(), newCost}});
 		}
-		if(optimalCost > newCost)
+		if(optimalCost == 0 || optimalCost > newCost)
 		{
 			optimalCost = newCost;
 			input->setBest(eq.node());
