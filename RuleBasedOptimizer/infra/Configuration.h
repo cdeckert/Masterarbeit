@@ -24,7 +24,7 @@ class Configuration
 	typedef BitVectorSmall<u_int> Bitvector_t;
 	typedef std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> BvDoubleMap_t;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
-	typedef std::unordered_map<Bitvector_t, EquivalenceClass_t *>  RelationsMap_t;
+	typedef std::unordered_map<u_int, EquivalenceClass_t *, Hasher<Bitvector_t>>  RelationsMap_t;
 	
 public:
 	Configuration(Json);
@@ -37,10 +37,11 @@ private:
 	BvDoubleMap_t _cardinality;
 	BvDoubleMap_t _selectivity;
 	StringVector_t _algorithms;
+	RelationsMap_t _relations;
 	
+	EquivalenceClass_t *createJoinTree(Json);
+	void createRelations();
 	
-	EquivalenceClass_t *createJoinTree(Json, RelationsMap_t);
-	RelationsMap_t getRelations();
 };
 
 //
@@ -74,34 +75,32 @@ Configuration<PlanNode_t>::Configuration(Json configuration)
 	}
 };
 template <typename PlanNode_t>
-typename Configuration<PlanNode_t>::RelationsMap_t Configuration<PlanNode_t>::getRelations()
+void Configuration<PlanNode_t>::createRelations()
 {
-	RelationsMap_t relations;
 	
 	for (json11::Json rel : _configuration["relations"].array_items())
 	{
-		unsigned int relName = rel.int_value();
-		relations.insert({{relName, o->rel(relName)}});
+		unsigned int relName = rel["id"].int_value();
+		_relations.insert({{relName, o->rel(relName)}});
 	}
 	
 	for (json11::Json edge : _configuration["joinEdges"].array_items())
 	{
-		relations.at(edge["from"].int_value())->addNeighbor(edge["to"].int_value());
-		relations.at(edge["to"].int_value())->addNeighbor(edge["from"].int_value());
+		_relations.at(edge["from"].int_value())->addNeighbor(edge["to"].int_value());
+		_relations.at(edge["to"].int_value())->addNeighbor(edge["from"].int_value());
 	}
-	return relations;
 };
 
 template <typename PlanNode_t>
-typename Configuration<PlanNode_t>::EquivalenceClass_t * Configuration<PlanNode_t>::createJoinTree(Json query, RelationsMap_t relations)
+typename Configuration<PlanNode_t>::EquivalenceClass_t * Configuration<PlanNode_t>::createJoinTree(Json query)
 {
 	if (query["op"].string_value() == "scan")
 	{
-		return o->scan(* relations.at(query["l"].int_value()));
+		return o->scan(* _relations.at(query["l"].int_value()));
 	}
 	else
 	{
-		return o->join( * createJoinTree(query["l"], relations), * createJoinTree(query["r"], relations));
+		return o->join( * createJoinTree(query["l"]), * createJoinTree(query["r"]));
 	}
 }
 
@@ -109,7 +108,8 @@ typename Configuration<PlanNode_t>::EquivalenceClass_t * Configuration<PlanNode_
 template <typename PlanNode_t>
 typename Configuration<PlanNode_t>::EquivalenceClass_t * Configuration<PlanNode_t>::getInitalTree()
 {
-	return createJoinTree(_configuration["query"], getRelations());
+	createRelations();
+	return createJoinTree(_configuration["inital_tree"]);
 };
 
 #endif

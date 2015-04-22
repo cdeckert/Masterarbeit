@@ -9,6 +9,9 @@
 #include <istream>  // for istream (operator >>)
 
 
+#include "Hasher.h"
+
+
 /*
  * not used: bit scan forward bsf ist intel befehl, der
  * fuer ein gesetztes bit die position rausfindet

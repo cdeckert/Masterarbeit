@@ -7,6 +7,7 @@
 
 #include "Executor.h"
 #include "Configurator.h"
+#include "PlanNode.h"
 
 #include <string>
 
@@ -20,7 +21,6 @@
 #include "Stopwatch.h"
 
 
-typedef EquivalenceClass_t Ec;
 
 
 std::string getConfigPath(int argc, char* argv[])
@@ -51,7 +51,11 @@ std::string getConfigPath(int argc, char* argv[])
 
 
 int main(int argc, char* argv[])
-{	
+{
+	typedef unsigned int u_int;
+	typedef BitVectorSmall<u_int> Bitvector_t;
+	typedef PlanNode<Bitvector_t> PlanNode_t;
+	typedef PlanNode_t::EquivalenceClass_t Ec;
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
 	Configurator<PlanNode_t> configManager;

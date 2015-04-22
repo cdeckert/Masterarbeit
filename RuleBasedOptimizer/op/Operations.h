@@ -16,6 +16,11 @@
  * @tparam PlanNode_t the standard plan Node
  * @tparam u_int an unsigned integer
  */
+
+#include "Reservoir.h"
+#include "Operator.h"
+
+
 template <typename PlanNode_t, typename u_int>
 class Operations
 {
