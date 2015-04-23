@@ -40,8 +40,7 @@ public:
 	 */
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
-		return & aPlanNode;
-		return & this->o.joinPN(aPlanNode.l().l(), *this->o.join(aPlanNode.l().r(), aPlanNode.r()));
+		return this->o.joinPN(aPlanNode.l().l(), *this->o.join(aPlanNode.l().r(), aPlanNode.r())).disableAllAndEnableCommutativity();
 	};
 	
 };

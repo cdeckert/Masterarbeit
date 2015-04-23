@@ -211,22 +211,24 @@ public:
 	 * @brief disables all rules
 	 * @details used by B2 rule set
 	 */
-	inline void disableAllRules()
+	inline self_type * disableAllRules()
 	{
 		_commutativityEnabled = false;
 		_leftAssociativityEnabled = false;
 		_rightAssociativityEnabled = false;
 		_exchangeEnabled = false;
+		return this;
 	};
 	
 	/**
 	 * @brief disables all rules and enables commutativity
 	 * @details used by B2 rule set
 	 */
-	inline void disableAllAndEnableCommutativity()
+	inline self_type * disableAllAndEnableCommutativity()
 	{
 		disableAllRules();
 		_commutativityEnabled = true;
+		return this;
 	};
 	
 

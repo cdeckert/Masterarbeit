@@ -29,7 +29,8 @@ public:
 	bool isApplicable(PlanNode & aPlanNode) const override
 	{
 		// IF (A ⨝ (B ⨝ C))
-		return aPlanNode.getOperator() == JOIN &&
+		return aPlanNode.isRightAssociativityEnabled() &&
+		aPlanNode.getOperator() == JOIN &&
 		aPlanNode.r().getOperator() == JOIN &&
 		aPlanNode.l().isOverlapping(aPlanNode.r().l());
 	};
@@ -43,8 +44,7 @@ public:
 	 */
 	PlanNode * apply(PlanNode & aPlanNode) const override
 	{
-		
-		return & this->o.joinPN(*this->o.join(aPlanNode.l(), aPlanNode.r().l()), aPlanNode.r().r());
+		return this->o.joinPN(*this->o.join(aPlanNode.l(), aPlanNode.r().l()), aPlanNode.r().r()).disableAllAndEnableCommutativity();
 	};
 	
 };

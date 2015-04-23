@@ -43,9 +43,7 @@ public:
 	 */
 	PlanNode_t * apply(PlanNode_t & aPlanNode) const override
 	{
-		PlanNode_t & pn = this->o.joinPN(aPlanNode.r(), aPlanNode.l());
-		pn.disableAllRules();
-		return & this->o.joinPN(aPlanNode.r(), aPlanNode.l());
+		return this->o.joinPN(aPlanNode.r(), aPlanNode.l()).disableAllRules();
 	};
 };
 
