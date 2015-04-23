@@ -34,8 +34,7 @@ class Executor
 	typedef RS_B1<PlanNode_t, Operations_t> RS_B1_t;
 	typedef RS_B2<PlanNode_t, Operations_t> RS_B2_t;
 
-	typedef ExhaustiveTransformation<EquivalenceClass_t, EquivalenceClassIterator_t,
-			PlanNode_t, Bitvector_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
+	typedef ExhaustiveTransformation<PlanNode_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 	//typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
 
 public:
@@ -47,7 +46,9 @@ private:
 	Configuration_t &_configuration;
 };
 
-
+//
+// Implementation
+//
 
 template <typename PlanNode_t>
 void Executor<PlanNode_t>::run() const

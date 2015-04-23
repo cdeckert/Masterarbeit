@@ -33,16 +33,20 @@ class RS_B2 : public RuleSet<Rule<PlanNode_t, Operations_t>>
 	typedef Exchange_B2<PlanNode_t, Operations_t> Exchange_t;
     
 public:
-    RS_B2() : RuleSet<Rule_t>()
-    {
-		this->push_back(new Commutativity_t());
-		this->push_back(new LeftAssociativity_t());
-		this->push_back(new RightAssociativity_t());
-		this->push_back(new Exchange_t());
-    };
-    
-private:
-    
+    RS_B2();
+};
+
+//
+// Implementation
+//
+
+template <typename PlanNode_t, typename Operations_t>
+RS_B2<PlanNode_t, Operations_t>::RS_B2() : RuleSet<Rule_t>()
+{
+	this->push_back(new Commutativity_t());
+	this->push_back(new LeftAssociativity_t());
+	this->push_back(new RightAssociativity_t());
+	this->push_back(new Exchange_t());
 };
 
 #endif

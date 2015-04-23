@@ -11,7 +11,7 @@ class CostEstimator
 {
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	typedef typename EquivalenceClass_t::Iterator EItr;
-	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	typedef typename PlanNode_t::BV Bitvector_t;
 	typedef std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> BvDoubleMap_t;
 
 public:

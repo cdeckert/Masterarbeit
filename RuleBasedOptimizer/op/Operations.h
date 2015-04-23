@@ -25,7 +25,7 @@ template <typename PlanNode_t, typename u_int>
 class Operations
 {
     typedef Operations self_type;
-	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	typedef typename PlanNode_t::BV Bitvector_t;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
     
 public:

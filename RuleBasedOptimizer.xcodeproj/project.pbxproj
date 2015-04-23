@@ -74,7 +74,6 @@
 		AFFF644C1AA5B1C80034AD55 /* LeftAssociativity_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LeftAssociativity_B2.h; path = rule/rules/b2/LeftAssociativity_B2.h; sourceTree = "<group>"; usesTabs = 1; };
 		AFFF644D1AA5B1E40034AD55 /* RightAssociativity_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity_B2.h; path = rule/rules/b2/RightAssociativity_B2.h; sourceTree = "<group>"; };
 		AFFF644E1AA5C11E0034AD55 /* Exchange_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exchange_B2.h; path = rule/rules/b2/Exchange_B2.h; sourceTree = "<group>"; };
-		AFFF64521AA5FA920034AD55 /* BetterTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BetterTransformation.h; path = rule/BetterTransformation.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,7 +237,6 @@
 				AFECC5B71A8D00B600FA9D84 /* rules */,
 				AFECC5B61A8D00AB00FA9D84 /* rulesets */,
 				AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */,
-				AFFF64521AA5FA920034AD55 /* BetterTransformation.h */,
 			);
 			name = rule;
 			sourceTree = "<group>";

@@ -36,9 +36,6 @@ public:
 		this->push_back(new LeftAssociativity_t());
 		this->push_back(new RightAssociativity_t());
     };
-    
-private:
-    
 };
 
 #endif

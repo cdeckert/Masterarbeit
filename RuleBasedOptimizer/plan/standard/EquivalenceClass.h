@@ -24,7 +24,7 @@ template <typename PlanNode_t>
 class EquivalenceClassIterator
 {
 	typedef EquivalenceClassIterator self_type;
-	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	typedef typename PlanNode_t::BV Bitvector_t;
 	
 	
 public:
@@ -84,7 +84,7 @@ template <typename PlanNode_t>
 struct EquivalenceClass
 {
 	typedef EquivalenceClass self_type;
-	typedef typename PlanNode_t::Bitvector_t Bitvector_t;
+	typedef typename PlanNode_t::BV Bitvector_t;
 	typedef EquivalenceClassIterator<PlanNode_t> Iterator;
 	typedef Reservoir<self_type> Reservoir_t;
 	
