@@ -9,14 +9,16 @@
   \label{SearchSpace}
 \end{figure}
 
+Die Architektur eines \ac{DBMS} lässt sich in zwei Teile gliedern: \ac{CTS} und \ac{RTS}. Jedes Teilsystem ist für eine andere Aufgabe verantwortlich. Eine Kommunikation beider Elemente findet i.d.R. nur unidirektional statt.
 
-Ein \ac{DBMS} lässt sich grob in zwei Teile gliedern: \ac{CTS} und \ac{RTS}. Jedes Teilsystem verfolgt eine eigene Aufgabe. Eine Kommunikation zwischen den Systemen findet immer unidirektional statt. Das System startet mit einem Nutzerkommando. Es wird in das \ac{CTS} eingegeben und von ihm in eine für das \ac{CTS} bearbeitbare Form gebracht, die dann durch das \ac{RTS} ausgeführt werden kann. Das Resultat dieses Prozesses wird an den User als Ergebnis zurückgeliefert.
+Bei der Bearbeitung eines Nutzerkommandos gibt der Nutzer eine Anfrage zuerst in das \ac{CTS} ein. Das \ac{CTS} ist für die Umwandlung der Anfrage in ein für das \ac{RTS} verarbeitbares Format verantwortlich. Ebenfalls nimmt das \ac{CTS} die Optimierung von Kommandos vor. Sobald die Anfrage an das \ac{RTS} weitergegeben ist, wird das Kommando ausgeführt und das Resultat zurück an den Nutzer übermittelt.
 
-Die Nutzerkommandos können variieren. Neben Anfragen (Queries) können auch Indexe erstellt, Schemaveränderungen vorgenommen und Datensätze verändert werden, um nur einige mögliche Kommandos zu nennen. Im Folgenden wird sich auf die Anfrage konzentriert.
+Es gibt eine Vielzahl an Kommandos, die von einem Nutzer an ein Datenbank-System gestellt werden können. Zu Ihnen zählen neben Anfragen (Queries) beispielsweise auch Indexerstellungen, Schema-  und Datensätzänderungen. Im Folgenden wird das Kommando Anfrage in den Fokus gestellt.
 
-Vor der Verarbeitung einer Anfrage muss die Anfrage formuliert werden. Dies geschieht bei relationalen Datenbanksystemen i.d.R. in \ac{SQL}. \ac{SQL} ist eine deklarative Anfragesprache, die sich als Standard in diesem Bereich durchgesetzt hat. Die fertige Anfrage bildet den Input, der in das Datenbanksystem übergeben wird und zuerst im \ac{CTS} ankommt. Dort kann die Anfrage entweder durch einen \ac{QC} oder durch einen \ac{QI} verarbeitet werden.
+Vor der Verarbeitung muss die Anfrage formuliert werden. Dies geschieht bei relationalen Datenbanksystemen i.d.R. in \ac{SQL}. \ac{SQL} ist eine deklarative Anfragesprache, die sich als Standardsprache für viele Datenbanksysteme durchgesetzt hat. Die fertige Anfrage bildet den Input, der in das Datenbanksystem übergeben wird. 
 
-Der erste Schritt, der innerhalb des \ac{CTS} vorgenommen wird, ist die Umwandlung der Anfrage in eine interne Repräsentationsform. Beispielsweise muss eine Anfrage die in \ac{SQL} formuliert ist und als String vorliegt mit einem Parser verarbeitet werden. Diese Umwandung geschieht bei einem \ac{QI} (vgl. Abb. \ref{DBMS_Interpreter})  im selben Schritt, in dem auch Rewriter zum Einsatz kommen können. Bei Rewritern handelt es sich um Funktionen, die die Anfrage umformulieren. Für \ac{QI} ist es nicht notwendig, dass ein Rewriter zum Einsatz kommt. Das Ergebnis dient in jedem Falle als Input für das \ac{RTS}.
+Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übergeben werden. Ein \ac{QI} ist im Vergleich zu einem \ac{QC} ein einfaches System zur Verarbeitung einer Anfrage. Es sieht vor, dass die Anfrage interpretiert wird und ein Ergebnis an den direkt Nutzer zurückgeliefert wird. Bei der Interpretation ist es möglich, dass Rewriter-Regeln zur Anwendung kommen, die die Anfrage umformulieren. Im Gegensatz zu \ac{QI} findet in \ac{QC} Systemen eine komplexere Bearbeitung der Anfrage statt. Dort wird eine Anfrage zuerst in einem \ac{CTS} entgegengenommen, das die Anfrage in einen \ac{QEP} umwandelt. Der dann an das \ac{RTS} weitergegeben wird.
+
 
 
 \begin{figure}[h]
@@ -26,6 +28,15 @@ Der erste Schritt, der innerhalb des \ac{CTS} vorgenommen wird, ist die Umwandlu
   \label{QC_Architecture}
 \end{figure}
 
-Im Gegensatz zum \ac{QI} sind bei einem \ac{QC} mehr Schritte involviert und die Architektur des \ac{QC} (vgl. Abb. \ref{QC_Architecture}) ist daher unterschiedlich. Am Beginn steht der Query Parser. Er wandelt die Anfrage, beispielsweise einen String, in einen internen, abstrakten Syntax baum um. Dier Baum wird durch ein nfst in eine Interne repräsentation gebracht. Die so formatierte Query ist der Input des \ac{QO}. Das Ergebnis wird mit einem Code Generator in einen ausführbaren Plan umgewandelt und dann an das \ac{RTS} weitergeleitet.
 
-Der \ac{QO} selbst führt zu Beginn einen Rewrite durch. Ein Plangenerator kommt zum Einsatz und findet den optimalen Plan. Daraufhin wird mit einem weiteren Rewriter die Anfrage weiterverarbeitet und an den \ac{QC} zurückgegeben.
+Der \ac{CTS} sieht mehrere Verarbeitsschritte vor. (vgl. Abb. \ref{DBMS_Interpreter}) Zuerst wird die Anfrage in einen abstrakten Syntaxbaum umgewandelt. Dieser Synaxbaum wird mit Hilfe von Normalisierung, Faktorisierung, Semantischer Analyse und Übersetzung in eine interne Repräsentationsform gebracht. Diese interne Repräsentation wird an den Anfragenoptimierer übergeben. Der zuerst mit einem ersten Rewriter die Anfrage einer Bearbeitung unterzieht. Views werden aufgelöst und zusammengeführt, verschachtelte Anfragen werden entschachtelt und neue Prädikate werden abgeleitet. Im nächsten Schritt wird diese veränderte Anfrage an den Plan Generator übergeben. Er ist verantwortlich für das finden des günstigsten \ac{QEP}. Teil dieser Optimierung ist beispielsweise das Join Ordering. Im letzten Schritt des \ac{QO} wird die Anfrage nochmals durch einen Query Rewriter verändert. Basierend auf diesem Code kann der finale Code generiert werden. Der dem \ac{RTS} als Input für die Ausführung einer Anfrage dient.
+
+
+Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich ist besteht benötigt, um seine Aufgabe zu erfüllen drei Komponenten \cite{chaudhuri1998overview}: 
+
+\begin{itemize}
+\item Einen Raum von Plänen (Search Space), aus denen der beste Plan ausgewählt werden kann,
+\item einen Enumerator Algorithmus, der für die Suche nach Plänen verantwortlich ist
+\item und einen Kostenschätzer, der die Kosten für die Ausführung eines jeden Plans abschätzt.
+\end{itemize}
+
