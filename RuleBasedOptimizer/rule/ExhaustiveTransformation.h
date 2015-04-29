@@ -58,7 +58,7 @@ void ExhaustiveTransformation<PlanNode_t, Operations_t, Rule_t>::apply(Exhaustiv
 				{
 					knownPlans.insert(itr->getSignature());
 					PlanNode_t *p = r->apply(*itr.node());
-					if (knownPlans.count(p->getSignature()) == 0)
+					if (p && knownPlans.count(p->getSignature()) == 0)
 					{
 						eq->push_back(*p);
 						knownPlans.insert(p->getLeft().getSignature());
