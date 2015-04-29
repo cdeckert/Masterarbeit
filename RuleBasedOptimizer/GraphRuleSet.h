@@ -38,7 +38,7 @@ public:
 template <typename PlanNode_t, typename Operations_t>
 GraphRuleSet<PlanNode_t, Operations_t>::GraphRuleSet() : RuleSet<Rule_t>()
 {
-    this->push_back(new GraphRule());
+    this->push_back(new GraphRule_t());
 };
 
 

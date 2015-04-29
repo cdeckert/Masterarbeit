@@ -19,6 +19,7 @@
 #include "StringAdaptor.h"
 #include "CostEstimator.h"
 #include "Stopwatch.h"
+#include "GraphRuleSet.h"
 
 template <typename PlanNode_t>
 class Executor
@@ -33,6 +34,7 @@ class Executor
 	typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
 	typedef RS_B1<PlanNode_t, Operations_t> RS_B1_t;
 	typedef RS_B2<PlanNode_t, Operations_t> RS_B2_t;
+	typedef GraphRuleSet<PlanNode_t, Operations_t> GraphRuleSet_t;
 
 	typedef ExhaustiveTransformation<PlanNode_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 	//typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
@@ -69,9 +71,12 @@ void Executor<PlanNode_t>::run() const
 			{
 				t1 = new ExhaustiveTransformation_t(RS_B1_t());
 			}
-			else
+			else if(algo == "RS_B2")
 			{
 				t1 = new ExhaustiveTransformation_t(RS_B2_t());
+			}else
+			{
+				t1 = new ExhaustiveTransformation_t(GraphRuleSet_t());
 			}
 
 			EquivalenceClass_t *eq = _configuration.getInitalTree();

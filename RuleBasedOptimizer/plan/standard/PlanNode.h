@@ -49,6 +49,8 @@ public:
 	 * @return [description]
 	 */
 	Bitvector_t getNeighbors() const;
+	
+	PlanNode<Bitvector_t> & getLast();
 
 	/**
 	 * @brief sets operators and left and right equivalence for a new plan node
@@ -76,6 +78,9 @@ public:
 	 * @param aNode the node which will be the next node
 	 */
 	void setNext(self_type *);
+	
+	inline void concat(self_type * next){ if(next != NULL) getLast().setNext(next); };
+	
 
 	/**
 	 * @brief Accessor for the next node
@@ -264,7 +269,7 @@ bool PlanNode<Bitvector_t>::hasNext() const
 };
 
 template <typename Bitvector_t>
-void PlanNode<Bitvector_t>::setNext(self_type *aNode)
+void PlanNode<Bitvector_t>::setNext(self_type * aNode)
 {
 	_next = aNode;
 };
@@ -274,6 +279,21 @@ PlanNode<Bitvector_t> * PlanNode<Bitvector_t>::getNext() const
 {
 	return _next;
 };
+
+template <typename Bitvector_t>
+PlanNode<Bitvector_t> & PlanNode<Bitvector_t>::getLast()
+{
+	if(this->hasNext())
+	{
+		return this->_next->getLast();
+	}
+	else
+	{
+		return * this;
+	}
+	
+};
+
 
 template <typename Bitvector_t>
 std::ostream &PlanNode<Bitvector_t>::print(std::ostream &os)

@@ -152,9 +152,26 @@
 		AF7A36941AF0E863001A6AEA /* graphRule */ = {
 			isa = PBXGroup;
 			children = (
+				AF7A36961AF0F3B1001A6AEA /* services */,
 				AFFF9B201AEE395B0095CBC1 /* GraphRule.h */,
 			);
 			name = graphRule;
+			sourceTree = "<group>";
+		};
+		AF7A36961AF0F3B1001A6AEA /* services */ = {
+			isa = PBXGroup;
+			children = (
+				AF7A36971AF0F3BE001A6AEA /* partitioning */,
+				AFFF9B211AEE39810095CBC1 /* MinCutConservative.h */,
+			);
+			name = services;
+			sourceTree = "<group>";
+		};
+		AF7A36971AF0F3BE001A6AEA /* partitioning */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = partitioning;
 			sourceTree = "<group>";
 		};
 		AF865C171AC2BE2C00D301D9 /* adaptor */ = {
@@ -248,7 +265,6 @@
 				AFECC5B71A8D00B600FA9D84 /* rules */,
 				AFECC5B61A8D00AB00FA9D84 /* rulesets */,
 				AF14C2471A95FF7C00A4AEEF /* ExhaustiveTransformation.h */,
-				AFFF9B211AEE39810095CBC1 /* MinCutConservative.h */,
 			);
 			name = rule;
 			sourceTree = "<group>";
