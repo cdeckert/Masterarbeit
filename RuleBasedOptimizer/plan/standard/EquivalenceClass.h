@@ -31,6 +31,11 @@ public:
 	{
 		_node = &aNode;
 	};
+	
+	inline PlanNode_t & operator*()
+	{
+		return * _node;
+	}
 
 	/**
 	 * @brief checks whether or not the next node is the last one
@@ -71,6 +76,11 @@ public:
 		_node = _node->getNext();
 		return *this;
 	};
+	
+	inline bool operator!=(const self_type &x) const
+	{
+		return _node != x._node;
+	}
 
 	/**
 	 * @brief Convinience operator to access the node without calling node()
@@ -118,6 +128,12 @@ public:
 	{
 		return Iterator(*_first);
 	};
+	
+	inline Iterator end() const
+	{
+		return Iterator(*_last);
+	}
+	
 
 	/**
 	 * @brief Accessor for relations
@@ -419,7 +435,7 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
 	else
 	{
 		_explored = true;
-		_last->setNext(&aPlanNode);
+		_last->setNext(& aPlanNode.getLast());
 		_last = &aPlanNode;
 		_relations += _last->getSignature();
 	}
