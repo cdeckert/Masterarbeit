@@ -138,6 +138,11 @@ public:
         return eq;
     }
 	
+	Bitvector_t * get_new_BV()
+	{
+		return bitvectors->get_new_entry();
+	}
+	
 private:
     Reservoir<EquivalenceClass_t> * reservoirEC;
     Reservoir<Bitvector_t> * bitvectors;

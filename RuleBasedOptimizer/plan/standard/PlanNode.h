@@ -51,6 +51,8 @@ public:
 	Bitvector_t getNeighbors() const;
 	
 	PlanNode<Bitvector_t> & getLast();
+	
+	void setLast(self_type *);
 
 	/**
 	 * @brief sets operators and left and right equivalence for a new plan node

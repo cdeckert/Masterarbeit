@@ -21,11 +21,19 @@ class GraphRule : public Rule<PlanNode, Operations_t>
     typedef typename EquivalenceClass_t::Iterator EItr;
     typedef typename PlanNode_t::BV Bitvector_t;
     typedef std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> BvSet_t;
+    typedef std::unordered_set<Bitvector_t, PlanNode *, Hasher<Bitvector_t>> BVPlanNodeMap_t;
+    
+    typedef std::unordered_map<Bitvector_t, std::unordered_set<Bitvector_t, Hasher<Bitvector_t>>, Hasher<Bitvector_t>> DPTable_t;
     
 public:
     GraphRule(BvSet_t joinEdges) : Rule<PlanNode, Operations_t>(){
         _joinEdges = joinEdges;
     };
+    
+    void partition(Bitvector_t & input)const;
+    
+    
+    
     
     /**
      * @brief checks whether or not left associativity is applicable
@@ -41,6 +49,19 @@ public:
         return aPlanNode.getOperator() == JOIN;
     };
     
+    Bitvector_t & merge(Bitvector_t bv1, Bitvector_t bv2) const
+    {
+        Bitvector_t * js = this->o.get_new_BV(); // =  Bitvector_t();
+        js->union_of(bv1, bv2);
+        return * js;
+    }
+    
+    std::vector<PlanNode_t *> createTrees(DPTable_t) const
+    {
+        std::vector<PlanNode_t *> vector;
+        return vector;
+    }
+    
     /**
      * @brief apply graph rule
      */
@@ -51,32 +72,29 @@ public:
         {
             for(PlanNode & js_b : aPlanNode.r())
             {
-                
-                // PlanNode * js = merge(js_a.getRelations(), js_b.getRelations());
-                /*if(!aPlanNode.joinSet.contains(js))
+                Bitvector_t & js = merge(js_a.getSignature(), js_b.getSignature());
+                this->partition(js);
+                for(PlanNode_t * t : this->createTrees(cuts))
                 {
-                    aPlanNode.joinSet.add(js);
-                    
-                }*/
+                    if(result == NULL) result = t;
+                    else result->concat(t);
+                }
             }
         }
-        // for all js in aPlanNode.l()
-            // for all js in aPlanNode.r()
-            // js = merge(jsA, jsB)
-            // if(aPlanNode.joinSet.contains(js)
-                // aPlanNode.joinSet.add(js)
-                // G = createGraph(js)
-                // cuts = Partition(G)
-                //trees.push_back(CreateTree(cuts))
-        
-        //return & this->o.joinPN(aPlanNode.l().l(), *this->o.join(aPlanNode.l().r(), aPlanNode.r()));
         return result;
     };
 private:
     BvSet_t _joinEdges;
+    DPTable_t cuts;
 };
 
-
-
+template <typename PlanNode, typename Operations_t>
+void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t & input)const
+{
+    if(cuts.count() == 0)
+    {
+        
+    }
+};
 
 #endif

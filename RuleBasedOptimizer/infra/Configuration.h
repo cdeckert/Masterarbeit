@@ -35,7 +35,7 @@ public:
 	inline BvDoubleMap_t getSelectivity() const { return _selectivity; };
 	inline BvDoubleMap_t getCardinality() const { return _cardinality; };
 	inline StringVector_t getAlgorithms() const { return _algorithms; };
-    inline BvSet_t getJoinEdges() const { return _selectivity; };
+    inline BvSet_t getJoinEdges() const { return _joinEdges; };
 	
 private:
 	Operations_t *o = Operations_t::exemplar();
@@ -44,9 +44,11 @@ private:
 	BvDoubleMap_t _selectivity;
 	StringVector_t _algorithms;
 	RelationsMap_t _relations;
-	
+	BvSet_t _joinEdges;
+    
 	EquivalenceClass_t *createJoinTree(Json);
 	void createRelations();
+    
 	
 };
 
@@ -72,6 +74,7 @@ Configuration<PlanNode_t>::Configuration(Json configuration)
 		b.set(sel["from"].int_value());
 		b.set(sel["to"].int_value());
 		_selectivity.insert({{b, sel["selectivtity"].number_value()}});
+        _joinEdges.insert({b});
 	}
 	
 	for(json11::Json algo : _configuration["algorithms"].array_items())
