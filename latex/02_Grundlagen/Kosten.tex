@@ -1,0 +1,15 @@
+\section{Kostenschätzung}
+Um den optimalen Plan zu finden, müssen die Kosten für einen Plan bewertet werden. Deise Kostenabschätzung geschieht in einer Kostenschätzung \cite{bruno2011automated}. 
+
+Die Kosten einer Datenbankabfrage sind von mehreren Faktoren abhängig. Um eine Grundlage für den Vergleich von verschiedenen Plänen zu haben, müssen die Kosten für jeden einzelnen Plan abgeschätzt werden. Die Kosten für die gesamte Abfrage setzten sich dabei aus den Kosten für die Enumeration der Abfrage, der Berechnung der Kosten und der Ausführung der eigentlichen Anfrage zusammen. Da die Kosten für Enumeration und Kostenabschätzung für jeden Plan gleich sind, kann das Augenmerk auf die Kostenschätzung für das physikalische Ausführend er Anfrage gelegt werden.
+
+Bei der Ausführung einer Anfrage sind vor allem die CPU, die input / output und Arbeitsspeicherkosten entscheidend. Die Kosten können für jede dieser Ressourcen getrennt oder gemeinsam betrachtet werden. Die Kostenabschätzung muss insgesamt jedoch akkurat sein, da der \ac{QO} nur so gut sein kann, wie es der Kostenschätzer erlaubt. Die Berechnung der Kosten geschieht i.d.R. nach folgender Massgabe:
+
+\begin{itemize}
+\item Statistische informationen werden gesammelt
+\item Für einen Operator im \ac{QEP} werden die Informationen aus Subbäumen berechnet und zusammengezalt
+\end{itemize}
+
+Die Kosten, die bei der Berechnung eines Baumsentstehen lassen sich mit Hilfe von Kostenfunktionen abhängig von der Datenmenge bestimmen. Daher sind die Kosten eines Plans stark von Kardinalitäten der Subpläne abhängig. Ebenso wie die Kardinalität spielt die Selektivität einzelner Operatoren eine grosse Rolle. Je selektiver ein Operator ist und je kleiner die Kardinalität der Subtrees ist desto schneller lässt sich eine Anfrage ausführen.
+
+ 

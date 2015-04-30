@@ -8,9 +8,10 @@
 template <typename PlanNode_t>
 class DotAdaptor
 {
+	typedef unsigned int u_int;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
-	typedef Operations<PlanNode_t, unsigned int> Operations_t;
-	typedef std::unordered_map<unsigned int, EquivalenceClass_t *>  RelationsMap_t;
+	typedef Operations<PlanNode_t, u_int> Operations_t;
+	typedef std::unordered_map<u_int, EquivalenceClass_t *>  RelationsMap_t;
 
 public:
 	/**
@@ -40,16 +41,13 @@ private:
 	std::string dump(EquivalenceClass_t *);
 };
 
+//
+// Implemenetation
+//
 
 template <typename PlanNode_t>
 void DotAdaptor<PlanNode_t>::nextToken()
 {
 
 };
-
-
-
-
-
-
 #endif

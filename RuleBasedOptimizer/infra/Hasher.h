@@ -6,11 +6,13 @@
 #define RuleBasedOptimizer_Hasher_h
 
 template<class Tbv>
-class Hasher {
+class Hasher
+{
 public:
-    inline std::size_t operator()(const Tbv& aBv) const {
-        return aBv.hashvalue();
-    };
+	inline std::size_t operator()(const Tbv &aBv) const
+	{
+		return aBv.hashvalue();
+	};
 };
 
 #endif

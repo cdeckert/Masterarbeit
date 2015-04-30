@@ -17,7 +17,7 @@ public:
 	Stopwatch();
 	void start();
 	void stop();
-	u_int getTime();
+	u_int getDuration();
 	
 private:
 	std::chrono::steady_clock::time_point _start;

@@ -1,2 +1,3 @@
+language: cpp
 xcode_project: RuleBasedOptimizer.xcodeproj
 xcode_scheme: RuleBasedOptimizer

@@ -11,14 +11,13 @@
 #include "json11.hpp"
 #include "Operations.h"
 
-
-
 template <typename PlanNode_t>
 class JSONAdaptor
 {
+	typedef unsigned int u_int;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	typedef Operations<PlanNode_t, unsigned int> Operations_t;
-	typedef std::unordered_map<unsigned int, EquivalenceClass_t *>  RelationsMap_t;
+	typedef std::unordered_map<u_int, EquivalenceClass_t *>  RelationsMap_t;
 
 public:
 	/**
@@ -26,6 +25,7 @@ public:
 	 * @details [long description]
 	 */
 	JSONAdaptor() {};
+
 	/**
 	 * @brief [brief description]
 	 * @details [long description]
@@ -34,6 +34,7 @@ public:
 	 * @return [description]
 	 */
 	EquivalenceClass_t *parse(std::string);
+
 	/**
 	 * @brief [brief description]
 	 * @details [long description]
@@ -52,10 +53,12 @@ private:
 
 };
 
-
-
+//
+// Implementation
+//
 template <typename PlanNode_t>
-typename JSONAdaptor<PlanNode_t>::RelationsMap_t JSONAdaptor<PlanNode_t>::getRelations(json11::Json json)
+typename JSONAdaptor<PlanNode_t>::RelationsMap_t
+JSONAdaptor<PlanNode_t>::getRelations(json11::Json json)
 {
 	RelationsMap_t relations;
 
@@ -73,10 +76,9 @@ typename JSONAdaptor<PlanNode_t>::RelationsMap_t JSONAdaptor<PlanNode_t>::getRel
 	return relations;
 }
 
-
-
 template <typename PlanNode_t>
-typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *JSONAdaptor<PlanNode_t>::createJoinTree(json11::Json query)
+typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *
+JSONAdaptor<PlanNode_t>::createJoinTree(json11::Json query)
 {
 	if (query["op"].string_value() == "scan")
 	{
@@ -88,13 +90,9 @@ typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *JSONAdaptor<PlanNode_t>::c
 	}
 }
 
-
-
-
-
-
 template <typename PlanNode_t>
-typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *JSONAdaptor<PlanNode_t>::parse(std::string input)
+typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *
+JSONAdaptor<PlanNode_t>::parse(std::string input)
 {
 	std::string err;
 	json11::Json json = json11::Json::parse(input, err);
@@ -105,28 +103,29 @@ typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *JSONAdaptor<PlanNode_t>::p
 	return createJoinTree(json["query"]);
 }
 
-
 template <typename PlanNode_t>
 json11::Json JSONAdaptor<PlanNode_t>::dump(EquivalenceClass_t *input)
 {
 	json11::Json result;
-
 	std::vector<json11::Json> plans = writeJson(input);
 	result = json11::Json::array(plans);
 	std::cout << result.dump();
 	return result;
 }
 
-
 template <typename PlanNode_t>
-std::vector<json11::Json> JSONAdaptor<PlanNode_t>::writeJson(EquivalenceClass_t *input)
+std::vector<json11::Json>
+JSONAdaptor<PlanNode_t>::writeJson(EquivalenceClass_t *input)
 {
 	std::vector<json11::Json> plans;
 	typedef typename EquivalenceClass_t::Iterator EItr;
 	if (input->getOperator() == Operator::SCAN)
 	{
 		int rel = input->getRel();
-		json11::Json plan = json11::Json::object{{"op", input->getOperatorAsString()}, {"l", rel}};
+		json11::Json plan = json11::Json::object
+		{
+			{"op", input->getOperatorAsString()}, {"l", rel}
+		};
 		plans.push_back(plan);
 	}
 	else
@@ -150,11 +149,4 @@ std::vector<json11::Json> JSONAdaptor<PlanNode_t>::writeJson(EquivalenceClass_t 
 
 	return plans;
 }
-
-
-
-
-
-
-
 #endif

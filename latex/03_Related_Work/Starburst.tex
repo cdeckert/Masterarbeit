@@ -1,8 +1,8 @@
-\subsection{Das Starburst Project}
+\section{Das Starburst Project}
 
-Das Starburst Projekt \cite{lohman1988Starbust}, \cite{haas1989extensible}, vorangetrieben und entwickelt von IBM,  startet unter der Prämisse, dass bestehende DBMSe nicht in der Lage sind die wachsenden Anforderungen von verschiedenen Applikationen vollumfänglich zu entsprechen. Zur Erfüllung der individuellen Ansprüche wurde das Starburst Projekt gestartet. Es gibt Datenbank-Ingenieur (DBI) die Möglichkeit die relationale Datenbank zu erweitern. Beispielsweise ist es möglich neue Zugriffs- und Speichermethoden zu implementieren oder neue Join Methoden zu erstellen. Um diese Features zu ermöglichen stellt Starburst eine Anfragesprache, einen Regelbasierten Optimierer, Query Rewriter und ein Ausführungssystem basierend auf relationaler Algebra zur Verfügung. Dieses Kapitel befasst sich zuerst mit der Aufteilung zwischen Ausführung und Anfrage, wie sie bereits zu Beginn von Kapitel 2 besprochen wurde. Es folgt ein Überblick über die eingesetzte Regelmaschine und eine Erläuterung des Starbust Query Optimizers.
+Das Starburst Projekt \cite{lohman1988Starbust}, \cite{haas1989extensible}, vorangetrieben und entwickelt von IBM,  startet unter der Prämisse, dass bestehende DBMSe nicht in der Lage sind die wachsenden Anforderungen von verschiedenen, neuartigen Applikationen vollumfänglich zu entsprechen. Zur Erfüllung der individuellen Ansprüche wurde das Starburst Projekt begonnen. Sein Zeil ist des dem \ac{DBI} die Möglichkeit zu geben eine die relationale Datenbank zu erweitern und so die Bedürfnisse von spezifischen Anwendungen zu erüllen. Beispielsweise ist es möglich neue Zugriffs- und Speichermethoden zu implementieren oder neue Join Methoden zu erstellen. Um diese Features zu ermöglichen stellt Starburst eine Anfragesprache, einen Regelbasierten Optimierer, Query Rewriter und ein Ausführungssystem basierend auf relationaler Algebra zur Verfügung. Dieses Kapitel befasst sich zuerst mit der Aufteilung zwischen Ausführung und Anfrage, wie sie bereits zu Beginn von Kapitel 2 besprochen wurde. Es folgt ein Überblick über die eingesetzte Regelmaschine und eine Erläuterung des Starbust Query Optimizers.
 
-\subsubsection{Ausführung einer Anfrage}
+\subsection{Ausführung einer Anfrage}
 
 Bei der Ausführung einer Anfrage mit Hilfe von Starburst wird grob zwischen zwei Phasen unterschieden: Übersetzungs- (Compile-) und Ausführungszeit (Run-Time). Während der Compile-Time wird aus der Anfrage ein Plan generiert, der zur Run-Time durch das Execution System ausgeführt wird. Der Query Optimizer findet seine Anwendung zur Compile-Time; die Query Execution Engine kommt zur Run-Time zum Einsatz.
 
@@ -17,7 +17,7 @@ Zur Comile-Time wird eine gegebene Anfrage auf semantische Korrektheit geprüft 
 Der Query Rewriter hat zwei konkrete Aufgaben: Auf der einen Seite soll die Anfrage in eine möglichst deklarative Form umgewandelt werden, hierbei werden insbesondere Anfragen entschachtelt. Auf der anderen Seite sollen weithin in der Forschung akzeptierte Heuristiken, beispielweise der Push-Down von Argumenten, angewandt werden.
 Bei der Planoptimierung durchläuft der Plan vom QGM hin zu einem QEM drei Stationen. Die drei wesentlichen Aspekte sind der Plan Generator, die Berechnung der Plankosten und die Suchstrategie. 
 
-\subsubsection{Regel-Maschine}
+\subsection{Regel-Maschine}
 
 Zur Ausführung von Optimierungen wurde für die Starburst Datenbank eine eigene Regel-Maschine entwickelt \cite{lohman1988Starbust}. Diese Regelmaschine ist für die Anführung von Regelsets verantwortlich, die bei der Transformation der QGMs zur Anwendung kommen und durch den DBI  erweitert werden können. Die Regelmaschine basiert auf fünf Prinzipien:
 
@@ -34,11 +34,11 @@ Zur Ausführung von Optimierungen wurde für die Starburst Datenbank eine eigene
 \item Schlussendlich ist es dem Nutzer der Datenbank möglich zu jedem beliebigen Zeitpunkt Regeln ausser Kraft zu setzen. Dies geschieht nur für den Nutzer lokal und andere Nutzer der Datenbank sind nicht betroffen. Spezielle Anwendungsfälle können so eine passgenau optimiert werden.
 \end{enumerate}
 
-\subsubsection{Plan Optimierer}
+\subsection{Plan Optimierer}
 
 Der Plan Optimierer generiert basierend auf einem QGM mehrere alternative Query Evaluation Plans (QEPs). Für jeden dieser QEPs werden die Kosten geschätzt und der günstigste für die Weiterverarbeitung ausgewählt. Um die Erweiterbarkeit des Optimierers zu gewährleisten wurden die drei Komponenten (Plangenerierung, Kostenschätzung und Suchstrategie) von einander soweit getrennt, dass sie einzeln erweitert und verändert werden können. 
 
-\subsubsection{Starburst Plan Generator}
+\subsection{Starburst Plan Generator}
 $$HIER ÜBERARBEITEN$$
 Der Plangenerator des Starburst Projekts, der für die Generierung von Planalternativen verantwortlich ist, bedient sich eines "Build Block"-Ansatzes[Lohm88] und einem Regel-Set, das auf einer eigenen Grammatik basiert.  
 

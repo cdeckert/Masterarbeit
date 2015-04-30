@@ -22,21 +22,21 @@
 template <typename PlanNode_t, typename Operations_t>
 class RS_B1 : public RuleSet<Rule<PlanNode_t, Operations_t>>
 {
-    typedef RS_B1 self_type;
-    typedef Rule<PlanNode_t, Operations_t> Rule_t;
-    typedef RuleSet<Rule_t> RuleSet_t;
-    typedef CommutativityRule<PlanNode_t, Operations_t> Commutativity_t;
-    typedef LeftAssociativity<PlanNode_t, Operations_t> LeftAssociativity_t;
-    
+	typedef RS_B1 self_type;
+	typedef Rule<PlanNode_t, Operations_t> Rule_t;
+	typedef RuleSet<Rule_t> RuleSet_t;
+	typedef CommutativityRule<PlanNode_t, Operations_t> Commutativity_t;
+	typedef LeftAssociativity<PlanNode_t, Operations_t> LeftAssociativity_t;
+
 public:
-    RS_B1() : RuleSet<Rule_t>()
-    {
+	RS_B1() : RuleSet<Rule_t>()
+	{
 		this->_rules.push_back(new Commutativity_t());
 		this->_rules.push_back(new LeftAssociativity_t());
-    };
-    
+	};
+
 private:
-    
+
 };
 
 #endif

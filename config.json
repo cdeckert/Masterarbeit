@@ -30,6 +30,19 @@
 	],
 	"algorithms":
 	[
-		"RS_0", "RS_1", "RS_2"
-	]
+		 "GraphRule", "RS_B0", "RS_B1", "RS_B2"
+	],
+	"inital_tree":
+	{
+		"op": "join",
+		"l": {
+			"op": "scan",
+			"l": 1
+		},
+		"r": {
+			"op": "join",
+			"l": {"op": "scan", "l": 2},
+			"r": {"op": "scan", "l": 3}
+		}
+	}
 }]
