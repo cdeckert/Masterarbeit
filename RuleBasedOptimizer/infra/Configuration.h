@@ -25,6 +25,7 @@ class Configuration
 	typedef std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> BvDoubleMap_t;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	typedef std::unordered_map<u_int, EquivalenceClass_t *, Hasher<Bitvector_t>>  RelationsMap_t;
+    typedef std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> BvSet_t;
 	
 public:
 	Configuration(Json);
@@ -34,6 +35,7 @@ public:
 	inline BvDoubleMap_t getSelectivity() const { return _selectivity; };
 	inline BvDoubleMap_t getCardinality() const { return _cardinality; };
 	inline StringVector_t getAlgorithms() const { return _algorithms; };
+    inline BvSet_t getJoinEdges() const { return _selectivity; };
 	
 private:
 	Operations_t *o = Operations_t::exemplar();
@@ -76,6 +78,7 @@ Configuration<PlanNode_t>::Configuration(Json configuration)
 	{
 		_algorithms.push_back(algo.string_value());
 	}
+    
 };
 
 template <typename PlanNode_t>

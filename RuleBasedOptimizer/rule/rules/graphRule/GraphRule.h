@@ -16,9 +16,17 @@
 template <typename PlanNode, typename Operations_t>
 class GraphRule : public Rule<PlanNode, Operations_t>
 {
-    
+    typedef PlanNode PlanNode_t;
+    typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
+    typedef typename EquivalenceClass_t::Iterator EItr;
+    typedef typename PlanNode_t::BV Bitvector_t;
+    typedef std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> BvSet_t;
     
 public:
+    GraphRule(BvSet_t joinEdges) : Rule<PlanNode, Operations_t>(){
+        _joinEdges = joinEdges;
+    };
+    
     /**
      * @brief checks whether or not left associativity is applicable
      * @details left associativity is applicable in case the given operation is
@@ -44,7 +52,8 @@ public:
             
             for(PlanNode & js_b : aPlanNode.r())
             {
-                // PlanNode * js = merge(js_a, js_b);
+                
+                // PlanNode * js = merge(js_a.getRelations(), js_b.getRelations());
                 /*if(!aPlanNode.joinSet.contains(js))
                 {
                     aPlanNode.joinSet.add(js);
@@ -64,7 +73,8 @@ public:
         //return & this->o.joinPN(aPlanNode.l().l(), *this->o.join(aPlanNode.l().r(), aPlanNode.r()));
         return result;
     };
-    
+private:
+    BvSet_t _joinEdges;
 };
 
 

@@ -26,9 +26,12 @@ class GraphRuleSet : public RuleSet<Rule<PlanNode_t, Operations_t>>
     typedef Rule<PlanNode_t, Operations_t> Rule_t;
     typedef RuleSet<Rule_t> RuleSet_t;
     typedef GraphRule<PlanNode_t, Operations_t> GraphRule_t;
+    typedef typename PlanNode_t::BV Bitvector_t;
+    typedef std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> BvSet_t;
     
 public:
     GraphRuleSet();
+    GraphRuleSet(BvSet_t);
 };
 
 //
@@ -39,6 +42,12 @@ template <typename PlanNode_t, typename Operations_t>
 GraphRuleSet<PlanNode_t, Operations_t>::GraphRuleSet() : RuleSet<Rule_t>()
 {
     this->push_back(new GraphRule_t());
+};
+
+template <typename PlanNode_t, typename Operations_t>
+GraphRuleSet<PlanNode_t, Operations_t>::GraphRuleSet(BvSet_t bvMap) : RuleSet<Rule_t>()
+{
+    this->push_back(new GraphRule_t(bvMap));
 };
 
 

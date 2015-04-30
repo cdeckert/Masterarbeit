@@ -76,7 +76,7 @@ void Executor<PlanNode_t>::run() const
 				t1 = new ExhaustiveTransformation_t(RS_B2_t());
 			}else
 			{
-				t1 = new ExhaustiveTransformation_t(GraphRuleSet_t());
+				t1 = new ExhaustiveTransformation_t(GraphRuleSet_t(_configuration.getSelectivity()));
 			}
 
 			EquivalenceClass_t *eq = _configuration.getInitalTree();

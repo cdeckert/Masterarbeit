@@ -20,7 +20,7 @@
 
 std::string getConfigPath(int argc, char *argv[])
 {
-	std::string configPath = "/Users/christiandeckert/Desktop/Masterarbeit_develop/config.json";
+	std::string configPath = "/Users/christiandeckert/Documents/Masterarbeit-Code/config.json";
 	if (argc == 0)
 	{
 
