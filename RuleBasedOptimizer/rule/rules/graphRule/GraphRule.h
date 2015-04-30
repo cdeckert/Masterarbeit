@@ -49,7 +49,6 @@ public:
         PlanNode * result = NULL;
         for(PlanNode & js_a : aPlanNode.l())
         {
-            
             for(PlanNode & js_b : aPlanNode.r())
             {
                 
