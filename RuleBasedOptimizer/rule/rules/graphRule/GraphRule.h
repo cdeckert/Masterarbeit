@@ -5,6 +5,7 @@
 #ifndef RuleBasedOptimizer_GraphRule_h
 #define RuleBasedOptimizer_GraphRule_h
 
+#include "MinCutConservative.h"
 
 /**
  * @brief Graph Rule
@@ -91,6 +92,10 @@ private:
 template <typename PlanNode, typename Operations_t>
 void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t & input)const
 {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> fa6934ec20a8b847554e5ff801aa801e6916d552
     /*if(cuts.count() == 0)
     {
         
