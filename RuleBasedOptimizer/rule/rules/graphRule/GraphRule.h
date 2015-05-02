@@ -91,10 +91,10 @@ private:
 template <typename PlanNode, typename Operations_t>
 void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t & input)const
 {
-    if(cuts.count() == 0)
+    /*if(cuts.count() == 0)
     {
         
-    }
+    }*/
 };
 
 #endif
