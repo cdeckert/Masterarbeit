@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "153"
             endingLineNumber = "153"
-            landmarkName = "partition(Bitvector_t &amp; input)"
+            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -59,7 +59,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
             endingLineNumber = "130"
-            landmarkName = "apply(PlanNode &amp; aPlanNode)"
+            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -75,7 +75,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "127"
             endingLineNumber = "127"
-            landmarkName = "apply(PlanNode &amp; aPlanNode)"
+            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
