@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>A8D1945B-F4BB-4EFD-85C1-8C828D7956B5</string>
 	<key>IDESourceControlProjectName</key>
-	<string>RuleBasedOptimizer</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>9092348459AB86EF26156580288FEB6EF5E36C7E</key>
 		<string>ssh://github.com/cdeckert/Masterarbeit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>RuleBasedOptimizer.xcodeproj</string>
+	<string>RuleBasedOptimizer.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9092348459AB86EF26156580288FEB6EF5E36C7E</key>

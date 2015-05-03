@@ -75,6 +75,8 @@ public:
 		_bitvector = ~_bitvector;
 		return (*this);
 	}
+    
+    
 public:
 	static inline size_t   capacity()
 	{
@@ -86,6 +88,19 @@ public:
 	{
 		return cardinality(_bitvector);
 	}
+    
+    inline size_t size()
+    {
+        size_t size = 0;
+        for(unsigned int i = 0; i < sizeof(bitvector_t); ++i)
+        {
+            if(test(i))
+            {
+                ++size;
+            }
+        }
+        return size;
+    }
 
 	int element(element_t &aElementOut) const; /* out: an element of the set,  */
 	/* return: -1: set empty */
@@ -153,6 +168,9 @@ public:
 		_bitvector |= x;
 		return (*this);
 	}
+    
+    
+    
 
 	inline BitVectorSmall &
 	operator^=(const bitvector_t &x)
@@ -207,6 +225,15 @@ public:
 	{
 		return BitVectorSmall(_bitvector & x._bitvector);
 	}
+    
+    inline BitVectorSmall without (const BitVectorSmall &x) const
+    {
+        return BitVectorSmall(_bitvector - (_bitvector & x._bitvector));
+    }
+    inline BitVectorSmall uni (const BitVectorSmall &x) const
+    {
+        return BitVectorSmall(_bitvector | x._bitvector);
+    }
 
 	inline BitVectorSmall
 	operator|(const BitVectorSmall &x) const

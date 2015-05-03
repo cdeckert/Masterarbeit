@@ -71,36 +71,65 @@ public:
         return t;
     }
     
+    struct BVSet_t
+    {
+        Bitvector_t _bitvector;
+        BVSet_t * _next;
+    };
+    
     BvSet_t getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
     {
-        BvSet_t result;
-        /*Bitvector_t N; N.intersection_of(neighbor(T), C);
+        BvSet_t O;
+        O.clear();
+        Bitvector_t D, N, U, L, L_new;
+        N = getNeighbors(T).without(C);
         if(N.size() <= 1)
         {
-            return {intersection_of(S, C)};
+            O.insert({S.without(C)});
+            return O;
         }
-        Bitvector_t L;
-        for(Bitvector_t L_new : N)
+        for(typename Bitvector_t::IteratorElement itr = N.begin(); itr != N.end(); ++itr)
         {
-            Bitvector_t U;  U.intersection_of(N, L_new);
-            while(L != L_new && !U.isEmpty())
+            L_new = *itr;
+            U = N.without(L_new);
+            while(L != L_new && U.is_not_empty())
             {
-                Bitvector_t D; D.intersection_of(L_new, L);
+                D = L_new.without(L);
                 L = L_new;
-                L_new.union_of(L_new, neighbor(D));
-                L_new.intersection_of(L_new, C);
-                U.intersection_of(U, L_new);
-                
+                L_new.union_with(getNeighbors(D).without(C));
+                U = U.without(L_new);
             }
-        }*/
-        return result;
+            if(U.is_not_empty()){
+                O.insert( {S.without(C)});
+            }
+            U = N.without(L);
+            while(U.is_not_empty())
+            {
+                L = Bitvector_t();
+                for(typename Bitvector_t::IteratorElement itr = U.begin(); itr != U.end(); ++itr)
+                {
+                    L_new = *itr;
+                    while(L != L_new)
+                    {
+                        D = L_new.without(L);
+                        L = L_new;
+                        L_new.union_with(getNeighbors(D).without(C));
+                    }
+                    O.insert({L});
+                    U = U.without(L);
+                }
+            }
+        }
+        
+        return O;
     }
     
     Bitvector_t getNeighbors(Bitvector_t relations) const
     {
         Bitvector_t result;
-        for(Bitvector_t r : relations)
+        for(typename Bitvector_t::IteratorElement itr = relations.begin(); itr != relations.end(); ++itr)
         {
+            Bitvector_t r = * itr;
             for(Bitvector_t aJoinEdge : _joinEdges)
             {
                 if(aJoinEdge.contains(r))
@@ -112,7 +141,7 @@ public:
         }
         for(Bitvector_t b : result)
         {
-            std::cout <<  "BITVECTOR: "<< b.log2() << ",";
+            std::cout << std::endl << "BITVECTOR: "<< std::endl << b.log2() << ",";
         }
         return result;
     }
@@ -126,10 +155,9 @@ public:
         {
             return result;
         }
-        if(!connectedRelations.is_empty())
+        if(connectedRelations.is_not_empty())
         {
             result.insert({connectedRelations});
-            return result;
         }
         Bitvector_t excluded_new = excluded;
         Bitvector_t neighborhood;
@@ -141,42 +169,20 @@ public:
         {
             neighborhood = connectedRelations;
         }
-        neighborhood.intersect_with(excluded);
-        for(Bitvector_t v : neighborhood)
+        neighborhood = neighborhood.without(excluded);
+        for(typename Bitvector_t::IteratorElement itr = neighborhood.begin(); itr != neighborhood.end(); ++itr)
         {
-            BvSet_t o = getConnectedParts(subSetOfRelations, connectedRelations & v, v);
-        }
-        
-        
-        Bitvector_t b = getNeighbors(subSetOfRelations);
-        /*if(c == s)
-        {
-            return result;
-        }*/
-        /*if(c.size() > 0)
-        {
-            result.insert(c.begin(), c.end());
-        }
-        BvSet_t x_new;
-        x_new.insert(x.begin(), x.end());*/
-        /*for(Bitvector_t c_new : c)
-        {
-            for(Bitvector_t x_new : x)
+            Bitvector_t v = *itr;
+            BvSet_t O = getConnectedParts(subSetOfRelations, connectedRelations.uni(v), v);
+            for(Bitvector_t o : O)
             {
-                Bitvector_t v = c_new.set_to_difference(c_new, x_new);
-                BvSet_t c_new2 = c;
-                c_new2.insert({v});
-                BvSet_t o = getConnectedParts(s, c_new2, {v});
-                for(Bitvector_t o_new : o)
-                {
-                    BvSet_t new_c;
-                    new_c.insert({o_new});
-                    BvSet_t r = MinCutConservative(s, new_c, x_new);
-                    result.insert(r.begin(), r.end());
-                    x_new.set_union(v);
-                }
+                Bitvector_t newConnectedRelationships;
+                newConnectedRelationships = subSetOfRelations.without(o);
+                BvSet_t r = MinCutConservative(subSetOfRelations, newConnectedRelationships, excluded_new);
+                result.insert(r.begin(), r.end());
+                excluded_new.union_with(v);
             }
-        }*/
+        }
         return result;
     }
     
@@ -212,10 +218,7 @@ public:
      */
     PlanNode * apply(PlanNode & aPlanNode) const override
     {
-        std::cout << "APPLY" << std::endl;
         PlanNode * result = NULL;
-        std::cout << (aPlanNode.l().begin() != aPlanNode.l().end());
-        std::cout.flush();
         for(ECItr_t itr_a = aPlanNode.l().begin(); itr_a.isOK(); ++itr_a)
         {
             PlanNode_t & js_a = * itr_a;
@@ -248,14 +251,5 @@ void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t & input)const
     MinCutConservative(input, b, b);
 };
 
-
-
-/*template <typename PlanNode, typename Operations_t>
-std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> GraphRule<PlanNode, Operations_t>::getConnectedPars(Bitvector_t s, Bitvector_t c, Bitvector_t)
-{
-    std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> result;
-    
-    return result;
-}*/
 
 #endif
