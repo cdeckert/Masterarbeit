@@ -82,6 +82,8 @@ public:
 	{
 		return sizeof(bitvector_t) * 8;
 	}
+    
+    
 
 	static inline unsigned int cardinality(register bitvector_t x);
 	inline unsigned int cardinality() const
