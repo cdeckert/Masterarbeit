@@ -74,7 +74,7 @@ public:
     BvSet_t getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
     {
         BvSet_t result;
-        Bitvector_t N; N.intersection_of(neighbor(T), C);
+        /*Bitvector_t N; N.intersection_of(neighbor(T), C);
         if(N.size() <= 1)
         {
             return {intersection_of(S, C)};
@@ -92,23 +92,73 @@ public:
                 U.intersection_of(U, L_new);
                 
             }
+        }*/
+        return result;
+    }
+    
+    Bitvector_t getNeighbors(Bitvector_t relations) const
+    {
+        Bitvector_t result;
+        for(Bitvector_t r : relations)
+        {
+            for(Bitvector_t aJoinEdge : _joinEdges)
+            {
+                if(aJoinEdge.contains(r))
+                {
+                    result.union_with(~r & aJoinEdge);
+                    break;
+                }
+            }
+        }
+        for(Bitvector_t b : result)
+        {
+            std::cout <<  "BITVECTOR: "<< b.log2() << ",";
         }
         return result;
     }
     
-    BvSet_t MinCutConservative(Bitvector_t & s, BvSet_t & c, BvSet_t & x) const
+    
+    BvSet_t MinCutConservative(Bitvector_t & subSetOfRelations, Bitvector_t & connectedRelations, Bitvector_t & excluded) const
     {
         BvSet_t result;
+        
+        if(connectedRelations == subSetOfRelations)
+        {
+            return result;
+        }
+        if(!connectedRelations.is_empty())
+        {
+            result.insert({connectedRelations});
+            return result;
+        }
+        Bitvector_t excluded_new = excluded;
+        Bitvector_t neighborhood;
+        if(connectedRelations.is_empty())
+        {
+            neighborhood = subSetOfRelations;
+        }
+        else
+        {
+            neighborhood = connectedRelations;
+        }
+        neighborhood.intersect_with(excluded);
+        for(Bitvector_t v : neighborhood)
+        {
+            BvSet_t o = getConnectedParts(subSetOfRelations, connectedRelations & v, v);
+        }
+        
+        
+        Bitvector_t b = getNeighbors(subSetOfRelations);
         /*if(c == s)
         {
             return result;
         }*/
-        if(c.size() > 0)
+        /*if(c.size() > 0)
         {
             result.insert(c.begin(), c.end());
         }
         BvSet_t x_new;
-        x_new.insert(x.begin(), x.end());
+        x_new.insert(x.begin(), x.end());*/
         /*for(Bitvector_t c_new : c)
         {
             for(Bitvector_t x_new : x)
@@ -194,7 +244,8 @@ void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t & input)const
 {
     BvSet_t empty;
     empty.insert(Bitvector_t());
-    MinCutConservative(input, empty, empty);
+    Bitvector_t b;
+    MinCutConservative(input, b, b);
 };
 
 
