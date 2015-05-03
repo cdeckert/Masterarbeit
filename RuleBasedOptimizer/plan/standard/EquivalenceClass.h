@@ -27,6 +27,7 @@ class EquivalenceClassIterator
 
 
 public:
+	EquivalenceClassIterator(){};
 	EquivalenceClassIterator(PlanNode_t &aNode)
 	{
 		_node = &aNode;
@@ -71,7 +72,7 @@ public:
 	 * @brief Increments iterator by 1
 	 * @details replaces the current node with the next node
 	 */
-	inline self_type &operator++()
+	inline self_type & operator++()
 	{
 		_node = _node->getNext();
 		return *this;
@@ -79,7 +80,7 @@ public:
 	
 	inline bool operator!=(const self_type &x) const
 	{
-		return _node != x._node;
+		return this->_node != x._node;
 	}
 
 	/**
@@ -131,7 +132,7 @@ public:
 	
 	inline Iterator end() const
 	{
-		return Iterator(*_last);
+		return Iterator();
 	}
 	
 

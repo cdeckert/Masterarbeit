@@ -5,7 +5,7 @@
 #ifndef RuleBasedOptimizer_GraphRule_h
 #define RuleBasedOptimizer_GraphRule_h
 
-#include "MinCutConservative.h"
+//#include "MinCutConservative.h"
 
 /**
  * @brief Graph Rule
@@ -26,6 +26,9 @@ class GraphRule : public Rule<PlanNode, Operations_t>
     
     typedef std::unordered_map<Bitvector_t, std::unordered_set<Bitvector_t, Hasher<Bitvector_t>>, Hasher<Bitvector_t>> DPTable_t;
     
+    
+    typedef typename EquivalenceClass_t::Iterator ECItr_t;
+    
 public:
     GraphRule(BvSet_t joinEdges) : Rule<PlanNode, Operations_t>(){
         _joinEdges = joinEdges;
@@ -33,8 +36,75 @@ public:
     
     void partition(Bitvector_t & input)const;
     
+    std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> getConnectedPars(Bitvector_t s, Bitvector_t c, Bitvector_t);
     
+    /*BvSet_t MinCutConservative(Bitvector_t & s, Bitvector_t & c, Bitvector_t & x) const
+    {
+        BvSet_t result;
+        if(c == s) return result;
+        if(c.log2() != 0) result.insert({{c}});
+        Bitvector_t x_new = x;
+        Bitvector_t itr;
+        itr.union_of(c, s);
+        itr.set_difference(x);
+        for(Bitvector_t v : itr)
+        {
+            std::cout << v;
+            BvSet_t o;
+            Bitvector_t inputCut;
+            inputCut.union_of(c, v);
+            o = getConnectedParts(s, inputCut, v);
+            for(Bitvector_t o_i : o)
+            {
+                
+                
+                BvSet_t r = MinCutConservative(s, inputCut, v);
+                result.insert(r.begin(), r.end());
+            }
+            //std::unordered_set<Bitvector_t> o; // = getConnectedParts();
+        }
+        return result;
+    }*/
     
+    BvSet_t getConnectedParts(Bitvector_t s, BvSet_t c, BvSet_t x) const
+    {
+        BvSet_t result;
+        return result;
+    }
+    
+    BvSet_t MinCutConservative(Bitvector_t & s, BvSet_t & c, BvSet_t & x) const
+    {
+        BvSet_t result;
+        /*if(c == s)
+        {
+            return result;
+        }*/
+        if(c.size() > 0)
+        {
+            result.insert(c.begin(), c.end());
+        }
+        BvSet_t x_new;
+        x_new.insert(x.begin(), x.end());
+        for(Bitvector_t c_new : c)
+        {
+            for(Bitvector_t x_new : x)
+            {
+                Bitvector_t v = c_new.set_to_difference(c_new, x_new);
+                BvSet_t c_new2 = c;
+                c_new2.insert({v});
+                BvSet_t o = getConnectedParts(s, c_new2, {v});
+                for(Bitvector_t o_new : o)
+                {
+                    BvSet_t new_c;
+                    new_c.insert({o_new});
+                    BvSet_t r = MinCutConservative(s, new_c, x_new);
+                    result.insert(r.begin(), r.end());
+                    x_new.set_union(v);
+                }
+            }
+        }
+        return result;
+    }
     
     /**
      * @brief checks whether or not left associativity is applicable
@@ -68,11 +138,17 @@ public:
      */
     PlanNode * apply(PlanNode & aPlanNode) const override
     {
+        std::cout << "APPLY" << std::endl;
         PlanNode * result = NULL;
-        for(PlanNode & js_a : aPlanNode.l())
+        std::cout << (aPlanNode.l().begin() != aPlanNode.l().end());
+        std::cout.flush();
+        for(ECItr_t itr_a = aPlanNode.l().begin(); itr_a.isOK(); ++itr_a)
         {
-            for(PlanNode & js_b : aPlanNode.r())
+            PlanNode_t & js_a = * itr_a;
+            std::cout << "l" << js_a.getSignature();
+            for(ECItr_t itr_b = aPlanNode.r().begin(); itr_b.isOK(); ++itr_b)
             {
+                PlanNode_t js_b = * itr_b;
                 Bitvector_t & js = merge(js_a.getSignature(), js_b.getSignature());
                 this->partition(js);
                 for(PlanNode_t * t : this->createTrees(cuts))
@@ -92,14 +168,19 @@ private:
 template <typename PlanNode, typename Operations_t>
 void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t & input)const
 {
-<<<<<<< HEAD
-=======
-    
->>>>>>> fa6934ec20a8b847554e5ff801aa801e6916d552
-    /*if(cuts.count() == 0)
-    {
-        
-    }*/
+    BvSet_t empty;
+    empty.insert(Bitvector_t());
+    MinCutConservative(input, empty, empty);
 };
+
+
+
+/*template <typename PlanNode, typename Operations_t>
+std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> GraphRule<PlanNode, Operations_t>::getConnectedPars(Bitvector_t s, Bitvector_t c, Bitvector_t)
+{
+    std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> result;
+    
+    return result;
+}*/
 
 #endif

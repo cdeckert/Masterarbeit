@@ -30,7 +30,7 @@
 	],
 	"algorithms":
 	[
-		 "GraphRule", "RS_B0", "RS_B1", "RS_B2"
+		 "GraphRule"
 	],
 	"inital_tree":
 	{
