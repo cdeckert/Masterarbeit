@@ -17,7 +17,9 @@ Es gibt eine Vielzahl an Kommandos, die von einem Nutzer an ein Datenbank-System
 
 Vor der Verarbeitung muss die Anfrage formuliert werden. Dies geschieht bei relationalen Datenbanksystemen i.d.R. in \ac{SQL}. \ac{SQL} ist eine deklarative Anfragesprache, die sich als Standardsprache für viele Datenbanksysteme durchgesetzt hat. Die fertige Anfrage bildet den Input, der in das Datenbanksystem übergeben wird. 
 
-Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übergeben werden. Ein \ac{QI} ist im Vergleich zu einem \ac{QC} ein einfaches System zur Verarbeitung einer Anfrage. Es sieht vor, dass die Anfrage interpretiert wird und ein Ergebnis an den direkt Nutzer zurückgeliefert wird. Bei der Interpretation ist es möglich, dass Rewriter-Regeln zur Anwendung kommen, die die Anfrage umformulieren. Im Gegensatz zu \ac{QI} findet in \ac{QC} Systemen eine komplexere Bearbeitung der Anfrage statt. Dort wird eine Anfrage zuerst in einem \ac{CTS} entgegengenommen, das die Anfrage in einen \ac{QEP} umwandelt. Der dann an das \ac{RTS} weitergegeben wird.
+Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übergeben werden. Ein \ac{QI} ist im Vergleich zu einem \ac{QC} ein einfaches System zur Verarbeitung einer Anfrage. Alle Schritte zur Erziehlung eines Ergebnisses werden in einem System ausgeführt. Die Anfrage wird zu diesem Zweck nicht kompiliert, sondern nur Interpretiert. Neben Rewriter-Regeln kommen keine weiteren Optimierungen zum Einsatz. Die Ergebnisse werden direkt an den Nutzer zurückgegeben. Im Gegensatz zu \ac{QI} findet in \ac{QC} Systemen eine komplexere Bearbeitung der Anfrage statt. Dort wird eine Anfrage zuerst in einem \ac{CTS} entgegengenommen, das die Anfrage in einen \ac{QEP} umwandelt. Der dann an das \ac{RTS} weitergegeben wird. Im Folgenden werden \ac{QC} genauer behandelt.
+
+
 
 
 
@@ -29,7 +31,7 @@ Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übe
 \end{figure}
 
 
-Der \ac{CTS} sieht mehrere Verarbeitsschritte vor. (vgl. Abb. \ref{DBMS_Interpreter}) Zuerst wird die Anfrage in einen abstrakten Syntaxbaum umgewandelt. Dieser Synaxbaum wird mit Hilfe von Normalisierung, Faktorisierung, Semantischer Analyse und Übersetzung in eine interne Repräsentationsform gebracht. Diese interne Repräsentation wird an den Anfragenoptimierer übergeben. Der zuerst mit einem ersten Rewriter die Anfrage einer Bearbeitung unterzieht. Views werden aufgelöst und zusammengeführt, verschachtelte Anfragen werden entschachtelt und neue Prädikate werden abgeleitet. Im nächsten Schritt wird diese veränderte Anfrage an den Plan Generator übergeben. Er ist verantwortlich für das finden des günstigsten \ac{QEP}. Teil dieser Optimierung ist beispielsweise das Join Ordering. Im letzten Schritt des \ac{QO} wird die Anfrage nochmals durch einen Query Rewriter verändert. Basierend auf diesem Code kann der finale Code generiert werden. Der dem \ac{RTS} als Input für die Ausführung einer Anfrage dient.
+Der \ac{CTS} sieht mehrere Verarbeitsschritte vor. (vgl. Abb. \ref{DBMS_Interpreter}) Zuerst wird die Anfrage in einen abstrakten Syntaxbaum umgewandelt. Dieser Synaxbaum wird mit Hilfe von Normalisierung, Faktorisierung, Semantischer Analyse und Übersetzung in eine interne Repräsentationsform gebracht. Diese interne Repräsentation wird an den Anfragenoptimierer übergeben, der zuerst mit einem ersten Rewriter die Anfrage einer Bearbeitung unterzieht. Views werden aufgelöst und zusammengeführt, verschachtelte Anfragen werden entschachtelt und neue Prädikate werden abgeleitet. Im nächsten Schritt wird diese veränderte Anfrage an den Plan Generator übergeben. Er ist verantwortlich für das finden des günstigsten \ac{QEP}. Teil dieser Optimierung ist beispielsweise das Join Ordering. Im letzten Schritt des \ac{QO} wird die Anfrage nochmals durch einen Query Rewriter verändert. Basierend auf diesem Code kann der finale Code generiert werden. Der dem \ac{RTS} als Input für die Ausführung einer Anfrage dient.
 
 
 Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich ist besteht benötigt, um seine Aufgabe zu erfüllen drei Komponenten \cite{chaudhuri1998overview}: 
@@ -39,4 +41,6 @@ Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich
 \item einen Enumerator Algorithmus, der für die Suche nach Plänen verantwortlich ist
 \item und einen Kostenschätzer, der die Kosten für die Ausführung eines jeden Plans abschätzt.
 \end{itemize}
+
+Diese drei Komponenten werden im Folgendenden unter die Lupe genommen und in Kapitel 3 an Hand von Beispielen aus der Praxis näher erläutert.
 
