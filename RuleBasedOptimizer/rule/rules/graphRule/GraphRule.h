@@ -56,7 +56,7 @@ public:
     {
         BvSet_t O;
         Bitvector_t D, N, U, L, L_new;
-        N = getNeighbors(T).without(C);
+        N = getNeighbors(T, S).without(C);
         if(N.size() <= 1)
         {
             Bitvector_t b = S.without(C);
@@ -79,7 +79,7 @@ public:
                     {
                         D = L_new.without(L);
                         L = L_new;
-                        L_new.union_with(getNeighbors(D).without(C));
+                        L_new.union_with(getNeighbors(D, S).without(C));
                         U = U.without(L_new);
                     }
                     if(U.is_not_empty()){
@@ -99,7 +99,7 @@ public:
                                 {
                                     D = L_new.without(L);
                                     L = L_new;
-                                    L_new.union_with(getNeighbors(D).without(C));
+                                    L_new.union_with(getNeighbors(D, S).without(C));
                                 }
                                 O.insert({L});
                                 U = U.without(L);
@@ -117,7 +117,7 @@ public:
         return O;
     }
     
-    Bitvector_t getNeighbors(Bitvector_t relations) const
+    Bitvector_t getNeighbors(Bitvector_t relations, Bitvector_t s) const
     {
         Bitvector_t result;
         for(BVIter itr = relations.begin(); itr != relations.end(); ++itr)
