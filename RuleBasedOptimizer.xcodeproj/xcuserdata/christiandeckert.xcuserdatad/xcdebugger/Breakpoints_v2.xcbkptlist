@@ -10,28 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452417472.86911"
+            timestampString = "452527780.675143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452417472.86911"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -136,12 +120,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452417501.828192"
+            timestampString = "452527780.675143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -152,12 +136,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452417939.658951"
+            timestampString = "452527780.675143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -168,12 +152,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452430386.830826"
+            timestampString = "452527780.675143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "MinCutConservative(Bitvector_t &amp; subSetOfRelations, Bitvector_t &amp; connectedRelations, Bitvector_t &amp; excluded)"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
