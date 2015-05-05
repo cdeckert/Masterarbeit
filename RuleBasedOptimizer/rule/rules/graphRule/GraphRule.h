@@ -254,7 +254,8 @@ void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 	BvSet_t empty;
 	empty.insert(Bitvector_t());
 	Bitvector_t b;
-	MinCutConservative(input, b, b);
+	BvSet_t result = MinCutConservative(input, b, b);
+	std::cout << result.size();
 };
 
 
