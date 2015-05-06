@@ -23,5 +23,7 @@ public:
 private:
 	static Log * instance;
 	Json json;
+	
+	
 };
 #endif /* defined(__RuleBasedOptimizer__Log__) */

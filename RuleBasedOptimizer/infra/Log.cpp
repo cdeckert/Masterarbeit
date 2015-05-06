@@ -8,4 +8,19 @@
 
 #include "Log.h"
 
+Log * Log::instance;
 
+Log & Log::log()
+{
+	if(instance == NULL)
+	{
+		instance = new Log();
+	}
+	return * instance;
+}
+
+
+Log::Log()
+{
+	
+}
