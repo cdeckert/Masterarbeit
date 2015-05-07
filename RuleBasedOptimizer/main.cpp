@@ -14,7 +14,9 @@
 #include "StringAdaptor.h"
 #include "CostEstimator.h"
 #include "Stopwatch.h"
+#include "easylogging++.h"
 
+INITIALIZE_EASYLOGGINGPP
 
 
 
@@ -51,6 +53,8 @@ int main(int argc, char *argv[])
 	typedef BitVectorSmall<u_int> Bitvector_t;
 	typedef PlanNode<Bitvector_t> PlanNode_t;
 	typedef PlanNode_t::EquivalenceClass_t Ec;
+	
+	
 	
 	
 
