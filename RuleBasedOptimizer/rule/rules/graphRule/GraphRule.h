@@ -36,7 +36,7 @@ public:
 	};
 
 
-	void partition(Bitvector_t &input)const;
+	BvSet_t partition(Bitvector_t &input)const;
 
 	std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> getConnectedPars(Bitvector_t s, Bitvector_t c, Bitvector_t);
 
@@ -55,7 +55,7 @@ public:
 		LOG(INFO) << "S:					" << S;
 		LOG(INFO) << "C:					" << C;
 		LOG(INFO) << "T:					" << T;
-		
+
 		BvSet_t O;
 		Bitvector_t D, N, U, L, L_new;
 		N = getNeighbors(T, S).without(C);
@@ -124,7 +124,7 @@ public:
 
 	Bitvector_t getNeighbors(Bitvector_t relations, Bitvector_t s) const
 	{
-		
+
 		Bitvector_t result;
 		if (relations.is_empty())
 		{
@@ -162,12 +162,12 @@ public:
 
 	BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
 	{
-		
+
 		LOG(INFO) << "MinCutConservative";
 		LOG(INFO) << "subSetOfRelations:	" << subSetOfRelations;
 		LOG(INFO) << "connectedRelations:	" << connectedRelations;
 		LOG(INFO) << "excluded:			" << excluded;
-		
+
 		BvSet_t result;
 
 		if (connectedRelations == subSetOfRelations)
@@ -225,11 +225,22 @@ public:
 		return * js;
 	}
 
-	std::vector<PlanNode_t *> createTrees(DPTable_t) const
+	std::vector<PlanNode_t *> createTrees(BvSet_t partition, Bitvector_t js) const
 	{
 		std::vector<PlanNode_t *> vector;
+		for(Bitvector_t t : partition)
+		{
+			if(js.contains(t))
+			{
+				if(t.size() == 1)
+				{
+					return o->scan(t);
+				}
+			}
+		}
 		return vector;
 	}
+	
 
 	/**
 	 * @brief apply graph rule
@@ -237,52 +248,33 @@ public:
 	PlanNode *apply(PlanNode &aPlanNode) const override
 	{
 		LOG(INFO) << "aPlanNode:" << aPlanNode.getRelations();
-		
+
 		PlanNode *result = NULL;
 
-		Bitvector_t & js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
-		
+		Bitvector_t &js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
+
 		LOG(WARNING) << "JS: " << js;
-		this->partition(js);
-		/*for (ECItr_t itr_a = aPlanNode.l().begin(); itr_a.isOK(); ++itr_a)
+		BvSet_t partition = this->partition(js);
+		for (PlanNode_t *t : this->createTrees(partition, js))
 		{
-			PlanNode_t &js_a = * itr_a;
-			LOG(INFO) << "js_a.getSignature():" << js_a.getRelations();
-			for (ECItr_t itr_b = aPlanNode.r().begin(); itr_b.isOK(); ++itr_b)
-			{
-				PlanNode_t js_b = * itr_b;
-				LOG(INFO) << "js_b.getSignature():" << js_b.getRelations();
-				Bitvector_t &js = merge(js_a.getSignature(), js_b.getSignature());
-		 
-				for (PlanNode_t *t : this->createTrees(cuts))
-				{
-					if (result == NULL) result = t;
-					else result->concat(t);
-				}
-			}
-		}*/
+			if (result == NULL) result = t;
+			else result->concat(t);
+		}
 		return result;
 	};
 private:
 	BvSet_t _joinEdges;
-	DPTable_t cuts;
 };
 
 template <typename PlanNode, typename Operations_t>
-void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
+typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 {
 	LOG(INFO) << "Entered partition";
 	BvSet_t empty;
 	empty.insert(Bitvector_t());
 	Bitvector_t b;
-	BvSet_t result = MinCutConservative(input, b, b);
-	std::cout << result.size();
-	for(Bitvector_t b : result)
-	{
-		LOG(INFO) << "DATA"<< b;
-
-	}
-	};
+	return MinCutConservative(input, b, b);
+};
 
 
 #endif
