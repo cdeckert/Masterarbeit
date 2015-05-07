@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452686118.610776"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
             landmarkType = "7">
          </BreakpointContent>
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452683601.076574"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T)"
             landmarkType = "7">
          </BreakpointContent>
@@ -72,11 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452683601.076574"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T)"
             landmarkType = "7">
          </BreakpointContent>
@@ -104,7 +104,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452686118.610776"
+            timestampString = "452703402.63437"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
@@ -120,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452686118.610776"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
             landmarkType = "7">
          </BreakpointContent>
@@ -136,13 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452686118.610776"
+            timestampString = "452703779.035701"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
-            landmarkType = "7">
+            startingLineNumber = "286"
+            endingLineNumber = "286">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -152,25 +166,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452689987.372857"
+            timestampString = "452703779.035701"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452689987.372857"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
             landmarkName = "partition(Bitvector_t &amp;input)"
             landmarkType = "7">
          </BreakpointContent>
@@ -197,22 +197,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452683601.076574"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/infra/Log.cpp"
             timestampString = "452681348.906188"
             startingColumnNumber = "9223372036854775807"
@@ -230,11 +214,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452689987.372857"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "partition(Bitvector_t &amp;input)"
             landmarkType = "7">
          </BreakpointContent>
@@ -246,11 +230,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452686539.700843"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "merge(Bitvector_t bv1, Bitvector_t bv2)"
             landmarkType = "7">
          </BreakpointContent>
@@ -262,12 +246,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
-            timestampString = "452689987.372857"
+            timestampString = "452703402.63437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
             landmarkName = "apply(PlanNode &amp;aPlanNode)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452703402.63437"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "MinCutConservative(Bitvector_t &amp;subSetOfRelations, Bitvector_t &amp;connectedRelations, Bitvector_t &amp;excluded)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452703402.63437"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452697397.023208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452703402.63437"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/infra/BitvectorSmall.h"
+            timestampString = "452698674.886014"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "size()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452703779.035701"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
+            landmarkName = "partition(Bitvector_t &amp;input)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/graphRule/GraphRule.h"
+            timestampString = "452703816.667518"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "partition(Bitvector_t &amp;input)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

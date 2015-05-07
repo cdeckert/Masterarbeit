@@ -48,7 +48,7 @@
 		AF6AE2E11AE4F85700BDBC5F /* Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Configuration.h; path = infra/Configuration.h; sourceTree = "<group>"; };
 		AF7515191A7F86440003FE5B /* RuleBasedOptimizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RuleBasedOptimizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF75151C1A7F86440003FE5B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		AF7A36951AF0E9BB001A6AEA /* GraphRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphRuleSet.h; sourceTree = "<group>"; };
+		AF7A36951AF0E9BB001A6AEA /* GraphRuleSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GraphRuleSet.h; path = rule/rulesets/GraphRuleSet.h; sourceTree = "<group>"; };
 		AF8222BF1AC425E600861B51 /* DotAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DotAdaptor.h; path = adaptor/DotAdaptor.h; sourceTree = "<group>"; };
 		AF8222C01AC5E2D000861B51 /* StringAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringAdaptor.h; path = adaptor/StringAdaptor.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSONAdaptor.h; path = adaptor/JSONAdaptor.h; sourceTree = "<group>"; };
@@ -77,7 +77,6 @@
 		AFFF644D1AA5B1E40034AD55 /* RightAssociativity_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity_B2.h; path = rule/rules/b2/RightAssociativity_B2.h; sourceTree = "<group>"; };
 		AFFF644E1AA5C11E0034AD55 /* Exchange_B2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exchange_B2.h; path = rule/rules/b2/Exchange_B2.h; sourceTree = "<group>"; };
 		AFFF9B201AEE395B0095CBC1 /* GraphRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GraphRule.h; path = rule/rules/graphRule/GraphRule.h; sourceTree = "<group>"; };
-		AFFF9B211AEE39810095CBC1 /* MinCutConservative.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MinCutConservative.h; path = rule/MinCutConservative.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,26 +152,9 @@
 		AF7A36941AF0E863001A6AEA /* graphRule */ = {
 			isa = PBXGroup;
 			children = (
-				AF7A36961AF0F3B1001A6AEA /* services */,
 				AFFF9B201AEE395B0095CBC1 /* GraphRule.h */,
 			);
 			name = graphRule;
-			sourceTree = "<group>";
-		};
-		AF7A36961AF0F3B1001A6AEA /* services */ = {
-			isa = PBXGroup;
-			children = (
-				AF7A36971AF0F3BE001A6AEA /* partitioning */,
-				AFFF9B211AEE39810095CBC1 /* MinCutConservative.h */,
-			);
-			name = services;
-			sourceTree = "<group>";
-		};
-		AF7A36971AF0F3BE001A6AEA /* partitioning */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = partitioning;
 			sourceTree = "<group>";
 		};
 		AF865C171AC2BE2C00D301D9 /* adaptor */ = {

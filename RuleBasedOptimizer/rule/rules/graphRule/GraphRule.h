@@ -63,6 +63,8 @@ public:
 		{
 			Bitvector_t b = S.without(C);
 			O.insert({b});
+			O.insert({C});
+			LOG(INFO) << "o:		" << b;
 			return O;
 		}
 		std::cout << "N" << N << std::endl;
@@ -170,6 +172,7 @@ public:
 
 		if (connectedRelations == subSetOfRelations)
 		{
+			LOG(WARNING) << "RESULT";
 			return result;
 		}
 		if (connectedRelations.is_not_empty())
@@ -187,15 +190,14 @@ public:
 				Bitvector_t v;
 				v.set(i);
 				BvSet_t O = getConnectedParts(subSetOfRelations, connectedRelations.uni(v), v);
+				excluded_new.union_with(v);
 				for (Bitvector_t o : O)
 				{
 					Bitvector_t newConnectedRelationships;
 					newConnectedRelationships = subSetOfRelations.without(o);
 					BvSet_t r = MinCutConservative(subSetOfRelations, newConnectedRelationships, excluded_new);
 					result.insert(r.begin(), r.end());
-					excluded_new.union_with(v);
 				}
-
 			}
 		}
 		return result;
@@ -275,7 +277,12 @@ void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 	Bitvector_t b;
 	BvSet_t result = MinCutConservative(input, b, b);
 	std::cout << result.size();
-};
+	for(Bitvector_t b : result)
+	{
+		LOG(INFO) << "DATA"<< b;
+
+	}
+	};
 
 
 #endif

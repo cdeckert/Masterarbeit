@@ -55,9 +55,6 @@ int main(int argc, char *argv[])
 	typedef PlanNode_t::EquivalenceClass_t Ec;
 	
 	
-	
-	
-
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
 	Configurator<PlanNode_t> configManager;
