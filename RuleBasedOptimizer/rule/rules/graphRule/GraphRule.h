@@ -6,7 +6,7 @@
 #define RuleBasedOptimizer_GraphRule_h
 
 //#include "MinCutConservative.h"
-
+#include "easylogging++.h"
 /**
  * @brief Graph Rule
  * @details Rule that creates commutative plan nodes based on a given node
@@ -42,10 +42,6 @@ public:
 
 
 
-	Bitvector_t neighbor(Bitvector_t &t)
-	{
-		return t;
-	}
 
 	struct BVSet_t
 	{
@@ -55,6 +51,11 @@ public:
 
 	BvSet_t getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
 	{
+		LOG(INFO) << "getConnectedParts";
+		LOG(INFO) << "S:					" << S;
+		LOG(INFO) << "C:					" << C;
+		LOG(INFO) << "T:					" << T;
+		
 		BvSet_t O;
 		Bitvector_t D, N, U, L, L_new;
 		N = getNeighbors(T, S).without(C);
@@ -121,6 +122,7 @@ public:
 
 	Bitvector_t getNeighbors(Bitvector_t relations, Bitvector_t s) const
 	{
+		
 		Bitvector_t result;
 		if (relations.is_empty())
 		{
@@ -151,12 +153,19 @@ public:
 
 			}
 		}
+		LOG(INFO) << "getNeighbors( relations: " << relations << ", s: " << s << ") : " << result;
 		return result;
 	}
 
 
 	BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
 	{
+		
+		LOG(INFO) << "MinCutConservative";
+		LOG(INFO) << "subSetOfRelations:	" << subSetOfRelations;
+		LOG(INFO) << "connectedRelations:	" << connectedRelations;
+		LOG(INFO) << "excluded:			" << excluded;
+		
 		BvSet_t result;
 
 		if (connectedRelations == subSetOfRelations)
@@ -208,6 +217,7 @@ public:
 
 	Bitvector_t &merge(Bitvector_t bv1, Bitvector_t bv2) const
 	{
+		LOG(INFO) << "bv1 + bv2: " << bv1 << ":" << bv2;
 		Bitvector_t *js = this->o.get_new_BV();  // =  Bitvector_t();
 		js->union_of(bv1, bv2);
 		return * js;
@@ -224,23 +234,31 @@ public:
 	 */
 	PlanNode *apply(PlanNode &aPlanNode) const override
 	{
+		LOG(INFO) << "aPlanNode:" << aPlanNode.getRelations();
+		
 		PlanNode *result = NULL;
-		for (ECItr_t itr_a = aPlanNode.l().begin(); itr_a.isOK(); ++itr_a)
+
+		Bitvector_t & js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
+		
+		LOG(WARNING) << "JS: " << js;
+		this->partition(js);
+		/*for (ECItr_t itr_a = aPlanNode.l().begin(); itr_a.isOK(); ++itr_a)
 		{
 			PlanNode_t &js_a = * itr_a;
-			std::cout << "l" << js_a.getSignature();
+			LOG(INFO) << "js_a.getSignature():" << js_a.getRelations();
 			for (ECItr_t itr_b = aPlanNode.r().begin(); itr_b.isOK(); ++itr_b)
 			{
 				PlanNode_t js_b = * itr_b;
+				LOG(INFO) << "js_b.getSignature():" << js_b.getRelations();
 				Bitvector_t &js = merge(js_a.getSignature(), js_b.getSignature());
-				this->partition(js);
+		 
 				for (PlanNode_t *t : this->createTrees(cuts))
 				{
 					if (result == NULL) result = t;
 					else result->concat(t);
 				}
 			}
-		}
+		}*/
 		return result;
 	};
 private:
@@ -251,6 +269,7 @@ private:
 template <typename PlanNode, typename Operations_t>
 void GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 {
+	LOG(INFO) << "Entered partition";
 	BvSet_t empty;
 	empty.insert(Bitvector_t());
 	Bitvector_t b;
