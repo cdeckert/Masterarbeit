@@ -177,7 +177,7 @@ public:
 		}
 		if (connectedRelations.is_not_empty())
 		{
-			result.insert({connectedRelations});
+			result.insert({connectedRelations, getNeighbors(connectedRelations, subSetOfRelations)});
 		}
 		Bitvector_t excluded_new = excluded;
 		Bitvector_t neighborhood = getNeighbors(connectedRelations, subSetOfRelations);
@@ -200,6 +200,10 @@ public:
 				}
 			}
 		}
+        for(Bitvector_t b : result)
+        {
+            LOG(WARNING) << "BITVECTOR:     " << b.log2();
+        }
 		return result;
 	}
 
@@ -229,8 +233,11 @@ public:
 	{
 		LOG(INFO) << "CREATE TREE";
 		LOG(INFO) << "js:					" << js;
+        for(Bitvector_t b : partition)
+        {
+            LOG(INFO) << "PARTITION:			" << b;
+        }
 		
-		LOG(INFO) << "PARTITION:			" << partition;
 		
 		EquivalenceClass_t * eq = new EquivalenceClass_t();
 		
@@ -241,11 +248,18 @@ public:
 			{
 				if(t.size() == 1)
 				{
-					eq->concat(this->o.scan(t));
+                    if(js.size() == 1) return this->o.scan(t);
+                    else
+					eq->concat(this->o.join(*this->o.scan(t), * createTrees(partition, js.without(t))));
+                    eq->explored = true;
+                    return eq;
 				}
 				else
 				{
-					eq->concat(this->o.join(*createTrees(partition, t), * createTrees(partition, js.without(t))));
+                    EquivalenceClass_t * eqNew = this->o.join(*createTrees(partition, t), * createTrees(partition, js.without(t)));
+                    LOG(INFO) << "eqNew" << eqNew->getRelations();
+					eq->concat(eqNew);
+                    LOG(INFO) << eq->getRelations().log2();
 				}
 			}
 		}
