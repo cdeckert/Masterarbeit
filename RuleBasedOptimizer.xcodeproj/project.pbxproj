@@ -476,6 +476,7 @@
 		AF7515211A7F86440003FE5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -484,6 +485,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

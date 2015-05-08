@@ -151,6 +151,20 @@ public:
 	{
 		return _neighbors;
 	};
+	
+	bool isEmpty();
+	
+	inline void concat(self_type * next)
+	{
+		if(isEmpty())
+		{
+			*this = *next;
+		}
+		else
+		{
+			push_back(* next->getFirst());
+		}
+	}
 
 	/**
 	 * @brief [brief description]
@@ -382,7 +396,6 @@ private:
 
 	PlanNode_t *_first;
 	PlanNode_t *_last;
-
 	PlanNode_t *_best;
 
 	bool _explored;
@@ -397,6 +410,8 @@ private:
 		_last = NULL;
 		_explored = false;
 	};
+	
+	
 
 	/**
 	 * @brief thows exception in case the eq was explored before
@@ -453,6 +468,12 @@ u_int EquivalenceClass<PlanNode_t>::getSize() const
 
 	return size;
 };
+
+template <typename PlanNode_t>
+bool EquivalenceClass<PlanNode_t>::isEmpty()
+{
+	return _first == NULL && _explored == false && _last == NULL;
+}
 
 template <typename PlanNode_t>
 u_int EquivalenceClass<PlanNode_t>::getCount() const

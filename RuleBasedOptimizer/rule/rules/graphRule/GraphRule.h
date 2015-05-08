@@ -225,20 +225,31 @@ public:
 		return * js;
 	}
 
-	std::vector<PlanNode_t *> createTrees(BvSet_t partition, Bitvector_t js) const
+	EquivalenceClass_t * createTrees(BvSet_t partition, Bitvector_t js) const
 	{
-		std::vector<PlanNode_t *> vector;
+		LOG(INFO) << "CREATE TREE";
+		LOG(INFO) << "js:					" << js;
+		
+		LOG(INFO) << "PARTITION:			" << partition;
+		
+		EquivalenceClass_t * eq = new EquivalenceClass_t();
+		
 		for(Bitvector_t t : partition)
 		{
+			LOG(INFO) << "t:					" << t;
 			if(js.contains(t))
 			{
 				if(t.size() == 1)
 				{
-					return o->scan(t);
+					eq->concat(this->o.scan(t));
+				}
+				else
+				{
+					eq->concat(this->o.join(*createTrees(partition, t), * createTrees(partition, js.without(t))));
 				}
 			}
 		}
-		return vector;
+		return eq;
 	}
 	
 
@@ -255,11 +266,7 @@ public:
 
 		LOG(WARNING) << "JS: " << js;
 		BvSet_t partition = this->partition(js);
-		for (PlanNode_t *t : this->createTrees(partition, js))
-		{
-			if (result == NULL) result = t;
-			else result->concat(t);
-		}
+		this->createTrees(partition, js);
 		return result;
 	};
 private:
