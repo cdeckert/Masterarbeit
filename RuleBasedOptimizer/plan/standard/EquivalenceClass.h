@@ -142,15 +142,29 @@ public:
 	 * equivalence class
 	 * @return a bitvector
 	 */
-	inline Bitvector_t &getRelations()
+	inline Bitvector_t & getRelations()
 	{
 		return _relations;
 	};
 
-	inline Bitvector_t &getNeighbors()
+	inline Bitvector_t & getNeighbors()
 	{
 		return _neighbors;
 	};
+	
+	bool isEmpty();
+	
+	inline void concat(self_type * next)
+	{
+		if(isEmpty())
+		{
+			*this = *next;
+		}
+		else
+		{
+			push_back(* next->getFirst());
+		}
+	}
 
 	/**
 	 * @brief [brief description]
@@ -158,7 +172,7 @@ public:
 	 *
 	 * @param aRelations [description]
 	 */
-	void setRelations(Bitvector_t &aRelations)
+	void setRelations(Bitvector_t & aRelations)
 	{
 		_relations += aRelations;
 	}
@@ -170,7 +184,7 @@ public:
 	 * @param b [description]
 	 * @return [description]
 	 */
-	bool isOverlapping(Bitvector_t b)
+	bool isOverlapping(const Bitvector_t & b) const
 	{
 		return _relations.overlap(b);
 	};
@@ -182,7 +196,7 @@ public:
 	 * @param b [description]
 	 * @return [description]
 	 */
-	bool isOverlapping(self_type b)
+	bool isOverlapping(self_type b) const
 	{
 		return _neighbors.overlap(b.getRelations());
 	};
@@ -232,7 +246,7 @@ public:
 	 * @details [long description]
 	 * @return [description]
 	 */
-	Bitvector_t &getSignature()
+	Bitvector_t & getSignature()
 	{
 		return _relations;
 	};
@@ -254,7 +268,7 @@ public:
 	 * @brief Accessor for operation (e.g. join)
 	 * @return operator string
 	 */
-	inline std::string getOperatorAsString()const
+	inline std::string getOperatorAsString() const
 	{
 		throwExceptionInCaseEqWasExpended();
 		return _first->getOperatorAsString();
@@ -302,7 +316,7 @@ public:
 	 * @param _relations [description]
 	 * @return [description]
 	 */
-	inline unsigned int getRel()
+	inline unsigned int getRel() const
 	{
 		return _relations.log2();
 	};
@@ -322,7 +336,7 @@ public:
 	 *
 	 * @param neighbors [description]
 	 */
-	void setNeighbors(Bitvector_t &neighbors)
+	void setNeighbors(const Bitvector_t &neighbors)
 	{
 		_neighbors = neighbors;
 	};
@@ -333,7 +347,7 @@ public:
 	 *
 	 * @param neighbor [description]
 	 */
-	void addNeighbor(u_int neighbor)
+	void addNeighbor(const u_int neighbor)
 	{
 		_neighbors.set(neighbor);
 	};
@@ -353,13 +367,13 @@ public:
 	 * @details [long description]
 	 * @return [description]
 	 */
-	inline PlanNode_t *getFirst()
+	inline PlanNode_t *getFirst() const
 	{
 		return _first;
 	};
 
 
-	inline PlanNode_t getBest()
+	inline PlanNode_t getBest() const
 	{
 		return *_best;
 	};
@@ -370,7 +384,7 @@ public:
 	};
 
 
-	inline bool isBest()
+	inline bool isBest() const
 	{
 		return _best != NULL;
 	};
@@ -382,7 +396,6 @@ private:
 
 	PlanNode_t *_first;
 	PlanNode_t *_last;
-
 	PlanNode_t *_best;
 
 	bool _explored;
@@ -397,6 +410,8 @@ private:
 		_last = NULL;
 		_explored = false;
 	};
+	
+	
 
 	/**
 	 * @brief thows exception in case the eq was explored before
@@ -440,7 +455,6 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
 		_last = &aPlanNode;
 		_relations += _last->getSignature();
 	}
-
 };
 
 template <typename PlanNode_t>
@@ -456,6 +470,12 @@ u_int EquivalenceClass<PlanNode_t>::getSize() const
 };
 
 template <typename PlanNode_t>
+bool EquivalenceClass<PlanNode_t>::isEmpty()
+{
+	return _first == NULL && _explored == false && _last == NULL;
+}
+
+template <typename PlanNode_t>
 u_int EquivalenceClass<PlanNode_t>::getCount() const
 {
 	u_int count = 0;
@@ -465,14 +485,6 @@ u_int EquivalenceClass<PlanNode_t>::getCount() const
 	}
 	return count;
 };
-
-
-
-
-
-
-
-
 
 template <typename PlanNode_t>
 std::ostream &EquivalenceClass<PlanNode_t>::print(std::ostream &os) const

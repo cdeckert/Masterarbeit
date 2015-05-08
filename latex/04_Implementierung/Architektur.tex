@@ -1,3 +1,29 @@
 \section{Architektur}
 
 Das Projekt ist organisiert Anhand der Komponenten, die bei der Plan-Expansion benötigt werden. Am Beginn steht eine Anfrage. Sie wird durch einen Adaptor in einen DAG umgewandelt. Der DAG wird in der Form von Äuquivalenzklassen und Planknoten bereit gestellt. Im nächsten Schritt wird ein Rule-Set ausgewählt, das mit Hilfe eines Rule-Set-Executors angewendet wird. Die neu erzeugten Graphen werden in die Struktur der Äuqivalenzklasse übernommen. Das Ergebnis des Search-Space-Generators ist ein erforschter Suchraum in der Form einer Äquivalenzklasse.
+
+\subsection{Planknoten und Äquivalenzklassen}
+
+\subsection{Regeln und Regelsets}
+Einer der wichtigsten Komponenten sind Regeln und Regelsets. Das Regelset bildet eine Sammlung von Regeln ab, die bei der Transformation des Anfragebaums Verwendung finden. Um sowohl Regeln als auch Regelsets erweitern zu können und um individuelle Implementierungen zu zulassen, erben alle Regeln vond er Abstrakten Klasse Rule und alle Regelsets von der Abstrakten Klasse RuleSet. Eine Regel muss, um das Interface der Rule zu erfüllen, die Methoden isApplicable für einen PlanKnoten als auch Apply implementieren. Die Methode isApplicable prüft individuell für jede Regel, ob sie zur Anwendung kommen kann. Die eigentliche Ausführung wird von apply übernommen. Obwohl apply nur einen einzigen PlanKnoten zurückgibt, können auch mehrere Knoten mit Hilfe des _next Pointer attributes zurückgegeben werden. Somit ist die Abstrakte Klasse Rule auch für komplexere Regeln wie die von [INDIEN] einsetzbar.
+
+Die einzelnen Regeln werden in Regelssets zusammengeführt. Insgesamt wurden vier unterschiedliche Regelsets implementiert. Sie basieren zum einen auf den von Pellenkoft vorgeschlagenen Regeln, implementieren jedoch auch die von [Indien] vorgeschlagene Regel.
+
+Die Abfolge der Regeln innerhalb eines Regelsets ist nicht dynamisch veränderbar. Alle Regeln, werden in der gegebenen Implementierung, immer in der Reihenfolge des Einfügens in des Regelset ausgeführt.  Eine weitere Flexibilisierung oder Priorisierung wäre möglich und kann mit Hilfe der Methode getRules() implementiert werden.
+
+Die Implementierung eines neuen Regelsets ist denkbar einfach. Zunächst müssen mögliche neue Regeln angelegt werden. Ebenfalls können basierend auf bereits bestehenden Regeln und neuen Regeln Regelsets zusammengestellt werden. Diese sind dann direkt für den Einsatz geeignet. 
+
+
+\subsection{Ausführung von Regeln}
+
+Das eigentliche Ausführen der Regeln wird durch einen XY durchgeführt. Im Konkreten Fall kommt hier der Algorithmus ExhaustiveTransformation zum Einsatz. Der Algorithmus startet mit einer Äquivalenzklasse. Innerhalb dieser Äquivalenzklasse werden die Regeln, die durch ein Regelset vorgegeben sind auf einem PlanKnoten ausgeführt. Die Ausführung geschieht hierbei zuerst auf den Oberen Ebenen und setzt sich dann auf den Kindern eines Knoten fort. Somit können bei der Transformation eines gegeneben Baums alle Regeln auf andere Bäume angewendet werden.
+
+Wichtig ist hierbei zu bemerken, dass dieser Algorithmus immer zuerst prüft, ob eine Regel auch tatsächlich für die Anwendung geeignet ist und dann erst der Algorithmus ausgeführt wird. Neben der eigentlichen Eignung wird auch geprüft, ob eine Äquivalenzklasse bereits vollständig expandiert wurde. Falls dies der Fall ist, wird von einer weiteren Anwendung von Regeln abgesehen. Diese Funktion kann insbesondere Vorteile bei der Implementierung von neuen Regelsets bieten. Nutzt ein gegebenenes Regelset die Möglichkeit nicht nur einen neuen PlanKnoten zu generieren sondern gleich mehrere Planknoten zu erstellen und auch in diesem zusammenhang bereits mehrere Kinder-Knoten zu erstellen, kann die Reihenfolge der Expansion von Äuqivalenzklassen geändert werden. Die einzelnen Äquivalenzklassen, die bereits durch eine Regel expandiert wurden, werden als solche markiert und die bisher vorhandenen Regeln werden nicht mehr ausgeführt.
+
+
+\subsection{Kostenschätzung und statistische Informationen}
+
+
+
+
+

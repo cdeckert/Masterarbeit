@@ -6,6 +6,7 @@
 #include <inttypes.h>
 #include <ostream>  // for ostream (operator <<)
 #include <istream>  // for istream (operator >>)
+#include "easylogging++.h"
 
 
 #include "Hasher.h"
@@ -94,7 +95,7 @@ public:
     inline size_t size()
     {
         size_t size = 0;
-        for(unsigned int i = 0; i < sizeof(bitvector_t); ++i)
+        for(unsigned int i = 0; i < capacity(); ++i)
         {
             if(test(i))
             {

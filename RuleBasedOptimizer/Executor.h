@@ -60,7 +60,7 @@ void Executor<PlanNode_t>::run() const
 	for (std::string algo : _configuration.getAlgorithms())
 	{
 		uint64_t duration = 0;
-		for (int i = 0; i < 1000; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
 			ExhaustiveTransformation_t *t1 = 0;
 			if (algo == "RS_B0")

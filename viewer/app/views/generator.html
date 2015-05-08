@@ -1,0 +1,44 @@
+<h2>Relationships</h2>
+
+	<table class="table table-bordered">
+		<tr>
+			<th>Relation</th>
+			<th>Cardinality</th>
+		</tr>
+		<tr ng-repeat="r in relations">
+			<td>{{r.relation}}</td>
+			<td contenteditable ui-keydown="{ 'tab' : 'addRelationByTab($event, r.relation)'}">{{r.cardinality}}</td>
+		</tr>
+	</table>
+	<button class="btn" ng-click="addRelation()" tabindex="99">Add relation</button>
+
+
+<h2>Join Edges</h2>
+
+	<table class="table table-bordered">
+		<tr>
+			<th>From</th>
+			<th>To</th>
+			<th>Selectivity</th>
+		</tr>
+		<tr ng-repeat="j in joinEdges">
+			<td contenteditable>{{j.from}}</td>
+			<td contenteditable>{{j.to}}</td>
+			<td contenteditable ui-keydown="{ 'tab' : 'addJoinEdgeByTab($event, j.id)'}">{{j.selectivity}}</td>
+		</tr>
+	</table>
+	<button class="btn" ng-click="addJoinEdge()" tabindex="99">Add join edge</button>
+
+
+<h2>Algorithms</h2>
+<div class="btn-group" role="group">
+	<button type="button" ng-class="containsAlgo(a)? 'btn-default':'btn-success'" class="btn" ng-click="clickAlgo(a)" ng-repeat="a in potentialRuelSets">{{a}}</button>
+</div>
+
+
+<h2>Inital Tree</h2>
+
+
+<textarea class="textarea">{{JSON.stringify(configFile)}}</textarea>
+
+<br />
