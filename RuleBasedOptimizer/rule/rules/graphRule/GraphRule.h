@@ -5,6 +5,10 @@
 #ifndef RuleBasedOptimizer_GraphRule_h
 #define RuleBasedOptimizer_GraphRule_h
 
+#define ELPP_STL_LOGGING
+#define ELPP_LOG_UNORDERED_SET
+#define TESTING_YES
+
 //#include "MinCutConservative.h"
 #include "easylogging++.h"
 /**
@@ -202,7 +206,7 @@ public:
 		}
         for(Bitvector_t b : result)
         {
-            LOG(WARNING) << "BITVECTOR:     " << b.log2();
+            LOG(WARNING) << "BITVECTOR:     " << b;
         }
 		return result;
 	}
@@ -232,26 +236,54 @@ public:
 	EquivalenceClass_t * createTrees(BvSet_t partition, Bitvector_t js) const
 	{
 		LOG(INFO) << "CREATE TREE";
-		LOG(INFO) << "js:					" << js;
-        for(Bitvector_t b : partition)
-        {
-            LOG(INFO) << "PARTITION:			" << b;
-        }
-		
-		
+		LOG(INFO) << "js:				" << js;
+
 		EquivalenceClass_t * eq = new EquivalenceClass_t();
 		
 		for(Bitvector_t t : partition)
 		{
 			LOG(INFO) << "t:					" << t;
-			if(js.contains(t))
+            
+            if(js.contains(t))
+            {
+                if(t.size() == 1 && js.size() == 1)
+                {
+                    eq->concat( this->o.scan(t) );
+                    return eq;
+                }else if(partition.count(js.without(t)) > 0)
+                {
+                    LOG(INFO) << "JOIN" << t << " : " << js.without(t);
+                    EquivalenceClass_t & left = *createTrees(partition, t);
+                    EquivalenceClass_t & right = *createTrees(partition, js.without(t));
+                    eq->concat( this->o.join(left, right));
+                }
+            }
+            #ifdef TESTING_YES
+            else
+            {
+                if(js.contains(t))
+                {
+                for(Bitvector_t p : partition)
+                {
+                    LOG(ERROR) << "PART:                " << p;
+                }
+                    LOG(ERROR) << "EROOR1:                  " << js.without(t);
+                LOG(ERROR) << "ERROR:					" << partition.count(t);
+                    
+                }
+            }
+            #endif
+            
+            
+			/*if(js.contains(t))
 			{
+                LOG(WARNING) << "partition.count(js.without(t))" << js.without(t) << ": " << partition.count(js.without(t));
 				if(t.size() == 1)
 				{
                     if(js.size() == 1) return this->o.scan(t);
-                    else
+                    else if(partition.count(js.without(t)) > 0)
 					eq->concat(this->o.join(*this->o.scan(t), * createTrees(partition, js.without(t))));
-                    eq->explored = true;
+                    //eq->explored = true;
                     return eq;
 				}
 				else
@@ -261,7 +293,7 @@ public:
 					eq->concat(eqNew);
                     LOG(INFO) << eq->getRelations().log2();
 				}
-			}
+			}*/
 		}
 		return eq;
 	}
@@ -274,14 +306,12 @@ public:
 	{
 		LOG(INFO) << "aPlanNode:" << aPlanNode.getRelations();
 
-		PlanNode *result = NULL;
-
 		Bitvector_t &js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
 
 		LOG(WARNING) << "JS: " << js;
 		BvSet_t partition = this->partition(js);
-		this->createTrees(partition, js);
-		return result;
+		EquivalenceClass_t * e = this->createTrees(partition, js);
+		return e->getFirst();
 	};
 private:
 	BvSet_t _joinEdges;
