@@ -10,7 +10,7 @@
 			<td contenteditable ui-keydown="{ 'tab' : 'addRelationByTab($event, r.relation)'}">{{r.cardinality}}</td>
 		</tr>
 	</table>
-	<button class="btn" ng-click="addRelation()" tabindex="99">Add relation</button>
+	<button class="btn btn-default" ng-click="addRelation()" tabindex="99">Add relation</button>
 
 
 <h2>Join Edges</h2>
@@ -27,7 +27,7 @@
 			<td contenteditable ui-keydown="{ 'tab' : 'addJoinEdgeByTab($event, j.id)'}">{{j.selectivity}}</td>
 		</tr>
 	</table>
-	<button class="btn" ng-click="addJoinEdge()" tabindex="99">Add join edge</button>
+	<button class="btn btn-default" ng-click="addJoinEdge()" tabindex="99">Add join edge</button>
 
 
 <h2>Algorithms</h2>
@@ -38,7 +38,21 @@
 
 <h2>Inital Tree</h2>
 
+<table class="table">
+	<tr>
+		<th>check</th>
+		<th>Relations</th>
+	</tr>
+	<tr ng-repeat="n in nodes" ng-class="n.marked? 'success' : ''" ng-hide="n.hide">
+		<td ><button class="btn btn-success" ng-click="join(n)" ng-hide="n.marked ">JOIN</button></td>
+		<td>{{n.relations}}</td>
+	</tr>
+</table>
 
-<textarea class="textarea">{{JSON.stringify(configFile)}}</textarea>
+<button class="btn btn-primery" ng-click="addToConfig()">Add to Config</button>
+
+
+<textarea class="form-control" value="">{{configFile}}</textarea>
 
 <br />
+

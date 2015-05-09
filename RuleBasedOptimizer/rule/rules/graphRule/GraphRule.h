@@ -166,28 +166,22 @@ public:
 
 	BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
 	{
-
-		LOG(INFO) << "MinCutConservative";
-		LOG(INFO) << "subSetOfRelations:	" << subSetOfRelations;
-		LOG(INFO) << "connectedRelations:	" << connectedRelations;
-		LOG(INFO) << "excluded:			" << excluded;
-
-		BvSet_t result;
-
-		if (connectedRelations == subSetOfRelations)
+        BvSet_t result;
+        if (connectedRelations == subSetOfRelations)
 		{
-			LOG(WARNING) << "RESULT";
 			return result;
 		}
 		if (connectedRelations.is_not_empty())
 		{
 			result.insert({connectedRelations, getNeighbors(connectedRelations, subSetOfRelations)});
 		}
-		Bitvector_t excluded_new = excluded;
+		
+        Bitvector_t excluded_new = excluded;
 		Bitvector_t neighborhood = getNeighbors(connectedRelations, subSetOfRelations);
 		neighborhood.intersect_with(subSetOfRelations);
 		neighborhood = neighborhood.without(excluded);
-		for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
+		
+        for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
 		{
 			if (neighborhood.test(i))
 			{
@@ -204,11 +198,7 @@ public:
 				}
 			}
 		}
-        for(Bitvector_t b : result)
-        {
-            LOG(WARNING) << "BITVECTOR:     " << b;
-        }
-		return result;
+        return result;
 	}
 
 	/**
@@ -227,75 +217,30 @@ public:
 
 	Bitvector_t &merge(Bitvector_t bv1, Bitvector_t bv2) const
 	{
-		LOG(INFO) << "bv1 + bv2: " << bv1 << ":" << bv2;
-		Bitvector_t *js = this->o.get_new_BV();  // =  Bitvector_t();
+		Bitvector_t *js = this->o.get_new_BV();
 		js->union_of(bv1, bv2);
 		return * js;
 	}
 
 	EquivalenceClass_t * createTrees(BvSet_t partition, Bitvector_t js) const
 	{
-		LOG(INFO) << "CREATE TREE";
-		LOG(INFO) << "js:				" << js;
-
 		EquivalenceClass_t * eq = new EquivalenceClass_t();
-		
 		for(Bitvector_t t : partition)
 		{
-			LOG(INFO) << "t:					" << t;
-            
-            if(js.contains(t))
+		    if(js.contains(t))
             {
                 if(t.size() == 1 && js.size() == 1)
                 {
-                    eq->concat( this->o.scan(t) );
-                    return eq;
+                    return this->o.scan(t);
                 }else if(partition.count(js.without(t)) > 0)
                 {
-                    LOG(INFO) << "JOIN" << t << " : " << js.without(t);
                     EquivalenceClass_t & left = *createTrees(partition, t);
                     EquivalenceClass_t & right = *createTrees(partition, js.without(t));
                     eq->concat( this->o.join(left, right));
                 }
             }
-            #ifdef TESTING_YES
-            else
-            {
-                if(js.contains(t))
-                {
-                for(Bitvector_t p : partition)
-                {
-                    LOG(ERROR) << "PART:                " << p;
-                }
-                    LOG(ERROR) << "EROOR1:                  " << js.without(t);
-                LOG(ERROR) << "ERROR:					" << partition.count(t);
-                    
-                }
-            }
-            #endif
-            
-            
-			/*if(js.contains(t))
-			{
-                LOG(WARNING) << "partition.count(js.without(t))" << js.without(t) << ": " << partition.count(js.without(t));
-				if(t.size() == 1)
-				{
-                    if(js.size() == 1) return this->o.scan(t);
-                    else if(partition.count(js.without(t)) > 0)
-					eq->concat(this->o.join(*this->o.scan(t), * createTrees(partition, js.without(t))));
-                    //eq->explored = true;
-                    return eq;
-				}
-				else
-				{
-                    EquivalenceClass_t * eqNew = this->o.join(*createTrees(partition, t), * createTrees(partition, js.without(t)));
-                    LOG(INFO) << "eqNew" << eqNew->getRelations();
-					eq->concat(eqNew);
-                    LOG(INFO) << eq->getRelations().log2();
-				}
-			}*/
-		}
-		return eq;
+        }
+        return eq;
 	}
 	
 
@@ -304,12 +249,8 @@ public:
 	 */
 	PlanNode *apply(PlanNode &aPlanNode) const override
 	{
-		LOG(INFO) << "aPlanNode:" << aPlanNode.getRelations();
-
 		Bitvector_t &js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
-
-		LOG(WARNING) << "JS: " << js;
-		BvSet_t partition = this->partition(js);
+        BvSet_t partition = this->partition(js);
 		EquivalenceClass_t * e = this->createTrees(partition, js);
 		return e->getFirst();
 	};
@@ -320,7 +261,6 @@ private:
 template <typename PlanNode, typename Operations_t>
 typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 {
-	LOG(INFO) << "Entered partition";
 	BvSet_t empty;
 	empty.insert(Bitvector_t());
 	Bitvector_t b;
