@@ -14,13 +14,17 @@
 #include "StringAdaptor.h"
 #include "CostEstimator.h"
 #include "Stopwatch.h"
+#include "easylogging++.h"
 
+INITIALIZE_EASYLOGGINGPP
+
+#define TESTING_YES
 
 
 
 std::string getConfigPath(int argc, char *argv[])
 {
-	std::string configPath = "/Users/christiandeckert/Documents/Masterarbeit-Code/config.json";
+	std::string configPath = "/Users/christiandeckert/Desktop/Masterarbeit_develop/config.json";
 	if (argc == 0)
 	{
 
@@ -53,7 +57,6 @@ int main(int argc, char *argv[])
 	typedef PlanNode_t::EquivalenceClass_t Ec;
 	
 	
-
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
 	Configurator<PlanNode_t> configManager;

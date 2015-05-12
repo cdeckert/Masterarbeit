@@ -77,14 +77,37 @@ public:
         eq->push_back(t);
         return eq;
     }
+	
+	EquivalenceClass_t * rel1(Bitvector_t & b) const
+	{
+		EquivalenceClass_t * eqN = reservoirEC->get_new_entry();
+		eqN->setRelations(b);
+		return eqN;
+		
+	}
+	
+	EquivalenceClass_t * scan(Bitvector_t b) const
+	{
+		EquivalenceClass_t * relation = rel1(b);
+		return scan(*relation);
+	}
+	
 	EquivalenceClass_t * rel(u_int i)
     {
         Bitvector_t * b = getBitVector(i);
         EquivalenceClass_t * eqN = reservoirEC->get_new_entry();
         eqN->setRelations(*b);
         return eqN;
-
     }
+	
+	/*EquivalenceClass_t * rel(Bitvector_t b)
+	{
+		EquivalenceClass_t * eqN = reservoirEC->get_new_entry();
+		eqN->setRelations(b);
+		return eqN;
+	}*/
+	
+	
 	
 	EquivalenceClass_t * rel(u_int i, std::initializer_list<u_int> neighbors) const
 	{

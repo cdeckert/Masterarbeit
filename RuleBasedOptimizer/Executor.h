@@ -94,7 +94,7 @@ void Executor<PlanNode_t>::run() const
 
 
 			duration += watch.getDuration();
-			std::cout << adaptor.dump(eq);
+			//std::cout << adaptor.dump(eq);
 		}
 		duration = duration / 1000;
 		std::cout << std::endl << "TIME:"  << duration << std::endl;
