@@ -18,6 +18,8 @@
 
 INITIALIZE_EASYLOGGINGPP
 
+#define TESTING_YES
+
 
 
 std::string getConfigPath(int argc, char *argv[])

@@ -60,7 +60,7 @@ void Executor<PlanNode_t>::run() const
 	for (std::string algo : _configuration.getAlgorithms())
 	{
 		uint64_t duration = 0;
-		for (int i = 0; i < 1; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			ExhaustiveTransformation_t *t1 = 0;
 			if (algo == "RS_B0")
@@ -94,7 +94,7 @@ void Executor<PlanNode_t>::run() const
 
 
 			duration += watch.getDuration();
-			std::cout << adaptor.dump(eq);
+			//std::cout << adaptor.dump(eq);
 		}
 		duration = duration / 1000;
 		std::cout << std::endl << "TIME:"  << duration << std::endl;

@@ -5,6 +5,10 @@
 #ifndef RuleBasedOptimizer_GraphRule_h
 #define RuleBasedOptimizer_GraphRule_h
 
+#define ELPP_STL_LOGGING
+#define ELPP_LOG_UNORDERED_SET
+#define TESTING_YES
+
 //#include "MinCutConservative.h"
 #include "easylogging++.h"
 /**
@@ -162,28 +166,22 @@ public:
 
 	BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
 	{
-
-		LOG(INFO) << "MinCutConservative";
-		LOG(INFO) << "subSetOfRelations:	" << subSetOfRelations;
-		LOG(INFO) << "connectedRelations:	" << connectedRelations;
-		LOG(INFO) << "excluded:			" << excluded;
-
-		BvSet_t result;
-
-		if (connectedRelations == subSetOfRelations)
+        BvSet_t result;
+        if (connectedRelations == subSetOfRelations)
 		{
-			LOG(WARNING) << "RESULT";
 			return result;
 		}
 		if (connectedRelations.is_not_empty())
 		{
-			result.insert({connectedRelations});
+			result.insert({connectedRelations, getNeighbors(connectedRelations, subSetOfRelations)});
 		}
-		Bitvector_t excluded_new = excluded;
+		
+        Bitvector_t excluded_new = excluded;
 		Bitvector_t neighborhood = getNeighbors(connectedRelations, subSetOfRelations);
 		neighborhood.intersect_with(subSetOfRelations);
 		neighborhood = neighborhood.without(excluded);
-		for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
+		
+        for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
 		{
 			if (neighborhood.test(i))
 			{
@@ -200,7 +198,7 @@ public:
 				}
 			}
 		}
-		return result;
+        return result;
 	}
 
 	/**
@@ -219,37 +217,30 @@ public:
 
 	Bitvector_t &merge(Bitvector_t bv1, Bitvector_t bv2) const
 	{
-		LOG(INFO) << "bv1 + bv2: " << bv1 << ":" << bv2;
-		Bitvector_t *js = this->o.get_new_BV();  // =  Bitvector_t();
+		Bitvector_t *js = this->o.get_new_BV();
 		js->union_of(bv1, bv2);
 		return * js;
 	}
 
 	EquivalenceClass_t * createTrees(BvSet_t partition, Bitvector_t js) const
 	{
-		LOG(INFO) << "CREATE TREE";
-		LOG(INFO) << "js:					" << js;
-		
-		LOG(INFO) << "PARTITION:			" << partition;
-		
 		EquivalenceClass_t * eq = new EquivalenceClass_t();
-		
 		for(Bitvector_t t : partition)
 		{
-			LOG(INFO) << "t:					" << t;
-			if(js.contains(t))
-			{
-				if(t.size() == 1)
-				{
-					eq->concat(this->o.scan(t));
-				}
-				else
-				{
-					eq->concat(this->o.join(*createTrees(partition, t), * createTrees(partition, js.without(t))));
-				}
-			}
-		}
-		return eq;
+		    if(js.contains(t))
+            {
+                if(t.size() == 1 && js.size() == 1)
+                {
+                    return this->o.scan(t);
+                }else if(partition.count(js.without(t)) > 0)
+                {
+                    EquivalenceClass_t & left = *createTrees(partition, t);
+                    EquivalenceClass_t & right = *createTrees(partition, js.without(t));
+                    eq->concat( this->o.join(left, right));
+                }
+            }
+        }
+        return eq;
 	}
 	
 
@@ -258,16 +249,10 @@ public:
 	 */
 	PlanNode *apply(PlanNode &aPlanNode) const override
 	{
-		LOG(INFO) << "aPlanNode:" << aPlanNode.getRelations();
-
-		PlanNode *result = NULL;
-
 		Bitvector_t &js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
-
-		LOG(WARNING) << "JS: " << js;
-		BvSet_t partition = this->partition(js);
-		this->createTrees(partition, js);
-		return result;
+        BvSet_t partition = this->partition(js);
+		EquivalenceClass_t * e = this->createTrees(partition, js);
+		return e->getFirst();
 	};
 private:
 	BvSet_t _joinEdges;
@@ -276,7 +261,6 @@ private:
 template <typename PlanNode, typename Operations_t>
 typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 {
-	LOG(INFO) << "Entered partition";
 	BvSet_t empty;
 	empty.insert(Bitvector_t());
 	Bitvector_t b;
