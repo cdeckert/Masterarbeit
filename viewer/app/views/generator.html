@@ -7,7 +7,7 @@
 		</tr>
 		<tr ng-repeat="r in relations">
 			<td>{{r.relation}}</td>
-			<td contenteditable ui-keydown="{ 'tab' : 'addRelationByTab($event, r.relation)'}">{{r.cardinality}}</td>
+			<td contenteditable ui-keydown="{ 'tab' : 'addRelationByTab($event, r.relation)'}" ng-model="r.cardinality"></td>
 		</tr>
 	</table>
 	<button class="btn btn-default" ng-click="addRelation()" tabindex="99">Add relation</button>
@@ -22,9 +22,9 @@
 			<th>Selectivity</th>
 		</tr>
 		<tr ng-repeat="j in joinEdges">
-			<td contenteditable>{{j.from}}</td>
-			<td contenteditable>{{j.to}}</td>
-			<td contenteditable ui-keydown="{ 'tab' : 'addJoinEdgeByTab($event, j.id)'}">{{j.selectivity}}</td>
+			<td contenteditable ng-model="j.from"></td>
+			<td contenteditable ng-model="j.to"></td>
+			<td contenteditable ui-keydown="{ 'tab' : 'addJoinEdgeByTab($event, j.id)'}" ng-model="j.selectivity"></td>
 		</tr>
 	</table>
 	<button class="btn btn-default" ng-click="addJoinEdge()" tabindex="99">Add join edge</button>

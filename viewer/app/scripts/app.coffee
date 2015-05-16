@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.keypress'
+    'ui.keypress',
+    'contenteditable'
   ])
   .config ($routeProvider) ->
     $routeProvider
