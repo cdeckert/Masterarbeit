@@ -1,6 +1,6 @@
 \section{Related Work}
 
-In diesem Kapitel werden die Grundlagen erläutert und bereits bekannte Implementierungen erklärt.  Das Kapitel beginnt mit einer kurzen Übersicht über die Funktionsweise von Datenbanksystemen vor dem Hintergrund der Anfrageoptimierung. Im Zentrum stehen die Komponenten Query Optimizer und Query Execution Engine. Beide Teile sind integraler Bestandteil eines Datenbanksystems. Im Weiteren wird der für die Anfragenoptimierung wichtige Begriff des Search Spaces eingegangen. Das Kapitel wird fortgesetzt mit einer Übersicht über bereits bestehende Datenbanksysteme und deren Optimierer. Es wird konkret auf IBMs Starburst-Projekt und das EXODUS Projekt \cite{graefe1987exodus}, \cite{carey1990exodus} mit seinen Nachfolgern Volcano \cite{graefe1990parallelizing}, \cite{graefe1990encapsulation}, \cite{graefe1993volcano}, \cite{graefe1994volcano} und Cascades \cite{graefe1995cascades} eingegangen. Abgerundet wird das Kapitel mit einer Erklärung der von Pellenkoft zusammengestellten Regelsets \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate}. Alle Komponenten zusammen bilden die Grundlage für die im nächsten Kapitel besprochene Implementierung der Planexpanders.
+In diesem Kapitel werden die Grundlagen erläutert. Bestehende Datenbanksysteme werden unter die Lupe genommen und deren Optimierer im Detail vorgestellt. Das Kapitel beginnt mit einer kurzen Übersicht über die Funktionsweise von Datenbanksystemen vor dem Hintergrund der Anfrageoptimierung. Im Zentrum stehen die Komponenten Query Optimizer und Query Execution Engine. Beide Teile sind integraler Bestandteil eines Datenbanksystems. Im Weiteren wird der für die Anfragenoptimierung wichtige Begriff des Search Spaces eingegangen. Das Kapitel wird fortgesetzt mit einer Übersicht über bereits bestehende Datenbanksysteme und deren Optimierer. Es wird konkret auf IBMs Starburst-Projekt und das EXODUS Projekt \cite{graefe1987exodus}, \cite{carey1990exodus} mit seinen Nachfolgern Volcano \cite{graefe1990parallelizing}, \cite{graefe1990encapsulation}, \cite{graefe1993volcano}, \cite{graefe1994volcano} und Cascades \cite{graefe1995cascades} eingegangen. Abgerundet wird das Kapitel mit einer Erklärung der von Pellenkoft zusammengestellten Regelsets \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate}. Alle Komponenten zusammen bilden die Grundlage für die im nächsten Kapitel besprochene Implementierung der Planexpanders.
 
 
 \section{Historischer Überblick}
@@ -29,3 +29,5 @@ RTS               & RSS               &                 &                 \\ \hl
 \input{03_Related_Work/Oracle.tex}
 
 \input{03_Related_Work/Pellenkoft_RuleSet.tex}
+
+\input{03_Related_Work/GraphRule.tex}

@@ -4,20 +4,20 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{02_Grundlagen/DBMS_Architecture.png}
-  \caption{\ac{DBMS} Architektur}
-  \label{SearchSpace}
+  \includegraphics{02_Grundlagen/CTS_RTS.pdf}
+  \caption{Architektur eines Datenbanksystems}
+  \label{Database_Architecture}
 \end{figure}
 
-Die Architektur eines \ac{DBMS} lässt sich in zwei Teile gliedern: \ac{CTS} und \ac{RTS}. Jedes Teilsystem ist für eine andere Aufgabe verantwortlich. Eine Kommunikation beider Elemente findet i.d.R. nur unidirektional statt.
+Die Architektur eines \ac{DBMS} lässt sich in zwei Teile gliedern: \ac{CTS} und \ac{RTS}. Jedes Teilsystem ist für eine andere Aufgabe verantwortlich. Eine Kommunikation beider Elemente findet i.d.R. nur unidirektional statt. Vom \ac{CTS} hin zum \ac{RTS}.
 
-Bei der Bearbeitung eines Nutzerkommandos gibt der Nutzer eine Anfrage zuerst in das \ac{CTS} ein. Das \ac{CTS} ist für die Umwandlung der Anfrage in ein für das \ac{RTS} verarbeitbares Format verantwortlich. Ebenfalls nimmt das \ac{CTS} die Optimierung von Kommandos vor. Sobald die Anfrage an das \ac{RTS} weitergegeben ist, wird das Kommando ausgeführt und das Resultat zurück an den Nutzer übermittelt.
+Bei der Bearbeitung eines Nutzerkommandos gibt der Nutzer eine Anfrage zuerst in das \ac{CTS} ein. Das \ac{CTS} ist für die Umwandlung der Anfrage in ein für das \ac{RTS} verständliches Format, beispielsweise einen Query Execution Plan, verantwortlich. Ebenfalls nimmt das \ac{CTS} die Optimierung von Kommandos vor. Sobald die Anfrage an das \ac{RTS} weitergegeben ist, wird das Kommando ausgeführt und das Resultat zurück an den Nutzer übermittelt. Dieser Verlauf ist in Abbildung \ref{Database_Architecture} verdeutlicht.
 
 Es gibt eine Vielzahl an Kommandos, die von einem Nutzer an ein Datenbank-System gestellt werden können. Zu Ihnen zählen neben Anfragen (Queries) beispielsweise auch Indexerstellungen, Schema-  und Datensätzänderungen. Im Folgenden wird das Kommando Anfrage in den Fokus gestellt.
 
 Vor der Verarbeitung muss die Anfrage formuliert werden. Dies geschieht bei relationalen Datenbanksystemen i.d.R. in \ac{SQL}. \ac{SQL} ist eine deklarative Anfragesprache, die sich als Standardsprache für viele Datenbanksysteme durchgesetzt hat. Die fertige Anfrage bildet den Input, der in das Datenbanksystem übergeben wird. 
 
-Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übergeben werden. Ein \ac{QI} ist im Vergleich zu einem \ac{QC} ein einfaches System zur Verarbeitung einer Anfrage. Alle Schritte zur Erzielung eines Ergebnisses werden in einem System ausgeführt. Die Anfrage wird zu diesem Zweck nicht kompiliert, sondern nur Interpretiert. Neben Rewriter-Regeln kommen keine weiteren Optimierungen zum Einsatz. Die Ergebnisse werden direkt an den Nutzer zurückgegeben. Im Gegensatz zu \ac{QI} findet in \ac{QC} Systemen eine komplexere Bearbeitung der Anfrage statt. Dort wird eine Anfrage zuerst in einem \ac{CTS} entgegengenommen, das die Anfrage in einen \ac{QEP} umwandelt, der dann an das \ac{RTS} weitergegeben wird. Im Folgenden werden \ac{QC} genauer behandelt.
+Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übergeben werden. Ein \ac{QI} ist im Vergleich zu einem \ac{QC} ein einfaches System zur Verarbeitung einer Anfrage. Alle Schritte zur Erzielung eines Ergebnisses werden in einem System ausgeführt. Die Anfrage wird zu diesem Zweck nicht kompiliert, sondern nur interpretiert. Neben Rewriter-Regeln werden keine weiteren Optimierungen durchgeführt. Die Ergebnisse werden direkt an den Nutzer zurückgegeben. Im Gegensatz zu \ac{QI} findet in \ac{QC} Systemen eine komplexere Bearbeitung der Anfrage statt. Dort wird eine Anfrage zuerst in einem \ac{CTS} entgegengenommen, das die Anfrage in einen \ac{QEP} umwandelt, der dann an das \ac{RTS} weitergegeben wird. Im Folgenden werden \ac{QC} genauer behandelt.
 
 
 
@@ -25,8 +25,8 @@ Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übe
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{02_Grundlagen/QC_Architecture.png}
-  \caption{\ac{QC} Architektur}
+  \includegraphics{02_Grundlagen/CTS_RTS.pdf}
+  \caption{\ac{QC} Flow}
   \label{QC_Architecture}
 \end{figure}
 
@@ -41,6 +41,3 @@ Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich
 \item einen Enumerator Algorithmus, der für die Suche nach Plänen verantwortlich ist
 \item einen Kostenschätzer, der die Kosten für die Ausführung eines jeden Plans abschätzt.
 \end{itemize}
-
-Diese drei Komponenten werden im Folgenden unter die Lupe genommen und in Kapitel 3 an Hand von Beispielen aus der Praxis näher erläutert.
-

@@ -1,0 +1,16 @@
+\section{GraphRule}
+Das bestehende Regel-Framework von Volcano wurde von \cite{shanbhag2014optimizing} mit einem neuen Regelset und einer neuen Regel erweitert. Das neue Regelset “Graph Rule” soll alle bestehenden Regeln zur JOIN-Tree Enumeration ersetzen. Im Gegensatz zu den vergleichsweise ineffektiven Regelsets, die bisher bekannt waren, setzt die neue Regel auf state-of-the-art, kreuzproduktfreie Join-Enumeratoren zur Suche nach äquivalenten Plänen.
+
+Die neue Regel gibt nicht nur eine neue Variante des Query-Trees zurück, sondern bestimmt gleich auf einmal alle äquivalenten Pläne. Die Erweiterbarkeit des Volcano-Optimizers ermöglicht es auch eine solche komplexe, neue Regel zu implementieren.
+
+Die neue Regel wird in drei Schritten umgesetzt. Zuerst werden die Subtrees bestimmt, auf die ein Paritionierungsalgorithmus in nächsten Schritt angewendet werden kann. Mit Hilfe der einzelnen Partitionen werdend ann neue Bäume aufgebaut, die als alternative Pläne zurückgegeben werden. Diese drei Schritte sind auch in Abb. \ref{GraphRule} zu sehen.
+
+Um die Funktion der neuen Regel im Detail zu beschreiben führt \cite{shanbhag2014optimizing} eine Reihe neuer Begriffe für einen Baum ein:
+
+\begin{itemize}
+\item $Base Equivalence Node$: dieser Knoten bezeichnet einen Äuqivalenzknoten, der keine JOIN-Operatoren als dessen Kinder besitzt.
+\item $Join Equivalence Node$: dieser Begriff bezeichnet einen Äquivalenzknoten, der mindestens eine JOIN Operation untergeordnet hat.
+\item $Maximal Join Tree$: Dieser Baum ist ein Baum, der entweder Äquivalenzknoten oder einen JOIN Operator untergeordnet hat.
+\item Ein $Maximal join Tree$ ist ein Baum, dessen Kinder immer EuqivalenceNodes sind.
+\item Ein $Join Set$ für einen Äquivalenzknoten E ist ein Paar $J = (V, P)$ bei dem $V$ ein Set von äquivalenknoten ist und deren Kinder seine 
+\end{itemize}

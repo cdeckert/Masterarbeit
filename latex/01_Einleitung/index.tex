@@ -1,11 +1,25 @@
 \chapter{Einleitung}
 
 \section{Motivation}
-Anfragenoptimierung ist eine der wichtigsten Bestandteile bei der Ausführung von Datenbankabfragen. Insbesondere im Kontext von komplexen und automatisch generierten SQL-Statements verspricht die Optimierung hohe Geschwindigkeitsverbesserungen. Der Optimierer ist für das Finden der richtigen Zugriffsstrategie auf Datensätze verantwortlich. Er entscheidet u.a. welche Art von Joins verwendet werden, in welcher Reihenfolge diese Joins angewendet werden oder ob Indexe anstatt von Full table scans zum Einsatz kommen. Nur durch die erreichte Performance heute gängiger \ac{DBMS} sind Anwendungen und Informationssysteme wie \ac{ERP}, \ac{CRM}, \ac{CMS}, \ac{BDWH} möglich geworden. \ac{DBMS} sind ein integraler Bestandteil unserer heutigen Wissens- und Informationsgesellschaft. Der schnelle und effiziente Zugriff auf Informationen und damit die Nutzung von \ac{DBMS} ist aus unserer Welt nicht mehr wegzudenken. Anfragenoptimierung bleibt daher ein wichtiger Teil.
+Anfragenoptimierung ist eine der wichtigsten Bestandteile bei der Ausführung von Datenbankabfragen. Insbesondere im Kontext von komplexen und automatisch generierten SQL-Statements verspricht die Optimierung hohe Geschwindigkeitsverbesserungen. Der Optimierer ist für das Finden der richtigen Zugriffsstrategie auf Datensätze verantwortlich. Er entscheidet u.a. welche Art von Joins verwendet werden, in welcher Reihenfolge diese Joins angewendet werden oder ob Indexe anstatt von Full table scans zum Einsatz kommen. Nur durch die erreichte Performance heute gängiger \ac{DBMS} sind Anwendungen und Informationssysteme wie \ac{ERP}, \ac{CRM}, \ac{CMS}, \ac{BDWH} möglich geworden. \ac{DBMS}e sind ein integraler Bestandteil unserer heutigen Wissens- und Informationsgesellschaft. Der schnelle und effiziente Zugriff auf Informationen und damit die Nutzung von \ac{DBMS} ist aus unserer Welt nicht mehr wegzudenken. Anfragenoptimierung bleibt daher ein wichtiger Teil.
 
 
+Anfragenoptimierer wurden von allen großen Datenbankherstellern implementiert. Bereits in den 1970er Jahren startete IBM mit System R, was zum heutigen DB 2 führte \cite{wade2012ibm}. Die Implementierung von Microsofts SQL Server fußt auf den Erkenntnisse des Volcano bzw. Exodus Projekts.
 
+In der langen Tradition der Anfragenoptimierer wurden die bekannten Lösungsansätze immer wieder unter die Lupe genommen und weiter verbessert.  \cite{shanbhag2014optimizing} nahmen 2014 die Regelsets, die von \cite{pellenkoft1997complexity} für den Vulcano Optimizer entwickelt wurden, genauer unter die Lupe. Sie stellten fest, das eines der Regelset, das zum Finden äquivalenter Plänen dienen nicht vollständig ist und schlugen statt der Pellenkoft Regelsets ein neues Regelset vor. Diese Erkenntnisse sind die Grundlage für die folgende Arbeit.
 
 \section{Ziel der Arbeit}
 
+\cite{shanbhag2014optimizing} stellen fest, dass das Regelset $RS_B2$ unvollständig ist. Ebenfalls wird von ihnen eine neue Regel zur Erzeugung von äquivalenten Plänen vorgestellt, dessen Performance erhebliche Verbesserung zu bisherigen Algorithmen verspricht.
+
+Ziel der Arbeit ist es, diese Aussagen zu prüfen. Zu diesem Zweck wird ein Join Ordering Prototyp implementiert, der mit Hilfe diverser Regelsets äquivalente Pläne generieren kann. Ebenfalls kann mit diesem System geprüft werden, ob und in welchen Fällen das Regelset $RS_B2$ unvollständig ist.
+
+
+
+
+
+
+
 \section{Inhaltlicher Aufbau}
+Die Arbeit ist in fünf Teile gegliedern. Nach der Einleitung werden im Kapitel Related Work zuerst die notwendigen Grundlagen besprochen. Insbesondere wird auf die Begriffe Search Space, Enumerator und Kostenschätzer eingegangen. Ebenfalls wird der historische Kontext der Anfragenoptimierung hergestellt. Datenbankoptimierer von System R über Volcano bis hin zu Oracle werden erläutern. Ebenfalls wird auf Regelsets, die zur Erzeugung von alternativen JOIN Trees bei der Optimierung einer Anfrage verwendet werden können eingageganen. Diese Regelsets sind Teil des Vulcano Optimizers. Ebenfalls wird ein neues Regelset von \cite{shanbhag2014optimizing} vorgestellt.
+
