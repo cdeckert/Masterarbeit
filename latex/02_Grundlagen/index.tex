@@ -3,13 +3,13 @@
 
 In diesem Kapitel werden die Grundlagen für die folgenden Kapitel gelegt und Hintergründe erläutert. Im ersten Teil wird zuerst ein Überblick über die Architektur eines Datenbanksystems vor dem Hintergrund der Anfragenoptimierung gegeben. Der für die Optimierung wichtige Begriff des Search Spaces erläutert. In ihm können mit Hilfe von Enumeratoren alternative, äquivalente Pläne gefunden werden und aus diesen Plänen mit Hilfe einer Kostenschätzung der optimale Plan gefunden werden. Auch die Techniken der Enumeration und Kostenschätzung werden in ihrer Funktion beschrieben.
 
-Neben diesen Grundbegriffen werden auch konkrete Implementierungen von DBMSen und deren Anfragenoptimierern besprochen. Neben System R, das die Grundlage für alle weiteren Anfragenoptimierer bildet, wird auch IBMs Starburst Projekt, die Projekte rund um Volcano und Oracles DBMS besprochen und deren unterschiede aufgezeigt.
+Neben diesen Grundbegriffen werden auch konkrete Implementierungen von DBMSen und deren Anfragenoptimierern besprochen. Neben System R, das die Grundlage für alle weiteren Anfragenoptimierer bildet, wird auch IBMs Starburst Projekt, die Projekte rund um Volcano und Oracles DBMS besprochen und deren Unterschiede aufgezeigt.
 
-Im nächsten Schritt wird auf die konkrete Implementierung der Suche nach Alternativen Plänen am Beispiel von Volcano und dessen regelbasierten Anfragenoptimierer. Die Regelsets von \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate} werden abgegbildet.
+Im nächsten Schritt wird auf die konkrete Implementierung der Suche nach alternativen Plänen am Beispiel von Volcano und dessen regelbasierten Anfragenoptimierer. Die Regelsets von \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate} werden abgegbildet.
 
 Nachdem der Aufbau von DBMSen, Anfrageoptimierern und konkrete Beispiele bekannt sind, wird auf die Arbeit von \cite{indien} eingegangen. Die Unvollständigkeit eines Regelsets wird beleuchtet, der Versuchsaufbau besprochen und das neue Regelset erläutert.
 
-All diese Bestandteile bilden die Grundlage und den weiteren Kontext für die Implementierung des Regelbasierten Join Enumerators, der im nächsten Kapitel vorgestellt wird.
+All diese Bestandteile bilden die Grundlage und den weiteren Kontext für die Implementierung des regelbasierten Join Enumerators, der im nächsten Kapitel vorgestellt wird.
 
 
 
@@ -32,4 +32,13 @@ In diesem Teil werden die theoretischen Grundlagen gelegt. Die Architektur eines
 
 
 
+
+
+\input{03_Related_Work/SystemR.tex}
+\input{03_Related_Work/Starburst.tex}
+\input{03_Related_Work/Exodus_Volcano_Cascades.tex}
+\input{03_Related_Work/Oracle.tex}
+
+\input{03_Related_Work/Pellenkoft_RuleSet.tex}
+\input{03_Related_Work/GraphRule.tex}
 

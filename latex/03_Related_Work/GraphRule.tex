@@ -14,3 +14,28 @@ Um die Funktion der neuen Regel im Detail zu beschreiben führt \cite{shanbhag20
 \item Ein $Maximal join Tree$ ist ein Baum, dessen Kinder immer EuqivalenceNodes sind.
 \item Ein $Join Set$ für einen Äquivalenzknoten E ist ein Paar $J = (V, P)$ bei dem $V$ ein Set von äquivalenknoten ist und deren Kinder seine 
 \end{itemize}
+
+
+\subsection{Implementierung}
+Die Implementierung des neuen Regelsets wurde auf Basis des Query Optimizers PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ entwickelten Optimierers Pyro, der an der Universität Bombay entwickelt wurde und das Volcano-Framework implementiert.
+
+Alle Tests wurden auf einem Computer mit Intels Core i5 3.5 GHz mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 durchgeführt. Die genaue Java Version und Einstellungen der JVM sind (fast) vollständig unbekannt.
+
+Wie von \cite{shanbhag2014optimizing} beschrieben, wurde während der Performance Test festgestellt, dass sich die Dauer für die Ausführung einer Optimierung stark unterscheiden. Erheblich höhere Werte für die Durchführung einer Optimierung wurden zu Beginn festgestellt. Gerade die ersten Anfragen hatten eine besonders hohe Laufzeit. Erklärt wurde dieses Verhalten durch den Java \ac{JIT}-Compiler. Ebenfalls wurde festgestellt, dass der Java eigene Code Optimierer HotSpot die Ergebnisse verfälsche. 
+
+Während der Performance Tests wurde festgestellt, dass sich
+
+
+\subsubsection{Probleme auf Grund der Platformwahl}
+Die Implementierung der neuen Regel und tests wurde mit Hilfe des Optimierers PyroJ vorgenommen. PyroJ ist eine Übersetzung des Pryro Optimizers, der an der Universität Bombay entwickelt wurde und das Volcano Framework implementiert. 
+
+Die Implementierung wurde auf einem Intel i5 3.5 GHz 8 Gbyte Arbeitsspeicher mit Ubuntu 11.10 durchgeführt. Die Java Version bzw die Java Runtime sind unbekannt. Während der Implementierung viel auf, dass die ersten Berechnungen deutlich langsamer waren, als die Berechnung der selben Anfrage zu einem späteren Zeitpunkt. Dieses Problem wurde auf den Java JIT Compiler zurückgeführt. Er kompiliert nur immer die Stellen des Codes zur Laufzeit, die auch tatsächlich zur Ausführung benötigt werden. Optimierungen werden durch den JIT Compiler zur Laufzeit durchgeführt. Sobald diese automatischen Code Optimierungen ausgeschaltet wurden, sank die Performance zur Ausführung erheblich. Nachdem diese Optimierung asugeschaltet wurde und ein JVM Flag gesetzt wurde, um die Compilierung beizubehalten. SO konnte sichergestellt werden, dass alle Stellen möglichst schon Kompiliert sind, wenn das Programm zum einsatz kommt. Nach ein paar Ausführungen konnte so der eigentliche Test gestartet werden.
+
+
+
+
+Es wurde ein SQL generator entwickelt, der Chain, Star und cycle und Clique queries in der gewünschten grösse ERzeugt.
+
+
+Die Resultate beinhalten weder die Kosten ohne Pruning noch die Kosten für die Kostenschätzung oder Generierung des Physischen Plans. 
+

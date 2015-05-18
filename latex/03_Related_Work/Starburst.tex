@@ -1,6 +1,6 @@
 \section{Das Starburst Project}
 
-Das Starburst Projekt \cite{lohman1988Starbust}, \cite{haas1989extensible}, vorangetrieben und entwickelt von IBM,  startet unter der Prämisse, dass bestehende DBMSe nicht in der Lage sind die wachsenden Anforderungen von verschiedenen, neuartigen Applikationen vollumfänglich zu entsprechen. Zur Erfüllung der individuellen Ansprüche wurde das Starburst Projekt begonnen. Sein Ziel ist es dem \ac{DBI} die Möglichkeit zu geben eine die relationale Datenbank zu erweitern und so die Bedürfnisse von spezifischen Anwendungen zu erfüllen. Beispielsweise ist es möglich neue Zugriffs- und Speichermethoden zu implementieren oder neue Join Methoden zu erstellen. Um diese Features zu ermöglichen stellt Starburst eine Anfragesprache, einen Regelbasierten Optimierer, Query Rewriter und ein Ausführungssystem basierend auf relationaler Algebra zur Verfügung. Dieses Kapitel befasst sich zuerst mit der Aufteilung zwischen Ausführung und Anfrage, wie sie bereits zu Beginn von Kapitel 2 besprochen wurde. Es folgt ein Überblick über die eingesetzte Regelmaschine und eine Erläuterung des Starbust Query Optimizers.
+Das Starburst Projekt \cite{lohman1988Starbust}, \cite{haas1989extensible}, vorangetrieben und entwickelt von IBM,  startet unter der Prämisse, dass bestehende DBMSe nicht in der Lage sind die wachsenden Anforderungen von verschiedenen, neuartigen Applikationen vollumfänglich zu entsprechen. Zur Erfüllung der individuellen Ansprüche wurde das Starburst Projekt begonnen. Sein Ziel ist es dem \ac{DBI} die Möglichkeit zu geben eine die relationale Datenbank zu erweitern und so die Bedürfnisse von spezifischen Anwendungen zu erfüllen. Beispielsweise ist es möglich neue Zugriffs- und Speichermethoden zu implementieren oder neue Join Methoden zu erstellen. Um diese Features zu ermöglichen stellt Starburst eine Anfragesprache, einen Regelbasierten Optimierer, Query Rewriter und ein Ausführungssystem basierend auf relationaler Algebra zur Verfügung. Dieses Kapitel befasst sich zuerst mit der Aufteilung zwischen Ausführung und Anfrage, wie sie bereits zu Beginn dieses Kapitels besprochen wurde. Es folgt ein Überblick über die eingesetzte Regelmaschine und eine Erläuterung des Starbust Query Optimizers.
 
 \subsection{Ausführung einer Anfrage}
 
@@ -8,18 +8,18 @@ Bei der Ausführung einer Anfrage mit Hilfe von Starburst wird grob zwischen zwe
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{02_Grundlagen/Starburst.png}
+  \includegraphics{03_Related_Work/StarburstFlow.pdf}
   \caption{Starburst}
 \end{figure}
 
-Zur Comile-Time wird eine gegebene Anfrage auf semantische Korrektheit geprüft und in ein Query Graph Model (QGM) übersetzt. Basierend auf diesem QGM wird die Optimierungen der Anfrage durch zuerst einen Query Rewriter, einen Plan Optimierer und einen Plan Refiner durchgeführt.
+Zur Comile-Time wird eine gegebene Anfrage auf semantische Korrektheit geprüft und in ein \ac{GQM} übersetzt. Basierend auf diesem \ac{GQM} wird die Optimierungen der Anfrage durch zuerst einen Query Rewriter, einen Plan Optimierer und einen Plan Refiner durchgeführt.
 
 Der Query Rewriter hat zwei konkrete Aufgaben: Auf der einen Seite soll die Anfrage in eine möglichst deklarative Form umgewandelt werden, hierbei werden insbesondere Anfragen entschachtelt. Auf der anderen Seite sollen weithin in der Forschung akzeptierte Heuristiken, beispielsweise der Push-Down von Argumenten, angewandt werden.
-Bei der Planoptimierung durchläuft der Plan vom QGM hin zu einem QEM drei Stationen. Die drei wesentlichen Aspekte sind der Plan Generator, die Berechnung der Plankosten und die Suchstrategie. 
+Bei der Planoptimierung durchläuft der Plan vom \ac{GQM} hin zu einem QEM drei Stationen. Die drei wesentlichen Aspekte sind der Plan Generator, die Berechnung der Plankosten, um den optimalen Plan auszuwählen. 
 
 \subsection{Regel-Maschine}
 
-Zur Ausführung von Optimierungen wurde für die Starburst Datenbank eine eigene Regel-Maschine entwickelt \cite{lohman1988Starbust}. Diese Regelmaschine ist für die Anführung von Regelsets verantwortlich, die bei der Transformation der QGMs zur Anwendung kommen und durch den DBI  erweitert werden können. Die Regelmaschine basiert auf fünf Prinzipien:
+Zur Ausführung von Optimierungen wurde für die Starburst Datenbank eine eigene Regel-Maschine entwickelt \cite{lohman1988Starbust}. Diese Regelmaschine ist für die Anführung von Regelsets verantwortlich, die bei der Transformation der QGMs zur Anwendung kommen und durch den \ac{DBI}  erweitert werden können. Die Regelmaschine basiert auf fünf Prinzipien:
 
 \begin{enumerate}
 \item Regel der arbiträren Komplexität: Eine Regel ist bei Starburst in zwei Teile aufgeteilt: Eine Koordinierungs- und eine Ausführungsfunktion. Bei dem Aufruf einer Regel muss zuerst geprüft werden, in wie weit die Regel angewendet werden darf. Ist sie anwendbar, wird die Ausführungsfunktion exekutiert.

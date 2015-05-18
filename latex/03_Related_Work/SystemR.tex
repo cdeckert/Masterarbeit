@@ -7,19 +7,19 @@ System R ist ein von IBM in den 1970er Jahren durchgeführtes Datenbank Research
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{03_Related_Work/SystemR.png}
-  \caption{System R Architektur \cite{astrahan1976system}}
+  \includegraphics{03_Related_Work/SystemR.pdf}
+  \caption{System R Architektur \cite{astrahan1976system} \cite{astrahan1978system}}
   \label{SystemRArchitecture}
 \end{figure}
 
 
-Wie in Abbildung \ref{SystemRArchitecture} zu erkennen,  besteht das System aus zwei Teilsystemen: \ac{RSS} und \ac{RDS}. 
+Wie in Abbildung \ref{SystemRArchitecture} zu erkennen,  besteht das System aus zwei Teilsystemen: \ac{RSS}, das dem RTS entspricht, und \ac{RDS}, das äquivalent zu einem CTS ist.
 
 Das \ac{RSS} ist für die physische Verwaltung der Datenbank verantwortlich. Es kontrolliert u.a. die Speicherverwaltung, das Device-Management, die Transaktionskonsistenz und die Transations- sowie System-Wiederherstellung. Insbesondere fällt in den Aufgabenbereich den Zugriff auf einzelne Tupel von Base Relations. Diese Funktionen werden gegenüber des \ac{RDS} mit Hilfe des \ac{RSI} bereitgestellt.
 
-Das \ac{RDS} übernimmt mit Hife des \ac{RDI} die Kommunikation nach Außen und leitet Befehle über das \ac{RSI} weiter. Anfragen von Außen werden mit Hilfe von \ac{SQL} an das System gestellt. Das \ac{RDS} übernimmt die Umwandlung in ein für das \ac{RSS} verständliche Form und optimiert die Anfrage mit einem Query Optimizer.
+Das \ac{RDS} übernimmt mit Hife des \ac{RDI} die Kommunikation nach Außen und leitet Befehle über das \ac{RSI} weiter. Anfragen von Außen werden mit Hilfe von \ac{SQL} an das System gestellt. Es ist auch möglich, dass externe Sprachen wie beispielsweise Cobol verwendet werden, die ohne Weiteres mit dem \ac{RDI} kommunizieren. In diesen Fällen muss SQL nicht verwendet werden. Das \ac{RSS} wandelt die Umfrage in eine für das \ac{RSI} verständliche Form um. Über das RSI wird die Anfrage entegen genommen und ausgeführt.
 
-Die von IBM verwendeten Begriffe RDS und RSS sind Deckungsgleich mit den Begriffen \ac{CTS} und \ac{RTS}.
+
 
 
 \subsection{Verarbeitung von Anfragen}
@@ -47,9 +47,9 @@ $$Cost = Page Fetches + W * (RSI calls)$$
 $Page Fetches$ repräsentieren die I/O Operationen, die beispielsweise durch den Abruf der Index Pages und der eigentlichen Pages entsteht. $RSI calls$ ist die Anzahl der erwarteten Datensätze, die durch das \ac{RSS} zurückgegeben werden. Sie dient als Abschätzung wie hoch der CPU Aufwand für die Rückgabe der Werte ist. Mit Hilfe des Parameters $W$ wird eingestellt in welchem Verhältnis I/O zu CPU Kosten stehen.
 
 
-Bei der Auswahl eines Plans unterscheidet das System zwischen einer „interessanten“ Reihenfolge und einer ungeordneten Reihenfolge. Als interessante Reihenfolge, werden Reihenfolgen betrachtet, die gessanter Reihenfolge“ notwendig sind und die Kosten, die für das lesen in ungeordneter Reihenfolge notwendig sind und addiert auf diese Kosten, die Kosten für das Ordnen der Ergebnisse falls eine ungeordnete Reihenfolge + das Ordnen der Ergebnisse gemeinsam kürzer dauert als das direkte Ausgeben einer interessanten Reihenfolge wird sich für die günstigere Variante entschieden. 
+Bei der Auswahl eines Plans unterscheidet das System zwischen einer "interessanten" Reihenfolge, also sortierten Ergebnissen, und einer ungeordneten Reihenfolge. Als interessante Reihenfolge, werden Reihenfolgen betrachtet, die gesamter Reihenfolge“ notwendig sind und die Kosten, die für das lesen in ungeordneter Reihenfolge notwendig sind und addiert auf diese Kosten, die Kosten für das Ordnen der Ergebnisse falls eine ungeordnete Reihenfolge + das Ordnen der Ergebnisse gemeinsam kürzer dauert als das direkte Ausgeben einer interessanten Reihenfolge wird sich für die günstigere Variante entschieden. 
 
-Die Berechnung geschieht auf Daten, die durch den Katalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Spring die Menge der ausgeschlossenen Tupel.
+Die Berechnung geschieht auf Daten, die durch den Catalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Sprich die Menge der ausgeschlossenen Tupel.
 
 
 
