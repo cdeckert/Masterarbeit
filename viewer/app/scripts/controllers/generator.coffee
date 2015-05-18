@@ -14,7 +14,7 @@ angular.module('viewerApp')
 	$scope.joinEdges = [{id: 1, from: '', to: '', selectivity: ''}]
 	$scope.algorithms = []
 
-	$scope.potentialRuelSets = ["RS_0", "RS_1", "RS_2", "GraphRule"]
+	$scope.potentialRuelSets = ["RS_B0", "RS_B1", "RS_B2", "GraphRule"]
 	$scope.configFile = []
 
 	$scope.nodes = [{op: "scan", l: 1, relations: 1}]
@@ -24,6 +24,8 @@ angular.module('viewerApp')
 		if(relation == $scope.relations.length)
 			$scope.addRelation()
 
+	$scope.removeLastLine = (list)->
+		list = list.splice(list.length-1, 1)
 	$scope.join = (node) ->
 		node.marked = true
 		if $scope.toBeJoined?
@@ -48,6 +50,8 @@ angular.module('viewerApp')
 		$scope.nodes.push {
 			op: "scan", l: $scope.relations.length, relations: $scope.relations.length
 		}
+	$scope.convertToFloat = (value)->
+		parseFloat(value)
 
 	$scope.addJoinEdge = ->
 		$scope.joinEdges.push {
@@ -61,6 +65,7 @@ angular.module('viewerApp')
 		console.log $scope.containsAlgo algo
 		if  !$scope.containsAlgo algo
 			$scope.algorithms.push algo
+			console.log "NEW"
 		else
 			$scope.algorithms.splice($scope.algorithms.indexOf algo, 1)
 
@@ -72,13 +77,30 @@ angular.module('viewerApp')
 			return n if not n.hide
 
 	$scope.addToConfig = ->
+		
+	
+
 		configFile =
 			{
 				name: "test"
-				relations: $scope.relations,
-				joinEdges: $scope.joinEdges,
+				relations: [],
+				joinEdges: [],
 				algorithms: $scope.algorithms,
 				inital_tree: $scope.getInitalTree()
 			}
+
+		for relation in $scope.relations
+			configFile.relations.push({
+				"id": relation.relation , "cardinality": parseInt(relation.cardinality)
+			})
+
+		for edge in $scope.joinEdges
+			configFile.joinEdges.push({
+				"from": parseInt edge.from
+				"to": parseInt edge.to
+				"selectivity": parseFloat(edge.selectivity)
+			})
+
+		$scope.configFile = []
 		$scope.configFile.push configFile
 
