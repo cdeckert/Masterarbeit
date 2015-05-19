@@ -54,6 +54,7 @@
 		AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSONAdaptor.h; path = adaptor/JSONAdaptor.h; sourceTree = "<group>"; };
 		AF865C1B1AC2C05A00D301D9 /* json11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json11.cpp; path = lib/json11/json11.cpp; sourceTree = "<group>"; };
 		AF865C1C1AC2C05A00D301D9 /* json11.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json11.hpp; path = lib/json11/json11.hpp; sourceTree = "<group>"; };
+		AF886ADC1B0B36D400648F78 /* Swap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swap.h; sourceTree = "<group>"; };
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/standard/RightAssociativity.h; sourceTree = "<group>"; };
 		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operations.h; path = op/Operations.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -288,6 +289,7 @@
 				AFECC5C81A8D03D100FA9D84 /* Commutativity.h */,
 				AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */,
 				AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */,
+				AF886ADC1B0B36D400648F78 /* Swap.h */,
 			);
 			name = standard;
 			sourceTree = "<group>";
