@@ -54,6 +54,7 @@
 		AF865C181AC2BE7A00D301D9 /* JSONAdaptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSONAdaptor.h; path = adaptor/JSONAdaptor.h; sourceTree = "<group>"; };
 		AF865C1B1AC2C05A00D301D9 /* json11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json11.cpp; path = lib/json11/json11.cpp; sourceTree = "<group>"; };
 		AF865C1C1AC2C05A00D301D9 /* json11.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json11.hpp; path = lib/json11/json11.hpp; sourceTree = "<group>"; };
+		AF886ADC1B0B36D400648F78 /* Swap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swap.h; sourceTree = "<group>"; };
 		AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RightAssociativity.h; path = rule/rules/standard/RightAssociativity.h; sourceTree = "<group>"; };
 		AF997E121A9CD5F400560932 /* Executor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF997E131A9F5EFC00560932 /* Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operations.h; path = op/Operations.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -63,7 +64,6 @@
 		AF99E4751A93672B006D94C4 /* Operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Operator.h; path = op/Operator.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF99E47B1A93964D006D94C4 /* Exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exceptions.h; path = infra/Exceptions.h; sourceTree = "<group>"; usesTabs = 1; };
 		AF99E47D1A939D0D006D94C4 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Types.h; path = infra/Types.h; sourceTree = "<group>"; usesTabs = 1; };
-		AF99E4801A93B0B0006D94C4 /* testJoin */ = {isa = PBXFileReference; lastKnownFileType = text; name = testJoin; path = queries/testJoin; sourceTree = "<group>"; };
 		AFE455C81ADEBF500064F8CF /* Stopwatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stopwatch.cpp; path = infra/Stopwatch.cpp; sourceTree = "<group>"; };
 		AFE455C91ADEBF500064F8CF /* Stopwatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stopwatch.h; path = infra/Stopwatch.h; sourceTree = "<group>"; };
 		AFECC5BC1A8D011A00FA9D84 /* BitvectorSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitvectorSmall.h; path = infra/BitvectorSmall.h; sourceTree = "<group>"; };
@@ -143,7 +143,6 @@
 				AFECC5B31A8D008500FA9D84 /* qcon */,
 				AFECC5B01A8D006B00FA9D84 /* plan */,
 				AF75151C1A7F86440003FE5B /* main.cpp */,
-				AF99E4801A93B0B0006D94C4 /* testJoin */,
 				AF997E121A9CD5F400560932 /* Executor.h */,
 			);
 			path = RuleBasedOptimizer;
@@ -290,6 +289,7 @@
 				AFECC5C81A8D03D100FA9D84 /* Commutativity.h */,
 				AF14C2411A9202DB00A4AEEF /* LeftAssociativity.h */,
 				AF91ADF41A97CC9E00D01EBA /* RightAssociativity.h */,
+				AF886ADC1B0B36D400648F78 /* Swap.h */,
 			);
 			name = standard;
 			sourceTree = "<group>";

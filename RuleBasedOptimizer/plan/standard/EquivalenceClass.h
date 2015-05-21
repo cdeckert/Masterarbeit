@@ -388,6 +388,14 @@ public:
 	{
 		return _best != NULL;
 	};
+	
+	void debug() const
+	{
+		std::cout << "=== EquivalenceClass ===" << std::endl;
+		std::cout << "Relations:		" << _relations << std::endl;
+		std::cout << "Neighborhood:	" << _neighbors << std::endl << std::endl;
+		
+	};
 
 
 private:

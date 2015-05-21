@@ -1,7 +1,17 @@
-\section{Enumeratoren}
+\subsection{Enumeratoren}
 
-Enumeratoren sind für die Erforschung eines Surchraums verantwortlich. Sie generieren basierend auf einer Anfrage unterschiedliche alternative Pläne. Es lässt sich im allgemeinen zwischen zwei Klassen an Enumeratoren unterscheiden: Dynamisch Programmierte und regelbasierten Enumeratoren. 
 
-Das Konzept der dynamischen Porgrammierung wurde zuerst durch IBM's System R umgesetzt \cite{selinger1979access}. In diesem System wird die Reihenfolge der JOINs, die für eine Anfrage notwendig sind, verändert, um die Anfrage zu optimieren. Der Search Space, der durch den Enumerator erforscht wird, besteht aus Join Trees. Je nach Enumerator werden nur bestimmte Join Trees behandelt, die im weiteren kurz erklärt werden.
 
-Je nach \ac{DBMS} kann sich ein Enumerator nur auf einen teil des gesamten Search Spaces beschränken. So ist es möglich, dass eine Beschränkung auf Grund der Form eines Baumes gebildet wird. Grob lässt sich wie in Abb. \ref{TreeTypes} zu sehen zwischen drei Arten an Bäumen unterscheiden. Left-Deep, Busy und Right-Deep Trees. Je nach behandelter Join Art werden mehr oder weniger potentielle Bäume aus dem Suchraum ausgeschlossen. Je nach grösse des potentiellen Suchraums kann sich die Suche effizienter oder weniger effizient gestalten. Einige \ac{DMBS} argumentieren, dass die Beschränkung auf beispielsweise left-deep trees vorteilhaft wäre, da Aufwand für die Suche nach den Plänen gespart werden kann und trotzdem eine grosse Menge an alternativen Plänen erzeugt werden kann, die für sich genommen auch einen Plan Nahe dem optimalen Plan bilden. 
+Enumeratoren sind für die Erforschung eines Surchraums verantwortlich. Sie generieren basierend auf einer Anfrage unterschiedliche alternative Pläne. Es lässt sich im Allgemeinen zwischen zwei Klassen an Enumeratoren unterscheiden: dynamisch programmierte und regelbasierte Enumeratoren.  \todo{Quelle}
+
+Das Konzept der dynamischen Programmierung wurde zuerst durch IBM's System R umgesetzt \cite{selinger1979access}. In diesem System wird die Reihenfolge der JOINs, die für eine Anfrage notwendig sind verändert, um die Anfrage zu optimieren. Der Search Space, der durch den Enumerator erforscht wird, besteht aus Join Trees. Je nach Enumerator werden nur bestimmte Join Trees behandelt.
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{02_Grundlagen/TreeTypes.pdf}
+  \caption{Tree Types}
+  \label{TreeTypes}
+\end{figure}
+
+Je nach \ac{DBMS} kann sich ein Enumerator nur auf einen Teil des gesamten Search Spaces beschränken. So ist es möglich, dass eine Beschränkung auf Grund der Form eines Baumes gebildet wird. Grob lässt sich wie in Abb. \ref{TreeTypes} zu sehen ist, zwischen drei Arten an Bäumen unterscheiden, Left-Deep, Busy und Right-Deep Trees. Je nach behandelter Join Art werden mehr oder weniger potenzielle Bäume aus dem Suchraum ausgeschlossen. Je nach Größe des potentiellen Suchraums kann sich die Suche effizienter oder weniger effizient gestalten. Einige \ac{DBMS}e argumentieren \todo{QUELLE}, dass die Beschränkung auf beispielsweise Left-Deep Trees vorteilhaft wäre, da Aufwand für die Suche nach den Plänen gespart werden kann und trotzdem eine große Menge an alternativen Plänen erzeugt wird, die für sich genommen auch einen Plan nahe dem optimalen Plan bilden. 

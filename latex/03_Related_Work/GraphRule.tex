@@ -1,0 +1,41 @@
+\section{GraphRule}
+Das bestehende Regel-Framework von Volcano wurde von \cite{shanbhag2014optimizing} mit einem neuen Regelset und einer neuen Regel erweitert. Das neue Regelset “Graph Rule” soll alle bestehenden Regeln zur JOIN-Tree Enumeration ersetzen. Im Gegensatz zu den vergleichsweise ineffektiven Regelsets, die bisher bekannt waren, setzt die neue Regel auf state-of-the-art, kreuzproduktfreie Join-Enumeratoren zur Suche nach äquivalenten Plänen.
+
+Die neue Regel gibt nicht nur eine neue Variante des Query-Trees zurück, sondern bestimmt gleich auf einmal alle äquivalenten Pläne. Die Erweiterbarkeit des Volcano-Optimizers ermöglicht es auch eine solche komplexe, neue Regel zu implementieren.
+
+Die neue Regel wird in drei Schritten umgesetzt. Zuerst werden die Subtrees bestimmt, auf die ein Paritionierungsalgorithmus in nächsten Schritt angewendet werden kann. Mit Hilfe der einzelnen Partitionen werdend ann neue Bäume aufgebaut, die als alternative Pläne zurückgegeben werden. Diese drei Schritte sind auch in Abb. \ref{GraphRule} zu sehen.
+
+Um die Funktion der neuen Regel im Detail zu beschreiben führt \cite{shanbhag2014optimizing} eine Reihe neuer Begriffe für einen Baum ein:
+
+\begin{itemize}
+\item $Base Equivalence Node$: dieser Knoten bezeichnet einen Äuqivalenzknoten, der keine JOIN-Operatoren als dessen Kinder besitzt.
+\item $Join Equivalence Node$: dieser Begriff bezeichnet einen Äquivalenzknoten, der mindestens eine JOIN Operation untergeordnet hat.
+\item $Maximal Join Tree$: Dieser Baum ist ein Baum, der entweder Äquivalenzknoten oder einen JOIN Operator untergeordnet hat.
+\item Ein $Maximal join Tree$ ist ein Baum, dessen Kinder immer EuqivalenceNodes sind.
+\item Ein $Join Set$ für einen Äquivalenzknoten E ist ein Paar $J = (V, P)$ bei dem $V$ ein Set von äquivalenknoten ist und deren Kinder seine 
+\end{itemize}
+
+
+\subsection{Implementierung}
+Die Implementierung des neuen Regelsets wurde auf Basis des Query Optimizers PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ entwickelten Optimierers Pyro, der an der Universität Bombay entwickelt wurde und das Volcano-Framework implementiert.
+
+Alle Tests wurden auf einem Computer mit Intels Core i5 3.5 GHz mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 durchgeführt. Die genaue Java Version und Einstellungen der JVM sind (fast) vollständig unbekannt.
+
+Wie von \cite{shanbhag2014optimizing} beschrieben, wurde während der Performance Test festgestellt, dass sich die Dauer für die Ausführung einer Optimierung stark unterscheiden. Erheblich höhere Werte für die Durchführung einer Optimierung wurden zu Beginn festgestellt. Gerade die ersten Anfragen hatten eine besonders hohe Laufzeit. Erklärt wurde dieses Verhalten durch den Java \ac{JIT}-Compiler. Ebenfalls wurde festgestellt, dass der Java eigene Code Optimierer HotSpot die Ergebnisse verfälsche. 
+
+Während der Performance Tests wurde festgestellt, dass sich
+
+
+\subsubsection{Probleme auf Grund der Platformwahl}
+Die Implementierung der neuen Regel und tests wurde mit Hilfe des Optimierers PyroJ vorgenommen. PyroJ ist eine Übersetzung des Pryro Optimizers, der an der Universität Bombay entwickelt wurde und das Volcano Framework implementiert. 
+
+Die Implementierung wurde auf einem Intel i5 3.5 GHz 8 Gbyte Arbeitsspeicher mit Ubuntu 11.10 durchgeführt. Die Java Version bzw die Java Runtime sind unbekannt. Während der Implementierung viel auf, dass die ersten Berechnungen deutlich langsamer waren, als die Berechnung der selben Anfrage zu einem späteren Zeitpunkt. Dieses Problem wurde auf den Java JIT Compiler zurückgeführt. Er kompiliert nur immer die Stellen des Codes zur Laufzeit, die auch tatsächlich zur Ausführung benötigt werden. Optimierungen werden durch den JIT Compiler zur Laufzeit durchgeführt. Sobald diese automatischen Code Optimierungen ausgeschaltet wurden, sank die Performance zur Ausführung erheblich. Nachdem diese Optimierung asugeschaltet wurde und ein JVM Flag gesetzt wurde, um die Compilierung beizubehalten. SO konnte sichergestellt werden, dass alle Stellen möglichst schon Kompiliert sind, wenn das Programm zum einsatz kommt. Nach ein paar Ausführungen konnte so der eigentliche Test gestartet werden.
+
+
+
+
+Es wurde ein SQL generator entwickelt, der Chain, Star und cycle und Clique queries in der gewünschten grösse ERzeugt.
+
+
+Die Resultate beinhalten weder die Kosten ohne Pruning noch die Kosten für die Kostenschätzung oder Generierung des Physischen Plans. 
+

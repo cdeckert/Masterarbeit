@@ -196,6 +196,8 @@ public:
 	 * @return the value of the corresponding variable
 	 */
 	bool isExchangeEnabled() const;
+	
+	void debug() const;
 
 private:
 	Operator _op;
@@ -223,6 +225,15 @@ template <typename Bitvector_t>
 Bitvector_t PlanNode<Bitvector_t>::getSignature() const
 {
 	return _left->getRelations();
+};
+
+template <typename Bitvector_t>
+void PlanNode<Bitvector_t>::debug() const
+{
+	std::cout << "=== PlanNode ===" << std::endl;
+	std::cout << "Relations:	" << getRelations() << std::endl;
+	std::cout << "Neighborhood:	" << getNeighbors() << std::endl << std::endl;
+	
 };
 
 template <typename Bitvector_t>
