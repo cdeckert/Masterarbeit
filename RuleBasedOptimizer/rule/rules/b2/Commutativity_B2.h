@@ -5,7 +5,6 @@
 #ifndef RuleBasedOptimizer_CommutativityRule_B2_h
 #define RuleBasedOptimizer_CommutativityRule_B2_h
 
-#include "Rule.h"
 
 /**
  * @brief Commutativity
@@ -15,7 +14,7 @@
  * @tparam Operations_t basic operations like join and scan
  */
 template <typename PlanNode_t, typename Operations_t>
-class CommutativityRule_B2 : public Rule<PlanNode_t, Operations_t>
+class CommutativityRule_B2 : public CommutativityRule<PlanNode_t, Operations_t>
 {
 public:
 
