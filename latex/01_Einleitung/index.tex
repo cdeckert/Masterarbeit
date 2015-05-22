@@ -1,11 +1,48 @@
 \chapter{Einleitung}
 
+\begin{itemize}
+\item Irgendwie einleiten / warten auf Schluss damit es rund wird....
+\end{itemize}
+
+
+\todo{Nicht vergessen zu entfernen}
+
 \section{Motivation}
-Anfragenoptimierung ist eine der wichtigsten Bestandteile bei der Ausführung von Datenbankabfragen. Insbesondere im Kontext von komplexen und automatisch generierten SQL-Statements verspricht die Optimierung hohe Geschwindigkeitsverbesserungen. Der Optimierer ist für das Finden der richtigen Zugriffsstrategie auf Datensätze verantwortlich. Er entscheidet u.a. welche Art von Joins verwendet werden, in welcher Reihenfolge diese Joins angewendet werden oder ob Indexe anstatt von Full table scans zum Einsatz kommen. Nur durch die erreichte Performance heute gängiger \ac{DBMS} sind Anwendungen und Informationssysteme wie \ac{ERP}, \ac{CRM}, \ac{CMS}, \ac{BDWH} möglich geworden. \ac{DBMS} sind ein integraler Bestandteil unserer heutigen Wissens- und Informationsgesellschaft. Der schnelle und effiziente Zugriff auf Informationen und damit die Nutzung von \ac{DBMS} ist aus unserer Welt nicht mehr wegzudenken. Anfragenoptimierung bleibt daher ein wichtiger Teil.
 
 
+Anfragenoptimierung ist eine der wichtigsten Bestandteile bei der Ausführung von Datenbankabfragen. Insbesondere im Kontext von komplexen und automatisch generierten SQL-Statements verspricht die Optimierung hohe Geschwindigkeitsverbesserungen. Der Optimierer ist für das Finden der richtigen Zugriffsstrategie auf Datensätze verantwortlich. Er entscheidet u.a. welche Art von Joins verwendet werden, in welcher Reihenfolge diese Joins angewendet werden oder ob Index Scans anstatt von Full Table Scans zum Einsatz kommen. Nur durch die erreichte Performance heute gängiger \ac{DBMS} sind Anwendungen und Informationssysteme wie \ac{ERP}, \ac{CRM}, \ac{CMS}, \ac{BDWH} möglich geworden. \ac{DBMS}e sind ein integraler Bestandteil unserer heutigen Wissens- und Informationsgesellschaft. Der schnelle und effiziente Zugriff auf Informationen und damit die Nutzung von \ac{DBMS} ist aus unserer Welt nicht mehr wegzudenken. Anfragenoptimierung ist und bleibt daher ein wichtiger Teil.
 
+Anfragenoptimierung ist ein seit Jahrzenten bedeutungsvolles Thema für Datenbankhesteller. Erkenntnisse, die bereits in den 1970er Jahren gewonnen wurde, kommen auch in modernen System zum Einsatz. Beispielsweise ist IBMs System R, das in den 70ern entwickelt wurde, die Grundlage für das heutige DB 2  \cite{wade2012ibm}. Auch Microsofts SQL Server lässt sich auf die Enwticklung von Volcano und Exodus in den 1980er Jahren zurückführen.
+
+In der langen Tradition der Anfragenoptimierer wurden die bekannten Lösungsansätze immer wieder unter die Lupe genommen, weiterentwickelt und verbessert. 2014 wurden Regelsets von \cite{pellenkoft1997complexity}, die im Vulcano Projekt zum Join-Ordering verwendet werden, von \cite{shanbhag2014optimizing} genauer unter die Lupe genommen. 
+Sie stellten fest, dass eines der verwendeten Regelsets nicht dem Anspruch genügt alle äquivalenten Pläne für eine gegebene Anfrage zu finden und somit die Gefahr besteht, dass ein suboptimaler Plan für die Ausführung gewählt werde. Neben der Unvollständigkeit eines Regelsets wurde von Shanbhag et al. eine neue Transformationsregel vorgestellt. Sie soll die Geschwindigkeit moderner Join-Enumeratoren mit der Erweiterbarkeit von modularen System wie Volcano vereinen.
+
+Diese Erkenntnisse bilden die Grundlage dieser Arbeit und werden im Folgenden eingeordnet, nachvollzogen und geprüft.
 
 \section{Ziel der Arbeit}
 
+Ziel der Arbeit ist es zunächst die Arbeit von \cite{shanbhag2014optimizing} in einen weiteren Kontext einzuordnen. Basierend auf der Einordnung und dem gewonnenen Wissen lassen sich die Fragen beantworten:
+
+\begin{itemize}
+\item Unter welchen Umständen ist das bemängelte Regelset unvollständig? 
+\item Lassen sich die Ergebnisse von \cite{shanbhag2014optimizing} bzgl. Ihres neues Algorithmus nachvollziehen und dessen Performance versprechen auch in einer neuen Implementierung nachvollziehen?
+\end{itemize}
+
+Um nachvollziehen zu können, ob bestehende Regelsets unvollständig sind und als Grundlage für das neue Regelset musste ein eigener Prototyp für die Erzeugung von äquivalenten Plänen implementiert werden. Basierend auf dem Prototypen konnten die Fragen untersucht werden und Ergebnisse gesammelt werden.
+
+
+
+
+
+
+
 \section{Inhaltlicher Aufbau}
+Die Arbeit ist in fünf Teile gegliedert. Nach der Einleitung werden im Kapitel Related Work zuerst die notwendigen Grundlagen besprochen. Insbesondere wird auf die Begriffe Search Space, Enumerator und Kostenschätzer eingegangen. Ebenfalls wird der historische Kontext der Anfragenoptimierung hergestellt. Datenbankoptimierer von System R über Volcano bis hin zu Oracle werden erläutert. Ebenfalls wird auf Regelsets, die zur Erzeugung von alternativen JOIN Trees bei der Optimierung einer Anfrage verwendet werden können eingegangen. Diese Regelsets sind Teil des Vulcano Optimizers. Ebenfalls wird ein neues Regelset von \cite{shanbhag2014optimizing} vorgestellt und der Versuchsaufbau erläutert. 
+
+Im Kapitel Implementierung wird zuerst auf die Prinzipien nach denen die weitere Implementierung gestaltet ist eingegangen. Basierend auf diesen Prinzipien wird dann die weitere Implementierung besprochen. Beginnend mit dem strukturellen Aufbau aller Komponenten wird Stück für Stück auf einzelne Komponenten und deren Funktion eingegangen.
+
+[ HIER ÜBER EVALUATION SPRECHEN]
+
+
+
+ 

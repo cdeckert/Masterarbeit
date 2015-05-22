@@ -1,3 +1,12 @@
+\section{Plattformentscheidung}
+
+Das Projekt wurde in c++11 implementiert. Diese Plattformentscheidung bietet eine Vielzahl an Vorteilen im Vergleich zur Implementierung in anderen Sprachen wie Java und der Java Plattform.
+
+Wie in Kapitel 2.3.1 zu sehen, ist durch die Platformwahl des PyroJ Optimizers einige Probleme aufgetreten. Beispielsweise kann nicht festgestellt werden, ob das Programm vollständig kompiliert ist. Die Dauer der Ausführung kann nur durch einschalten eines bestimmten Java Runntime flags konstant gehalten werden. Ausserdem kann zu jedem belieben Zeitpunkt die Gar-Collection ausgeführt werden, die den Prozess unterbricht und somit die Messergebnisse verfälscht.
+
+Um diesen problemen aus dem Weg zu gehen wurde bei der Implementierung
+
+
 \section{Verwaltung von Relationen}
 
 Eine der grundlegenden Design-Entscheidungen ist die Repräsentation von Relationen mit Hilfe von Bitvectoren. Ein Bitvector sind mehrere Bits, die entweder $TRUE$ also $1$ oder $FALSE$ also $0$ sein können. Ist das n-te Bit eines Bitvectors gesetzt, so repräsentiert dieses Bit die n-te Relation. Beispielsweise bezeichnet der Bitvector $010000000$ die Relation mit dem Namen $1$. Mit Hilfe des Bitvectors können auch mehrere Relationen gespeichert werden $01010000000$ bezeichnet folglich die Relation mit dem Name $1$ und die Relation mit dem Namen $3$. Für die durchgeführten Berechnungen ist es nicht notwendig, dass eine Relation mit ihrem tatsächlichen Namen bekannt ist. Es reicht eine Bezeichnung mit Hilfe von Nummern aus.
@@ -33,7 +42,7 @@ Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Servi
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{04_Implementierung/Planknoten.png}
+  \includegraphics{04_Implementierung/JoinScan.pdf}
   \caption{Planknoten und Äquivalenzklassen}
   \label{PlanAequi}
 \end{figure}
@@ -56,7 +65,7 @@ Die Konkrete Implementierung der Äquivalenzklasse sieht vor, wie in Abb. \ref{E
 
 
 
-\subsection{Regeln und Regelsets}
+\section{Regeln und Regelsets}
 
 
 Eine entscheidende Komponente sind Regeln und Regelsets. Mehrere Regeln werden in einem Regelset zusammengefasst. Ein Regelset ist eine Instanz der abstrakten Klasse $RuleSet$, die die Methode $getRules()$ vorgibt, mit deren Hilfe ein Vektor von Regeln ausgegeben wird. Je nach Regelset können andere Regeln vorhanden sein.
@@ -87,7 +96,7 @@ Auf dem zweiten Level, diese Klassen sind mit dem Zusatz $B2$ gekennzeichnet, fi
 Auf dem dritten Level findet sich die $GraphRule$ sie ersetzt andere Regeln und ist im RuleSet $GraphRuleSet$ abgebildet.
 
 
-Die Funktion einer Regel ist im Prinzip immer ähnlich: Zuerst muss geprüft werden, ob eine Regel zur Anwendung kommen kann. Dies geschieht mit der Methode $isApplicable$. Wenn diese Methode $wahr$ zurückgeliefert, kann die Regel  mit Hilfe von $apply$ angewendet werden. Das Ergebnis ist ein neuer Planknoten.
+Ähnlich wie bei Starburst bestehen Regel aus zwei Teilen. Auf der einen Seite wird geprüft, ob eine Regel zur Anwendung kommen kann. Dies geschieht mit der Methode $isApplicable$ auf der anderen Seite gibt es die Methode $apply$, die immer einen äquivalenten Planknoten zurückliefert. Mit Hilfe dieses Prinzips wurden alle Regeln implementiert. Das einheitliche Interface erlaubt es, dass Regeln in Regelsets gebündet werden können.
 
 
 \subsubsection{Erweiterbarkeit von Regeln}
@@ -117,25 +126,25 @@ Das eigentliche Ausführen der Regeln wird durch einen XY durchgeführt. Im Konk
 Wichtig ist hierbei zu bemerken, dass dieser Algorithmus immer zuerst prüft, ob eine Regel auch tatsächlich für die Anwendung geeignet ist und dann erst der Algorithmus ausgeführt wird. Neben der eigentlichen Eignung wird auch geprüft, ob eine Äquivalenzklasse bereits vollständig expandiert wurde. Falls dies der Fall ist, wird von einer weiteren Anwendung von Regeln abgesehen. Diese Funktion kann insbesondere Vorteile bei der Implementierung von neuen Regelsets bieten. Nutzt ein gegebenes Regelset die Möglichkeit nicht nur einen neuen PlanKnoten zu generieren sondern gleich mehrere Planknoten zu erstellen und auch in diesem Zusammenhang bereits mehrere Kinder-Knoten zu erstellen, kann die Reihenfolge der Expansion von Äuqivalenzklassen geändert werden. Die einzelnen Äquivalenzklassen, die bereits durch eine Regel expandiert wurden, werden als solche markiert und die bisher vorhandenen Regeln werden nicht mehr ausgeführt.
 
 
-\subsection{Kostenschätzung und statistische Informationen}
+\section{Kostenschätzung und statistische Informationen}
 
 
 
-Die Kostenschätzung zur Suche des optimalen Plans geschieht bei der vorliegenden Implementierung in einem eigenen Kostenschätzungsmodul. Teil des Kostenmoduls ist ein Katalog innerhalb dessen Informationen über Selektivität von JOINs und Kardinalitäten von Relationen gespeichert sind. Diese Informationen werden aus dem Katalog mit Hilfe des Kostenschätzers ausgelesen und die Kosten für einen Planknoten berechnet.
+Die Kostenschätzung zur Suche des optimalen Plans geschieht bei der vorliegenden Implementierung in einem eigenen Kostenschätzungsmodul.Teil des Kostenmoduls ist ein Katalog innerhalb dessen Informationen über Selektivität von JOINs und Kardinalitäten von Relationen gespeichert sind. Diese Informationen werden aus dem Katalog mit Hilfe des Kostenschätzers ausgelesen und die Kosten für einen Planknoten berechnet.
 
-Die Berechnung der Kardinalität findet bottom up statt. Für jede Äquivalenzklasse wird die optimale Kardinalität berechnet und gespeichert. Der Planknoten mit dessen Hilfe diese optimale Kardinalität erreicht wird, wird als bester Planknoten markiert. Folgt man dem Pfad der besten Planknoten ergbibt sich der kostenoptimale Baum an Planknoten. Die Berechnung sieht vor, dass immer die Selektivität eines Operators mit dem Produkt der Kardinalität der Eingabeparameter multipliziert wird. Beispielsweise wird auf der untersten Ebene - der Ebene der Scans - für eine gegebene Relation die Kardinalität mit der Selektivität von 1 multipliziert, da die gesamte Relation verarbeitet werden muss. Bei einem Join können komplexere Situationen auftreten. Zuerst wird das Produkt der Kardinalität der Eingabe Parameter berechnet. Diese kann dann mit der 
+Die Berechnung der Kardinalität findet bottom up statt. Für jede Äquivalenzklasse wird die optimale Kardinalität berechnet und gespeichert. Der Planknoten mit dessen Hilfe diese optimale Kardinalität erreicht wird, wird als bester Planknoten markiert. Folgt man dem Pfad der besten Planknoten ergibt sich der kostenoptimale Baum an Planknoten. Die Berechnung sieht vor, dass immer die Selektivität eines Operators mit dem Produkt der Kardinalität der Eingabeparameter multipliziert wird. Beispielsweise wird auf der untersten Ebene - der Ebene der Scans - für eine gegebene Relation die Kardinalität mit der Selektivität von 1 multipliziert, da die gesamte Relation verarbeitet werden muss. Bei einem Join können komplexere Situationen auftreten. Zuerst wird das Produkt der Kardinalität der Eingabe Parameter berechnet. Diese kann dann mit der 
 Selektivität multipliziert werden. Das Produkt der Kardinalitäten repräsentiert in diesem Falle die Kardinalität des möglichen Kreuzproduktes, das mit Hilfe von Selektoren eingeschränkt wird.
 
 
-\subsection{Services}
+\section{Services}
 Um alle Module, die bisher besprochen wurden zu koordinieren und um die Verarbeitung von Daten sicherzustellen, wurden einige Service Module implementiert: Konfigurator, Stopwatch, Logging.
 
-\subsubsection{Konfiguration}
+\subsection{Konfiguration}
 
-Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szeanieren. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen. Für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
+Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenaieren. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen. Für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
 Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON Format.
 
-Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen und umsetzen des Konfigurationsfiles. 
+Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen und Umsetzen des Konfigurationsfiles. 
 
 
 \subsubsection{}
@@ -143,4 +152,4 @@ Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen un
 
 \subsection{Zusammenfassung}
 
-Gerade im Bereich der Regeln ist klar zu erkennen, dass die SOLID Prinzipien eingehalten wurden. Hier ist jede Klasse nur genau für eine Aufgabe zuständig. Ein hohes Mass an Kohesion konnte erreicht werden. Die Regelklassen, sind offen für Erweiterungen, jedoch geschlossen für Modifikationen. Dies wird insbesondere bei der Erweiterung mit Hilfe des Regelsets $GraphRuleSet$ deutlich. Auch das Liskov Substitutionsprinzip wurde eingehalten. Alle Klassen verhalten sich nach Aussen geleich und liefern das selbe Ergebis, einen Planknoten, zurück. 
+Gerade im Bereich der Regeln ist klar zu erkennen, dass die SOLID Prinzipien eingehalten wurden. Hier ist jede Klasse nur genau für eine Aufgabe zuständig. Ein hohes Maß an Kohäsion konnte erreicht werden. Die Regelklassen  sind offen für Erweiterungen, jedoch geschlossen für Modifikationen. Dies wird insbesondere bei der Erweiterung mit Hilfe des Regelsets $GraphRuleSet$ deutlich. Auch das Liskov Substitutionsprinzip wurde eingehalten. Alle Klassen verhalten sich nach außen gleich und liefern das selbe Ergebnis, einen Planknoten, zurück. 
