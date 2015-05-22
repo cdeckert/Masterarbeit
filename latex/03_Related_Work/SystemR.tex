@@ -19,11 +19,6 @@ Das \ac{RSS} ist für die physische Verwaltung der Datenbank verantwortlich. Es 
 
 Das \ac{RDS} übernimmt via \ac{RDI} die Kommunikation nach Außen und leitet Befehle über das \ac{RSI} weiter. Anfragen von Außen werden mit Hilfe von \ac{SQL} an das System gestellt. Es ist auch möglich, dass externe Sprachen wie Cobol verwendet werden, die ohne Weiteres mit dem \ac{RDI} kommunizieren. In diesen Fällen muss SQL nicht verwendet werden. Das \ac{RSS} wandelt die Umfrage in eine für das \ac{RSI} verständliche Form um. Über das RSI wird die Anfrage entgegen genommen und ausgeführt.
 
-<<<<<<< HEAD
-=======
-Das \ac{RDS} übernimmt mit Hife des \ac{RDI} die Kommunikation nach Außen und leitet Befehle über das \ac{RSI} weiter. Anfragen von Außen werden mit Hilfe von \ac{SQL} an das System gestellt. Es ist auch möglich, dass externe Sprachen wie beispielsweise Cobol verwendet werden, die ohne Weiteres mit dem \ac{RDI} kommunizieren. In diesen Fällen muss SQL nicht verwendet werden. Das \ac{RSS} wandelt die Umfrage in eine für das \ac{RSI} verständliche Form um. Über das RSI wird die Anfrage entegen genommen und ausgeführt.
-
->>>>>>> 2dbe3382d95b975a93a2c2789dd91dda3468d5cc
 
 
 
@@ -53,7 +48,6 @@ $$Cost = Page Fetches + W * (RSI calls)$$
 $Page Fetches$ repräsentieren die I/O Operationen, die beispielsweise durch den Abruf der Index Pages und der eigentlichen Pages entsteht. $RSI calls$ ist die Anzahl der erwarteten Datensätze, die durch das \ac{RSS} zurückgegeben werden. Sie dient als Abschätzung wie hoch der CPU Aufwand für die Rückgabe der Werte ist. Mit Hilfe des Parameters $W$ wird eingestellt in welchem Verhältnis I/O zu CPU Kosten stehen.
 
 
-<<<<<<< HEAD
 %\sout{Bei der Auswahl eines Plans unterscheidet das System zwischen einer \"interessanten\" Reihenfolge, also sortierten Ergebnissen, und einer ungeordneten Reihenfolge. Als interessante Reihenfolge, werden Reihenfolgen betrachtet, die gesamter Reihenfolge notwendig sind und die Kosten, die für das lesen in ungeordneter Reihenfolge notwendig sind und addiert auf diese Kosten, die Kosten für das Ordnen der Ergebnisse falls eine ungeordnete Reihenfolge + das Ordnen der Ergebnisse gemeinsam kürzer dauert als das direkte Ausgeben einer interessanten Reihenfolge wird sich für die günstigere Variante entschieden.}
 
 
@@ -71,11 +65,6 @@ Auf Basis dieser Kennzahlen wird je nach Operator die Kosten festgestellt.
 %\sout{Die Berechnung geschieht auf Daten, die durch den Catalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Sprich die Menge der ausgeschlossenen Tupel.}
 
 
-=======
-Bei der Auswahl eines Plans unterscheidet das System zwischen einer "interessanten" Reihenfolge, also sortierten Ergebnissen, und einer ungeordneten Reihenfolge. Als interessante Reihenfolge, werden Reihenfolgen betrachtet, die gesamter Reihenfolge“ notwendig sind und die Kosten, die für das lesen in ungeordneter Reihenfolge notwendig sind und addiert auf diese Kosten, die Kosten für das Ordnen der Ergebnisse falls eine ungeordnete Reihenfolge + das Ordnen der Ergebnisse gemeinsam kürzer dauert als das direkte Ausgeben einer interessanten Reihenfolge wird sich für die günstigere Variante entschieden. 
-
-Die Berechnung geschieht auf Daten, die durch den Catalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Sprich die Menge der ausgeschlossenen Tupel.
->>>>>>> 2dbe3382d95b975a93a2c2789dd91dda3468d5cc
 
 \subsection{Plan Enumerator}
 Die Enumeration des System R Optimizers zeigt zwei wichtige Aspekte eines Enumerators: Auf der einen Seite die \"interesting Order\" auf der anderen Seite \"dynamic programming\". 
