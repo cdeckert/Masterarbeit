@@ -13,7 +13,7 @@
  * @tparam Operations_t basic operations like join and scan
  */
 template <typename PlanNode, typename Operations_t>
-class RightAssociativity_B2 : public Rule<PlanNode, Operations_t>
+class RightAssociativity_B2 : public RightAssociativity<PlanNode, Operations_t>
 {
 
 
