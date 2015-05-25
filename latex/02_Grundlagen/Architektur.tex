@@ -13,7 +13,7 @@ Die Architektur eines \ac{DBMS} lässt sich in zwei Teile gliedern: \ac{CTS} und
 
 Bei der Bearbeitung eines Nutzerkommandos gibt der Nutzer eine Anfrage zuerst in das \ac{CTS} ein. Das \ac{CTS} ist für die Umwandlung der Anfrage in ein für das \ac{RTS} verständliches Format, beispielsweise einen \ac{QEP}, verantwortlich. Ebenfalls nimmt das \ac{CTS} die Optimierung von Kommandos vor. Sobald die Anfrage an das \ac{RTS} weitergegeben ist, wird das Kommando ausgeführt und das Resultat zurück an den Nutzer übermittelt. Dieser Verlauf ist in Abbildung \ref{Database_Architecture} verdeutlicht.
 
-Es gibt eine Vielzahl an Kommandos, die von einem Nutzer an ein Datenbank-System gestellt werden können. Zu Ihnen zählen neben Anfragen (Queries) beispielsweise auch Indexerstellungen, Schema-  und Datensätzänderungen. Im Folgenden wird das Kommando Anfrage in den Fokus gestellt.
+Es gibt eine Vielzahl von Kommandos, die von einem Nutzer an ein Datenbank-System gestellt werden können. Zu Ihnen zählen neben Anfragen (Queries) beispielsweise auch Indexerstellungen, Schema- und Datensatzänderungen. Im Folgenden wird das Kommando Anfrage in den Fokus gestellt.
 
 Vor der Verarbeitung muss die Anfrage formuliert werden. Dies geschieht bei relationalen Datenbanksystemen i.d.R. in \ac{SQL}. \ac{SQL} ist eine deklarative Anfragesprache, die sich als Standardsprache für viele Datenbanksysteme durchgesetzt hat. Die fertige Anfrage bildet den Input, der in das Datenbanksystem übergeben wird. 
 
@@ -31,10 +31,10 @@ Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übe
 \end{figure}
 
 
-Der \ac{CTS} sieht mehrere Verarbeitungsschritte vor (vgl. Abb. \ref{DBMS_Interpreter}). Zuerst wird die Anfrage in einen abstrakten Syntaxbaum umgewandelt. Dieser Synaxbaum wird mit Hilfe von Normalisierung, Faktorisierung, semantischer Analyse und Übersetzung (nfst) in eine interne Repräsentationsform gebracht. Diese interne Repräsentation wird an den Anfragenoptimierer übergeben, der zuerst mit einem ersten Rewriter die Anfrage einer Bearbeitung unterzieht. Views werden aufgelöst und zusammengeführt, verschachtelte Anfragen werden entschachtelt und neue Prädikate werden abgeleitet. Im nächsten Schritt wird diese veränderte Anfrage an den Plan Generator übergeben. Er ist verantwortlich für das Finden des günstigsten \ac{QEP}. Teil dieser Optimierung ist beispielsweise das Join Ordering. Im letzten Schritt des \ac{QO} wird die Anfrage nochmals durch einen Query Rewriter verändert. Basierend auf diesem Code kann der finale Code generiert werden. Der dem \ac{RTS} als Input für die Ausführung einer Anfrage dient.
+Der \ac{CTS} sieht mehrere Verarbeitungsschritte vor (vgl. Abb. \ref{DBMS_Interpreter}). Zuerst wird die Anfrage in einen abstrakten Syntaxbaum umgewandelt. Dieser Synaxbaum wird mit Hilfe von Normalisierung, Faktorisierung, semantischer Analyse und Übersetzung (nfst) in eine interne Repräsentationsform gebracht. Diese interne Repräsentation wird an den Anfragenoptimierer übergeben, der zuerst mit einem ersten Rewriter die Anfrage einer Bearbeitung unterzieht. Views werden aufgelöst und zusammengeführt, verschachtelte Anfragen werden entschachtelt und neue Prädikate werden abgeleitet. Im nächsten Schritt wird diese veränderte Anfrage an den Plan Generator übergeben. Er ist verantwortlich für das Finden des günstigsten \ac{QEP}. Teil dieser Optimierung ist beispielsweise das Join Ordering. Im letzten Schritt des \ac{QO} wird die Anfrage nochmals durch einen Query Rewriter verändert. Basierend auf diesem Code kann der finale Code generiert werden, der dem \ac{RTS} als Input für die Ausführung einer Anfrage dient.
 
 
-Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich ist besteht benötigt, um seine Aufgabe zu erfüllen drei Komponenten \cite{chaudhuri1998overview}: 
+Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich ist, benötigt um seine Aufgabe zu erfüllen,drei Komponenten \cite{chaudhuri1998overview}: 
 
 \begin{itemize}
 \item einen Raum von Plänen (Search Space), aus denen der beste Plan ausgewählt werden kann,

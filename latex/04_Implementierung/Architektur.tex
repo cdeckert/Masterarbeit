@@ -2,16 +2,21 @@
 
 Das Projekt wurde in c++11 implementiert. Diese Plattformentscheidung bietet eine Vielzahl an Vorteilen im Vergleich zur Implementierung in anderen Sprachen wie Java und der Java Plattform.
 
-Wie in Kapitel 2.3.1 zu sehen, ist durch die Platformwahl des PyroJ Optimizers einige Probleme aufgetreten. Beispielsweise kann nicht festgestellt werden, ob das Programm vollständig kompiliert ist. Die Dauer der Ausführung kann nur durch einschalten eines bestimmten Java Runntime flags konstant gehalten werden. Ausserdem kann zu jedem belieben Zeitpunkt die Gar-Collection ausgeführt werden, die den Prozess unterbricht und somit die Messergebnisse verfälscht.
+Wie in Kapitel 2.3.1 zu sehen,sind  durch die Plattformwahl des PyroJ Optimizers einige Probleme aufgetreten. Beispielsweise kann nicht festgestellt werden, ob das Programm vollständig kompiliert ist. Die Dauer der Ausführung kann nur durch Einschalten eines bestimmten Java Runntime flags konstant gehalten werden. Außerdem kann zu jedem beliebigen Zeitpunkt die Gar-Collection ausgeführt werden, die den Prozess unterbricht und somit die Messergebnisse verfälscht.
 
-Um diesen problemen aus dem Weg zu gehen wurde bei der Implementierung
+Um diesen Problemen aus dem Weg zu gehen wurde bei der Implementierung
+
+
+
+
+
 
 
 \section{Verwaltung von Relationen}
 
 Eine der grundlegenden Design-Entscheidungen ist die Repräsentation von Relationen mit Hilfe von Bitvectoren. Ein Bitvector sind mehrere Bits, die entweder $TRUE$ also $1$ oder $FALSE$ also $0$ sein können. Ist das n-te Bit eines Bitvectors gesetzt, so repräsentiert dieses Bit die n-te Relation. Beispielsweise bezeichnet der Bitvector $010000000$ die Relation mit dem Namen $1$. Mit Hilfe des Bitvectors können auch mehrere Relationen gespeichert werden $01010000000$ bezeichnet folglich die Relation mit dem Name $1$ und die Relation mit dem Namen $3$. Für die durchgeführten Berechnungen ist es nicht notwendig, dass eine Relation mit ihrem tatsächlichen Namen bekannt ist. Es reicht eine Bezeichnung mit Hilfe von Nummern aus.
 
-Vorteil für die Verwendung von Bitvectoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame JOIN Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. Dies ist besodners effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
+Vorteil für die Verwendung von Bitvectoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame JOIN Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. Dies ist besonders effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
 
 
 Für externe Systeme kann es daher notwendig sein, dass Relationsnamen mit Hilfe eines Adapers übersetzt werden. Die genau Funktionsweise eines solchen Adapters wird in diesem Kapitel genauer beschrieben.
@@ -30,7 +35,9 @@ Das Projekt ist entlang der unterschiedlichen Aufgaben modular organisiert. Unte
   \label{ProjectOrga}
 \end{figure}
 
-Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Service-Bereich und insbesondere das Konfigurationsmodul sind für die konkrete Zusammenstellung der für den Test notwendigen Komponenten verantwortlich. Es entscheidet, welche Regeln zum Einsatz kommen, welcher Exector gewählt wird, welche konkreten Pläne getestet und mit Hilfe welcher Adapter die Daten ein bzw. ausgegeben werden. Um zu verstehen, welche Möglichkeiten das implementierte System bietet, sind die einzelnen Komponenten im Folgenden im Detail beschrieben.
+Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Service-Bereich und insbesondere das Konfigurationsmodul sind für die konkrete Zusammenstellung der für den Test notwendigen Komponenten verantwortlich. Es entscheidet, welche Regeln zum Einsatz kommen, welcher Exector gewählt wird, welche konkreten Pläne getestet und mit Hilfe welcher Adapter die Daten ein-  bzw. ausgegeben werden. Um zu verstehen, welche Möglichkeiten das implementierte System bietet, sind die einzelnen Komponenten im Folgenden im Detail beschrieben.
+
+
 
 
 
@@ -50,8 +57,7 @@ Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Servi
 Am Beginn steht die Struktur in der Pläne gespeichert werden. Diese Struktur wird durch andere Komponenten bearbeitet und ausgewertet und stellt somit das Werkstück bei der Verarbeitung dar.
 
 Ähnlich wie in anderen System kommen in der aktuellen Implementierung Äquivalenzklassen und Planknoten zum Einsatz. Äquivalenzklassen repräsentieren ein Set von unterschiedlichen, jedoch äquivalenten Planknoten. Mit Hilfe von Äquivalenzklassen und Planknoten kann die Information über alle möglichen Äquivalenten Pläne gespeichert werden. Sie können also den gesamten Search Space abbilden.
-
-Die Aufgabe eines Planknotens ist es einen Operator zu repräsentieren. Jeder Operator kann mehrere Parameter besitzen. Im Konkreten Fall sind zwei Operatoren implementiert: JOINs und SCANs. Scans zeichnen sich dadurch aus, dass sie immer genau eine Relation lesen. Folglich haben Sie nur einen Parameter, um die Relation zu übergeben. Bei Joins gibt es immer genau zwei Parameter. Beide Parameter repräsentieren Datenströme, die mit Hilfe des Joins in einen gemeinsamen Datenstrom kombiniert werden.
+ Aufgabe eines Planknotens ist es einen Operator zu repräsentieren. Jeder Operator kann mehrere Parameter besitzen. Im konkreten Fall sind zwei Operatoren implementiert: JOINs und SCANs. Scans zeichnen sich dadurch aus, dass sie immer genau eine Relation lesen. Folglich haben Sie nur einen Parameter, um die Relation zu übergeben. Bei Joins gibt es immer genau zwei Parameter. Beide Parameter repräsentieren Datenströme, die mit Hilfe des Joins in einen gemeinsamen Datenstrom kombiniert werden.
 
 Die kleinste im System mögliche Datenstruktur ist ein Scan. Er besteht aus einer Äquivalenzklasse, die die Relation repräsentiert. Auf sie wird ein Planknoten angewendet mit dem Operator SCAN. Dieser Planknoten ist selbst wieder Teil einer Äuqivalenzklasse. Eine solche Datenstruktur ist im linken Teil der Abbildung \ref{PlanAequi} zu finden.
 
@@ -60,7 +66,7 @@ Kombiniert man zwei dieser SCANs mit einem JOIN so erhält man die kleinste mög
 
 \subsection{Konkrete Implementierung}
 
-Die Konkrete Implementierung der Äquivalenzklasse sieht vor, wie in Abb. \ref{EquivalenceClassDiagram} zu erkennen, das für jede Äquivalenzklasse die darin aggregierten Relationen sowie deren Nachbarn gespeichert. Ebenfalls wird der erste, letzte und kosteneffektivste Planknoten gespeichert. Ebenfalls kann festgehalten werden, ob eine Äquivalenzklasse bereits $explored$, also erforscht, ist. 
+Die Konkrete Implementierung der Äquivalenzklasse sieht vor, wie in Abb. \ref{EquivalenceClassDiagram} zu erkennen, das für jede Äquivalenzklasse die darin aggregierten Relationen sowie deren Nachbarn gespeichert wird. Ebenfalls wird der erste, letzte und kosteneffektivste Planknoten gespeichert.Außerdem kann festgehalten werden, ob eine Äquivalenzklasse bereits $explored$, also erforscht, ist. 
 
 
 
@@ -93,10 +99,10 @@ $Commutativity$, $LeftAssociativity$ und $RighAssociativity$ bilden die erste Eb
 
 Auf dem zweiten Level, diese Klassen sind mit dem Zusatz $B2$ gekennzeichnet, finden sich $Commutativity_B2$, $LeftAssociativity_B2$, $RighAssociativity_B2$ und $Exchange_B2$. Diese Regeln sind für das Regelset $RS_2$ notwendig und erlauben es andere Regeln zu deaktivieren. Da die Deaktivierung von Regeln eine Erweiterung darstellt, erben Kommutativität und Assoziativität von ihren Verwandten aus $RS_0$ bzw. $RS_1$. Da die Exchange Regel neu hinzukommt, erbt diese direkt von Rule.
 
-Auf dem dritten Level findet sich die $GraphRule$ sie ersetzt andere Regeln und ist im RuleSet $GraphRuleSet$ abgebildet.
+Auf dem dritten Level findet sich die $GraphRule$. Sie ersetzt andere Regeln und ist im RuleSet $GraphRuleSet$ abgebildet.
 
 
-Ähnlich wie bei Starburst bestehen Regel aus zwei Teilen. Auf der einen Seite wird geprüft, ob eine Regel zur Anwendung kommen kann. Dies geschieht mit der Methode $isApplicable$ auf der anderen Seite gibt es die Methode $apply$, die immer einen äquivalenten Planknoten zurückliefert. Mit Hilfe dieses Prinzips wurden alle Regeln implementiert. Das einheitliche Interface erlaubt es, dass Regeln in Regelsets gebündet werden können.
+Ähnlich wie bei Starburst bestehen Regel aus zwei Teilen. Auf der einen Seite wird geprüft, ob eine Regel zur Anwendung kommen kann. Dies geschieht mit der Methode $isApplicable$ auf der anderen Seite gibt es die Methode $apply$, die immer einen äquivalenten Planknoten zurückliefert. Mit Hilfe dieses Prinzips wurden alle Regeln implementiert. Das einheitliche Interface erlaubt es, dass Regeln in Regelsets gebündelt werden können.
 
 
 \subsubsection{Erweiterbarkeit von Regeln}
@@ -105,9 +111,9 @@ Die Erweiterbarkeit ist auf mehreren Ebenen sichergestellt. Auf der einen Seite 
 
 Eine weitere Möglichkeit zur Erweiterung wurde ebenfalls von $GraphRule$ genutzt. GraphRule gibt nicht nur einen einzelnen neuen Planknoten zurück, sondern übergibt gleich einen vollständig expandierten Baum. Auch diese Anforderung konnte ohne Veränderung des Interfaces umgesetzt werden. Da der Planknoten ein $next$ Attribut besitzt, das den vorhergehenden mit dem nächsten Knoten verbindet, können Ketten von neuen Knoten gebildet werden. Diese Ketten werden im Falle der $GraphRule$ zurückgegeben ohne dabei das Interface zu brechen.
 
-Neben den vorgegeben Methoden können auch weitere Methoden für eine Regel implementiert werden. Dies ist beispielsweise bei $GraphRule$ notwendig gewesen. Hier ist es notwendig, dass der Graph zuerst partitioniert wird, dann ConnectedComponents gefunden und schlussendlich ein Baum zurückgegeben wird. Auch dies ist innerhalb der Rules möglich.
+Neben den vorgegebenen  Methoden können auch weitere Methoden für eine Regel implementiert werden. Dies ist beispielsweise bei $GraphRule$ notwendig gewesen. Hier ist es erforderlich, dass der Graph zuerst partitioniert wird, dann ConnectedComponents gefunden und schlussendlich ein Baum zurückgegeben wird. Auch dies ist innerhalb der Rules möglich.
 
-Eine weitere Möglichkeit zur Erweiterung ist durch Templates gegeben. Template ist eine Funktion von C++ mit deren Hilfe Funktionen und Klassen mit generischen Typen arbeiten können. Dadurch ist es einer Funktion der einer Klasse möglich mit viele unterschiedliche Typen zu unterstützen ohne die Funktion oder die Klasse bearbeiten zu müssen. Im konkreten Fall der Regeln werden zwei dieser generischen Typen verwendet: $PlanNode$ und $Operations$. Es wird somit möglich die Klassen des Planknotens und die möglichen Operationen, die für diese Planknoten möglich sind zu ersetzen, ohne Funktionen und Klassen verändern zu können.
+Eine weitere Möglichkeit zur Erweiterung ist durch Templates gegeben. Template ist eine Funktion von C++ mit deren Hilfe Funktionen und Klassen mit generischen Typen arbeiten können. Dadurch ist es einer Funktion der einen Klasse möglich viele unterschiedliche Typen zu unterstützen ohne die Funktion oder die Klasse bearbeiten zu müssen. Im konkreten Fall der Regeln werden zwei dieser generischen Typen verwendet: $PlanNode$ und $Operations$. Es wird somit möglich die Klassen des Planknotens und die möglichen Operationen, die für diese Planknoten möglich sind zu ersetzen, ohne Funktionen und Klassen verändern zu können.
 
 \subsubsection{Erweiterbarkeit von Regelsets}
 
@@ -121,9 +127,9 @@ Wird ein neues Regelset erstellt, ist es nicht nur notwendig eine neue Regelset 
 
 \subsection{Ausführung von Regeln}
 
-Das eigentliche Ausführen der Regeln wird durch einen XY durchgeführt. Im Konkreten Fall kommt hier der Algorithmus ExhaustiveTransformation zum Einsatz. Der Algorithmus startet mit einer Äquivalenzklasse. Innerhalb dieser Äquivalenzklasse werden die Regeln, die durch ein Regelset vorgegeben sind auf einem PlanKnoten ausgeführt. Die Ausführung geschieht hierbei zuerst auf den Oberen Ebenen und setzt sich dann auf den Kindern eines Knoten fort. Somit können bei der Transformation eines gegebenen Baums alle Regeln auf andere Bäume angewendet werden.
+Das eigentliche Ausführen der Regeln wird durch einen XY durchgeführt. Im konkreten Fall kommt hier der Algorithmus ExhaustiveTransformation zum Einsatz. Der Algorithmus startet mit einer Äquivalenzklasse. Innerhalb dieser Äquivalenzklasse werden die Regeln, die durch ein Regelset vorgegeben sind auf einem PlanKnoten ausgeführt. Die Ausführung geschieht hierbei zuerst auf den Oberen Ebenen und setzt sich dann auf den Kindern eines Knoten fort. Somit können bei der Transformation eines gegebenen Baums alle Regeln auf andere Bäume angewendet werden.
 
-Wichtig ist hierbei zu bemerken, dass dieser Algorithmus immer zuerst prüft, ob eine Regel auch tatsächlich für die Anwendung geeignet ist und dann erst der Algorithmus ausgeführt wird. Neben der eigentlichen Eignung wird auch geprüft, ob eine Äquivalenzklasse bereits vollständig expandiert wurde. Falls dies der Fall ist, wird von einer weiteren Anwendung von Regeln abgesehen. Diese Funktion kann insbesondere Vorteile bei der Implementierung von neuen Regelsets bieten. Nutzt ein gegebenes Regelset die Möglichkeit nicht nur einen neuen PlanKnoten zu generieren sondern gleich mehrere Planknoten zu erstellen und auch in diesem Zusammenhang bereits mehrere Kinder-Knoten zu erstellen, kann die Reihenfolge der Expansion von Äuqivalenzklassen geändert werden. Die einzelnen Äquivalenzklassen, die bereits durch eine Regel expandiert wurden, werden als solche markiert und die bisher vorhandenen Regeln werden nicht mehr ausgeführt.
+Wichtig ist hierbei zu bemerken, dass dieser Algorithmus immer zuerst prüft, ob eine Regel auch tatsächlich für die Anwendung geeignet ist und dann erst der Algorithmus ausgeführt wird. Neben der eigentlichen Eignung wird auch geprüft, ob eine Äquivalenzklasse bereits vollständig expandiert wurde. Falls dies der Fall ist, wird von einer weiteren Anwendung von Regeln abgesehen. Diese Funktion kann insbesondere Vorteile bei der Implementierung von neuen Regelsets bieten. Nutzt ein gegebenes Regelset die Möglichkeit nicht nur einen neuen Planknoten zu generieren, sondern gleich mehrere Planknoten zu erstellen und auch in diesem Zusammenhang bereits mehrere Kinder-Knoten zu erstellen, kann die Reihenfolge der Expansion von Äuqivalenzklassen geändert werden. Die einzelnen Äquivalenzklassen, die bereits durch eine Regel expandiert wurden, werden als solche markiert und die bisher vorhandenen Regeln werden nicht mehr ausgeführt.
 
 
 \section{Kostenschätzung und statistische Informationen}
@@ -141,7 +147,7 @@ Um alle Module, die bisher besprochen wurden zu koordinieren und um die Verarbei
 
 \subsection{Konfiguration}
 
-Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenaieren. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen. Für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
+Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
 Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON Format.
 
 Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen und Umsetzen des Konfigurationsfiles. 
@@ -152,4 +158,4 @@ Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen un
 
 \subsection{Zusammenfassung}
 
-Gerade im Bereich der Regeln ist klar zu erkennen, dass die SOLID Prinzipien eingehalten wurden. Hier ist jede Klasse nur genau für eine Aufgabe zuständig. Ein hohes Maß an Kohäsion konnte erreicht werden. Die Regelklassen  sind offen für Erweiterungen, jedoch geschlossen für Modifikationen. Dies wird insbesondere bei der Erweiterung mit Hilfe des Regelsets $GraphRuleSet$ deutlich. Auch das Liskov Substitutionsprinzip wurde eingehalten. Alle Klassen verhalten sich nach außen gleich und liefern das selbe Ergebnis, einen Planknoten, zurück. 
+Gerade im Bereich der Regeln ist klar zu erkennen, dass die SOLID Prinzipien eingehalten wurden. Hier ist jede Klasse nur genau für eine Aufgabe zuständig. Ein hohes Maß an Kohäsion konnte erreicht werden. Die Regelklassen  sind offen für Erweiterungen, jedoch geschlossen für Modifikationen. Dies wird insbesondere bei der Erweiterung mit Hilfe des Regelsets $GraphRuleSet$ deutlich. Auch das Liskov Substitutionsprinzip wurde eingehalten. Alle Klassen verhalten sich nach außen gleich und liefern dasselbe Ergebnis, einen Planknoten, zurück. 
