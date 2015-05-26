@@ -1,5 +1,5 @@
-\section{Oracle}
-\subsection{Oracle Architektur}
+\subsection{Oracle}
+\subsubsection{Oracle Architektur}
 
 
 \begin{figure}[h]
@@ -16,7 +16,7 @@ Die Oracle Architektur zur Verarbeitung von Anfragen \cite{Oracle2004Basics} (vg
 Der \ac{QO} führt bei der Verarbeitung die folgenden drei Schritte aus:
 
 \begin{itemize}
-\item Eine Menge potentieller Pläne wird basierend der SQL Anfrage selbst und Hinweisen, die durch den Nutzer eingegeben werden, generiert.
+\item Eine Menge potenzieller Pläne wird basierend der SQL Anfrage selbst und aufgrund von Hinweisen, die durch den Nutzer eingegeben werden, generiert.
 \item Der Optimierer schätzt die Kosten für jeden Plan basierend auf Kosteninformationen über die Anfrage und Storage Charakteristiken der Tabellen, Indexe und Partitionen, die durch ein Statement zugegriffen werden können.
 
 Die Kostenschätzung für den Zugriff auf entsprechende Datensätze und die Reihenfolge der Joins wird nach ihrem Verbrauch von Ressourcen wie I/O, CPU und Memory geschätzt.
@@ -29,7 +29,7 @@ Pläne mit höheren Kosten benötigen mehr Zeit zur Ausführung als Pläne mit n
 Das Ergebnis des Optimizers ist ein Plan, der zum Ausführen der Anfrage geeignet ist und als kostenoptimal eingeschätzt wird.
 
 
-\subsection{Kostenbasierte Transformation in Oracle}
+\subsubsection{Kostenbasierte Transformation in Oracle}
 
 Traditionelle Relationale Datenbank Systeme führen, wie bereits dargestellt, die Transformation von Anfragen in zwei Phasen durch: Logische und physische Phase. In der logischen Phase wird die gegebene Anfrage zuerst durch einen Rewriter angewendet, hier kommen Heueristiken oder Regeln zum Einsatz. Der traditionelle pyhsische Optimizer arbeitet mit einem einzelnen Query Block aus Restriktionen über Tabellen, Projektionen und Joins. Die Physische Optimizerungsphase befasst sich mit Access Methoden, Join Orders und join Methoden die genutzt werden, um effiziente Pläne zu erzeugen.
 
@@ -40,7 +40,7 @@ Bisher wurden zuerst Rewriter Rules angewendet und dann die Nutzung von Cost Bas
 Oracle hat die kostenbasierte Transformation, die logische Transformation und die physische Optimierung kombiniert, um den optimalen Execution Plan zu finden. Der Logische Teil des Systems teilt sich in Heueristiken und kostenbasierte Transformationen. Die kostenbasierten Trasnformatioenen funktionieren wie folgt:
 
 \begin{itemize}
-\item Transformationsalorithmen konvertieren gesamte under teil Anfrage Bäume in sequentiell gleiche Form
+\item Transformationsalgorithmen konvertieren gesamte under teil Anfrage Bäume in sequentiell gleiche Form
 \item Stae Spaces für verschiedene Transformationen
 \item State Space Search Algorithmen
 \item Möglichkeit zur Deep Copy von Anfrage Böcken und Ihrer Consitutues
@@ -56,7 +56,7 @@ Die Oracle Transformationen werden immer hintereinander angewendet. Eine Transfo
 
 
 
-\subsubsection{State Space Search Techniques}
+\subsubsubsection{State Space Search Techniques}
 Bei der Suche nach einem Plan mit Hilfe von kostenbasierender Transformation stellt sich die grundsätzliche Frage nach einem Trade-off zwischen optimalen Kosten und Execution Kosten. Die Suche nach einer Transformation lohnt sich nur dann, wenn die Kosten für die Suche nach einer besseren Transformation gemeinsam mit der Ausführung der eigentlichen Anfrage geringer ist als die bisher gefundenen Pläne.
 
 Die Frage nach diesem Problem stellt sich insbesondere, wenn eine große Menge an möglichen alternativen Plänen bestehen.. Existieren viele einzelne Objekte einer Anfrage, seien es Query Blocks, Tables join edges predikate, gibt es auch die Möglichkeit, dass viele Regeln auf die Objekte angewendet und somit viele alternative Pläne erzeugt werden können. Wenn $N$ Objekte vorhanden sind und auf diese $N$ Objekte eine Transformation $T$ angewendet wird, dann werden nur durch diese eine transformation $2^N$ verschiedene Pläne generiert. Dies Menge wächst weiter, wenn mehrere Transformationen auf die bestehenden Objekte angewendet werden können. 
@@ -70,10 +70,10 @@ chst mit der Anzahl der Trasnfromationsobjekte. Wenn die Anzahl der Transformati
 \item 
 \end{itemize}
 
-\subsubsection{Subquery Entschachtelung}
+\subsubsubsection{Subquery Entschachtelung}
 
-\subsubsection{Join Elimination}
+\subsubsubsection{Join Elimination}
 
-\subsubsection{Filter Predicate Move Around}
+\subsubsubsection{Filter Predicate Move Around}
 
-\subsubsection{Group Pruning}
+\subsubsubsection{Group Pruning}

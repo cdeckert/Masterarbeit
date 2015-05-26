@@ -1,15 +1,15 @@
-\section{Pellenkoft Rulsets}
+\subsection{Pellenkoft Rulsets}
 
 Bei der Erforschung eines Search Spaces kommen in regelbasierten \ac{QO} Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelsets zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
 
 
 
-Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt die Eingabe dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln auf alle Pläne angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
+Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt die Eingabe dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
 
 Mehrere Transformationsregeln werden gemeinsam als Regelsets bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelsets, die Pläne mehrfach generieren können und Regelsets, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat  der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelsets vorgestellt, die Duplikate bilden und ein Regelset, das duplikatsfrei ist.
 
 
-\subsection{Regelset mit Duplikaten}
+\subsubsection{Regelset mit Duplikaten}
 
 Eines der Regelsets, das zur Erzeugung eines Bushy Tree Space genutzt werden kann, ist $RS-B0$. Es besteht aus drei Regeln:
 
@@ -33,7 +33,7 @@ Ebenfalls können sich bei komplexeren Plänen     Teilpläne gleichen. Beispiel
 
 
 
-\subsection{Duplikatfreie Regelsets}
+\subsubsection{Duplikatfreie Regelsets}
 Durch die Anwendung on $RS_B0$ bzw. $RS_B1$ ist es möglich, dass Varianten des Plans erneut erzeugt werden. Dieser Gefahr trägt das Regelset RS-B2 Rechnung. Es sieht vor, dass eine Regel nur genau einmal ausgeführt und andere Regeln nur einmal pro Operator ausgeführt werden dürfen. Dieses Regelset besteht aus:
 
 
