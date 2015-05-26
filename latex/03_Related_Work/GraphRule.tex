@@ -10,7 +10,7 @@ Die Untersuchungen wurden mit dem Optimierer PyroJ durchgeführt. PyroJ ist ein 
 
 PyroJ basiert auf dem von \cite{roy2001multi} in C++ Implementierten Optimierer Pyro und wurde automatisch von C++ nach Java übersetzt. Der Optimierer Pyro wurde nach dem Vorbild des Volcano Optimizers entwickelt. Volcano wurde als Vorbild gewählt, da es sich bei Volcano um einen hoch-respektablen state-of-the-art regelbasierten Optimierer handelt, der auch die Basis von kommerziellen Datenbanksytemen wie MS SQL Server ist. Ausserdem ist Volcano, wie zuvor besprochen, hoch erweiterbar: Das Datenmodell, Executionmodell sind leicht erweiterbar, Transformationsregeln und Operatoren lassen sich hinzufügen. 
 
-\subsubsubsection{Ablauf / Reihenfolge der Planoptimierung}
+\subsubsection{Ablauf / Reihenfolge der Planoptimierung}
 Einer der Unterschiede zwischen Volcano und Pyro ist die Trennung zwsichen logical / physical Space Generation und Suche nach dem optimalen Plan. Im Gegensatz zu Volcano werden erst alle logische Pläne für einen LQDAG generiert, daraufhin werden dann alle Pläne in physische Pläne umgesetzt und basierend auf diesen Plänen der günstigste Plan ausgewählt.
 
 Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generiert für diese Plan dann alle physischen Pläne. Für diese Pläne wird dann der günstigste Plan gesucht. Die andere Pläne müssen nicht mehr im Speicher vorgehalten werden. Daraufhin kann dann der nächste logische Plan generiert werden und die Kosten des günstigsten Plans mit dem bisher günstigsten Plan verglichen werden. Der Vorteil dieses Verfahrens ist, dass gerade bei grossen Search Spaces der Plan im Speicher gehalten werden kann und suboptimale Pläne nicht länger als nötig gespeichert werden.
@@ -19,7 +19,7 @@ Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generie
 
 In der Implementierung von Volcano war vorgesehen, dass Äquivalenzknoten mehrfach vorkommen können, obwohl sie die selben Relationen repräsentieren. Dadurch war es beispielsweise möglich, dass bei einer Anfrage, die aus $(A \Join B \Join C) \cup (B \Join C \Join D)$ zwei Äquivalenzknoten für den Knoten $B \Join C$ gebildet werden, obwohl alle Teilpläne von $A \Join B$ immer äquivalent sein werden und somit kein Grund besteht die Pläne mehrfach zu berechnen.
 
-\subsubsubsection{Seperation von Enforcer und Algrothm Plan Spaces}
+\subsubsection{Seperation von Enforcer und Algrothm Plan Spaces}
 
 
 \subsubsection{Unvollständigkeit von $RS-B2$}
@@ -58,7 +58,7 @@ Die Vollständigkeit wurde auch mit Hilfe des PyroJ Optimizers geprüft. Hierbei
 
 
 
-\subsubsubsection{Vorschlag von RS-Graph}
+\subsubsection{Vorschlag von RS-Graph}
 
 \subsubsection{JOIN SETS}
 

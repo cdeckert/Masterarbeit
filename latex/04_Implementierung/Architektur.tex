@@ -1,28 +1,5 @@
-\section{Plattformentscheidung}
 
-Das Projekt wurde in c++11 implementiert. Diese Plattformentscheidung bietet eine Vielzahl an Vorteilen im Vergleich zur Implementierung in anderen Sprachen wie Java und der Java Plattform.
-
-Wie in Kapitel 2.3.1 zu sehen,sind  durch die Plattformwahl des PyroJ Optimizers einige Probleme aufgetreten. Beispielsweise kann nicht festgestellt werden, ob das Programm vollständig kompiliert ist. Die Dauer der Ausführung kann nur durch Einschalten eines bestimmten Java Runntime flags konstant gehalten werden. Außerdem kann zu jedem beliebigen Zeitpunkt die Gar-Collection ausgeführt werden, die den Prozess unterbricht und somit die Messergebnisse verfälscht.
-
-Um diesen Problemen aus dem Weg zu gehen wurde bei der Implementierung
-
-
-
-
-
-
-
-\section{Verwaltung von Relationen}
-
-Eine der grundlegenden Design-Entscheidungen ist die Repräsentation von Relationen mit Hilfe von Bitvectoren. Ein Bitvector sind mehrere Bits, die entweder $TRUE$ also $1$ oder $FALSE$ also $0$ sein können. Ist das n-te Bit eines Bitvectors gesetzt, so repräsentiert dieses Bit die n-te Relation. Beispielsweise bezeichnet der Bitvector $010000000$ die Relation mit dem Namen $1$. Mit Hilfe des Bitvectors können auch mehrere Relationen gespeichert werden $01010000000$ bezeichnet folglich die Relation mit dem Name $1$ und die Relation mit dem Namen $3$. Für die durchgeführten Berechnungen ist es nicht notwendig, dass eine Relation mit ihrem tatsächlichen Namen bekannt ist. Es reicht eine Bezeichnung mit Hilfe von Nummern aus.
-
-Vorteil für die Verwendung von Bitvectoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame JOIN Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. Dies ist besonders effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
-
-
-Für externe Systeme kann es daher notwendig sein, dass Relationsnamen mit Hilfe eines Adapers übersetzt werden. Die genau Funktionsweise eines solchen Adapters wird in diesem Kapitel genauer beschrieben.
-
-
-\section{Architektur}
+\section{Organisation und Aufbau}
 
 
 Das Projekt ist entlang der unterschiedlichen Aufgaben modular organisiert. Unter dem Dach der Anwendung finden sich vier unterschiedliche Sparten, die gemeinsam für das Ausführen des Programms verantwortlich sind: Planknoten und Äuqivalenzklassen, Regeln und Regelsets, Executoren und Services. Die genaue Zuordnung zu den jeweiligen Bereichen ist in Abb. \ref{ProjectOrga} nachvollziehbar.
@@ -38,10 +15,48 @@ Das Projekt ist entlang der unterschiedlichen Aufgaben modular organisiert. Unte
 Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Service-Bereich und insbesondere das Konfigurationsmodul sind für die konkrete Zusammenstellung der für den Test notwendigen Komponenten verantwortlich. Es entscheidet, welche Regeln zum Einsatz kommen, welcher Exector gewählt wird, welche konkreten Pläne getestet und mit Hilfe welcher Adapter die Daten ein-  bzw. ausgegeben werden. Um zu verstehen, welche Möglichkeiten das implementierte System bietet, sind die einzelnen Komponenten im Folgenden im Detail beschrieben.
 
 
+\section{Services}
+
+
+\subsection{Konfiguration}
+
+Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
+Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON Format.
+
+Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen und Umsetzen des Konfigurationsfiles. 
+
+
+\section{Adapter}
+
+\section{Regeln und Regelsets}
+
+\subsection{Regeln}
+
+\subsection{Regelsets}
+
+
+\section{Relationen, Planknoten und Äquivalenzklassen}
+
+\subsection{Verwaltung von Relationen}
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics{04_Implementierung/Bitvector.pdf}
+  \caption{Bitvekotren als Repräsentation von Relationen oder Joins}
+  \label{Bitvektor}
+\end{figure}
+
+Eine der grundlegenden Design-Entscheidungen ist die Repräsentation von Relationen mit Hilfe von Bitvektoren. Ein Bitvektor sind mehrere Bits, die entweder $TRUE$ also $1$ oder $FALSE$ also $0$ sein können. Ist das n-te Bit eines Bitvektors gesetzt, so repräsentiert dieses Bit die n-te Relation. Beispielsweise bezeichnet der Bitvektor $010000000$ die Relation mit dem Namen $1$. Mit Hilfe des Bitvektors können auch mehrere Relationen gespeichert werden $01010000000$ bezeichnet folglich die Relation mit dem Name $1$ und die Relation mit dem Namen $3$. Für die durchgeführten Berechnungen ist es nicht notwendig, dass eine Relation mit ihrem tatsächlichen Namen bekannt ist. Es reicht eine Bezeichnung mit Hilfe von Nummern aus.
+
+Vorteil für die Verwendung von Bitvektoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame JOIN Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. (vgl. Abb. \ref{Bitvector}) Dies ist besonders effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
+
+
+Für externe Systeme kann es daher notwendig sein, dass Relationsnamen mit Hilfe eines Adapers übersetzt werden. Die genau Funktionsweise eines solchen Adapters wird in diesem Kapitel genauer beschrieben.
 
 
 
-\section{Planknoten und Äquivalenzklassen}
+\subsection{Planknoten und Äquivalenzklassen}
 
 
 
@@ -54,19 +69,32 @@ Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Servi
   \label{PlanAequi}
 \end{figure}
 
-Am Beginn steht die Struktur in der Pläne gespeichert werden. Diese Struktur wird durch andere Komponenten bearbeitet und ausgewertet und stellt somit das Werkstück bei der Verarbeitung dar.
+Zu  Beginn steht die Struktur in der Pläne gespeichert werden. Diese Struktur wird durch andere Komponenten bearbeitet und ausgewertet und stellt somit das Werkstück bei der Verarbeitung dar.
 
 Ähnlich wie in anderen System kommen in der aktuellen Implementierung Äquivalenzklassen und Planknoten zum Einsatz. Äquivalenzklassen repräsentieren ein Set von unterschiedlichen, jedoch äquivalenten Planknoten. Mit Hilfe von Äquivalenzklassen und Planknoten kann die Information über alle möglichen Äquivalenten Pläne gespeichert werden. Sie können also den gesamten Search Space abbilden.
  Aufgabe eines Planknotens ist es einen Operator zu repräsentieren. Jeder Operator kann mehrere Parameter besitzen. Im konkreten Fall sind zwei Operatoren implementiert: JOINs und SCANs. Scans zeichnen sich dadurch aus, dass sie immer genau eine Relation lesen. Folglich haben Sie nur einen Parameter, um die Relation zu übergeben. Bei Joins gibt es immer genau zwei Parameter. Beide Parameter repräsentieren Datenströme, die mit Hilfe des Joins in einen gemeinsamen Datenstrom kombiniert werden.
 
 Die kleinste im System mögliche Datenstruktur ist ein Scan. Er besteht aus einer Äquivalenzklasse, die die Relation repräsentiert. Auf sie wird ein Planknoten angewendet mit dem Operator SCAN. Dieser Planknoten ist selbst wieder Teil einer Äuqivalenzklasse. Eine solche Datenstruktur ist im linken Teil der Abbildung \ref{PlanAequi} zu finden.
 
-Kombiniert man zwei dieser SCANs mit einem JOIN so erhält man die kleinste mögliche Struktur, die einen JOIN beinhaltet. Dies ist in Abb. \ref{PlanAequi} zu sehen. In diesem konkreten Fall ist noch keine Transformation auf den bestehenden Graphen angewendet worden. Es existiert also noch keine alternativen Planknoten. Eine solche Transformation könnte beispielsweise zur Folge habe, dass neben dem bisher bestehenden JOIN Knoten ein neuer JOIN Knoten erzeugt wird, der die beiden untergeordneten Relationen in umgekehrter Reihenfolge joint.
+Kombiniert man zwei dieser SCANs mit einem JOIN so erhält man die kleinste mögliche Struktur, die einen JOIN beinhaltet. Dies ist in Abb. \ref{PlanAequi} zu sehen. In diesem konkreten Fall ist noch keine Transformation auf den bestehenden Graphen angewendet worden. Es existieren also noch keine alternativen Planknoten. Eine solche Transformation könnte beispielsweise zur Folge habe, dass neben dem bisher bestehenden JOIN Knoten ein neuer JOIN Knoten erzeugt wird, der die beiden untergeordneten Relationen in umgekehrter Reihenfolge joint.
 
 
 \subsection{Konkrete Implementierung}
 
-Die Konkrete Implementierung der Äquivalenzklasse sieht vor, wie in Abb. \ref{EquivalenceClassDiagram} zu erkennen, das für jede Äquivalenzklasse die darin aggregierten Relationen sowie deren Nachbarn gespeichert wird. Ebenfalls wird der erste, letzte und kosteneffektivste Planknoten gespeichert.Außerdem kann festgehalten werden, ob eine Äquivalenzklasse bereits $explored$, also erforscht, ist. 
+Die konkrete Implementierung der Äquivalenzklasse sieht vor, wie in Abb. \ref{EquivalenceClassDiagram} zu erkennen, das für jede Äquivalenzklasse die darin aggregierten Relationen sowie deren Nachbarn gespeichert werden. Ebenfalls wird der erste, letzte und kosteneffektivste Planknoten gespeichert. Außerdem kann festgehalten werden, ob eine Äquivalenzklasse bereits $explored$, also erforscht, ist. 
+
+
+
+
+
+
+\subsection{Exektuoren}
+
+
+
+
+
+
 
 
 
@@ -145,12 +173,6 @@ Selektivität multipliziert werden. Das Produkt der Kardinalitäten repräsentie
 \section{Services}
 Um alle Module, die bisher besprochen wurden zu koordinieren und um die Verarbeitung von Daten sicherzustellen, wurden einige Service Module implementiert: Konfigurator, Stopwatch, Logging.
 
-\subsection{Konfiguration}
-
-Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
-Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON Format.
-
-Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen und Umsetzen des Konfigurationsfiles. 
 
 
 \subsubsection{}

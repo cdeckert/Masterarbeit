@@ -26,7 +26,7 @@ Pläne mit höheren Kosten benötigen mehr Zeit zur Ausführung als Pläne mit n
 \item Der Optimierer vergleicht die Kosten der Pläne und wählt den kostengünstigsten Plan aus.
 \end{itemize}
 
-Das Ergebnis des Optimizers ist ein Plan, der zum Ausführen der Anfrage geeignet ist und als kostenoptimal eingeschätzt wird.
+Das Ergebnis des Optimizers ist ein Plan, der zum Ausführen der Anfrage geeignet ist und als kosten-optimal eingeschätzt wird.
 
 
 \subsubsection{Kostenbasierte Transformation in Oracle}
@@ -56,7 +56,7 @@ Die Oracle Transformationen werden immer hintereinander angewendet. Eine Transfo
 
 
 
-\subsubsubsection{State Space Search Techniques}
+\subsubsection{State Space Search Techniques}
 Bei der Suche nach einem Plan mit Hilfe von kostenbasierender Transformation stellt sich die grundsätzliche Frage nach einem Trade-off zwischen optimalen Kosten und Execution Kosten. Die Suche nach einer Transformation lohnt sich nur dann, wenn die Kosten für die Suche nach einer besseren Transformation gemeinsam mit der Ausführung der eigentlichen Anfrage geringer ist als die bisher gefundenen Pläne.
 
 Die Frage nach diesem Problem stellt sich insbesondere, wenn eine große Menge an möglichen alternativen Plänen bestehen.. Existieren viele einzelne Objekte einer Anfrage, seien es Query Blocks, Tables join edges predikate, gibt es auch die Möglichkeit, dass viele Regeln auf die Objekte angewendet und somit viele alternative Pläne erzeugt werden können. Wenn $N$ Objekte vorhanden sind und auf diese $N$ Objekte eine Transformation $T$ angewendet wird, dann werden nur durch diese eine transformation $2^N$ verschiedene Pläne generiert. Dies Menge wächst weiter, wenn mehrere Transformationen auf die bestehenden Objekte angewendet werden können. 
@@ -70,10 +70,10 @@ chst mit der Anzahl der Trasnfromationsobjekte. Wenn die Anzahl der Transformati
 \item 
 \end{itemize}
 
-\subsubsubsection{Subquery Entschachtelung}
+\subsubsection{Subquery Entschachtelung}
 
-\subsubsubsection{Join Elimination}
+\subsubsection{Join Elimination}
 
-\subsubsubsection{Filter Predicate Move Around}
+\subsubsection{Filter Predicate Move Around}
 
-\subsubsubsection{Group Pruning}
+\subsubsection{Group Pruning}
