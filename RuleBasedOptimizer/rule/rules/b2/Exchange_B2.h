@@ -13,8 +13,8 @@
  * @tparam PlanNode_t PlanNode
  * @tparam Operations_t basic operations like join and scan
  */
-template <typename PlanNode, typename Operations_t>
-class Exchange_B2 : public Rule<PlanNode, Operations_t>
+template <typename PlanNode_t, typename Operations_t>
+class Exchange_B2 : public Rule<PlanNode_t, Operations_t>
 {
 
 
@@ -27,15 +27,21 @@ public:
 	 * @param aPlanNode a given plan node
 	 * @return true in case the rule is applicable
 	 */
-	bool isApplicable(PlanNode &aPlanNode) const override
+	bool isApplicable(PlanNode_t &aPlanNode) const override
 	{
 		// IF (A ⨝ B) ⨝ (C ⨝ D) <-> (A ⨝ D) ⨝ (C ⨝ B)
-		return aPlanNode.isExchangeEnabled() &&
-			   aPlanNode.getOperator() == JOIN &&
-			   aPlanNode.l().getOperator() == JOIN &&
-			   aPlanNode.r().getOperator() == JOIN &&
-			   aPlanNode.l().r().isOverlapping(aPlanNode.r().r());
+        return aPlanNode.getOperator() == JOIN &&
+        isApplicable(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
 	};
+    
+    bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
+    {
+        return aPlanNode.isExchangeEnabled() &&
+        aPlanNode.getOperator() == JOIN &&
+        left.getOperator() == JOIN &&
+        right.getOperator() == JOIN &&
+        left.r().isOverlapping(right.r());
+    };
 
 	/**
 	 * @brief [brief description]
@@ -44,12 +50,17 @@ public:
 	 * @param aPlanNode [description]
 	 * @return [description]
 	 */
-	PlanNode *apply(PlanNode &aPlanNode) const override
+	PlanNode_t *apply(PlanNode_t &aPlanNode) const override
 	{
-		PlanNode &pn = this->o.joinPN(* this->o.join(aPlanNode.l().l(),  aPlanNode.r().r()), * this->o.join(aPlanNode.r().l(), aPlanNode.l().r()));
-		pn.disableAllAndEnableCommutativity();
-		return & pn;
+		return apply(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
 	};
+    
+    PlanNode_t * apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right)  const override
+    {
+        PlanNode_t &pn = this->o.joinPN(* this->o.join(left.l(),  right.r()), * this->o.join(right.l(), left.r()));
+        pn.disableAllAndEnableCommutativity();
+        return & pn;
+    };
 
 };
 

@@ -17,6 +17,7 @@
 template <typename PlanNode_t, typename Operations_t>
 class CommutativityRule : public Rule<PlanNode_t, Operations_t>
 {
+    typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 public:
 	
 	/**
@@ -28,9 +29,13 @@ public:
 	 */
 	bool isApplicable(PlanNode_t & aPlanNode) const override
 	{
-		return aPlanNode.getOperator() != SCAN &&
-			aPlanNode.r().isOverlapping(aPlanNode.l());
+		return aPlanNode.hasRight() && isApplicable(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
 	}
+    bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
+    {
+        
+        return aPlanNode.getOperator() != SCAN && aPlanNode.l().isOverlapping(aPlanNode.r());
+    }
 
 
 	/**
@@ -44,8 +49,13 @@ public:
 	PlanNode_t * apply(PlanNode_t & aPlanNode) const override
 	{
     
-		return & this->o.joinPN(aPlanNode.r(), aPlanNode.l());
+		return apply(aPlanNode,* aPlanNode.r().getFirst(),* aPlanNode.l().getFirst());
 	};
+    
+    PlanNode_t * apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right)  const override
+    {
+        return & this->o.joinPN(aPlanNode.r(), aPlanNode.l());
+    }
 };
 
 

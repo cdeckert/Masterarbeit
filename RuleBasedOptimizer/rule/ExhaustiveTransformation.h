@@ -21,9 +21,9 @@ class ExhaustiveTransformation
 	typedef ExhaustiveTransformation self_type;
 
 public:
-	ExhaustiveTransformation(RuleSet_t aRuleSet)
+	ExhaustiveTransformation(RuleSet_t ruleSet)
 	{
-		_ruleset = aRuleSet;
+		_ruleset = ruleSet;
 	};
 	void apply(EquivalenceClass_t &) const;
 

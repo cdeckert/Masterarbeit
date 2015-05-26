@@ -20,6 +20,7 @@
 #include "CostEstimator.h"
 #include "Stopwatch.h"
 #include "GraphRuleSet.h"
+#include "BetterTransformation.h"
 
 template <typename PlanNode_t>
 class Executor
@@ -36,7 +37,9 @@ class Executor
 	typedef RS_B2<PlanNode_t, Operations_t> RS_B2_t;
 	typedef GraphRuleSet<PlanNode_t, Operations_t> GraphRuleSet_t;
 
-	typedef ExhaustiveTransformation<PlanNode_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
+	typedef BetterTransformation<PlanNode_t, Operations_t, Rule_t> BetterTransformation_t;
+	//typedef ExhaustiveTransformation<PlanNode_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
+	typedef BetterTransformation_t ExhaustiveTransformation_t;
 	//typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
 
 public:

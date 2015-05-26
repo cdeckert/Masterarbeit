@@ -22,16 +22,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RuleBasedOptimizer/Swap.h"
-            timestampString = "453731713.306774"
+            timestampString = "454161387.3528"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "apply(PlanNode &amp; aPlanNode)"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "apply(PlanNode_t &amp; aPlanNode)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,8 +47,24 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
             endingLineNumber = "30"
-            landmarkName = "isApplicable(PlanNode &amp; aPlanNode)"
+            landmarkName = "isApplicable(PlanNode_t &amp; aPlanNode)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RuleBasedOptimizer/rule/rules/Rule.h"
+            timestampString = "454157041.377938"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "class Rule"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -12,8 +12,8 @@
  * @tparam PlanNode_t PlanNode
  * @tparam Operations_t basic operations like join and scan
  */
-template <typename PlanNode, typename Operations_t>
-class LeftAssociativity : public Rule<PlanNode, Operations_t>
+template <typename PlanNode_t, typename Operations_t>
+class LeftAssociativity : public Rule<PlanNode_t, Operations_t>
 {
 	
 	
@@ -26,21 +26,30 @@ public:
 	 * @param aPlanNode a given plan node
 	 * @return true in case the rule is applicable
 	 */
-	bool isApplicable(PlanNode & aPlanNode) const override
+	bool isApplicable(PlanNode_t & aPlanNode) const override
 	{
 		// IF ((A ⨝ B) ⨝ C)
 		return aPlanNode.getOperator() == JOIN &&
-		aPlanNode.l().getOperator() == JOIN &&
-		aPlanNode.r().isOverlapping(aPlanNode.l().r());
+		isApplicable(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
 	};
+    
+    bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
+    {
+        return aPlanNode.getOperator() == JOIN && left.getOperator() == JOIN && aPlanNode.r().isOverlapping(left.r());
+    }
 
 	/**
 	 * @brief apply left associativity
 	 */
-	PlanNode * apply(PlanNode & aPlanNode) const override
+	PlanNode_t * apply(PlanNode_t & aPlanNode) const override
 	{
-		return & this->o.joinPN(aPlanNode.l().l(), *this->o.join(aPlanNode.l().r(), aPlanNode.r()));
-	};
+        return apply(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
+    };
+    
+    PlanNode_t * apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right)  const override
+    {
+        return & this->o.joinPN(left.l(), *this->o.join(left.r(), aPlanNode.r()));
+    };
 
 };
 
