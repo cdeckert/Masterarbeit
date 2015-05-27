@@ -155,7 +155,10 @@ public:
 	 * @return pointer to left equivalence
 	 */
 	EquivalenceClass_t & l() const;
-
+	
+	
+	void setLeft(EquivalenceClass_t * e){_left = e;};
+	void setRight(EquivalenceClass_t * e){_right = e;};
 	/**
 	 * @brief disables all rules
 	 * @details used by B2 rule set

@@ -396,6 +396,11 @@ public:
 		std::cout << "Neighborhood:	" << _neighbors << std::endl << std::endl;
 		
 	};
+	
+	bool isExplored()
+	{
+		return _explored ||(!hasPlanNodes() || getOperator() == SCAN);
+	}
 
 
 private:

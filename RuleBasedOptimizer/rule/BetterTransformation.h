@@ -47,6 +47,7 @@ public:
     
 private:
     RuleSet_t _ruleset;
+    static EquivalenceClassMap_t knownEquivalenceClasses;
 };
 
 //
@@ -54,19 +55,83 @@ private:
 //
 
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
+std::unordered_map<typename PlanNode_t::BV, typename PlanNode_t::EquivalenceClass_t, Hasher<typename PlanNode_t::BV>> BetterTransformation<PlanNode_t, Operations_t, Rule_t>::knownEquivalenceClasses;
+
+template <typename PlanNode_t, typename Operations_t, typename Rule_t>
 void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransformation<PlanNode_t, Operations_t, Rule_t>::EquivalenceClass_t &aEquivalenceClass) const
 {
-    EquivalenceClassMap_t existingEquivalenceClasses;
-    ToDoList toDoList;
-    if(aEquivalenceClass.getOperator() == JOIN)
+    
+    
+    LOG(INFO) << aEquivalenceClass.getSignature();
+    
+    typedef typename EquivalenceClass_t::Iterator EItr;
+    // insert to known map in case it doesnt exist
+    if(knownEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
     {
-        toDoList.push_back({ToDo(aEquivalenceClass, *aEquivalenceClass.getFirst(), *aEquivalenceClass.getFirst()->l().getFirst(), *aEquivalenceClass.getFirst()->r().getFirst())});
+        knownEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), aEquivalenceClass}});
     }
-    // collect to dos
-    for(ToDo & aToDo : toDoList)
+    
+    //apply transformation to children in case they are unexplored
+    for(EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
     {
-        
+        if(!eq->l().isExplored()) apply(eq->l());
+        if(eq->hasRight() && !eq->r().isExplored()) apply(eq->r());
     }
+    std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
+    for(EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
+    {
+        if(eq->hasRight())
+        {
+            knownEQSignatures.insert({{eq.node()->getSignature()}});
+            for(EItr leftItr = eq->l().begin(); leftItr.isOK(); ++ leftItr)
+            {
+                for(EItr rightItr = eq->r().begin(); rightItr.isOK(); ++rightItr)
+                {
+                    
+                    for (Rule_t *r : _ruleset.getRules())
+                    {
+                        if(r->isApplicable(* eq.node(), * leftItr.node(), * rightItr.node()))
+                        {
+                            PlanNode_t *p = r->apply(* eq.node(), * leftItr.node(), * rightItr.node());
+                            
+                            // if left or right is known
+                            if(knownEquivalenceClasses.count(p->l().getRelations()) == 0)
+                            {
+                                apply(p->l());
+                                knownEquivalenceClasses.insert({{p->l().getRelations(), p->l()}});
+                            }
+                            else
+                            {
+                                p->setLeft(& knownEquivalenceClasses.at(p->l().getRelations()));
+                            }
+                            
+                            if(knownEquivalenceClasses.count(p->r().getRelations()) == 0)
+                            {
+                                apply(p->r());
+                                knownEquivalenceClasses.insert({{p->r().getRelations(), p->r()}});
+                            }
+                            else
+                            {
+                                p->setRight(& knownEquivalenceClasses.at(p->r().getRelations()));
+                            }
+                            if(knownEQSignatures.count(p->getSignature()) == 0)
+                            {
+                                aEquivalenceClass.push_back(* p);
+                                knownEQSignatures.insert({{p->getSignature()}});
+                            }
+                            
+                            
+                        }
+                    }
+                }
+            }
+            
+                
+            
+        }
+    }
+    
+    
     
 };
 
