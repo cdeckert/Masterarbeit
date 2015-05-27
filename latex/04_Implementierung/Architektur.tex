@@ -17,16 +17,49 @@ Bei der Ausführung eines Test müssen alle Bereiche zusammenarbeiten. Der Servi
 
 \section{Services}
 
+Da für die Ausführung des Programms unterschiedliche Dienstleistungen benötigt werden, die auch in anderen Kontexten relevant sein können, fallst das Projekt diese Funktionen im Bereich Services zusammen. Teil des Bereichs ist der Konfigurator, der die Konfiguration der Tests übernimmt, die Zeitmessung und Das Logging von Informationen.
+
+Nicht alle Komponenten wurden selbst enwtickelt, beispielwesie wurde beim Logging auf die existierende Library easylogging++ gesetzt.
 
 \subsection{Konfiguration}
 
-Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien. Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, für diese einen JOIN Tree zu erstellen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
-Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON Format.
 
-Der Konfigurator des eigentlichen Projektes ist verantwortlich für das Lesen und Umsetzen des Konfigurationsfiles. 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{04_Implementierung/ScenarioGenerator.png}
+  \caption{Konfigurationstool: Scenario-Generator}
+  \label{ScenarioGenerator}
+\end{figure}
+
+Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien (vgl. Abb. \ref{ScenarioGenerator}). Mit Hilfe dieser Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem, das in  zu sehen ist, bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, Selektivitäten festzulegen und schlussendlich einen initalen Query Tree zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelsets, die geprüft werden sollen, festzulegen.
+Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON Format. Das Tool unterstützt die Erzeugung mehrerer Secenarios in einem Konfigurationsfile. So können mehrere Scenarios in einem Test-Run durchgespielt werden.
+
+Die eigentliche Konfiguration findet in C++ statt. Mit der Library json11 \cite{json11} wird das Konfigurationsfile gelesen. Für jedes Szenario und jedes Regelset wird ein initaler Baum aus Äquivalenzklassen und Planknoten mit einem JSON-Adapter gebildet. Der Exekutor wird gewählt und mit einem Regelset initialisiert. Der initiale Baum wird dem Exekutor übergeben. Nachdem die Regeln angewendet wurden, startet der Konfigurator die Kostenschätzung. Nachdem alle Szenarios abgearbeitet sind, ist das Programm beendet.
+
+\subsection{Zeitmessung}
+Wie bereits in Abb. \ref{Ablauf} dargestellt wird die Zeitmessung nach der Konfiguration gestartet. Sobald alle Pläne expandiert sind und die Kosten berechnet sind wird die Messung beendet. Um eine möglichst genaue Messung durchführen zu können, wurde die Uhr \texttt{std::chrono::steady\_clock} verwendet. Diese Uhr ist Teil von C++11. Wie in der Dokumentation \cite{cppreference_2015_clock} beschrieben handelt es sich bei der Uhr um eine monotone Uhr. Die Uhr kann nicht rückwärts laufen, solange die physische Zeit fortfährt. Die Uhr selbst mit der Wall\-Clock\-Time verbunden und ist das passende Werkzeug zur Messung von Intervallen. 
+
+Die Dauer zwischen Start der Expansion und dem Ende der Kostenberechnung wird in Nanosekunden gemessen, um ein möglichst akkurates Ergebnis zu erhalten. Die gemessenen Ergebnisse werden sowohl als Debug-Log in der Konsole ausgegeben, aber auch in einem Log File gespeichert.
+
+
+
+\subsection{Logging und Debugging}
+
+Auch zum Debugging wurde eine externe Bibliothek eingesetzt: EasyLogging++ \cite{easylogging}, ein einfach zu bedienendes jedoch hochgradig konfigurierbares Logging Instrument. Gerade die Leichtgewichtigkeit - das Tool besteht nur aus einer Headerklasse -, die einfache Bedienung und Geschwindigkeit gabem den Ausschlag zur Nutzung der Library. Mit Hilfe dieser Library werden debugging Informationen geschrieben, aber auch Zeitmessungen gespeichert, pläne ausgegeben und sonstige Debugging Nachrichten ausgegeben. Insbesondere ist die Unterscheidung zwischen unterschiedlichen Debug\-Leveln wichtig. Auf mehreren Ebenen (INFO, WARNING, DEBUG, etc.) können Informationen ausgegeen werden. Je nachdem welches Level angesprochen ist, werden nur Informationen über dieses ausgegeben. 
 
 
 \section{Adapter}
+
+Die Implementierung bietet mehrere Adapter, die zur Umwandlung von externen Formaten in eine interne Repräsentationsform oder von einer internen Repräsentationsform in ein externes Format genutzt werden können. Sie bieten die Möglichkeit andere Systeme an das bestehende System anzudocken und sorgen so für den notwendigen Anschluss und die Erweiterbarkeit durch Dritte.
+
+Insgesamt werden drei Adapter mitgeliefert. (1) JSON\-Adapter, (2) String\-Adapter, (3) DOT\-Adapter.
+
+Der Json-Adaper erlaubt des Daten im JSON Format zu importieren und wird beim einlesen des initalen Plans genutzt. Er wandelt auf Basis des Konfigurationsfiles JSON in Planknoten und Äquivalenzklassen um, die dann weiterverarbeitet werden können. Ebenfalls ist es möglich Pläne in JSON auszugeben. Zu diesem Zweck implementiert der Parser auch eine \texttt{dump} Methode.
+
+Neben dem JSON\-Adapter wird auch ein String Adapter verwendet. Er ist für die Ausgabe von Plänen als String verantwortlich. Im Gegensatz zu einem JSON\-Adapter ist die Eingabe von Plänen mit Hilfe dieses Moduls nicht möglich. Auch der DOT\-Adapter erlaubt nur die Ausgabe von Plänen im DOT\-Format. Das zur Generierung von graphischen Ausgaben verwendet werden kann.
+
+
+
 
 \section{Regeln und Regelsets}
 
@@ -52,7 +85,7 @@ Eine der grundlegenden Design-Entscheidungen ist die Repräsentation von Relatio
 Vorteil für die Verwendung von Bitvektoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame JOIN Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. (vgl. Abb. \ref{Bitvector}) Dies ist besonders effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
 
 
-Für externe Systeme kann es daher notwendig sein, dass Relationsnamen mit Hilfe eines Adapers übersetzt werden. Die genau Funktionsweise eines solchen Adapters wird in diesem Kapitel genauer beschrieben.
+Für externe Systeme kann es daher notwendig sein, dass Relationsnamen mit Hilfe eines Adapters übersetzt werden. Die genau Funktionsweise eines solchen Adapters wird in diesem Kapitel genauer beschrieben.
 
 
 
@@ -169,13 +202,6 @@ Die Kostenschätzung zur Suche des optimalen Plans geschieht bei der vorliegende
 Die Berechnung der Kardinalität findet bottom up statt. Für jede Äquivalenzklasse wird die optimale Kardinalität berechnet und gespeichert. Der Planknoten mit dessen Hilfe diese optimale Kardinalität erreicht wird, wird als bester Planknoten markiert. Folgt man dem Pfad der besten Planknoten ergibt sich der kostenoptimale Baum an Planknoten. Die Berechnung sieht vor, dass immer die Selektivität eines Operators mit dem Produkt der Kardinalität der Eingabeparameter multipliziert wird. Beispielsweise wird auf der untersten Ebene - der Ebene der Scans - für eine gegebene Relation die Kardinalität mit der Selektivität von 1 multipliziert, da die gesamte Relation verarbeitet werden muss. Bei einem Join können komplexere Situationen auftreten. Zuerst wird das Produkt der Kardinalität der Eingabe Parameter berechnet. Diese kann dann mit der 
 Selektivität multipliziert werden. Das Produkt der Kardinalitäten repräsentiert in diesem Falle die Kardinalität des möglichen Kreuzproduktes, das mit Hilfe von Selektoren eingeschränkt wird.
 
-
-\section{Services}
-Um alle Module, die bisher besprochen wurden zu koordinieren und um die Verarbeitung von Daten sicherzustellen, wurden einige Service Module implementiert: Konfigurator, Stopwatch, Logging.
-
-
-
-\subsubsection{}
 
 
 \subsection{Zusammenfassung}

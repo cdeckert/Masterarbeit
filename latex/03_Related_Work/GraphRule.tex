@@ -15,7 +15,7 @@ Einer der Unterschiede zwischen Volcano und Pyro ist die Trennung zwsichen logic
 
 Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generiert für diese Plan dann alle physischen Pläne. Für diese Pläne wird dann der günstigste Plan gesucht. Die andere Pläne müssen nicht mehr im Speicher vorgehalten werden. Daraufhin kann dann der nächste logische Plan generiert werden und die Kosten des günstigsten Plans mit dem bisher günstigsten Plan verglichen werden. Der Vorteil dieses Verfahrens ist, dass gerade bei grossen Search Spaces der Plan im Speicher gehalten werden kann und suboptimale Pläne nicht länger als nötig gespeichert werden.
 
-\subsubsubsection{Wiederverwendung von Äquivalenzknoten}
+\subsubsection{Wiederverwendung von Äquivalenzknoten}
 
 In der Implementierung von Volcano war vorgesehen, dass Äquivalenzknoten mehrfach vorkommen können, obwohl sie die selben Relationen repräsentieren. Dadurch war es beispielsweise möglich, dass bei einer Anfrage, die aus $(A \Join B \Join C) \cup (B \Join C \Join D)$ zwei Äquivalenzknoten für den Knoten $B \Join C$ gebildet werden, obwohl alle Teilpläne von $A \Join B$ immer äquivalent sein werden und somit kein Grund besteht die Pläne mehrfach zu berechnen.
 
@@ -34,7 +34,7 @@ Die Vollständigkeit von $RS-B2$, das nur jede Regel genau einmal zulässt und a
 
 
 
-\subsubsubsection{Unvollständigkeit von RS-02}
+\subsubsection{Unvollständigkeit von RS\-02}
 
 
 \begin{figure}[h]
@@ -106,11 +106,10 @@ ersetzten X und Y die bisher gezeigten Regeln des Volcano Optimizers mit einer n
 
 
 
-\subsubsubsection{}
 
 
 
-\subsubsection{Patition zu Graph}
+\subsubsection{Partition zu Graph}
 
 
 
@@ -120,7 +119,7 @@ Die Methode Partition gibt eine Menge von Partitionen zurück. Jede Partition be
 
 
 
-Das bestehende Regel-Framework von Volcano wurde von (27) mit einem neuen Regelset und einer neuen Regel erweitert. Das neue Regelset "Graph Rule soll alle bestehenden Regeln zur JOIN-Tree Enumeration ersetzen. Im Gegensatz zu den vergleichsweise ineffektiven Regelsets, die bisher bekannt waren, setzt die neue Regel auf state-of-the-art, kreuzproduktfreie Join-Enumeratoren zur Suche nach äquivalenten Plänen. Damit kombiniert die neue Regel die Vorteile eines hoch erweiterbaren Systems wie Volcano mit der Geschwindigkeit von neuartigen Join-Enumeratoren.
+Das bestehende Regel-Framework von Volcano wurde von (27) mit einem neuen Regelset und einer neuen Regel erweitert. Das neue Regelset Graph Rule soll alle bestehenden Regeln zur JOIN-Tree Enumeration ersetzen. Im Gegensatz zu den vergleichsweise ineffektiven Regelsets, die bisher bekannt waren, setzt die neue Regel auf state-of-the-art, kreuzproduktfreie Join-Enumeratoren zur Suche nach äquivalenten Plänen. Damit kombiniert die neue Regel die Vorteile eines hoch erweiterbaren Systems wie Volcano mit der Geschwindigkeit von neuartigen Join-Enumeratoren.
 
 Die neue Regel gibt nicht nur eine neue Variante des Query-Trees zurück, sondern bestimmt gleich auf einmal alle äquivalenten Pläne. Die Erweiterbarkeit des Volcano-Optimizers ermöglicht es auch eine solche komplexe, neue Regel zu implementieren.
 
@@ -159,7 +158,7 @@ Wie von \cite{shanbhag2014optimizing} beschrieben, wurde während er Performance
 Während der Performance Tests wurde festgestellt, dass sich.........
 
 
-\subsubsubsection{Probleme auf Grund der Plattformwahl}
+\subsubsection{Probleme auf Grund der Plattformwahl}
 Die Implementierung der neuen Regel wurde auf Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des von ITT Bombay entwickelten Systems Pyro, das eine Implementierung des Volcano-Frameworks ist. PyroJ, das in Java implementiert ist, entstand durch eine automatische Konvertierung des C++ Codes von Pyro. 
 
 Die Implementierung der Experimente wurde auf Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ geschriebenen Query Optimierers Pyro nach Java. Der Optimierer wurde an der IIT Bombay gebaut und ist eine Implementierung des Volcano Optimization Frameworks.
