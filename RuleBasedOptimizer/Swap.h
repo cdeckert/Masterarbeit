@@ -54,7 +54,12 @@ public:
     
     PlanNode_t * apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right)  const override
     {
-        return & this->o.joinPN(* this->o.join(left.l(), aPlanNode.r()), left.r());    };
+        return & this->o.joinPN(* this->o.join(left.l(), aPlanNode.r()), left.r());
+    };
+    std::string getName()  const override
+        {
+            return "Swap";
+        };
     
 };
 

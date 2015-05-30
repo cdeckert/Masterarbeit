@@ -53,6 +53,8 @@ public:
     {
         return & this->o.joinPN(*this->o.join(aPlanNode.l(), right.l()), right.r());
     };
+    
+    std::string getName()  const override { return "RightAssociativity.h"; };
 
 };
 

@@ -25,6 +25,11 @@ class PlanNode
 	typedef unsigned int u_int;
 	
 public:
+	struct Signature
+	{
+		Bitvector_t _left;
+		Bitvector_t _right;
+	};
 	typedef Bitvector_t BV;
 	typedef EquivalenceClass<self_type> EquivalenceClass_t;
 
@@ -83,6 +88,8 @@ public:
 	
 	inline void concat(self_type * next){ if(next != NULL) getLast().setNext(next); };
 	
+	
+	inline Signature getSignature2() const { return _signature; };
 
 	/**
 	 * @brief Accessor for the next node
@@ -212,6 +219,7 @@ private:
 	bool _leftAssociativityEnabled = true;
 	bool _rightAssociativityEnabled = true;
 	bool _exchangeEnabled = true;
+	Signature _signature;
 };
 
 //
@@ -258,6 +266,11 @@ void PlanNode<Bitvector_t>::set(Operator anOperator, EquivalenceClass_t *aLeftEC
 	_op = anOperator;
 	_left = aLeftEC;
 	_right = aRightEC;
+	_signature._left = _left->getRelations();
+	if(_right != NULL)
+	{
+		_signature._right = _right->getRelations();
+	}
 };
 
 template <typename Bitvector_t>

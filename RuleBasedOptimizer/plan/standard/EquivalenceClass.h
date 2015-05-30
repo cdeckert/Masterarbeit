@@ -174,7 +174,7 @@ public:
 	 */
 	void setRelations(Bitvector_t & aRelations)
 	{
-		_relations += aRelations;
+		_relations = _relations.union_with(aRelations);
 	}
 
 	/**
@@ -407,9 +407,9 @@ private:
 	Bitvector_t _neighbors;
 	Bitvector_t _relations;
 
-	PlanNode_t *_first;
-	PlanNode_t *_last;
-	PlanNode_t *_best;
+	PlanNode_t *_first = NULL;
+	PlanNode_t *_last = NULL;
+	PlanNode_t *_best = NULL;
 
 	bool _explored;
 
@@ -457,8 +457,8 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
 	{
 		_first = &aPlanNode;
 		_last = &aPlanNode;
-		_relations += _first->getRelations();
-		_neighbors += _first->getNeighbors();
+		_relations = _relations.union_with(_first->getRelations());
+		_neighbors = _neighbors.union_with(_first->getNeighbors());
 		_neighbors.set_to_difference(_neighbors, _relations);
 	}
 	else
@@ -466,7 +466,7 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
 		_explored = true;
 		_last->setNext(& aPlanNode.getLast());
 		_last = &aPlanNode;
-		_relations += _last->getSignature();
+		_relations = _relations.union_with(_last->getSignature());
 	}
 };
 

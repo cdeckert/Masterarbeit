@@ -14,40 +14,66 @@
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
 class BetterTransformation
 {
-    typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
-    typedef typename PlanNode_t::BV Bitvector_t;
+	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
+	typedef typename PlanNode_t::BV Bitvector_t;
+
+	typedef std::unordered_map<Bitvector_t, EquivalenceClass_t, Hasher<Bitvector_t>> EquivalenceClassMap_t;
+    typedef BitVectorSmall<uint64_t> BitvectorMax_t;
     
-    typedef std::unordered_map<Bitvector_t, EquivalenceClass_t, Hasher<Bitvector_t>> EquivalenceClassMap_t;
-    struct ToDo
-    {
-        EquivalenceClass_t & _eq;
-        PlanNode_t & _parent;
-        PlanNode_t & _left;
-        PlanNode_t & _right;
-        
-        ToDo(EquivalenceClass_t eq, PlanNode_t & parent, PlanNode_t & left, PlanNode_t & right): _eq(eq), _parent(parent), _left(left), _right(right){};
-    };
+    typedef std::unordered_map<Bitvector_t, std::unordered_set<BitvectorMax_t, Hasher<BitvectorMax_t>>, Hasher<Bitvector_t>> MapSetBitVector_t;
+
     
-    
-    typedef typename EquivalenceClass_t::Iterator Iterator;
-    typedef RuleSet<Rule_t> RuleSet_t;
-    typedef BetterTransformation self_type;
-    typedef std::vector<ToDo> ToDoList;
-    
+
+	typedef typename EquivalenceClass_t::Iterator Iterator;
+	typedef RuleSet<Rule_t> RuleSet_t;
+	typedef BetterTransformation self_type;
+
 public:
-    BetterTransformation(RuleSet_t aRuleSet)
-    {
-        _ruleset = aRuleSet;
-    }
-    void apply(EquivalenceClass_t &) const;
-    
-    
-    
-    
-    
+	BetterTransformation(RuleSet_t aRuleSet)
+	{
+		_ruleset = aRuleSet;
+		_knownEquivalenceClasses.clear();
+        _foundEquivalenceClasses.clear();
+	}
+	void apply(EquivalenceClass_t &) const;
+
+
+
+
+
 private:
-    RuleSet_t _ruleset;
-    static EquivalenceClassMap_t knownEquivalenceClasses;
+	RuleSet_t _ruleset;
+	static EquivalenceClassMap_t _knownEquivalenceClasses;
+    static MapSetBitVector_t _foundEquivalenceClasses;
+    
+    BitvectorMax_t concat(Bitvector_t a, Bitvector_t b)
+    {
+        BitvectorMax_t result;
+        result = a;
+        result << b;
+        return result;
+    }
+    
+    BitvectorMax_t signature(PlanNode_t & aPlanNode) const
+    {
+        BitvectorMax_t result;
+        Bitvector_t & left = aPlanNode.l().getRelations();
+        for(unsigned int i = 0; i < left.capacity(); ++i)
+        {
+            if(left.test(i)) result.set(i);
+        }
+        if(aPlanNode.hasRight())
+        {
+            Bitvector_t & right = aPlanNode.r().getRelations();
+            for(unsigned int i = 0; i < right.capacity(); ++i)
+            {
+                unsigned int position = i+left.capacity();
+                if(right.test(i)) result.set(position);
+            }
+        }
+        //LOG(INFO) << "Signature"<< result;
+        return result;
+    }
 };
 
 //
@@ -55,84 +81,122 @@ private:
 //
 
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
-std::unordered_map<typename PlanNode_t::BV, typename PlanNode_t::EquivalenceClass_t, Hasher<typename PlanNode_t::BV>> BetterTransformation<PlanNode_t, Operations_t, Rule_t>::knownEquivalenceClasses;
+std::unordered_map<typename PlanNode_t::BV, typename PlanNode_t::EquivalenceClass_t, Hasher<typename PlanNode_t::BV>> BetterTransformation<PlanNode_t, Operations_t, Rule_t>::_knownEquivalenceClasses;
+
+
+template <typename PlanNode_t, typename Operations_t, typename Rule_t>
+std::unordered_map<typename PlanNode_t::BV, std::unordered_set<BitVectorSmall<uint64_t>, Hasher<BitVectorSmall<uint64_t>>>, Hasher<typename PlanNode_t::BV>> BetterTransformation<PlanNode_t, Operations_t, Rule_t>::_foundEquivalenceClasses;
 
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
 void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransformation<PlanNode_t, Operations_t, Rule_t>::EquivalenceClass_t &aEquivalenceClass) const
 {
+
+
+	//LOG(INFO) << "Start\t"<<  aEquivalenceClass.getRelations();
+
+	typedef typename EquivalenceClass_t::Iterator EItr;
+	// insert to known map in case it doesnt exist
+	if (_knownEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
+	{
+		_knownEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), aEquivalenceClass}});
+	}
     
-    
-    LOG(INFO) << aEquivalenceClass.getSignature();
-    
-    typedef typename EquivalenceClass_t::Iterator EItr;
-    // insert to known map in case it doesnt exist
-    if(knownEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
+    if(_foundEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
     {
-        knownEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), aEquivalenceClass}});
+        _foundEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), {{}}}});
     }
-    
-    //apply transformation to children in case they are unexplored
-    for(EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
-    {
-        if(!eq->l().isExplored()) apply(eq->l());
-        if(eq->hasRight() && !eq->r().isExplored()) apply(eq->r());
-    }
-    std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
-    for(EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
-    {
-        if(eq->hasRight())
+    if(aEquivalenceClass.getSize() > 0)
+    _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(* aEquivalenceClass.getFirst())}});
+
+	//LOG(INFO) << "INTER\t"<<  aEquivalenceClass.getRelations();
+
+
+	
+	//LOG(INFO) << "INTER2\t"<<  aEquivalenceClass.getRelations();
+	std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
+	bool isNew = true;
+    int i = 0;
+	while (isNew)
+	{
+        //apply transformation to children in case they are unexplored
+        for (EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
         {
-            knownEQSignatures.insert({{eq.node()->getSignature()}});
-            for(EItr leftItr = eq->l().begin(); leftItr.isOK(); ++ leftItr)
+            apply(eq->l());
+            
+            //LOG(INFO) << "APPLY TO: " << eq->l().getRelations();
+            if (eq->hasRight())
             {
-                for(EItr rightItr = eq->r().begin(); rightItr.isOK(); ++rightItr)
-                {
-                    
-                    for (Rule_t *r : _ruleset.getRules())
-                    {
-                        if(r->isApplicable(* eq.node(), * leftItr.node(), * rightItr.node()))
-                        {
-                            PlanNode_t *p = r->apply(* eq.node(), * leftItr.node(), * rightItr.node());
-                            
-                            // if left or right is known
-                            if(knownEquivalenceClasses.count(p->l().getRelations()) == 0)
-                            {
-                                apply(p->l());
-                                knownEquivalenceClasses.insert({{p->l().getRelations(), p->l()}});
-                            }
-                            else
-                            {
-                                p->setLeft(& knownEquivalenceClasses.at(p->l().getRelations()));
-                            }
-                            
-                            if(knownEquivalenceClasses.count(p->r().getRelations()) == 0)
-                            {
-                                apply(p->r());
-                                knownEquivalenceClasses.insert({{p->r().getRelations(), p->r()}});
-                            }
-                            else
-                            {
-                                p->setRight(& knownEquivalenceClasses.at(p->r().getRelations()));
-                            }
-                            if(knownEQSignatures.count(p->getSignature()) == 0)
-                            {
-                                aEquivalenceClass.push_back(* p);
-                                knownEQSignatures.insert({{p->getSignature()}});
-                            }
-                            
-                            
-                        }
-                    }
-                }
+                apply(eq->r());
+                //LOG(INFO) << "APPLY TO: " << eq->r().getRelations();
             }
-            
-                
-            
         }
-    }
-    
-    
-    
+        i++;
+        
+        if(i > 1) LOG(INFO) << "RE RUN";
+        
+        
+        //LOG(INFO) << "RUN: "<< i;
+		isNew = false;
+		for (EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
+		{
+			if (eq->hasRight())
+			{
+				knownEQSignatures.insert({{eq.node()->getSignature()}});
+				for (EItr leftItr = eq->l().begin(); leftItr.isOK(); ++ leftItr)
+				{
+					for (EItr rightItr = eq->r().begin(); rightItr.isOK(); ++rightItr)
+					{
+
+						for (Rule_t *r : _ruleset.getRules())
+						{
+							if (r->isApplicable(* eq.node(), * leftItr.node(), * rightItr.node()))
+							{
+								PlanNode_t *p = r->apply(* eq.node(), * leftItr.node(), * rightItr.node());
+                                
+                                
+                                apply(p->l());
+                                if(p->hasRight())apply(p->r());
+
+								// if left or right is known
+								if (_knownEquivalenceClasses.count(p->l().getRelations()) != 0)
+								{
+									p->setLeft(& _knownEquivalenceClasses.at(p->l().getRelations()));
+								}
+                                
+								if (_knownEquivalenceClasses.count(p->r().getRelations()) != 0)
+								{
+									p->setRight(& _knownEquivalenceClasses.at(p->r().getRelations()));
+								}
+
+								//LOG(WARNING) << "SIG\t\t"<< p->getSignature();
+                                //LOG(INFO) << r->getName();
+                                if(_foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).count(signature(*p)) == 0)
+                                {
+                                    aEquivalenceClass.push_back(* p);
+                                    knownEQSignatures.insert({{p->getSignature()}});
+                                    isNew = true;
+                                    
+                                    _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(*p)}});
+
+                                }
+
+							}
+						}
+					}
+				}
+
+
+
+			}
+		}
+        
+        
+        //LOG(INFO) << "ERUN:" << i;
+	}
+	//LOG(INFO) << "END\t\t"<<  aEquivalenceClass.getRelations();
+
+
+
 };
 
 #endif

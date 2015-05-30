@@ -13,11 +13,11 @@
  * @tparam PlanNode_t PlanNode
  * @tparam Operations_t basic operations like join and scan
  */
-template <typename PlanNode, typename Operations_t>
-class LeftAssociativity_B2 : public LeftAssociativity<PlanNode, Operations_t>
+template <typename PlanNode_t, typename Operations_t>
+class LeftAssociativity_B2 : public LeftAssociativity<PlanNode_t, Operations_t>
 {
 
-
+	typedef LeftAssociativity<PlanNode_t, Operations_t> Parent_t;
 public:
 	/**
 	 * @brief checks whether or not left associativity is applicable
@@ -27,21 +27,33 @@ public:
 	 * @param aPlanNode a given plan node
 	 * @return true in case the rule is applicable
 	 */
-	bool isApplicable(PlanNode &aPlanNode) const override
+	bool isApplicable(PlanNode_t &aPlanNode) const override
 	{
 		// IF ((A ⨝ B) ⨝ C)
-		return aPlanNode.getOperator() == JOIN &&
-			   aPlanNode.l().getOperator() == JOIN &&
-			   aPlanNode.r().isOverlapping(aPlanNode.l().r());
+		return aPlanNode.isLeftAssociativityEnabled() && Parent_t::isApplicable(aPlanNode);
+	};
+	
+	bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
+	{
+		// IF ((A ⨝ B) ⨝ C)
+		return aPlanNode.isLeftAssociativityEnabled() && Parent_t::isApplicable(aPlanNode, left, right);
 	};
 
 	/**
 	 * @brief apply left associativity
 	 */
-	PlanNode *apply(PlanNode &aPlanNode) const override
+	PlanNode_t *apply(PlanNode_t &aPlanNode) const override
 	{
-		return this->o.joinPN(aPlanNode.l().l(), *this->o.join(aPlanNode.l().r(), aPlanNode.r())).disableAllAndEnableCommutativity();
+		return Parent_t::apply(aPlanNode)->disableAllAndEnableCommutativity();
 	};
+	
+	
+	PlanNode_t *apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
+	{
+		return Parent_t::apply(aPlanNode, left, right)->disableAllAndEnableCommutativity();
+	};
+	
+	std::string getName()  const override { return "LeftAssociativity_B2"; };
 
 };
 

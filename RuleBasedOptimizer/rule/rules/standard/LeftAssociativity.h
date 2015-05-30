@@ -50,6 +50,8 @@ public:
     {
         return & this->o.joinPN(left.l(), *this->o.join(left.r(), aPlanNode.r()));
     };
+    
+    std::string getName()  const override { return "LeftAssociativity"; };
 
 };
 

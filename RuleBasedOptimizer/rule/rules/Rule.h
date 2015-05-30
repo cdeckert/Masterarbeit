@@ -32,6 +32,7 @@ public:
     virtual bool isApplicable(PlanNode_t &, PlanNode_t &, PlanNode_t &) const = 0;
 	virtual PlanNode_t *apply(PlanNode_t &) const = 0;
     virtual PlanNode_t *apply(PlanNode_t &, PlanNode_t &, PlanNode_t &) const = 0;
+    virtual std::string getName() const = 0;
 
 protected:
 	Operations_t &o;

@@ -52,7 +52,7 @@ std::string StringAdaptor<PlanNode_t>::getBestPlan(EquivalenceClass_t *input)
 	else
 	{
 		std::string result = "";
-		//result = input->getBest().getOperatorAsString() + "(" + getBestPlan(&input->getBest().l());
+		result = input->getBest().getOperatorAsString() + "(" + getBestPlan(&input->getBest().l());
 		if (input->getBest().hasRight())
 		{
 			result += "," + getBestPlan(&input->getBest().r());

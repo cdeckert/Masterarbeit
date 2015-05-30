@@ -9,6 +9,7 @@
 #include "Rule.h"
 #include "Commutativity.h"
 #include "Swap.h"
+#include "LeftAssociativity.h"
 
 
 /**
@@ -27,6 +28,7 @@ class RS_B1 : public RuleSet<Rule<PlanNode_t, Operations_t>>
 	typedef RuleSet<Rule_t> RuleSet_t;
 	typedef CommutativityRule<PlanNode_t, Operations_t> Commutativity_t;
 	typedef Swap<PlanNode_t, Operations_t> Swap_t;
+    typedef LeftAssociativity<PlanNode_t, Operations_t> LeftAssociativity_t;
 
 public:
 	RS_B1() : RuleSet<Rule_t>()

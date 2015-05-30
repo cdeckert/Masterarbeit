@@ -56,6 +56,8 @@ public:
     {
         return & this->o.joinPN(aPlanNode.r(), aPlanNode.l());
     }
+    
+    std::string getName()  const override { return "Commutativity"; };
 };
 
 

@@ -61,6 +61,8 @@ public:
         pn.disableAllAndEnableCommutativity();
         return & pn;
     };
+    
+    std::string getName()  const override { return "Exchange_B2"; };
 
 };
 
