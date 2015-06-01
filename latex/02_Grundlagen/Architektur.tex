@@ -36,7 +36,7 @@ Eine solche Anfrage kann entweder an ein \ac{QI} oder an ein \ac{QC} System übe
 Der \ac{CTS} sieht mehrere Verarbeitungsschritte vor (vgl. Abb. \ref{DBMS_Interpreter}). Zuerst wird die Anfrage in einen abstrakten Syntaxbaum umgewandelt. Dieser Synaxbaum wird mit Hilfe von Normalisierung, Faktorisierung, semantischer Analyse und Übersetzung (nfst) in eine interne Repräsentationsform gebracht. Diese interne Repräsentation wird an den Anfragenoptimierer übergeben, der zuerst mit einem ersten Rewriter die Anfrage einer Bearbeitung unterzieht. Views werden aufgelöst und zusammengeführt, verschachtelte Anfragen werden entschachtelt und neue Prädikate werden abgeleitet. Im nächsten Schritt wird diese veränderte Anfrage an den Plan Generator übergeben. Er ist verantwortlich für das Finden des günstigsten \ac{QEP}. Teil dieser Optimierung ist beispielsweise das Join Ordering. Im letzten Schritt des \ac{QO} wird die Anfrage nochmals durch einen Query Rewriter verändert. Basierend auf diesem Code kann der finale Code generiert werden, der dem \ac{RTS} als Input für die Ausführung einer Anfrage dient.
 
 
-Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich ist, benötigt um seine Aufgabe zu erfüllen,drei Komponenten \cite{chaudhuri1998overview}: 
+Der Plan Generator, der für die Suche nach dem günstigsten Plan verantwortlich ist, benötigt um seine Aufgabe zu erfüllen, drei Komponenten \cite{chaudhuri1998overview}: 
 
 \begin{itemize}
 \item einen Raum von Plänen (Search Space), aus denen der beste Plan ausgewählt werden kann,

@@ -4,27 +4,27 @@ Die von Pellenkoft et al. entwickelten Regelsets, dienen als Grundlage für rege
 
 Die Untersuchungen wurden mit dem Optimierer PyroJ durchgeführt. PyroJ ist ein Optimierer, der basiernd auf Pyro \cite{roy2001multi} erstellt wurde und 
 
- Genau diese Regelsets wurden bzgl. ihrer Geschwindigkeit und Vollständigkeit von \cite{shanbhag2014optimizing} genauer unter die Lupe genommen. Mit Hilfe des Optimierers PyroJ \cite{roy2001multi} geprüft in wie wiet das Regelset RS-B2 unvollständig ist und wie das neue Regelset im Gegensatz zu den bestehenden performt.
+ Genau diese Regelsets wurden bzgl. ihrer Geschwindigkeit und Vollständigkeit von \cite{shanbhag2014optimizing} genauer unter die Lupe genommen. Mit Hilfe des Optimierers PyroJ \cite{roy2001multi} geprüft in wie weit das Regelset RS-B2 unvollständig ist und wie das neue Regelset im Gegensatz zu den bestehenden performt.
 
 \subsubsection{Implementierung von PyroJ}
 
-PyroJ basiert auf dem von \cite{roy2001multi} in C++ Implementierten Optimierer Pyro und wurde automatisch von C++ nach Java übersetzt. Der Optimierer Pyro wurde nach dem Vorbild des Volcano Optimizers entwickelt. Volcano wurde als Vorbild gewählt, da es sich bei Volcano um einen hoch-respektablen state-of-the-art regelbasierten Optimierer handelt, der auch die Basis von kommerziellen Datenbanksytemen wie MS SQL Server ist. Ausserdem ist Volcano, wie zuvor besprochen, hoch erweiterbar: Das Datenmodell, Executionmodell sind leicht erweiterbar, Transformationsregeln und Operatoren lassen sich hinzufügen. 
+PyroJ basiert auf dem von \cite{roy2001multi} in C++ Implementierten Optimierer Pyro und wurde automatisch von C++ nach Java übersetzt. Der Optimierer Pyro wurde nach dem Vorbild des Volcano Optimizers entwickelt. Volcano wurde als Vorbild gewählt, da es sich bei Volcano um einen hoch-respektablen state-of-the-art regelbasierten Optimierer handelt, der auch die Basis von kommerziellen Datenbanksytemen wie MS SQL Server ist. Außerdem ist Volcano, wie zuvor besprochen, hoch erweiterbar: Das Datenmodell, Executionmodell sind leicht erweiterbar, Transformationsregeln und Operatoren lassen sich hinzufügen. 
 
 \subsubsection{Ablauf / Reihenfolge der Planoptimierung}
-Einer der Unterschiede zwischen Volcano und Pyro ist die Trennung zwsichen logical / physical Space Generation und Suche nach dem optimalen Plan. Im Gegensatz zu Volcano werden erst alle logische Pläne für einen LQDAG generiert, daraufhin werden dann alle Pläne in physische Pläne umgesetzt und basierend auf diesen Plänen der günstigste Plan ausgewählt.
+Einer der Unterschiede zwischen Volcano und Pyro ist die Trennung zwischen logical / physical Space Generation und Suche nach dem optimalen Plan. Im Gegensatz zu Volcano werden erst alle logische Pläne für einen LQDAG generiert, daraufhin werden dann alle Pläne in physische Pläne umgesetzt und basierend auf diesen Plänen der günstigste Plan ausgewählt.
 
-Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generiert für diese Plan dann alle physischen Pläne. Für diese Pläne wird dann der günstigste Plan gesucht. Die andere Pläne müssen nicht mehr im Speicher vorgehalten werden. Daraufhin kann dann der nächste logische Plan generiert werden und die Kosten des günstigsten Plans mit dem bisher günstigsten Plan verglichen werden. Der Vorteil dieses Verfahrens ist, dass gerade bei grossen Search Spaces der Plan im Speicher gehalten werden kann und suboptimale Pläne nicht länger als nötig gespeichert werden.
+Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generiert für diesen Plan dann alle physischen Pläne. Für diese Pläne wird dann der günstigste Plan gesucht. Die anderen Pläne müssen nicht mehr im Speicher vorgehalten werden. Daraufhin kann dann der nächste logische Plan generiert werden und die Kosten des günstigsten Plans mit dem bisher günstigsten Plan verglichen werden. Der Vorteil dieses Verfahrens ist, dass gerade bei großen Search Spaces der Plan im Speicher gehalten werden kann und suboptimale Pläne nicht länger als nötig gespeichert werden.
 
 \subsubsection{Wiederverwendung von Äquivalenzknoten}
 
-In der Implementierung von Volcano war vorgesehen, dass Äquivalenzknoten mehrfach vorkommen können, obwohl sie die selben Relationen repräsentieren. Dadurch war es beispielsweise möglich, dass bei einer Anfrage, die aus $(A \Join B \Join C) \cup (B \Join C \Join D)$ zwei Äquivalenzknoten für den Knoten $B \Join C$ gebildet werden, obwohl alle Teilpläne von $A \Join B$ immer äquivalent sein werden und somit kein Grund besteht die Pläne mehrfach zu berechnen.
+In der Implementierung von Volcano war vorgesehen, dass Äquivalenzknoten mehrfach vorkommen können, obwohl sie die selben Relationen repräsentieren. Dadurch war es beispielsweise möglich, dass bei einer Anfrage, die aus $(A \Join B \Join C) \cup (B \Join C \Join D)$ zwei Äquivalenzknoten für den Knoten $B \Join C$ gebildet werden, obwohl alle Teilpläne von $A \Join B$ immer äquivalent sein werden und somit kein Grund besteht, die Pläne mehrfach zu berechnen.
 
-\subsubsection{Seperation von Enforcer und Algrothm Plan Spaces}
+\subsubsection{Seperation von Enforcer und Algorithm Plan Spaces}
 
 
 \subsubsection{Unvollständigkeit von $RS-B2$}
 
-Die Vollständigkeit von $RS-B2$, das nur jede Regel genau einmal zulässt und andere Regeln nach der Ausführung ausschliesst, ist nicht unbedingt 
+Die Vollständigkeit von $RS-B2$, das nur jede Regel genau einmal zulässt und andere Regeln nach der Ausführung ausschließt, ist nicht unbedingt 
 
 \subsubsection{Implementierung von $RS-B1$ und $RS-B2$}
 
@@ -67,7 +67,7 @@ Ein Base Equivalence Knoten in einem expandierten LQDAG ist ein Äquivalenzknote
 
 Ein Join Tree ist in einem expandierten LQDAG ein Baum in der LQDAG dessen Wurzel ein Äuqivalenzknoten und jeder interne Knoten entweder ein Äquivalenzknoten oder ein Join Operator und jeder untergeordneter Knoten ein Äuqivalenzknoten ist.
 
-Der Maximale JOIN Tree ist in einem expandierten LQDAG ein Join Tree, bei dem jeder Leaf knoten ein Base Equivalence Node ist.
+Der Maximale JOIN Tree ist in einem expandierten LQDAG ein Join Tree, bei dem jeder Leaf Knoten ein Base Equivalence Node ist.
 
 Ein Join-Set für einen Äquivalenzknoten E ist in einem expandierten LQDAG ein Paar $J = (S, P)$ bei dem S ein Set von Äquivalenzknoten ist, deren 
 
@@ -76,23 +76,23 @@ Neben den bereits etablierten Regeln wird eine neue Regel für den Volcano Optim
 
 Die Regel \emph{RS-Graph} verwendet dazu die Subroutine $GraphRule$. Sie wird auf den Join Tree angewendet, falls die beiden mit einem Operator verbundenen Knoten A und B und deren Mitterknoten $P$. Für jedes Paar der J %\emph{equivalence nodes A,B and parent equivalence node P. For each pair of join-set (jsA,jsB) ∈ A.JoinSets∗B.JoinSets, we merge the pair to form a join-set js. We define the merge of the two join-sets jsA = (V1,P1) and jsB = (V2,P2) as (V1∪V2,P1 ∧P2).}
 
-Um wiederholte Berechnungen des selben Join TRees zu vermeiden wird zudem geprüft, ob der Eltern-Äquivalenzknoten bereits $js$ beinhaltet. $$To check if two join- sets at an equivalence node are equal, it is sufficient to check if they have same equivalence nodes. If the join-sets have the same equivalence nodes, then they will also have the same predicates.$$
+Um wiederholte Berechnungen des selben Join Trees zu vermeiden wird zudem geprüft, ob der Eltern-Äquivalenzknoten bereits $js$ beinhaltet. $$To check if two join- sets at an equivalence node are equal, it is sufficient to check if they have same equivalence nodes. If the join-sets have the same equivalence nodes, then they will also have the same predicates.$$
 
 Für alle Join Sets $js$ des Parent nodes werden daraufhin zuerst alle JOIN partitionen gebildet bei denen $S_1 \Join S_2$ mit 
 
-Sollte der $js$ noch nicht existieren, wird dieser dem JOIN Set hinzugefügt. Ein Graph wird basierend auf den $js$ gebildet, der mit Hilfe der Methode Partition in alle Partitionen getrennt wird. Aus denen wiederum Bäume erstellt werden, die an das Resultat zurückgegeben werden.
+Sollte der $js$ noch nicht existieren, wird dieser dem JOIN Set hinzugefügt. Ein Graph wird basierend auf den $js$ gebildet, der mit Hilfe der Methode Partition in alle Partitionen getrennt wird. Aus denen werden wiederum Bäume erstellt, die an das Resultat zurückgegeben werden.
 
 Die SubRoutine Create Graph, gibt ein JOIN Set, das JS einen Join Graphen aus, der
 
 
 
 
-\subsubsection{Discussion}
-Die Implementierung der neuen Regel wurde in einem Java basierten regelbasierten Optimierer implementiert. Dieser Optimierer \"ProtoJ\" ist eine Übersetzung des Optimierers Proto aus C++ in Java. Für die Implementierung mussten neue Felder den Äquivalenzklassen hinzugefügt werden.
+\subsubsection{Diskussion}
+Die Implementierung der neuen Regel wurde in einem Java basierten regelbasierten Op den Äquivalenzklassen neue Felder hinzugefügt werden.
 
 Die Generierung der Resultate findet ohne Pruning statt und Kosten für die Kostenberechnung werden nicht einbezogen. Ebenfalls bleiben Regeln bestehen, die für denn SELECT Pushdown verantwortlich sind, als Teil der Normalisierungsphase. 
 
-Es wurden sowohl Star, Chain als auch Clique Queries getestet. Die Experimente fanden auf einem Intel i5 3.5 GHz mit 8 GB Ram statt. Es wurde festgestellt, dass die Geschwindigkeit der Optimierung verbessert werden konnte, dadurch, dass die Optimierung mehrfach durchgeführt wurde. Dieses Verhalten wurde auf Javas JIT Kompilierungsstrategie zurückgeführt, die erst den Code Kompiliert, wenn er auch tatsächlich gebraucht wird. Um sicherzustellen, dass der Kompilierte Code nicht wieder während der Ausführung vergessen wird mussten spezielle Flags für die JVM gesetzt werden. Das Ergebnis war, dass die Dauer zwar verglichen zu den schnellsten Test ohne das Flag langsamer, aber dafür konstant blieb.
+Es wurden sowohl Star, Chain als auch Clique Queries getestet. Die Experimente fanden auf einem Intel i5 3.5 GHz mit 8 GB Ram statt. Es wurde festgestellt, dass die Geschwindigkeit der Optimierung verbessert werden konnte, dadurch, dass die Optimierung mehrfach durchgeführt wurde. Dieses Verhalten wurde auf Javas JIT Kompilierungsstrategie zurückgeführt, die erst den Code Kompiliert, wenn er auch tatsächlich gebraucht wird. Um sicherzustellen, dass der Kompilierte Code nicht wieder während der Ausführung vergessen wird, mussten spezielle Flags für die JVM gesetzt werden. Das Ergebnis war, dass die Dauer zwar verglichen zu den schnellsten Tests ohne das Flag langsamer, aber dafür konstant blieb.
 
 Ebenfalls wurde bei Ruleset $RS_B1$ geprüft, ob der gesamte Search Space erreicht wurde, indem die Anzahl der Äquivalenten Knoten und Operatoren im LQDAG gezählt wurden. Diese Zahl wurde mit der Zahl der Knoten in RS-Graph verglichen. Da beide Zahlen gleich waren, wird davon ausgegangen, dass beide Regelsets das selbe Ergebnis erzeugen. Eine Prüfung, die dies belegt fand aus technischen Gründen nicht statt.
 
@@ -101,7 +101,7 @@ Ebenfalls wurde bei Ruleset $RS_B1$ geprüft, ob der gesamte Search Space erreic
 
 
 
-ersetzten X und Y die bisher gezeigten Regeln des Volcano Optimizers mit einer neuen Transformationsregel: RS-Graph. Die Regel kommt zur Anwendung, falls ein Graph dem Pattern $E_1 \Join E_2$ entspricht. Ist dies der Fall wird die Funktion $GraphRule(\Join, E_1, E_2, parent)$ aufgerufen. Sie erzeugt ein Set von allen Join Operatoren unter dem Equivalenzklasse des $parent$-Knotens.
+Ersetzten X und Y die bisher gezeigten Regeln des Volcano Optimizers mit einer neuen Transformationsregel: RS-Graph. Die Regel kommt zur Anwendung, falls ein Graph dem Pattern $E_1 \Join E_2$ entspricht. Ist dies der Fall wird die Funktion $GraphRule(\Join, E_1, E_2, parent)$ aufgerufen. Sie erzeugt ein Set von allen Join Operatoren unter dem Äquivalenzklasse des $parent$-Knotens.
 
 
 
@@ -119,7 +119,7 @@ Die Methode Partition gibt eine Menge von Partitionen zurück. Jede Partition be
 
 
 
-Das bestehende Regel-Framework von Volcano wurde von (27) mit einem neuen Regelset und einer neuen Regel erweitert. Das neue Regelset Graph Rule soll alle bestehenden Regeln zur JOIN-Tree Enumeration ersetzen. Im Gegensatz zu den vergleichsweise ineffektiven Regelsets, die bisher bekannt waren, setzt die neue Regel auf state-of-the-art, kreuzproduktfreie Join-Enumeratoren zur Suche nach äquivalenten Plänen. Damit kombiniert die neue Regel die Vorteile eines hoch erweiterbaren Systems wie Volcano mit der Geschwindigkeit von neuartigen Join-Enumeratoren.
+Das bestehende Regel-Framework von Volcano wurde von \cite{shanbhag2014optimizing} mit einem neuen Regelset und einer neuen Regel erweitert. Das neue Regelset Graph Rule soll alle bestehenden Regeln zur JOIN-Tree Enumeration ersetzen. Im Gegensatz zu den vergleichsweise ineffektiven Regelsets, die bisher bekannt waren, setzt die neue Regel auf state-of-the-art, kreuzproduktfreie Join-Enumeratoren zur Suche nach äquivalenten Plänen. Damit kombiniert die neue Regel die Vorteile eines hoch erweiterbaren Systems wie Volcano mit der Geschwindigkeit von neuartigen Join-Enumeratoren.
 
 Die neue Regel gibt nicht nur eine neue Variante des Query-Trees zurück, sondern bestimmt gleich auf einmal alle äquivalenten Pläne. Die Erweiterbarkeit des Volcano-Optimizers ermöglicht es auch eine solche komplexe, neue Regel zu implementieren.
 
@@ -137,14 +137,12 @@ Die neue Regel wird in drei Schritten umgesetzt. Zuerst werden die Subtrees best
 
 
 
-Um die Funktion der neuen Regel im Detail zu beschreiben führt \cite{shanbhag2014optimizing} eine Reihe neuer Begriffe für einen Baum ein:
-
-\begin{itemize}
+Um die Funktion der neuen Regel im Detail zu beschreiben, führt \cite{shanbhag2014optimizing} eine Reihe neuer Begriffe für einen Baum ein:
 \item $Base Equivalence Node$: dieser Knoten bezeichnet einen Äuqivalenzknoten, der keine JOIN-Operatoren als dessen Kinder besitzt.
 \item $Join Equivalence Node$: dieser Begriff bezeichnet einen Äquivalenzknoten, der mindestens eine JOIN Operation untergeordnet hat.
 \item $Maximal Join Tree$: Dieser Baum ist ein Baum, der entweder Äquivalenzknoten oder einen JOIN Operator untergeordnet hat.
 \item Ein $Maximal join Tree$ ist ein Baum, dessen Kinder immer EuqivalenceNodes sind.
-\item Ein $Join Set$ für einen Äquivalenzknoten E ist ein Paar $J = (V, P)$ bei dem $V$ ein Set von äquivalenknoten ist und deren Kinder seine 
+\item Ein $Join Set$ für einen Äquivalenzknoten E ist ein Paar $J = (V, P)$ bei dem $V$ ein Set von Äquivalenknoten ist und deren Kinder seine 
 \end{itemize}
 
 
