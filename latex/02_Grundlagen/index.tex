@@ -32,8 +32,20 @@ In diesem Teil werden die theoretischen Grundlagen gelegt. Die Architektur eines
 
 \section{Datenbanksystme und Anfrageoptimierer}
 
-\subsection{Historischer Überblick}
-Der Grundstein für Anfragenoptimierung wurde durch System R gelegt. Das System beinhaltet einen Algorithmus, der mit Hilfe von dynamischer Programmierung, eine optimale Join Order für eine Anfrage bildet. Das System prägte auch das Konzept der Interesting orders for exploiting available ordering. Bei späteren Systemen  wurde die Menge der optimierten Operatoren weiter vergrößert und regelbasierte Optimierungstechiken eingeführt. Ein Beispiel für dieses Systeme ist Starburst, das im Folgenden weiter besprochen wird. Es ist die Weiterentwicklung von System R bei IBM und ist der Prototyp für DB2. Starburst begann mehrere interne Repräsentationen der Anfrage einzuführen genauso wie Grammer-like Regeln zur Kombination von LOLEPOPs in Execution Plans. Ähnlich wie System R nutzt es einen Buttom-up Approach. Eine andere Familie an Optimierern fußt auf der Arbeit an EXODUS, aus dem Volcano und schließlich Cascades entstand. Im Gegensatz zu dem Bottom-up approach nutzt Voplcano einen Transformaiven Top down optimierungs Ansatz mit Memorization. 
+Der Grundstein für Anfragenoptimierung wurde durch System R gelegt. Das System beinhaltet einen Algorithmus, der mit Hilfe von dynamischer Programmierung, eine optimale Join Order für eine Anfrage bildet. Bei späteren Systemen  wurde die Menge der optimierten Operatoren weiter vergrößert und regelbasierte Optimierungstechniken eingeführt. Ein Beispiel für dieses Systeme ist Starburst, das im Folgenden weiter besprochen wird. Es ist die Weiterentwicklung von System R bei IBM und ist der Prototyp für DB2. Starburst begann mehrere interne Repräsentationen der Anfrage einzuführen genauso wie Grammer-like Regeln zur Kombination von LOLEPOPs in Execution Plans. Ähnlich wie System R nutzt es einen Buttom-up Approach bei der Enumeration. Eine andere Familie an Optimierern fußt auf der Arbeit an EXODUS, aus dem Volcano und schließlich Cascades entstand. Im Gegensatz zu dem Bottom-up Approach nutzt Volcano einen Transformaiven Top down Optimierungsansatz mit Memorization.
+
+
+Eine Übersicht über die unterschiedlichen Systeme findet sich in \ref{DatabasesOverview}.
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+{\bf }                & {\bf System R} & {\bf Starburst} & {\bf Volcano} & {\bf Pyro(J)} \\ \hline
+{\bf Transformation}  &                &                 &               &               \\ \hline
+{\bf Enumeration}     &                &                 &               &               \\ \hline
+{\bf Erweiterbarkeit} &                &                 &               &               \\ \hline
+\end{tabular}
+\label{DatabasesOverview}
+\end{table}
 
 
 \input{03_Related_Work/SystemR.tex}
@@ -42,6 +54,8 @@ Der Grundstein für Anfragenoptimierung wurde durch System R gelegt. Das System 
 \input{03_Related_Work/Oracle.tex}
 
 \section{Regelsets und Regelerweiterungen}
+
+Regeln und Regelsets, die zum Join-Ordering 
 \input{03_Related_Work/Pellenkoft_RuleSet.tex}
 \input{03_Related_Work/GraphRule.tex}
 

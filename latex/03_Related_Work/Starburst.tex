@@ -1,6 +1,6 @@
 \subsection{Das Starburst Project}
 
-Das Starburst Projekt \cite{lohman1988Starbust}, \cite{haas1989extensible}, vorangetrieben und entwickelt von IBM,  startete unter der Prämisse, dass bestehende DBMSe nicht in der Lage sind den wachsenden Anforderungen von verschiedenen, neuartigen Applikationen vollumfänglich zu entsprechen. Zur Erfüllung der individuellen Ansprüche wurde das Starburst Projekt begonnen. Sein Ziel ist es dem \ac{DBI} die Möglichkeit zu geben, die relationale Datenbank zu erweitern und so die Bedürfnisse von spezifischen Anwendungen zu erfüllen. Beispielsweise ist es möglich, neue Zugriffs- und Speichermethoden zu implementieren oder neue Join Methoden zu erstellen. Um diese Features zu ermöglichen, stellt Starbust eine Anfragesprache, einen regelbasierten Optimierer, Query Rewriter und ein Ausführungssystem basierend auf relationaler Algebra zur Verfügung.
+Das Starburst Projekt \cite{lohman1988Starbust}, \cite{haas1989extensible}, vorangetrieben und entwickelt von IBM,  startete unter der Prämisse, dass bestehende DBMSe nicht in der Lage sind den wachsenden Anforderungen von verschiedenen, neuartigen Applikationen vollumfänglich zu entsprechen. Zur Erfüllung der individuellen Ansprüche wurde das Starburst Projekt begonnen. Sein Ziel ist es dem \ac{DBI} die Möglichkeit zu geben, die relationale Datenbank zu erweitern und so die Bedürfnisse von spezifischen Anwendungen zu erfüllen. Beispielsweise ist es möglich, neue Zugriffs- und Speichermethoden zu implementieren oder neue Join Methoden zu erstellen. Um diese Features zu ermöglichen, stellt Starbust eine Anfragesprache (Hydrogen), einen regelbasierten Optimierer, Query Rewriter und ein Ausführungssystem basierend auf relationaler Algebra zur Verfügung.
 
 
 \subsubsection{Ausführung einer Anfrage}
@@ -60,27 +60,5 @@ Der Plan Optimierer selbst ist regelbasiert nutzt aber nicht den transformierend
 
 Der \ac{STAR} definiert ein bekanntes parametrisiertes Objekt. Es besteht aus einer Bedingung zur Anwendbarkeit und einer Definition  eines Plans. Ist ein STAR auf einen Teilplan anwendbar, wird dieser STAR an dieser Stelle referenziert. Der Plan selbst hat einen rootSTAR als Startpunkt. Mit Hilfe der STARs innerhalb des \ac{QGM}s ist eine Grammatik mit deren Hilfe alternative Pläne zu finden sind. 
 
-Der Plan Optimierer generiert basierend auf einem QGM mehrere alternative Query Evaluation Plans (QEPs). Für jeden dieser QEPs werden die Kosten geschätzt und der günstigste für die Weiterverarbeitung ausgewählt. Um die Erweiterbarkeit des Optimierers zu gewährleisten wurden die drei Komponenten (Plangenerierung, Kostenschätzung und Suchstrategie) von einander soweit getrennt, dass sie einzeln erweitert und verändert werden können. 
+Bei der Zusammensetzung von verschiedenen alternativen Plänen kommt ein Gluemechanismus zu Einsatz. Er verhindert, dass die Anzahl der Alternativen die in Plänen vorkommen vervielfacht werden. So entstehen uas GQMs QEPs deren Kosten geschätzt werden können.
 
-\subsubsection{Starburst Plan Generator}
-\emph{HIER ÜBERARBEITEN}
-Der Plangenerator des Starburst Projekts, der für die Generierung von Planalternativen verantwortlich ist, bedient sich eines "Build Block"-Ansatzes[Lohm88] und einem Regelset, das auf einer eigenen Grammatik basiert.  
-
-Als Build Block werden Low-Level-Datenbankoperationen (wie Access, Join und Sort) zu High-Level Operationen kombiniert. Diese können wiederverwendet werden. Dank des Konzepts der Build Blocks ist es möglich die Erstellung und Verarbeitung in zwei wesentlichen Aspekten zu vereinfachen:
-
-
-\begin{enumerate}
-
-
-\item Die Regeln sind leichter von einem DBI zu lesen und zu verstehen, da die Fülle an Information mit Hilfe von Build Blocks aggregiert wurde.
-
-\item Das Ausführen von Regeln wird effizienter, da nicht mehr ganze Graphen nach Pattern durchsucht werden müssen, sondern direkt über Build Blocks erkannt werden. Dadurch erleichtert sich die Ausführung. Ebenfalls ist es dank der Nutzung von Macro-Expandern möglich, die Geschwindigkeit zu verbessern.
-
-
-\end{enumerate}
-
-
-$$TEXT$$
-Jede Regel erlaubt es, dass aus ihr sowohl eine,  als auch mehrere Graphen entstehen können. In diesem Falle spricht man von Sets von Alternativen Plänen (SAP).
-
- 

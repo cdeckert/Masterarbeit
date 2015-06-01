@@ -5,7 +5,7 @@ System R ist ein von IBM in den 1970er Jahren durchgeführtes Datenbank Research
 
 \subsubsection{Architektur und Systemstruktur}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics{03_Related_Work/SystemR.pdf}
   \caption{System R Architektur \cite{astrahan1976system} \cite{astrahan1978system}}
@@ -61,7 +61,7 @@ Die Berechnung findet auf Basis der Daten statt, die von System Rs Catalog berei
 \item $H$: Koeffizient der CPU-Kosten ($1/H$ ist die Anzahl der Tupelvergleiche, die  als gleich den Kosten für einen Page Access sind.)
 \end{itemize}
 
-Auf Basis dieser Kennzahlen werden die Kosten je nach Operator festgestellt. 
+Auf Basis dieser Kennzahlen werden die Kosten je nach Operator festgestellt und die Gesamtkosten berechnet. 
 
 %\sout{Die Berechnung geschieht auf Daten, die durch den Catalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Sprich die Menge der ausgeschlossenen Tupel.}
 
