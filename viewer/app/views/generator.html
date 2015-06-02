@@ -1,57 +1,74 @@
-<h2>Relationships</h2>
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<h2>Relationships</h2>
 
-	<table class="table table-bordered">
-		<tr>
-			<th>Relation</th>
-			<th>Cardinality</th>
-		</tr>
-		<tr ng-repeat="r in relations">
-			<td>{{r.relation}}</td>
-			<td contenteditable ui-keydown="{ 'tab' : 'addRelationByTab($event, r.relation)'}" ng-model="r.cardinality"></td>
-		</tr>
-	</table>
-	<button class="btn btn-default" ng-click="addRelation()" tabindex="99">Add relation</button> <button class="btn btn-danger" ng-click="removeLastLine(relations)" tabindex="100" ng-show="relations.length > 1">remove relation</button>
+		<table class="table table-bordered">
+			<tr>
+				<th>Relation</th>
+				<th>Cardinality</th>
+			</tr>
+			<tr ng-repeat="r in relations">
+				<td>{{r.relation}}</td>
+				<td contenteditable ui-keydown="{ 'tab' : 'addRelationByTab($event, r.relation)'}" ng-model="r.cardinality"></td>
+			</tr>
+		</table>
+		<button class="btn btn-default" ng-click="addRelation()" tabindex="99">Add relation</button> <button class="btn btn-danger" ng-click="removeLastLine(relations)" tabindex="100" ng-show="relations.length > 1">remove relation</button>
+	</div>
+	<div class="col-md-6 col-sm-12">
+		<h2>Join Edges</h2>
+
+		<table class="table table-bordered">
+			<tr>
+				<th>From</th>
+				<th>To</th>
+				<th>Selectivity</th>
+			</tr>
+			<tr ng-repeat="j in joinEdges">
+				<td contenteditable ng-model="j.from"></td>
+				<td contenteditable ng-model="j.to"></td>
+				<td contenteditable ui-keydown="{ 'tab' : 'addJoinEdgeByTab($event, j.id)'}" ng-model="j.selectivity"></td>
+			</tr>
+		</table>
+		<button class="btn btn-default" ng-click="addJoinEdge()" tabindex="99">Add join edge</button> <button class="btn btn-danger" ng-click="removeLastLine(joinEdges)" tabindex="100" ng-show="joinEdges.length > 1">remove edge</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<h2>Algorithms</h2>
+		<div class="btn-group" role="group">
+			<button type="button" ng-class="!containsAlgo(a)? 'btn-default':'btn-success'" class="btn" ng-click="clickAlgo(a)" ng-repeat="a in potentialRuelSets">{{a}}</button>
+		</div>
+	</div>
+	<div class="col-md-6 col-sm-12">
+		
+		<h2>Inital Tree</h2>
+
+		<table class="table">
+			<tr>
+				<th>check</th>
+				<th>Relations</th>
+			</tr>
+			<tr ng-repeat="n in nodes" ng-class="n.marked? 'success' : ''" ng-hide="n.hide">
+				<td ><button class="btn btn-success" ng-click="join(n)" ng-hide="n.marked ">JOIN</button></td>
+				<td>{{n.relations}}</td>
+			</tr>
+		</table>
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<button class="btn btn-primery" ng-click="addToConfig()">Add to Config</button>
 
 
-<h2>Join Edges</h2>
-
-	<table class="table table-bordered">
-		<tr>
-			<th>From</th>
-			<th>To</th>
-			<th>Selectivity</th>
-		</tr>
-		<tr ng-repeat="j in joinEdges">
-			<td contenteditable ng-model="j.from"></td>
-			<td contenteditable ng-model="j.to"></td>
-			<td contenteditable ui-keydown="{ 'tab' : 'addJoinEdgeByTab($event, j.id)'}" ng-model="j.selectivity"></td>
-		</tr>
-	</table>
-	<button class="btn btn-default" ng-click="addJoinEdge()" tabindex="99">Add join edge</button> <button class="btn btn-danger" ng-click="removeLastLine(joinEdges)" tabindex="100" ng-show="joinEdges.length > 1">remove edge</button>
-
-<h2>Algorithms</h2>
-<div class="btn-group" role="group">
-	<button type="button" ng-class="!containsAlgo(a)? 'btn-default':'btn-success'" class="btn" ng-click="clickAlgo(a)" ng-repeat="a in potentialRuelSets">{{a}}</button>
+		<textarea class="form-control" value="">{{configFile}}</textarea>
+	</div>
 </div>
 
 
-<h2>Inital Tree</h2>
-
-<table class="table">
-	<tr>
-		<th>check</th>
-		<th>Relations</th>
-	</tr>
-	<tr ng-repeat="n in nodes" ng-class="n.marked? 'success' : ''" ng-hide="n.hide">
-		<td ><button class="btn btn-success" ng-click="join(n)" ng-hide="n.marked ">JOIN</button></td>
-		<td>{{n.relations}}</td>
-	</tr>
-</table>
-
-<button class="btn btn-primery" ng-click="addToConfig()">Add to Config</button>
 
 
-<textarea class="form-control" value="">{{configFile}}</textarea>
+
 
 <br />
-
+</div>
