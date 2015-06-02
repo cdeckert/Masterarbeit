@@ -33,7 +33,7 @@ Ein weiterer Unterschied zu Volcano ist, dass es sich bei Pyro kein Optimizer ge
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{03_Related_Work/Incompleteness_RS-B2-CPS.png}
+  \includegraphics[width=\textwidth]{03_Related_Work/Graphs.pdf}
   \caption{Incompletness of RS-B2-CPS}
   \label{Incompleteness_RS-B2-CPS}
 \end{figure}
@@ -56,7 +56,7 @@ Da nicht alle Pläne gefunden werden konnten, liegt es nahe, dass der optimale P
 
 \cite{shanbhag2014optimizing} stellt fest, dass RS-B0-CPS und RS-B1-CPS vollständig sind. Die Vollständigkeit von RS-B2-CPS wird jedoch in Frage gestellt und die Unvollständigkeit mit Hilfe eines Beispiels belegt. Als Beispiel dient eine Menge von Relationen, die mit Hilfe des Jointrees J (\ref{fig:Incompleteness_RS-B2-CPS}) miteinander gejoint sind. Der Initale Anfragebaum \textit{Q1} ist in \ref{fig:Incompleteness_RS-B2-CPS} dargestellt. Das gewünschte Ergebnis nach einer Transformation \textit{Q2}  findet sich in \ref{fig:Incompleteness_RS-B2-CPS}. 
 
-Bei \textit{RS-B2-CPS} dürfen die Regeln \textit{R2}, \textit{}R3, \textit{R4} nur jeweils einmal auf einen Join-Operator angewendet werden. Keine der Regeln darf danach auf den neu generierten Operator angewendet werden. Die In \ref{fig:Q1} und \ref{fig:Q2} zeichnet sich dadurch aus, dass die Relationen \textit{R1} und \textit{R4} vertauscht sind.
+Bei \textit{RS-B2-CPS} dürfen die Regeln \textit{R2}, \textit{R3}, \textit{R4} nur jeweils einmal auf einen Join-Operator angewendet werden. Keine der Regeln darf danach auf den neu generierten Operator angewendet werden. Die In \ref{fig:Q1} und \ref{fig:Q2} zeichnet sich dadurch aus, dass die Relationen \textit{R1} und \textit{R4} vertauscht sind.
 
 
 Die Vollständigkeit wurde auch mit Hilfe des PyroJ Optimizers geprüft. Hierbei wurde an Hand von Star-Queries  die Unvollständigkeit belegt. Wie in Abb. \ref{CompletenessResults} zu sehen, wurden mit Hilfe von \textit{RS-B2} nur knapp die Hälfte aller äquivalenten Pläne gefunden. Ebenfalls wird betont, dass die geschätzten Kosten des besten Plans, der durch \textit{RS-B2} erzeugt wurde um den Faktor 1.86 im Vergleich zu \textit{RS-B1} niedrigere geschätzte Kosten hatte.
