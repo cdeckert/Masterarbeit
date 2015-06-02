@@ -1,4 +1,8 @@
-\section{Überblick über den Optimierungsvorgang}
+\section{Überblick und Einordnung des Optimierers}
+
+\subsection{Überblick über den Optimierungsvorgang}
+
+
 Die Ausführung des Programms geschieht in drei Schritten (vgl. Abb. \ref{Ablauf}): (1) Konfiguration, (2) Generierung von semantisch gleichen Plänen, (3) Finden des optimalen Plans.
 
 \begin{figure}[h]
@@ -20,12 +24,12 @@ Im ersten Schritt, wird auf Grund von externen Parametern das System konfigurier
 
 Mit Hilfe der Relationen und deren Kardinalität können später im Zusammenspiel mit JoinEdges und Selektivitität die Kosten für einen Plan berechnet werden. Der initiale Plan dient als Startpunkt der Transformation. Auf ihn werden die Regelsets angewendet und so logische  Äquivalente erzeugt.
 
-Zu Beginn des zweiten Schritts, der Erzeugung von äquivalenten Plänen, wird die Zeitmessung gestartet.  Mit Hilfe von Exektoren werden die unterschiedlichen Regelsets auf den Initialen Plan angewendet. Für jeden Knoten wird zuerst festgestellt, ob er bereits expanded wurde. Falls das nicht der Fall ist, wird geprüft, ob eine Regel aus dem Regelset anwendbar ist. iI
+Zu Beginn des zweiten Schritts, der Erzeugung von äquivalenten Plänen, wird die Zeitmessung gestartet.  Mit Hilfe von Exektoren werden die unterschiedlichen Regelsets auf den Initialen Plan angewendet. Für jeden Knoten wird zuerst festgestellt, ob er bereits expanded wurde. Falls das nicht der Fall ist, wird geprüft, ob eine Regel aus dem Regelset anwendbar ist. 
 
 In einem finalen Schritt wird findet die Kostenberechnung statt und aus den möglichen Plänen wird der günstigste ausgewählt. Diese Preisberechnung findet im Modul der Kostenschätzung statt.
 
 
-\section{Unterschiede zu Volcano und Pyro(J)}
+\subsection{Unterschiede zu Volcano und Pyro(J)}
 
 Einer der fundamentalen Unterschiede zwischen Pyro bzw. Volcano zur hier vorgestellten Implementierung ist, dass sowohl Volcano als auch Pyro vollständige Optimierer sind. Sie erstellen basierend auf einer Anfrage einen physischen Plan, der dann weiterverarbeitet werden kann. Im Gegensatz dazu wird für diese Masterarbeit nur das Join-Ordering betrachtet und daher auch nur das Join-Ordering implementiert.
 

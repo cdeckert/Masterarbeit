@@ -1,4 +1,4 @@
-\subsection{Verbesserte Join Enumeration und Unvollständigkeit von RS-B2}
+\subsection{GraphRule und Unvollständigkeit von RS-B2}
 
 Die von Pellenkoft et al. entwickelten Regelsets, dienen als Grundlage für regelbasierte Optimierer wie Volcano. \cite{shanbhag2014optimizing} untersuchten sowohl die Vollständigkeit der vorgestellten Regel und fügten den bestehenden Regelsets ein neues hinzu, das alle andere Regelsets zum Join Reordering obsolet macht und zudem erheblich bessere Performance liefert.
 
@@ -10,19 +10,29 @@ Die Untersuchungen \cite{shanbhag2014optimizing} wurden mit dem Optimierer PyroJ
 
 PyroJ basiert auf dem von \cite{roy2001multi} in C++ Implementierten Optimierer Pyro und wurde automatisch von C++ nach Java übersetzt. Der Optimierer Pyro wurde nach dem Vorbild des Volcano Optimizers entwickelt. Volcano wurde als Vorbild gewählt, da es sich bei Volcano um einen hoch-repektierten, state-of-the-art, regelbasierten Optimierer handelt, der auch die Basis von kommerziellen Datenbanksytemen wie MS SQL Server ist. Außerdem ist Volcano, wie zuvor besprochen, hoch erweiterbar: Das Datenmodell, Executionmodell sind leicht erweiterbar, Transformationsregeln und Operatoren lassen sich hinzufügen. 
 
-Einer der Unterschiede zwischen Volcano und Pyro ist die Trennung zwischen logical / physical Plan Generierung und der Suche nach dem optimalen Plan. Im Gegensatz zu Volcano werden erst alle logische Pläne für einen LQDAG generiert, daraufhin werden dann alle Pläne in physische Pläne umgesetzt und basierend auf diesen Plänen der günstigste Plan ausgewählt.
+Einer der Unterschiede zwischen Volcano und Pyro ist die Trennung zwischen logical / physical Plan Generierung und der Suche nach dem optimalen Plan. Im Gegensatz zu Volcano werden erst alle logische Pläne für einen \ac{LQDAG} generiert, daraufhin werden dann alle Pläne in physische Pläne umgesetzt und basierend auf diesen Plänen der günstigste Plan ausgewählt.
 
-Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generiert für diesen Plan dann alle physischen Pläne. Für diese Pläne wird dann der günstigste Plan gesucht. Die anderen Pläne müssen nicht mehr im Speicher vorgehalten werden. Daraufhin kann dann der nächste logische Plan generiert werden und die Kosten des günstigsten Plans mit dem bisher günstigsten Plan verglichen werden. Der Vorteil dieses Verfahrens ist, dass gerade bei großen Search Spaces der Plan im Speicher gehalten werden kann und suboptimale Pläne nicht länger als nötig gespeichert werden.
+Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generiert für diesen Plan dann alle physischen Pläne. Für diese Pläne wird der günstigste Plan gesucht. Die anderen Pläne müssen nicht mehr im Speicher vorgehalten werden. Daraufhin kann dann der nächste logische Plan generiert werden und die Kosten des günstigsten Plans mit dem bisher günstigsten Plan verglichen werden. Der Vorteil dieses Verfahrens ist, dass gerade bei großen Search Spaces der Plan im Speicher gehalten werden kann und suboptimale Pläne nicht länger als nötig gespeichert werden.
 
 Genau wie das Volcano Projekt wird eine Memofunktion verwendet. \cite{roy2001multi} weist daraufhin, dass diese Memofunktion erst später dem Volcano Optimizer hinzugefügt wurde. Dadurch war es beispielsweise möglich, dass bei einer Anfrage, die aus $(A \Join B \Join C) \cup (B \Join C \Join D)$ zwei Äquivalenzknoten für den Knoten $B \Join C$ gebildet werden, obwohl alle Teilpläne von $A \Join B$ immer äquivalent sein werden und somit kein Grund besteht, die Pläne mehrfach zu berechnen. Pyro verwendet eine Memodatenstruktur, um die mehrfache Generierung des selben Teilplans zu unterbinden.
 
-Ein weiterer Unterschied zu Volcano ist, dass es sich bei Pyro kein Optimizer generiert wird, sondern der Optimizer von vorneherein in C++ geschrieben ist. Eine Übersetzung aus einem Description\-File hin zu C\-Code findet daher nicht statt.
+Ein weiterer Unterschied zu Volcano ist, dass es sich bei Pyro kein Optimizer generiert wird, sondern der Optimizer von vornherein in C++ geschrieben ist. Eine Übersetzung aus einem Description\-File hin zu C\-Code findet daher nicht statt.
 
 \subsubsection{Getestete Regeln und Regelsets}
 
-\cite{shanbhag2014optimizing} und \cite{roy2001multi} geben an, dass sie die Regelsets \textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} implementieren. Im Gegensatz zu Pellenkoft wird im Regelset \textit{RS-B1} nicht die Regel Swap verwendet, sondern Left\-Associtativity. Beide Regeln sind jedoch semantisch ähnlich genug und können mit Hilfe von Kommutativität in einander überführt werden. Ebenfalls ist eine genaue Unterscheidung der Reihenfolge der Anwendung ähnlich wie bei Volcano nicht möglich. Alle Regeln laufen immer in einer vorgegeben Reihenfolge ab.
+\cite{shanbhag2014optimizing} und \cite{roy2001multi} geben an, dass sie die Regelsets \textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} implementieren. Im Gegensatz zu Pellenkoft wird im Regelset \textit{RS-B1} nicht die Regel Swap verwendet, sondern Left\-Associtativity (vgl. \ref{PellenkoftVsPyro}). Beide Regeln sind jedoch semantisch ähnlich genug und können mit Hilfe von Kommutativität in einander überführt werden. Ebenfalls ist eine genaue Unterscheidung der Reihenfolge der Anwendung ähnlich wie bei Volcano nicht möglich. Alle Regeln laufen immer in einer vorgegeben Reihenfolge ab.
 
-
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\cline{1-3}
+{\bf Ruleset} & {\bf Pellenkoft}                                                                                                  & {\bf Pyro(J)}                                                                                                       \\ \cline{1-3}
+{\bf RS-B0}   & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\end{tabular}            & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\end{tabular}              \\ \cline{1-3}
+{\bf RS-B1 }  & \begin{tabular}[c]{@{}l@{}}Swap\\ Bottom Commutativity\end{tabular}                                         & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Commutativity\end{tabular}                                    \\ \cline{1-3}
+{\bf RS-B2 }  & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\\ Exchange\end{tabular} & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\\ Exchange\end{tabular}   \\ \cline{1-3}
+\end{tabular}
+\caption{Unterschiede zwischen Pellenkoft und Pyro(J)}
+\label{PellenkoftVsPyro}
+\end{table}
 
 
 
@@ -39,11 +49,13 @@ Ein weiterer Unterschied zu Volcano ist, dass es sich bei Pyro kein Optimizer ge
 \end{figure}
 
 
-Die Unvollständigkeit von \textit{RS-B2} wurde auf zwei Arten gezeigt. Auf der einen Seite wurde an Hand des Beispiel \ref{Incompleteness_RS} gezeigt. Im konkreten Beispiel sollte $S_1$ und $S_4$ getauscht werden. Wobei das Regelset \textit{RS-B2} zum Einsatz kommen sollte. Anhand des gegebenen Join Graphen ist die Transformation zwar Teil des Suchraums, kann jedoch durch die Regeln nicht erreicht werden. Das Regelset ist daher unvollständig.
+Die Unvollständigkeit von \textit{RS-B2} wurde auf zwei Arten gezeigt. Auf der einen Seite wurde an Hand des Beispiel \ref{Incompleteness_RS} gezeigt. Im konkreten Beispiel sollte \textit{R1} und \textit{R4} getauscht werden. Wobei das Regelset \textit{RS-B2} zum Einsatz kommen sollte. Anhand des gegebenen Join Graphen ist die Transformation zwar Teil des Suchraums, kann jedoch durch die Regeln nicht erreicht werden. Das Regelset ist daher unvollständig.
 
-Ebenfalls wurden unterschiedliche Abfragen mit Hilfe des Optimierers optimiert und geprüft, ob die selbe Menge an plänen aus den unterschiedlichen Regelsets entstehen kann. Wie zu erzwarten war die Menge der Pläne, dei aus \textit{RS-B0} unr \textit{RS-B1} entstanden sind gleich. Die Menge der \textit{RS-B2} Pläne stark reduziert. (vgl. \ref{tabelle)}.
+Ebenfalls wurden unterschiedliche Abfragen mit Hilfe des Optimierers optimiert und geprüft, ob die selbe Menge an plänen aus den unterschiedlichen Regelsets entstehen kann. Wie zu erwarten war die Menge der Pläne, die aus \textit{RS-B0} nur \textit{RS-B1} entstanden sind gleich. Die Menge der \textit{RS-B2} Pläne stark reduziert. (vgl. \ref{tabelle)}.
 
-Da nicht alle Pläne gefunden werden konnten, liegt es nahe, dass der optimale Plan möglicherweise nicht Teil des erforschten Suchraums ist. \cite{shanbhag2014optimizing} stellen fest, dass das Ergebnis mit \textit{RS-B2} 
+Da nicht alle Pläne gefunden werden konnten, liegt es nahe, dass der optimale Plan möglicherweise nicht Teil des erforschten Suchraums ist. \cite{shanbhag2014optimizing} stellen fest, dass das Ergebnis mit \textit{RS-B2} erzeugt wurde bzgl. der berechneten Kosten um den Faktor 1.86 schlechter war, als die Pläne, die mit Hilfe eines vollständigen Regelsets erzeugt wurden. Wie genau die Zahl 1.86 zustande gekommen ist, ist nicht genauer begründet.
+
+Es lässt sich also feststellen, dass mit Hilfe des Regelsets \textit{RS-B2} weniger Pläne im Suchraum gefunden werden konnten, als mit Hilfe des Regelsets \textit{RS-B1} bzw. \textit{RS-B2}. Ausserdem wurde festgestellt, dass Pläne aus unvollständigen Regelsets nicht immer den optimalen Plan beinhalten.
 
 
 
