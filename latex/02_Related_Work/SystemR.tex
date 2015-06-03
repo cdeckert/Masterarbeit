@@ -7,7 +7,7 @@ System R ist ein von IBM in den 1970er Jahren durchgeführtes Datenbank Research
 
 \begin{figure}[ht]
   \centering
-  \includegraphics{03_Related_Work/SystemR.pdf}
+  \includegraphics{02_Related_Work/SystemR.pdf}
   \caption{System R Architektur \cite{astrahan1976system} \cite{astrahan1978system}}
   \label{SystemRArchitecture}
 \end{figure}
@@ -29,9 +29,9 @@ Wie bei anderen relationalen Datenbanksystemen steht zu  Beginn eine in \ac{SQL}
 Im ersten Schritt, Parsen, wird wie bei späteren Systemen die Syntax geprüft und die Anfrage in eine interne Repräsentation umgewandelt. Bei System R werden hierzu Query Blöcke verwendet. Ein Query Block besteht aus SELECT-List, FROM-List und WHERE-Tree. Der WHERE-Tree beinhaltet Elemente, die beispielsweise zum JOIN von Tabellen und der Einschränkung von Datensätzen dienen. Es ist möglich, dass mehrere Query Blöcke für eine einzige Anfrage vorhanden sind. Dies geschieht dann, wenn eine Anfrage Inner-Queries verwendet bzw. Anfragen als Argumente für eine WHERE Bedingung zum Einsatz kommen.
 
 
-Sobald die Anfrage in Query Blöcke verarbeitet wurde, kommt der \ac{QO} zum Einsatz. Der Optimierer prüft zuerst, ob die genutzten Relationen und Felder auch in der Datenbank vorhanden sind und schlägt Informationen über diese im System R Catalog nach. Teil dieser Informationen sind statistische Informationen der referenzierten Relationen. Diese werden später für die Auswahl der richtigen Access Plans verwendet. Auf die Planauswahl wird in \ref{sec:SystemRKostenberechnung} genauer eingegangen.
+Sobald die Anfrage in Query Blöcke verarbeitet wurde, kommt der \ac{QO} zum Einsatz. Der Optimierer prüft zuerst, ob die genutzten Relationen und Felder auch in der Datenbank vorhanden sind und schlägt Informationen über diese im System R Katalog nach. Teil dieser Informationen sind statistische Informationen der referenzierten Relationen. Diese werden später für die Auswahl der richtigen Access Plans verwendet. Auf die Planauswahl wird in \ref{sec:SystemRKostenberechnung} genauer eingegangen.
 
-Im nächsten Schritt, Optimieren, bestimmt der Optimizer für jeden Query Block den optimalen Access-Pfad. Zuerst wird die Evaluationsreihenfolge der Query Blocks im Statement festgelegt. Dann wird für jeden Query Block die FROM Relationen betrachtet. Sind mehr als eine Relation vorhanden, werden Permutationen der JOIN-Order gebildet. Es wird der Pfad mit den günstigsten Kosten gewählt und die notwendigen Modifikationen werden an der Anfrage vorgenommen. Das Resultat des Prozesses ist ein Plan in der \ac{ASL}.
+Im nächsten Schritt, Optimieren, bestimmt der Optimizer für jeden Query Block den optimalen Access-Pfad. Zuerst wird die Evaluationsreihenfolge der Query Blocks im Statement festgelegt. Dann wird für jeden Query Block die FROM Relationen betrachtet. Sind mehr als eine Relation vorhanden, werden Permutationen der JOIN-Reihenfolge gebildet. Es wird der Pfad mit den günstigsten Kosten gewählt und die notwendigen Modifikationen werden an der Anfrage vorgenommen. Das Resultat des Prozesses ist ein Plan in der \ac{ASL}.
 
 Nachdem der Plan gefunden und als \ac{ASL}-Tree vorhanden ist, kommt der Code Generator zum Einsatz. Er übersetzt den \ac{ASL}-Plan in einen  Maschinencode. Dieser Code führt die Anfrage des Nutzers auf der Datenbank aus. 
 
@@ -39,9 +39,9 @@ Der Maschinencode wird dann auf dem \ac{RSS} über das \ac{RSI} ausgeführt und 
 
 \subsubsection{Kostenberechnung}
 \label{sec:SystemRKostenberechnung}
-Bei der Auswahl des optimalen Plans beginnt System R mit der Reihenfolge der Query Blocks. Zuerst wird für jeden Query Block geprüft, ob mehrere Tabellen in den FROM Listen vorhanden sind. Falls das der Fall ist, wird die Optimale Join-Order und die Methode des Joins bestimmt. Der Plan mit den geringsten Gesamtkosten für einen Block wird ausgewählt.
+Bei der Auswahl des optimalen Plans beginnt System R mit der Reihenfolge der Query Blocks. Zuerst wird für jeden Query Block geprüft, ob mehrere Tabellen in den FROM Listen vorhanden sind. Falls das der Fall ist, wird die optimale Join-Reihenfolge und die Methode des Joins bestimmt. Der Plan mit den geringsten Gesamtkosten für einen Block wird ausgewählt.
 
-Zur Bestimmung der Kosten werden statistische Informationen aus dem System R Catalog herangezogen. Die Berechnung der Kosten für einen Access Plan, werden mit Hilfe der folgenden Funktion abgeschätzt:
+Zur Bestimmung der Kosten werden statistische Informationen aus dem System R Katalog herangezogen. Die Berechnung der Kosten für einen Access Plan, werden mit Hilfe der folgenden Funktion abgeschätzt:
 
 $$Cost = Page Fetches + W * (RSI calls)$$
 
@@ -52,7 +52,7 @@ $Page Fetches$ repräsentieren die I/O Operationen, die beispielsweise durch den
 %\sout{Bei der Auswahl eines Plans unterscheidet das System zwischen einer \"interessanten\" Reihenfolge, also sortierten Ergebnissen, und einer ungeordneten Reihenfolge. Als interessante Reihenfolge, werden Reihenfolgen betrachtet, die gesamter Reihenfolge notwendig sind und die Kosten, die für das lesen in ungeordneter Reihenfolge notwendig sind und addiert auf diese Kosten, die Kosten für das Ordnen der Ergebnisse falls eine ungeordnete Reihenfolge + das Ordnen der Ergebnisse gemeinsam kürzer dauert als das direkte Ausgeben einer interessanten Reihenfolge wird sich für die günstigere Variante entschieden.}
 
 
-Die Berechnung findet auf Basis der Daten statt, die von System Rs Catalog bereitgestellt werden. Die Daten umfassen folgende Kennzahlen:
+Die Berechnung findet auf Basis der Daten statt, die von System Rs Katalog bereitgestellt werden. Die Daten umfassen folgende Kennzahlen:
 
 \begin{itemize}
 \item $R$: Kardinalität der Relation (Anzahl Tupel)
@@ -63,12 +63,12 @@ Die Berechnung findet auf Basis der Daten statt, die von System Rs Catalog berei
 
 Auf Basis dieser Kennzahlen werden die Kosten je nach Operator festgestellt und die Gesamtkosten berechnet. 
 
-%\sout{Die Berechnung geschieht auf Daten, die durch den Catalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Sprich die Menge der ausgeschlossenen Tupel.}
+%\sout{Die Berechnung geschieht auf Daten, die durch den Katalog bereitgestellt werden, Sie enthalten Informationen über die Kardinalität und die Anzahl der Segmente, die für das auslesen einer Relation notwendig sind, ebenfalls wird ein Selektivitätsfaktor genutzt, der das Verhältnis der Gesamtheit zur eingeschlossenen Menge der Anfrage angibt. Sprich die Menge der ausgeschlossenen Tupel.}
 
 
 
 \subsubsection{Plan Enumerator}
-Die Enumeration des System R Optimizers zeigt zwei wichtige Aspekte eines Enumerators: Auf der einen Seite die interesting order, auf der anderen Seite die dynamic programming:
+Die Enumeration des System R Optimierers zeigt zwei wichtige Aspekte eines Enumerators: Auf der einen Seite die interesting order, auf der anderen Seite die dynamic programming:
 
 Dynamische Programmierung geht davon aus, dass das Kostenmodell dem Optimalitätsprinzip von Bellman \cite{Bellman:1957} gehorcht. Das Prinzip sagt aus, dass sich eine Optimallösung aus optimalen Teillösungen zusammensetzt. In unserem konkreten Fall sagt das Prinzip, dass der optimale Plan nur aus optimalen Teilbäumen bestehen kann. Somit müssen nur optimale Subplans zur Erzeugung des optimalen Plans verwendet werden. I.a.w. sucht man mit Hilfe eine bottom-up Enumeration Algorithmus nach dem optimalen Plan. So müssen nur Subpläne in Betracht für eine optimale Gesamtlösung gezogen werden, die für sich optimal sind.
 

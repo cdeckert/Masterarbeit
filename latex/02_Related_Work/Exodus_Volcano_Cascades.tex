@@ -1,6 +1,6 @@
 \subsection{Exodus, Volcano, Cascades}
 
-Das Volcano Projekt mit seinem Vorgänger \ac{EXODUS} und dem Nachfolger Cascades bildet die Grundlage für den Microsoft SQL Server und dessen Anfrageoptimierer. Bei der Implementierung des Volcano Optimizers ist insbesondere die Implementierung des Query Optimizers von Interesse und wird daher ausführlich behandelt.
+Das Volcano Projekt mit seinem Vorgänger \ac{EXODUS} und dem Nachfolger Cascades bildet die Grundlage für den Microsoft SQL Server und dessen Anfrageoptimierer. Bei der Implementierung des Volcano Optimierers ist insbesondere die Implementierung des Query Optimierers von Interesse und wird daher ausführlich behandelt.
 
 \subsubsection{Exodus}
 
@@ -11,7 +11,7 @@ Im Gegensatz zu konventionellen DBMS wie System R oder Starburst handelt es sich
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{02_Grundlagen/ExodusDatabaseSystemStructure.png}
+  \includegraphics[width=\textwidth]{02_Related_Work/ExodusDatabaseSystemStructure.png}
   \caption{Exodus Database System Structure}
   \label{ExodusDatabaseStructure}
 \end{figure}\todo{Eigene Grafik bauen}
@@ -22,7 +22,7 @@ Neben den generierten Komponenten gibt es den E Compiler, der E Code in Objekt-C
 
 Zwischen der kompilierten Anfrage und dem Storage Manager kommen zwei Komponenten zum Einsatz, die von einem DBI geschrieben werden müssen: Die Operator Methoden und Access Methoden. Diese beiden Komponenten dienen dazu, die Anfrage in Code zu übersetzen, der durch den  Storage Manager ausgeführt wird.
 
-Bei der Implementierung eines Optimierers kommen grundsätzlich zwei mögliche Ansätze in Frage: (1) interpretierte und (2) kompilierte Programmiersprachen. Bei EXODUS wurde zuerst die Implementierung mittels sog.\"AI\" Sprachen versucht. In einem Prototypen wurde mit Hilfe von Prolog ein Optimierer entwickelt. Für Prolog hat man sich entschieden, da diese Sprache Pattern Matching und eine Search Engine bereitstellt. (Auch unification konnte zum Einsatz gebracht werden, um elegant Query Trees zu erstellen.) Der Hauptvorteil eines interpretierten Ansatzes war aus Sicht von EXODUS die Möglichkeit neue Regeln zur Laufzeit des Programms hinzuzufügen. Trotz dieser Vorteile wurde der Ansatz als zu langsam verworfen. Auch der Vorteil Regeln während der Laufzeit hinzuzufügen, wird in der Literatur \todo{QUELLE} als wenig nützlich bewertet. Statt dieses Ansatzes wurde in der Folge auf die Erstellung eines Generators, der in C geschrieben wurde, gesetzt. Der Generator erstellt basierend auf Regeln einen Optimierer in C, der wiederum kompiliert werden kann. Zwar war die Entwicklung des C Generators aufwändiger als die Implementierung in Prolog, jedoch konnte auf applikationsspezifische Notwendigkeiten, wie die Implementierung von speziellen Suchverfahren, Punkt genau eingegangen werden.
+Bei der Implementierung eines Optimierers kommen grundsätzlich zwei mögliche Ansätze in Frage: (1) interpretierte und (2) kompilierte Programmiersprachen. Bei EXODUS wurde zuerst die Implementierung mittels sog.\"AI\" Sprachen versucht. In einem Prototypen wurde mit Hilfe von Prolog ein Optimierer entwickelt. Für Prolog hat man sich entschieden, da diese Sprache Pattern Matching und eine Search Engine bereitstellt. (Auch unification konnte zum Einsatz gebracht werden, um elegant Query Trees zu erstellen.) Der Hauptvorteil eines interpretierten Ansatzes war aus Sicht von EXODUS die Möglichkeit neue Regeln zur Laufzeit des Programms hinzuzufügen. Trotz dieser Vorteile wurde der Ansatz als zu langsam verworfen. Auch der Vorteil Regeln während der Laufzeit hinzuzufügen, wird in der Literatur \todo{QUELLE} als wenig nützlich bewertet. Statt dieses Ansatzes wurde in der Folge auf die Erstellung eines Generators, der in C geschrieben wurde, gesetzt. Der Generator erstellt basierend auf Regeln einen Optimierer in C, der wiederum kompiliert werden kann. Zwar war die Entwicklung des C Generators aufwändiger als die Implementierung in Prolog, jedoch konnte auf applikationsspezifische Notwendigkeiten, wie die Implementierung von speziellen Suchverfahren, punktgenau eingegangen werden.
 
 
 Die Generierung des Optimierters geschieht auf Basis eines Description-Files. Dieses File setzt sich aus drei Komponenten zusammen: Operatoren, Methoden und Regeln.
@@ -36,13 +36,13 @@ Diese Regeln werden gemeinsam mit Hilfe des Optimizer Generators in C Code umgew
 
 Bei der Anwendung der Regeln wird zuerst geprüft welche Regeln anwendbar sind. Diese Regeln werden in der Liste OPEN abgelegt. Durch einen Auswahlmechanismus wird festgelegt, welche Regel zum Einsatz kommt. Nachdem eine Regeln angewendet wurde wird sie aus der OPEN Liste entfernt. Regelanwendungen, die durch deise Transformation möglich wurden, werden der OPEN Liste hinzugefügt. Der Auswahlmechanismus sieht vor, dass die poteniell gebildeteten Pläne auf Grund ihrer Kosten bewertet werden und die Regel ausgeführt wird, die zum günstigsten Plan führt. Die Suchstrategie wird als Hill climbing bezeichnet.
 
-Einer der Nachteile dieses Ansatzes ist es, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die kombination mhererer Regeln enstehen werden nicht berücksichtigt. Auch Graefe selbst sieht einige weitere Nachteile \cite{graefe1993volcano}:
+Einer der Nachteile dieses Ansatzes ist es, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Auch Graefe selbst sieht einige weitere Nachteile \cite{graefe1993volcano}:
 
 \begin{itemize}
 \item nicht-triviale Kostenmodelle
 \item keine Eigenschaften
-\item keine Heueristiken
-\item keine Transformation von Subsripten von Algebraischen Operatoren nach algebraische Operatoren
+\item keine Heuristiken
+\item keine Transformation von Subscripten von Algebraischen Operatoren nach algebraische Operatoren
 \end{itemize}
 
 
@@ -59,21 +59,21 @@ Der Volcano Optimizer wurde von Grund auf neu entwickelt und begegnet den von Gr
 
 \begin{enumerate}
 
-\item Die erste Grundlage des Volcano Optimizers ist die Anwendung von algebraischen Techniken wie algebraische Operatoren und Äquivalenzklassen. Volcano unterscheidet dabei zwischen logischer und physischer Algebra. Die Umwandlung von logischer Algebra (der Anfrage) in die physische Algebra (einem Query Evaluation Plans) geschieht durch die Transformation der logischen Algebra mit Hilfe von kostenbasierten Mappings von logischen Algorithmen.
+\item Die erste Grundlage des Volcano Optimierers ist die Anwendung von algebraischen Techniken wie algebraische Operatoren und Äquivalenzklassen. Volcano unterscheidet dabei zwischen logischer und physischer Algebra. Die Umwandlung von logischer Algebra (der Anfrage) in die physische Algebra (einem Query Evaluation Plans) geschieht durch die Transformation der logischen Algebra mit Hilfe von kostenbasierten Mappings von logischen Algorithmen. \todo{Unklar}
 
 
 \item Das zweite Prinzip sieht vor, dass die Information über algebraische Gesetze, die zur Transformation von Algebraischen Ausdrücken genutzt werden als Regeln und Pattern modular erfasst sind. Durch dieses Prinzip sind die einzelnen Regeln klar und transparent von einander getrennt und können zu Regelsets zusammengestellt werden. Einige dieser Regelsets werden im folgenden Kapitel behandelt.
 
 
-\item Das dritte Prinzip betrifft der Eingabe des Optimierers im Gegensatz zu anderen Optimierern (namentlich Stardust) setzt der Volcano Optimizer auf algebraische Äquivalenzen als Eingabe Parameter. Andere Systeme nutzen hier mehrere Stufen an Umwandlung, um zwischen Query und Optimizer Eingabe zu vermitteln. 
+\item Das dritte Prinzip betrifft die Eingabe des Optimierers. Im Gegensatz zu anderen Optimierern (namentlich Starbust) setzt der Volcano Optimizer auf algebraische Äquivalenzen als Eingabe Parameter. Andere Systeme nutzen hier mehrere Stufen an Umwandlung, um zwischen Query und Optimizer Eingabe zu vermitteln. 
 
 \item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer daduch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen. Diese Möglichkeit wird jedoch in der Praxis nicht benötigt.
 
-\item Das letzte Prinzip ist, dass der Volcano Optimierer auf dynamisches Programmieren bei der Generierung von Programmen setzt. 
+\item Das letzte Prinzip ist, dass der Volcano Optimierer auf dynamisches Programmieren bei der Generierung von Programmen setzt. \todo{Unklar}
 \end{enumerate}
 
 
 Wie bereits zuvor wird der Ausdurck in einen Operatorbaum umgewandelt. Transformationsregeln und Implementierungsregeln kommen bei der Optimierung zum Einsatz. Eine Trennung zwischen Optimierung auf logischer und auf physischer Ebene findet nicht statt. Es wird zuerst ein logischer Ast erzeugt und für diesen Ast unterschiedliche physische Pläne generiert. Diese Pläne werden auf Basis ihrer Kosten verglichen nur der günstigste Plan beleibt bestehen und wird gespeichert. Ist bereits ein Plan vorhanden, so wird nur der günstigste Plan im Speicher behalten. Bei der Generierung kommt zudem eine Memo-Struktur zum Einsatz. In einer Hashtabelle wird geprüft ob eine Transformation bereits bekannt ist. Wenn das der Fall ist, wird diese Transformation verwendet und somit doppelter Berechnungsaufwand gespart und die bekannte Transformation stattdessen referenziert.
 
-Regeln und insbesodnere Transformationsregeln, die bei der Transformation im Bereich JOIN-Ordering verwendet werden, werden in \ref{sec:pellenkoftRulesets} beschrieben.
+Regeln und insbesondere Transformationsregeln, die bei der Transformation im Bereich JOIN-Reihenfolgeänderung verwendet werden, werden in \ref{sec:pellenkoftRulesets} beschrieben.
 

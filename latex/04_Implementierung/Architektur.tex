@@ -6,7 +6,7 @@ Das Projekt ist entlang der unterschiedlichen Aufgaben modular organisiert. Unte
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{04_Implementierung/Matrix.png}
+  \includegraphics[width=\textwidth]{04_Implementierung/Organization.pdf}
   \caption{Projektorganisation}
   \label{ProjectOrga}
 \end{figure}
@@ -78,15 +78,33 @@ Eine entscheidende Komponente sind Regeln und Regelsets. Mehrere Regeln werden i
 
 Auch bei den Regeln erben alle Regeln direkt oder - und das ist neu - indirekt von der Klasse \texttt{Rule}. Die Organisation der Klassen ist in Abb. \ref{RuleClassDiagram} dargestellt. Insgesamt wird zwischen den Regeln auf drei Ebenen unterschieden: 
 
-$Commutativity$, $LeftAssociativity$ und $RighAssociativity$ bilden die erste Ebene der Regeln. Sie kommen in Verbindung mit den RuleSets $RS-B0$ und $RS-B1$ zum Einsatz.
+\textit{Commutativity}, \textit{LeftAssociativity}, \textit{RighAssociativity} und \textit{Swap} bilden die erste Ebene der Regeln. Sie kommen in Verbindung mit den Regelmengen \textit{RS-B0} und \textit{RS-B1} zum Einsatz.
 
-Auf dem zweiten Level, diese Klassen sind mit dem Zusatz $B2$ gekennzeichnet, finden sich $Commutativity-B2$, $LeftAssociativity-B2$, $RighAssociativity-B2$ und $Exchange-B2$. Diese Regeln sind für das Regelset $RS-B2$ notwendig und erlauben es andere Regeln zu deaktivieren. Da die Deaktivierung von Regeln eine Erweiterung darstellt, erben Kommutativität und Assoziativität von ihren Verwandten aus $RS-B0$ bzw. $RS-B1$. Da die Exchange Regel neu hinzukommt, erbt diese direkt von Rule. Ebenfalls ist $Swap$ als Regel vorhanden.
+Auf dem zweiten Level, diese Klassen sind mit dem Zusatz \textit{B2} gekennzeichnet, finden sich \textit{Commutativity-B2}, \textit{LeftAssociativity-B2}, \textit{RighAssociativity-B2} und \textit{Exchange-B2}. Diese Regeln sind für das Regelset \textit{RS-B2} notwendig und erlauben es andere Regeln zu deaktivieren. Da die Deaktivierung von Regeln eine Erweiterung darstellt, erben Kommutativität und Assoziativität von ihren Verwandten aus \textit{RS-B0} bzw. \textit{RS-B1}. Da die Exchange Regel neu hinzukommt, erbt diese direkt von Rule.
 
-Auf dem dritten Level findet sich die $GraphRule$. Sie ersetzt andere Regeln und ist im RuleSet $GraphRuleSet$ abgebildet.
+Auf dem dritten Level findet sich die \textit{GraphRule}. Sie ersetzt andere Regeln und ist in der Regelmenge \textit{GraphRuleSet} abgebildet.
 
 
 Ähnlich wie bei Starburst bestehen Regel aus zwei Teilen. Auf der einen Seite wird geprüft, ob eine Regel zur Anwendung kommen kann. Dies geschieht mit der Methode \texttt{isApplicable} auf der anderen Seite gibt es die Methode \texttt{apply}, die immer einen äquivalenten Planknoten zurückliefert. Mit Hilfe dieses Prinzips wurden alle Regeln implementiert. Das einheitliche Interface erlaubt es, dass Regeln in Regelsets gebündelt werden können.
 
+
+Die konkreten Bedingungen für die Anwendbarkeit einer Regel sind in Tabelle \ref{TabelleRules} abzulesen. Die Anwendbarkeit ist je nach Regel von den Nachbarn eines Knoten abhängig. Das Konzept der Nachbarn und der referenzierten Relationen ist in \ref{sec:PlanNode} beschrieben. 
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[th]
+\begin{tabular}{@{}llll@{}}
+\toprule
+{\bf Regel}   & {\bf Eingabe} & {\bf Bedingung}      & {\bf Ausgabe} \\ \midrule
+Commutativity & $A \Join B$ & $op = \Join \&\& A.isOverlapping(B)$ & B \Join A    \\
+              &             &                      &              \\
+              &             &                      &              \\ \bottomrule
+\end{tabular}
+\label{TabelleRules}
+\caption{Regelübersicht}
+\end{table}
 
 
 \subsubsection{Erweiterbarkeit von Regelsets}
@@ -187,7 +205,7 @@ Die konkrete Implementierung der Äquivalenzklasse sieht vor, wie in Abb. \ref{E
 
 \subsubsection{Erweiterbarkeit von Regeln}
 
-Die Erweiterbarkeit ist auf mehreren Ebenen sichergestellt. Auf der einen Seite können neue Regeln erzeugt werden. Sobald diese die Form der abstrakten Klasse $Rule$ übernehmen, können sie in Regelsets zum Einsatz kommen. Ein Beispiel für eine solche Erweiterung ist die Regel $GraphRule$. Sie wurde später der entwickelten Lösung hinzugefügt. Das neue RuleSet $GraphRuleSet$ beinhaltet in diesem speziellen Fall nur eine Regel.
+Die Erweiterbarkeit ist auf mehreren Ebenen sichergestellt. Auf der einen Seite können neue Regeln erzeugt werden. Sobald diese die Form der abstrakten Klasse $Rule$ übernehmen, können sie in Regelsets zum Einsatz kommen. Ein Beispiel für eine solche Erweiterung ist die Regel $GraphRule$. Sie wurde später der entwickelten Lösung hinzugefügt. Die neue Regelmenge $GraphRuleSet$ beinhaltet in diesem speziellen Fall nur eine Regel.
 
 Eine weitere Möglichkeit zur Erweiterung wurde ebenfalls von $GraphRule$ genutzt. GraphRule gibt nicht nur einen einzelnen neuen Planknoten zurück, sondern übergibt gleich einen vollständig expandierten Baum. Auch diese Anforderung konnte ohne Veränderung des Interfaces umgesetzt werden. Da der Planknoten ein $next$ Attribut besitzt, das den vorhergehenden mit dem nächsten Knoten verbindet, können Ketten von neuen Knoten gebildet werden. Diese Ketten werden im Falle der $GraphRule$ zurückgegeben ohne dabei das Interface zu brechen.
 

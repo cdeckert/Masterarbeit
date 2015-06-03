@@ -32,7 +32,16 @@ public:
 		return aPlanNode.getOperator() == JOIN &&
 		isApplicable(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
 	};
-    
+	/**
+	 * @brief checks whether or not left associativity is applicable
+	 * @details left associativity is applicable in case the given operation is
+	 * "JOIN" the left descendant node is a join
+	 *
+	 * @param aPlanNode a given plan node
+	 * @param left the left node
+	 * @param right the right node
+	 * @return true in case the rule is applicable
+	 */
     bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
     {
         return aPlanNode.getOperator() == JOIN && left.getOperator() == JOIN && aPlanNode.r().isOverlapping(left.r());
@@ -45,7 +54,9 @@ public:
 	{
         return apply(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
     };
-    
+	/**
+	 * @brief apply left associativity
+	 */
     PlanNode_t * apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right)  const override
     {
         return & this->o.joinPN(left.l(), *this->o.join(left.r(), aPlanNode.r()));
