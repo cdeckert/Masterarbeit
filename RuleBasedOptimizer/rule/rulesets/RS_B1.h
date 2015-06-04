@@ -34,7 +34,7 @@ public:
 	RS_B1() : RuleSet<Rule_t>()
 	{
 		this->_rules.push_back(new Commutativity_t());
-		this->_rules.push_back(new Swap_t());
+		this->_rules.push_back(new LeftAssociativity_t());
 	};
 
 private:
