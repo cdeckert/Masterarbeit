@@ -1,4 +1,8 @@
-\section{Überblick über den Optimierungsvorgang}
+\section{Überblick und Einordnung des Optimierers}
+
+\subsection{Überblick über den Optimierungsvorgang}
+
+
 Die Ausführung des Programms geschieht in drei Schritten (vgl. Abb. \ref{Ablauf}): (1) Konfiguration, (2) Generierung von semantisch gleichen Plänen, (3) Finden des optimalen Plans.
 
 \begin{figure}[h]
@@ -14,24 +18,24 @@ Im ersten Schritt, wird auf Grund von externen Parametern das System konfigurier
 \begin{itemize}
 \item Relationen und deren Kardinalität 
 \item JoinEdges und deren Selektvität
-\item Inital-Plan
+\item Initial-Plan
 \item Regelsets
 \end{itemize}
 
-Mit Hilfe der Relationen und deren Kardinalität kann später im Zusammenspiel mit JoinEdges und Selektvitität die Kosten für einen Plan berechnet werden. Der initale Plan dient als Startpunkt der Transformation. Auf ihn werden die Regelsets angewendet und so logisch äquivalente erzeugt.
+Mit Hilfe der Relationen und deren Kardinalität können später im Zusammenspiel mit JoinEdges und Selektivitität die Kosten für einen Plan berechnet werden. Der initiale Plan dient als Startpunkt der Transformation. Auf ihn werden die Regelsets angewendet und so logische  Äquivalente erzeugt.
 
-Zu Beginn des zweiten Schritts, der Erzeugung von äquivalenten Plänen, wird die Zeitmessung gestartet.  Mit Hilfe von Exektuoren werden die unterschiedlichen Regelsets auf den Initialen Plan angewendet. Für jeden Knoten wird zuerst festgestellt, ob er bereits expanded wurde. Falls das nicht der Fall ist, wird geprüft, ob eine Regel aus dem Regelset anwendbar ist, ist das der Fall, kommt die Regel zum Einsatz. Nur wenn der neu-erzeugte Plan bisher noch unbekannt ist, wird er einer Äquivalenzklasse hinzugefügt.
+Zu Beginn des zweiten Schritts, der Erzeugung von äquivalenten Plänen, wird die Zeitmessung gestartet.  Mit Hilfe von Exektoren werden die unterschiedlichen Regelsets auf den Initialen Plan angewendet. Für jeden Knoten wird zuerst festgestellt, ob er bereits expanded wurde. Falls das nicht der Fall ist, wird geprüft, ob eine Regel aus dem Regelset anwendbar ist. 
 
 In einem finalen Schritt wird findet die Kostenberechnung statt und aus den möglichen Plänen wird der günstigste ausgewählt. Diese Preisberechnung findet im Modul der Kostenschätzung statt.
 
 
-\section{Unterschiede zu Volcano und Pyro(J)}
+\subsection{Unterschiede zu Volcano und Pyro(J)}
 
-Einer der fundamentalen Unterschiede zwischen Pyro bzw. Volcano zur hier vorgestellten Implementierung ist, dass sowohl Volcano als auch Pyro vollständige Optimierer sind. Sie erstellen basierend auf einer Anfrage einen physischen Plan, der dann weiterverarbeitet werden kann. Im Gegensatz dazu wird für diese Masterarbeit nur das Join-Ordering betrachtet und daher auch nur das Join-Ordering implementiert.
+Einer der fundamentalen Unterschiede zwischen Pyro bzw. Volcano zur hier vorgestellten Implementierung ist, dass sowohl Volcano als auch Pyro vollständige Optimierer sind. Sie erstellen basierend auf einer Anfrage einen physischen Plan, der dann weiterverarbeitet werden kann. Im Gegensatz dazu wird für diese Masterarbeit nur das Anpassen der Join-Reihenfolge betrachtet und daher auch nur das Anpassen der Join-Reihenfolge implementiert.
 
 
-Ebenfalls wird von Volcano und Pyro immer ein physischer Plan erzeugt. Dies geschieht in dieser Implementierung nicht. Es werden somit nur für die logischen Pläne alternativen gefunden und aus diesen alternativen der günstigste Plan ausgewählt. Dies geschieht, da für die Überprüfung der Regelsets RS-B0, RS-B1, RS-B2 und GraphRule keine pysischen Pläne notwendig sind. Die unterschiedlichen Rulesets widmen sich nicht dem berechnen von physischen Alternativen, sondern finden alternative Join-Reihenfolgen. Falls alle Pläne gefunden werden, wäre der Aufwand für die Umwandlung in physische Pläne für alle Rulesets gleich. Daher trägt die Umwandlung und weitere Expansion nicht zu unterschieden in der Expansionsgeschwindigkeit bei.
+Ebenfalls wird von Volcano und Pyro immer ein physischer Plan erzeugt. Dies geschieht in dieser Implementierung nicht. Es werden somit nur für die logischen Pläne Alternativen gefunden und aus diesen Alternativen der günstigste Plan ausgewählt. Dies geschieht, da für die Überprüfung der Regelsets RS-B0, RS-B1, RS-B2 und GraphRule keine pysischen Pläne notwendig sind. Die unterschiedlichen Regelmengen widmen sich nicht dem Berechnen von physischen Alternativen, sondern dem Finden alternativer Join-Reihenfolgen. Falls alle Pläne gefunden werden, wäre der Aufwand für die Umwandlung in physische Pläne für alle Regelmengen gleich. Daher trägt die Umwandlung und weitere Expansion nicht zu Unterschieden in der Expansionsgeschwindigkeit bei.
 
-Ein weiterer Unterschied zu Volcano ist es, dass alle Pläne direkt berechnet werden und aus allen Plänen dann der günstigste Plan ausgewählt wird. Volcano berechnet zuerst einen Plan und wählt dann aus der Menge der physischen Pläne den günstigsten aus, bevor der nächste logische Plan berechnet wird und nur falls ein günstigerer Plan gefunden wird, dieser auch im Speicher behalten wird. Im Gegensatz zu diesem sehr ressourcensparenden Verfahren setzt Pyro und die eigen Implementierung auf Pläne die dauerhaft vorgehalten werden. Dies erleichtert das Debugging, da alle Pläne jederzeit betrachtet werden können, erhöht aber den Verbrauch an Arbeitsspeicher.
+Ein weiterer Unterschied zu Volcano ist, dass alle Pläne direkt berechnet werden und  anschließend aus allen Plänen der günstigste Plan ausgewählt wird. Volcano berechnet zuerst einen Plan und wählt dann aus der Menge der physischen Pläne den günstigsten aus, bevor der nächste logische Plan berechnet wird. Nur falls ein günstigerer Plan gefunden wird, wird dieser auch im Speicher behalten. Im Gegensatz zu diesem sehr ressourcensparenden Verfahren setzt Pyro und die eigen Implementierung auf Pläne die dauerhaft vorgehalten werden. Dies erleichtert das Debugging, da alle Pläne jederzeit betrachtet werden können, erhöht aber den Verbrauch an Arbeitsspeicher.
 
-Neben diesen konzeptionellen Unterschieden setzt die implementierte Lösung wie Pyro oder Volcano auf C++ als Programmiersprache. Im Gegensatz zu diesen Implementierungen setzt PyroJ auf Java und die Java Plattform, die per se mit schlecht beeinflussbaren Faktoren wie Garbage Collection, Virtuellen Machinen und JIT-Compilern zu kämpfen hat. Wie bereits in Kapitel \ref{} besprochen, mussten bei den Messungen mit PyroJ diverse Parameter gesetzt werden, um überhaupt reproduzierbare Ergebnisse zu erzeugen. Um solchen Problemen vorzubeugen, wurde vollständig auf C++ für die Implementierung gesetzt. Da der Code zur Laufzeit bereits vollständig kompiliert ist, können Probleme durch einen JIT Compiler und Optimierungen zur Laufzeit ausgeschlossen werden. Unterbrechungen durch eine Garbage Collection können nicht auftreten, da keine vorhanden ist.
+Neben diesen konzeptionellen Unterschieden setzt die implementierte Lösung wie Pyro oder Volcano auf C++ als Programmiersprache). Im Gegensatz zu diesen Implementierungen setzt PyroJ auf Java und die Java Plattform, die per se mit schlecht beeinflussbaren Faktoren wie Garbage Collection, Virtuellen Maschinen und JIT-Compilern zu kämpfen hat. Wie bereits in Kapitel \ref{} besprochen, mussten bei den Messungen mit PyroJ diverse Parameter gesetzt werden, um überhaupt reproduzierbare Ergebnisse zu erzeugen. Um solchen Problemen vorzubeugen, wurde vollständig auf C++ für die Implementierung gesetzt. Da der Code zur Laufzeit bereits vollständig kompiliert ist, können Probleme durch einen JIT Compiler und Optimierungen zur Laufzeit ausgeschlossen werden. Unterbrechungen durch eine Garbage Collection können nicht auftreten, da keine vorhanden sind.
