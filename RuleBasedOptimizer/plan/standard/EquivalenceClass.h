@@ -260,7 +260,6 @@ public:
 	 */
 	Operator getOperator() const
 	{
-		throwExceptionInCaseEqWasExpended();
 		return _first->getOperator();
 	};
 
@@ -270,7 +269,6 @@ public:
 	 */
 	inline std::string getOperatorAsString() const
 	{
-		throwExceptionInCaseEqWasExpended();
 		return _first->getOperatorAsString();
 	};
 
@@ -283,7 +281,6 @@ public:
 	 */
 	self_type &getLeft() const
 	{
-		throwExceptionInCaseEqWasExpended();
 		return _first->getLeft();
 	};
 
@@ -305,7 +302,6 @@ public:
 	 */
 	inline self_type &getRight() const
 	{
-		throwExceptionInCaseEqWasExpended();
 		return _first->getRight();
 	};
 
@@ -373,7 +369,7 @@ public:
 	};
 
 
-	inline PlanNode_t getBest() const
+	inline PlanNode_t & getBest() const
 	{
 		return *_best;
 	};
@@ -425,21 +421,6 @@ private:
 	};
 	
 	
-
-	/**
-	 * @brief thows exception in case the eq was explored before
-	 * @details In case the equivalence class was explored before it is not
-	 * possible to determin the "correct" left / right / operator because
-	 * a bunch of logical equal plans are in place
-	 *
-	 */
-	void throwExceptionInCaseEqWasExpended() const
-	{
-		if (_explored)
-		{
-			//throw;
-		}
-	}
 };
 
 
