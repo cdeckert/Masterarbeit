@@ -18,7 +18,7 @@ Der Ablauf der Ausführung (vgl. \ref{StarburstFlow}) ist vergleichbar mit dem A
 
 Zur Compile-Time wird eine gegebene Anfrage - die Anfrage ist in Hydrogen (ähnlich SQL) formuliert - auf semantische Korrektheit geprüft und in ein \ac{QGM} übersetzt.
 
-Der wichtigste Teil eines \ac{QGM} ist der Select-Operator. In diesem findet sich eine Projektionsliste und das Anfrageprädikat in Graphform. Die Knoten des Graphen referenzieren Relationen oder weitere \ac{QGM}-Operatoren. Mengenbegrenzungen\todo{was ist das?} tragen zur Erzeugung des Ergebnisses eines Operators bei, Quantoren zu dessen Einschränkung. Die Kanten des Graphen sind mit Predikaten wie insert, update, intersection, union oder group-by markiert. Neben dem Graphen enthält das \ac{QGM} auch aus Schema- und statistische Informationen. 
+Der wichtigste Teil eines \ac{QGM} ist der Select-Operator. In diesem findet sich eine Projektionsliste und das Anfrageprädikat in Graphform. Die Knoten des Graphen referenzieren Relationen oder weitere \ac{QGM}-Operatoren. Mengenbegrenzungen \todo{was ist das?}  tragen zur Erzeugung des Ergebnisses eines Operators bei, Quantoren zu dessen Einschränkung. Die Kanten des Graphen sind mit Predikaten wie insert, update, intersection, union oder group-by markiert. Neben dem Graphen enthält das \ac{QGM} auch aus Schema- und statistische Informationen. 
 
 Basierend auf diesem \ac{QGM} wird die Optimierung der Anfrage zuerst durch einen Query Rewriter, einen Plan Optimierer und einen Plan Refiner durchgeführt.
 

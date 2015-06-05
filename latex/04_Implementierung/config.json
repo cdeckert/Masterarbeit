@@ -1,0 +1,21 @@
+[{  
+   "name":"test",
+   "relations":[  
+      { "id":1, "cardinality":10 },
+      { "id":2, "cardinality":20 }
+   ],
+   "joinEdges":[  
+      { "from":1, "to":2, "selectivity":0.5 }
+   ],
+   "algorithms":[ "RS_B0", "RS_B1", "RS_B2" ],
+   "inital_tree":{  
+      "op":"join",
+      "l":{  
+         "op":"scan", "l":1, "relations":1
+      },
+      "r":{  
+         "op":"scan", "l":2, "relations":2
+      },
+      "relations":"JOIN(1, 2)"
+   }
+}]

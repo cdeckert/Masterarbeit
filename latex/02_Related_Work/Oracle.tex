@@ -12,7 +12,7 @@
 
 Die Oracle Architektur zur Verarbeitung von Anfragen \cite{Oracle2004Basics}  (vgl. Abb. \ref{OracleArchitecture})  beginnt wie die meisten Systeme mit einer SQL Anfrage, die von einem Parser in eine Interne Repräsentation gebracht wird. Der Parser übernimmt dabei zwei Funktionen. Auf der einen Seite die syntaktische Analyse. Es wird geprüft, ob die SQL Anfrage die korrekte Syntax besitzt. Auf der anderen Seite eine semantische Analyse. Diese prüft beispielsweise ob Datenbank Objekte und Objekt-Attribute  korrekt referenziert werden. 
 
-Einer der grossen Unterschiede war bis zu Version 11g der Oracle Datenbank die Verwendung von \ac{RBO} und \ac{CBO}. Je nach Anfrage konnte durch den \ac{DBI} entschieden werden ob \ac{RBO} bzw. \ac{CBO} zu Einsatz kommt. Mit Version 11g ist diese Möglichkeit weggefallen \cite{dba_oracle2015}. 
+Einer der großen Unterschiede war bis zu Version 11g der Oracle Datenbank die Verwendung von \ac{RBO} und \ac{CBO}. Je nach Anfrage konnte durch den \ac{DBI} entschieden werden ob \ac{RBO} bzw. \ac{CBO} zu Einsatz kommt. Mit Version 11g ist diese Möglichkeit weggefallen \cite{dba_oracle2015}. 
 
 Der \ac{QO} führt bei der Verarbeitung die folgenden drei Schritte aus:
 
@@ -23,7 +23,7 @@ Der \ac{QO} führt bei der Verarbeitung die folgenden drei Schritte aus:
 
 Die Kostenschätzung für den Zugriff auf entsprechende Datensätze und die Reihenfolge der Joins wird nach ihrem Verbrauch von Ressourcen wie I/O, CPU und Memory geschätzt.
 
-Pläne mit höheren Kosten benötigen mehr Zeit zur Ausführung als Pläne mit niedrigeren Kosten. Falls Pläne parallel ausgeführt werden können, ist die Ressourcen Nutzung nicht direkt abhängig von der verwendeten Zeit.
+Pläne mit höheren Kosten benötigen mehr Zeit zur Ausführung, als Pläne mit niedrigeren Kosten. Falls Pläne parallel ausgeführt werden können, ist die Ressourcen Nutzung nicht direkt abhängig von der verwendeten Zeit.
 
 \item Der Optimierer vergleicht die Kosten der Pläne und wählt den kostengünstigsten Plan aus.
 \end{itemize}
@@ -52,7 +52,7 @@ Transformation derective und cost annotations
 
 Unterschiedliche Transformationsregeln werden auf unterschiedliche Teile der Anfrage angewendet. So kann beispielsweise die Entschachtelung nur auf verschachtelte Elemente der Anfrage angewendet werden. 
 
-Die Bäume werden während der Optimierung Bottom up transformiert. Verschiedene Alternativen für eine oder mehrere Transformationen für Elemente in einem Query Tree generieren unterschiedliche States innerhalb des State Space of Transformation. Eine Deep copy wird gemacht bevor ein bestimmter Status erreicht wird und dessen Kosten durch den Aufruf des physischen Optimierers geschätzt werden. Die Evaluation von jedem States der Transformationsstage, der die besten Kosten bietet wird zurück auf den Ursprungstree angewendet.
+Die Bäume werden während der Optimierung Bottom up transformiert. Verschiedene Alternativen für eine oder mehrere Transformationen für Elemente in einem Query Tree generieren unterschiedliche States innerhalb des State Space of Transformation. Eine Deep copy wird gemacht, bevor ein bestimmter Status erreicht wird und dessen Kosten durch den Aufruf des physischen Optimierers geschätzt werden. Die Evaluation von jedem States der Transformationsstage, der die besten Kosten bietet wird zurück auf den Ursprungstree angewendet.
 
 Die Oracle Transformationen werden immer hintereinander angewendet. Eine Transformatiosnregel wird immer auf den ganzen Baum angewendet, erst danach folgt die nächste Regel. Die Reihenfolge ist diese: Common sub expression factorization, JPS view merging, join elimination, subquery unnesting, group by distinct view merging, group pruning, predicate move around, set operator factorization, disjunction into union-all exansion, star transfomration and join predicate pushdown. Von dieser Reihenfolge kann jedoch in bestimmten Fällen abgewichen werden. 
 

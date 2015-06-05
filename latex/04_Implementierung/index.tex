@@ -8,7 +8,21 @@ In diesem Kapitel wird die Implementierung des Plan Generators näher erläutert
 \input{04_Implementierung/Ablauf.tex}
 %\input{04_Implementierung/Organisation.tex}
 
+\input{04_Implementierung/Nodes.tex}
+\input{04_Implementierung/Rules.tex}
+
+
+
 \input{04_Implementierung/Architektur.tex}
 
 
+\subsection{Unterschiede zu Volcano und Pyro(J)}
 
+Einer der fundamentalen Unterschiede zwischen Pyro bzw. Volcano zur hier vorgestellten Implementierung ist, dass sowohl Volcano als auch Pyro vollständige Optimierer sind. Sie erstellen basierend auf einer Anfrage einen physischen Plan, der dann weiterverarbeitet werden kann. Im Gegensatz dazu wird für diese Masterarbeit nur das Anpassen der Join-Reihenfolge betrachtet und daher auch nur das Anpassen der Join-Reihenfolge implementiert.
+
+
+Ebenfalls wird von Volcano und Pyro immer ein physischer Plan erzeugt. Dies geschieht in dieser Implementierung nicht. Es werden somit nur für die logischen Pläne Alternativen gefunden und aus diesen Alternativen der günstigste Plan ausgewählt. Dies geschieht, da für die Überprüfung der Regelsets RS-B0, RS-B1, RS-B2 und GraphRule keine pysischen Pläne notwendig sind. Die unterschiedlichen Regelmengen widmen sich nicht dem Berechnen von physischen Alternativen, sondern dem Finden alternativer Join-Reihenfolgen. Falls alle Pläne gefunden werden, wäre der Aufwand für die Umwandlung in physische Pläne für alle Regelmengen gleich. Daher trägt die Umwandlung und weitere Expansion nicht zu Unterschieden in der Expansionsgeschwindigkeit bei.
+
+Ein weiterer Unterschied zu Volcano ist, dass alle Pläne direkt berechnet werden und  anschließend aus allen Plänen der günstigste Plan ausgewählt wird. Volcano berechnet zuerst einen Plan und wählt dann aus der Menge der physischen Pläne den günstigsten aus, bevor der nächste logische Plan berechnet wird. Nur falls ein günstigerer Plan gefunden wird, wird dieser auch im Speicher behalten. Im Gegensatz zu diesem sehr ressourcensparenden Verfahren setzt Pyro und die eigen Implementierung auf Pläne die dauerhaft vorgehalten werden. Dies erleichtert das Debugging, da alle Pläne jederzeit betrachtet werden können, erhöht aber den Verbrauch an Arbeitsspeicher.
+
+Neben diesen konzeptionellen Unterschieden setzt die implementierte Lösung wie Pyro oder Volcano auf C++ als Programmiersprache). Im Gegensatz zu diesen Implementierungen setzt PyroJ auf Java und die Java Plattform, die per se mit schlecht beeinflussbaren Faktoren wie Garbage Collection, Virtuellen Maschinen und JIT-Compilern zu kämpfen hat. Wie bereits in Kapitel \ref{} besprochen, mussten bei den Messungen mit PyroJ diverse Parameter gesetzt werden, um überhaupt reproduzierbare Ergebnisse zu erzeugen. Um solchen Problemen vorzubeugen, wurde vollständig auf C++ für die Implementierung gesetzt. Da der Code zur Laufzeit bereits vollständig kompiliert ist, können Probleme durch einen JIT Compiler und Optimierungen zur Laufzeit ausgeschlossen werden. Unterbrechungen durch eine Garbage Collection können nicht auftreten, da keine vorhanden sind.

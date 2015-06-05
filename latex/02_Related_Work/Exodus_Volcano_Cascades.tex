@@ -34,7 +34,7 @@ Allen Regeln ist gemein, dass sie wie bereits beschrieben aus zwei Teilen besteh
 
 Diese Regeln werden gemeinsam mit Hilfe des Optimizer Generators in C Code umgewandelt, der dann wie jeder andere Query-Optimizer verwendet werden kann. 
 
-Bei der Anwendung der Regeln wird zuerst geprüft welche Regeln anwendbar sind. Diese Regeln werden in der Liste OPEN abgelegt. Durch einen Auswahlmechanismus wird festgelegt, welche Regel zum Einsatz kommt. Nachdem eine Regeln angewendet wurde wird sie aus der OPEN Liste entfernt. Regelanwendungen, die durch deise Transformation möglich wurden, werden der OPEN Liste hinzugefügt. Der Auswahlmechanismus sieht vor, dass die poteniell gebildeteten Pläne auf Grund ihrer Kosten bewertet werden und die Regel ausgeführt wird, die zum günstigsten Plan führt. Die Suchstrategie wird als Hill climbing bezeichnet.
+Bei der Anwendung der Regeln wird zuerst geprüft, welche Regeln anwendbar sind. Diese Regeln werden in der Liste OPEN abgelegt. Durch einen Auswahlmechanismus wird festgelegt, welche Regel zum Einsatz kommt. Nachdem eine Regel angewendet wurde, wird sie aus der OPEN Liste entfernt. Regelanwendungen, die durch diese Transformation möglich wurden, werden der OPEN Liste hinzugefügt. Der Auswahlmechanismus sieht vor, dass die potenziell gebildeteten Pläne auf Grund ihrer Kosten bewertet werden und die Regel ausgeführt wird, die zum günstigsten Plan führt. Die Suchstrategie wird als Hill climbing bezeichnet.
 
 Einer der Nachteile dieses Ansatzes ist es, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Auch Graefe selbst sieht einige weitere Nachteile \cite{graefe1993volcano}:
 
@@ -42,7 +42,7 @@ Einer der Nachteile dieses Ansatzes ist es, dass Pläne nicht bzgl. ihrer Güte 
 \item nicht-triviale Kostenmodelle
 \item keine Eigenschaften
 \item keine Heuristiken
-\item keine Transformation von Subscripten von Algebraischen Operatoren nach algebraische Operatoren
+\item keine Transformation von Subscripten von algebraischen Operatoren nach algebraische Operatoren
 \end{itemize}
 
 
@@ -67,13 +67,13 @@ Der Volcano Optimizer wurde von Grund auf neu entwickelt und begegnet den von Gr
 
 \item Das dritte Prinzip betrifft die Eingabe des Optimierers. Im Gegensatz zu anderen Optimierern (namentlich Starbust) setzt der Volcano Optimizer auf algebraische Äquivalenzen als Eingabe Parameter. Andere Systeme nutzen hier mehrere Stufen an Umwandlung, um zwischen Query und Optimizer Eingabe zu vermitteln. 
 
-\item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer daduch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen. Diese Möglichkeit wird jedoch in der Praxis nicht benötigt.
+\item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer daduch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen. Jedoch wird diese Möglichkeit in der Praxis nicht benötigt. 
 
 \item Das letzte Prinzip ist, dass der Volcano Optimierer auf dynamisches Programmieren bei der Generierung von Programmen setzt. \todo{Unklar}
 \end{enumerate}
 
 
-Wie bereits zuvor wird der Ausdurck in einen Operatorbaum umgewandelt. Transformationsregeln und Implementierungsregeln kommen bei der Optimierung zum Einsatz. Eine Trennung zwischen Optimierung auf logischer und auf physischer Ebene findet nicht statt. Es wird zuerst ein logischer Ast erzeugt und für diesen Ast unterschiedliche physische Pläne generiert. Diese Pläne werden auf Basis ihrer Kosten verglichen nur der günstigste Plan beleibt bestehen und wird gespeichert. Ist bereits ein Plan vorhanden, so wird nur der günstigste Plan im Speicher behalten. Bei der Generierung kommt zudem eine Memo-Struktur zum Einsatz. In einer Hashtabelle wird geprüft ob eine Transformation bereits bekannt ist. Wenn das der Fall ist, wird diese Transformation verwendet und somit doppelter Berechnungsaufwand gespart und die bekannte Transformation stattdessen referenziert.
+Wie bereits zuvor wird der Ausdruck in einen Operatorbaum umgewandelt. Transformationsregeln und Implementierungsregeln kommen bei der Optimierung zum Einsatz. Eine Trennung zwischen Optimierung auf logischer und auf physischer Ebene findet nicht statt. Es wird zuerst ein logischer Ast erzeugt, für den dann unterschiedliche physische Pläne generiert werden. Diese Pläne werden auf der Basis ihrer Kosten verglichen, nur der günstigste Plan bleibt bestehen und wird gespeichert. Ist bereits ein Plan vorhanden, so wird nur der günstigste Plan im Speicher behalten. Bei der Generierung kommt zudem eine Memo-Struktur zum Einsatz. In einer Hashtabelle wird geprüft ob eine Transformation bereits bekannt ist. Wenn das der Fall ist, wird diese Transformation verwendet und somit doppelter Berechnungsaufwand gespart und die bekannte Transformation stattdessen referenziert.
 
 Regeln und insbesondere Transformationsregeln, die bei der Transformation im Bereich JOIN-Reihenfolgeänderung verwendet werden, werden in \ref{sec:pellenkoftRulesets} beschrieben.
 
