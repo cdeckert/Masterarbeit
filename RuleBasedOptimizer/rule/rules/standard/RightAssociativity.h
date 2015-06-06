@@ -23,38 +23,38 @@ public:
 	 * @details right associativity is applicable in case the given operation
 	 * is "JOIN" the left descendant node is a join
 	 *
-	 * @param aPlanNode a given plan node
+	 * @param parentNode a given plan node
 	 * @return true in case the rule is applicable
 	 */
-	bool isApplicable(PlanNode_t & aPlanNode) const override
+	bool isApplicable(PlanNode_t & parentNode) const override
 	{
         // IF (A ⨝ (B ⨝ C))
-        return aPlanNode.getOperator() == JOIN && isApplicable(aPlanNode, * aPlanNode.l().getFirst(), * aPlanNode.r().getFirst());
+        return parentNode.getOperator() == JOIN && isApplicable(parentNode, * parentNode.l().getFirst(), * parentNode.r().getFirst());
     };
     
-    bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
+    bool isApplicable(PlanNode_t & parentNode, PlanNode_t & left, PlanNode_t & right) const override
     {
-        return aPlanNode.getOperator() == JOIN && right.getOperator() == JOIN && aPlanNode.l().isOverlapping(right.l());
+        return parentNode.getOperator() == JOIN && right.getOperator() == JOIN && parentNode.l().isOverlapping(right.l());
     };
 
     /**
     * @brief [brief description]
     * @details [long description]
     *
-    * @param aPlanNode [description]
+    * @param parentNode [description]
     * @return [description]
     */
-    PlanNode_t * apply(PlanNode_t & aPlanNode) const override
+    PlanNode_t * apply(PlanNode_t & parentNode) const override
     {
-        return apply(aPlanNode, *aPlanNode.l().getFirst(), *aPlanNode.r().getFirst());
+        return apply(parentNode, *parentNode.l().getFirst(), *parentNode.r().getFirst());
     };
     
-    PlanNode_t * apply(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right)  const override
+    PlanNode_t * apply(PlanNode_t & parentNode, PlanNode_t & left, PlanNode_t & right)  const override
     {
-        return & this->o.joinPN(*this->o.join(aPlanNode.l(), right.l()), right.r());
+        return & this->o.joinPN(*this->o.join(parentNode.l(), right.l()), right.r());
     };
     
-    std::string getName()  const override { return "RightAssociativity.h"; };
+    std::string getName()  const override { return "RightAssociativity"; };
 
 };
 

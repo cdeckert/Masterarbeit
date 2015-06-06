@@ -5,7 +5,7 @@ Das Volcano Projekt mit seinem Vorgänger \ac{EXODUS} und dem Nachfolger Cascade
 \subsubsection{Exodus}
 
 
-Bereits in den 1970er Jahren begann Graefe mit der Implementierung eines DBMS Frameworks unter dem Titel EXODUS \cite{carey1990exodus} . Das Projekt, das die Grundlage für Volcano legen sollte, hatte sich zum Ziel gesetzt, einen erweiterbaren, applikationsspezifischen und hochperformanten Baukasten zusammenzustellen, mit dessen Hilfe neue Datenbanksysteme generiert werden konnten. 
+Bereits in den 1970er Jahren begann Graefe mit der Implementierung eines DBMS Frameworks unter dem Titel EXODUS \cite{carey1990exodus}.  Das Projekt, das die Grundlage für Volcano legen sollte, hatte sich zum Ziel gesetzt, einen erweiterbaren, applikationsspezifischen und hochperformanten Baukasten zusammenzustellen, mit dessen Hilfe neue Datenbanksysteme generiert werden konnten. 
 
 Im Gegensatz zu konventionellen DBMS wie System R oder Starburst handelt es sich bei EXODUS nicht um ein funktionsfähiges und sofort einsatzfähiges DBMS, sondern um einen Baukasten, auf dessen Basis ein neues System durch einen \ac{DBI} erstellt werden kann. Im Gegensatz zu anwendungsübergreifend designten DBMS wie Postgres bietet EXODUS den Vorteil, dass eine Datenbank speziell an die Bedürfnisse eines Anwendungsfalles angepasst ist und so die Anforderungen einer Anwendung passgenau erfüllt. Um dennoch das Ziel der Performance nicht aus den Augen zu verlieren, werden viele Komponenten nicht immer wieder auf einer grünen Wiese entwickelt, sondern auf dem Fundament des EXODUS Baukastens aufgebaut.
 
@@ -25,7 +25,7 @@ Zwischen der kompilierten Anfrage und dem Storage Manager kommen zwei Komponente
 Bei der Implementierung eines Optimierers kommen grundsätzlich zwei mögliche Ansätze in Frage: (1) interpretierte und (2) kompilierte Programmiersprachen. Bei EXODUS wurde zuerst die Implementierung mittels sog.\"AI\" Sprachen versucht. In einem Prototypen wurde mit Hilfe von Prolog ein Optimierer entwickelt. Für Prolog hat man sich entschieden, da diese Sprache Pattern Matching und eine Search Engine bereitstellt. (Auch unification konnte zum Einsatz gebracht werden, um elegant Query Trees zu erstellen.) Der Hauptvorteil eines interpretierten Ansatzes war aus Sicht von EXODUS die Möglichkeit neue Regeln zur Laufzeit des Programms hinzuzufügen. Trotz dieser Vorteile wurde der Ansatz als zu langsam verworfen. Auch der Vorteil Regeln während der Laufzeit hinzuzufügen, wird in der Literatur \todo{QUELLE} als wenig nützlich bewertet. Statt dieses Ansatzes wurde in der Folge auf die Erstellung eines Generators, der in C geschrieben wurde, gesetzt. Der Generator erstellt basierend auf Regeln einen Optimierer in C, der wiederum kompiliert werden kann. Zwar war die Entwicklung des C Generators aufwändiger als die Implementierung in Prolog, jedoch konnte auf applikationsspezifische Notwendigkeiten, wie die Implementierung von speziellen Suchverfahren, punktgenau eingegangen werden.
 
 
-Die Generierung des Optimierters geschieht auf Basis eines Description-Files. Dieses File setzt sich aus drei Komponenten zusammen: Operatoren, Methoden und Regeln.
+Die Generierung des Optimierers geschieht auf Basis eines Description-Files. Dieses File setzt sich aus drei Komponenten zusammen: Operatoren, Methoden und Regeln.
 
 
 Die Operatoren bezeichnen die logische Algebra. Die Methoden werden in der physischen Algebra verwendet. Ebenfalls sind Transformationen Teil des Description-Files. Es wird zwischen zwei Arten an Regeln unterschieden: Transformationsregeln und Implementierungsregeln. Implementierungsregeln kommen bei der Übersetzung von logischer in physische Algebra zum Einsatz. Transformationsregeln sind für die Erzeugung von alternativen Plänen verantwortlich.
@@ -34,15 +34,15 @@ Allen Regeln ist gemein, dass sie wie bereits beschrieben aus zwei Teilen besteh
 
 Diese Regeln werden gemeinsam mit Hilfe des Optimizer Generators in C Code umgewandelt, der dann wie jeder andere Query-Optimizer verwendet werden kann. 
 
-Bei der Anwendung der Regeln wird zuerst geprüft welche Regeln anwendbar sind. Diese Regeln werden in der Liste OPEN abgelegt. Durch einen Auswahlmechanismus wird festgelegt, welche Regel zum Einsatz kommt. Nachdem eine Regeln angewendet wurde wird sie aus der OPEN Liste entfernt. Regelanwendungen, die durch deise Transformation möglich wurden, werden der OPEN Liste hinzugefügt. Der Auswahlmechanismus sieht vor, dass die poteniell gebildeteten Pläne auf Grund ihrer Kosten bewertet werden und die Regel ausgeführt wird, die zum günstigsten Plan führt. Die Suchstrategie wird als Hill climbing bezeichnet.
+Bei der Anwendung der Regeln wird zuerst geprüft, welche Regeln anwendbar sind. Diese Regeln werden in der Liste OPEN abgelegt. Durch einen Auswahlmechanismus wird festgelegt, welche Regel zum Einsatz kommt. Nachdem eine Regel angewendet wurde, wird sie aus der OPEN Liste entfernt. Regelanwendungen, die durch diese Transformation möglich wurden, werden der OPEN Liste hinzugefügt. Der Auswahlmechanismus sieht vor, dass die potenziell gebildeteten Pläne auf Grund ihrer Kosten bewertet werden und die Regel ausgeführt wird, die zum günstigsten Plan führt. Die Suchstrategie wird als Hill climbing bezeichnet.
 
-Einer der Nachteile dieses Ansatzes ist es, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Auch Graefe selbst sieht einige weitere Nachteile \cite{graefe1993volcano}:
+Einer der Nachteile dieses Ansatzes ist, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Auch Graefe selbst sieht einige weitere Nachteile \cite{graefe1993volcano}:
 
 \begin{itemize}
 \item nicht-triviale Kostenmodelle
 \item keine Eigenschaften
 \item keine Heuristiken
-\item keine Transformation von Subscripten von Algebraischen Operatoren nach algebraische Operatoren
+\item keine Transformation von Subscripten von algebraischen Operatoren nach algebraische Operatoren
 \end{itemize}
 
 
@@ -67,13 +67,13 @@ Der Volcano Optimizer wurde von Grund auf neu entwickelt und begegnet den von Gr
 
 \item Das dritte Prinzip betrifft die Eingabe des Optimierers. Im Gegensatz zu anderen Optimierern (namentlich Starbust) setzt der Volcano Optimizer auf algebraische Äquivalenzen als Eingabe Parameter. Andere Systeme nutzen hier mehrere Stufen an Umwandlung, um zwischen Query und Optimizer Eingabe zu vermitteln. 
 
-\item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer daduch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen. Diese Möglichkeit wird jedoch in der Praxis nicht benötigt.
+\item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer daduch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen. Jedoch wird diese Möglichkeit in der Praxis nicht benötigt. 
 
 \item Das letzte Prinzip ist, dass der Volcano Optimierer auf dynamisches Programmieren bei der Generierung von Programmen setzt. \todo{Unklar}
 \end{enumerate}
 
 
-Wie bereits zuvor wird der Ausdurck in einen Operatorbaum umgewandelt. Transformationsregeln und Implementierungsregeln kommen bei der Optimierung zum Einsatz. Eine Trennung zwischen Optimierung auf logischer und auf physischer Ebene findet nicht statt. Es wird zuerst ein logischer Ast erzeugt und für diesen Ast unterschiedliche physische Pläne generiert. Diese Pläne werden auf Basis ihrer Kosten verglichen nur der günstigste Plan beleibt bestehen und wird gespeichert. Ist bereits ein Plan vorhanden, so wird nur der günstigste Plan im Speicher behalten. Bei der Generierung kommt zudem eine Memo-Struktur zum Einsatz. In einer Hashtabelle wird geprüft ob eine Transformation bereits bekannt ist. Wenn das der Fall ist, wird diese Transformation verwendet und somit doppelter Berechnungsaufwand gespart und die bekannte Transformation stattdessen referenziert.
+Wie bereits zuvor wird der Ausdruck in einen Operatorbaum umgewandelt. Transformationsregeln und Implementierungsregeln kommen bei der Optimierung zum Einsatz. Eine Trennung zwischen Optimierung auf logischer und auf physischer Ebene findet nicht statt. Es wird zuerst ein logischer Ast erzeugt, für den dann unterschiedliche physische Pläne generiert werden. Diese Pläne werden auf der Basis ihrer Kosten verglichen, nur der günstigste Plan bleibt bestehen und wird gespeichert. Ist bereits ein Plan vorhanden, so wird nur der günstigste Plan im Speicher behalten. Bei der Generierung kommt zudem eine Memo-Struktur zum Einsatz. In einer Hashtabelle wird geprüft ob eine Transformation bereits bekannt ist. Wenn das der Fall ist, wird diese Transformation verwendet und somit doppelter Berechnungsaufwand gespart und die bekannte Transformation stattdessen referenziert.
 
 Regeln und insbesondere Transformationsregeln, die bei der Transformation im Bereich JOIN-Reihenfolgeänderung verwendet werden, werden in \ref{sec:pellenkoftRulesets} beschrieben.
 

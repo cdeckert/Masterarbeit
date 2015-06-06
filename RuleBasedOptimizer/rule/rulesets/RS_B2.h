@@ -43,11 +43,11 @@ public:
 template <typename PlanNode_t, typename Operations_t>
 RS_B2<PlanNode_t, Operations_t>::RS_B2() : RuleSet<Rule_t>()
 {
-    LOG(INFO) << "RSB2";
+    //LOG(INFO) << "RSB2";
 	this->push_back(new Commutativity_t());
 	this->push_back(new LeftAssociativity_t());
 	this->push_back(new RightAssociativity_t());
-	this->push_back(new Exchange_t());
+	//this->push_back(new Exchange_t());
 };
 
 #endif

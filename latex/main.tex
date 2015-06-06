@@ -12,6 +12,7 @@
 \usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{lipsum}
 
 
 
@@ -24,6 +25,9 @@
  top=25mm,
  bottom=20mm,
  }
+\lstset{numbers=left,xleftmargin=2em,frame=single,framexleftmargin=1.5em}
+
+
 
 \title{Masterarbeit}
 \author{Christian Deckert}
@@ -49,12 +53,17 @@
 \input{Acronym.tex}
 \newpage
 
+
+\lipsum[1]
+\texttt{\lipsum[1]}
+
+
 \setcounter{page}{1}
 \input{01_Einleitung/index.tex}
 
 \input{02_Related_Work/index.tex}
 
-
+\input{03_Regeln/index.tex}
 
 
 \input{04_Implementierung/index.tex}
@@ -64,6 +73,8 @@
 \input{06_Conclusion/index.tex}
 
 \newpage
+
+\setcounter{page}{1}
 \bibliography{literatur}
 \bibliographystyle{plain}
 

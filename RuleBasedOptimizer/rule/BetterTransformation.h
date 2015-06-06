@@ -132,41 +132,50 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
         }
         i++;
         
-        if(i > 1) LOG(INFO) << "RE RUN";
+        //if(i > 1) LOG(INFO) << "RE RUN";
         
         
         //LOG(INFO) << "RUN: "<< i;
 		isNew = false;
 		for (EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
 		{
+            apply(eq->l());
 			if (eq->hasRight())
 			{
+                apply(eq->r());
 				knownEQSignatures.insert({{eq.node()->getSignature()}});
 				for (EItr leftItr = eq->l().begin(); leftItr.isOK(); ++ leftItr)
 				{
+                    
 					for (EItr rightItr = eq->r().begin(); rightItr.isOK(); ++rightItr)
 					{
-
-						for (Rule_t *r : _ruleset.getRules())
+                        for (Rule_t *r : _ruleset.getRules())
 						{
 							if (r->isApplicable(* eq.node(), * leftItr.node(), * rightItr.node()))
 							{
 								PlanNode_t *p = r->apply(* eq.node(), * leftItr.node(), * rightItr.node());
                                 
                                 
-                                apply(p->l());
-                                if(p->hasRight())apply(p->r());
+                                
+                                
 
 								// if left or right is known
 								if (_knownEquivalenceClasses.count(p->l().getRelations()) != 0)
 								{
 									p->setLeft(& _knownEquivalenceClasses.at(p->l().getRelations()));
 								}
+                                else
+                                {
+                                    apply(p->l());
+                                }
                                 
 								if (_knownEquivalenceClasses.count(p->r().getRelations()) != 0)
 								{
 									p->setRight(& _knownEquivalenceClasses.at(p->r().getRelations()));
 								}
+                                else{
+                                    apply(p->r());
+                                }
 
 								//LOG(WARNING) << "SIG\t\t"<< p->getSignature();
                                 //LOG(INFO) << r->getName();

@@ -29,16 +29,15 @@ public:
 	 * @brief getter for rules
 	 * @return an array of rules
 	 */
-	const Rule_v getRules() const
-	{
-		return _rules;
-	};
+	const Rule_v getRules() const { return _rules; };
+    
+    /**
+     * @brief add rule to ruleset
+     * @param aRule a new rule which is added to the ruleset
+     */
+	void push_back(Rule_t * aRule) { _rules.push_back(aRule); };
 
-	void push_back(Rule_t *aRule)
-	{
-		_rules.push_back(aRule);
-	};
-
+protected:
 	Rule_v _rules;
 };
 

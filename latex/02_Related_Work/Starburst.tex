@@ -18,7 +18,7 @@ Der Ablauf der Ausführung (vgl. \ref{StarburstFlow}) ist vergleichbar mit dem A
 
 Zur Compile-Time wird eine gegebene Anfrage - die Anfrage ist in Hydrogen (ähnlich SQL) formuliert - auf semantische Korrektheit geprüft und in ein \ac{QGM} übersetzt.
 
-Der wichtigste Teil eines \ac{QGM} ist der Select-Operator. In diesem findet sich eine Projektionsliste und das Anfrageprädikat in Graphform. Die Knoten des Graphen referenzieren Relationen oder weitere \ac{QGM}-Operatoren. Mengenbegrenzungen\todo{was ist das?} tragen zur Erzeugung des Ergebnisses eines Operators bei, Quantoren zu dessen Einschränkung. Die Kanten des Graphen sind mit Predikaten wie insert, update, intersection, union oder group-by markiert. Neben dem Graphen enthält das \ac{QGM} auch aus Schema- und statistische Informationen. 
+Der wichtigste Teil eines \ac{QGM} ist der Select-Operator. In diesem findet sich eine Projektionsliste und das Anfrageprädikat in Graphform. Die Knoten des Graphen referenzieren Relationen oder weitere \ac{QGM}-Operatoren. Mengenbegrenzungen \todo{was ist das?}  tragen zur Erzeugung des Ergebnisses eines Operators bei, Quantoren zu dessen Einschränkung. Die Kanten des Graphen sind mit Predikaten wie insert, update, intersection, union oder group-by markiert. Neben dem Graphen enthält das \ac{QGM} auch aus Schema- und statistische Informationen. 
 
 Basierend auf diesem \ac{QGM} wird die Optimierung der Anfrage zuerst durch einen Query Rewriter, einen Plan Optimierer und einen Plan Refiner durchgeführt.
 
@@ -56,7 +56,7 @@ Die Regelmaschine basiert auf fünf Prinzipien:
 
 \subsubsection{Plan Optimierer}
 
-Der Plan Optimierer selbst ist regelbasiert nutzt aber nicht den transformierenden, sondern einen generierenden Ansatz. Mit Hilfe von Basisoperatoren sog. \ac{LOLEPOP}s werden mit Hilfe von Regeln sog. \ac{STAR}s Pläne erzeugt. Die Basisoperatoren \ac{LOLEPOP}s bilden einfach Operationen wie SCAN und SORT. Ein Plan besteht aus mehreren dieser \ac{LOLEPOP}s, die gemeinsam einen Plan ergeben.
+Der Plan Optimierer selbst ist regelbasiert, nutzt aber nicht den transformierenden, sondern einen generierenden Ansatz. Mit Hilfe von Basisoperatoren sog. \ac{LOLEPOP}s werden mit Hilfe von Regeln sog. \ac{STAR}s Pläne erzeugt. Die Basisoperatoren \ac{LOLEPOP}s bilden einfach Operationen wie SCAN und SORT. Ein Plan besteht aus mehreren dieser \ac{LOLEPOP}s, die gemeinsam einen Plan ergeben.
 
 Der \ac{STAR} definiert ein bekanntes parametrisiertes Objekt. Es besteht aus einer Bedingung zur Anwendbarkeit und einer Definition  eines Plans. Ist ein STAR auf einen Teilplan anwendbar, wird dieser STAR an dieser Stelle referenziert. Der Plan selbst hat einen rootSTAR als Startpunkt. Mit Hilfe der STARs\todo{Stil} innerhalb des \ac{QGM}s ist eine Grammatik mit deren Hilfe alternative Pläne zu finden sind. 
 

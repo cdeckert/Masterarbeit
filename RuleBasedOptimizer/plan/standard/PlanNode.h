@@ -89,7 +89,7 @@ public:
 	inline void concat(self_type * next){ if(next != NULL) getLast().setNext(next); };
 	
 	
-	inline Signature getSignature2() const { return _signature; };
+	//inline Signature getSignature2() const { return _signature; };
 
 	/**
 	 * @brief Accessor for the next node
@@ -219,7 +219,6 @@ private:
 	bool _leftAssociativityEnabled = true;
 	bool _rightAssociativityEnabled = true;
 	bool _exchangeEnabled = true;
-	Signature _signature;
 };
 
 //
@@ -266,11 +265,11 @@ void PlanNode<Bitvector_t>::set(Operator anOperator, EquivalenceClass_t *aLeftEC
 	_op = anOperator;
 	_left = aLeftEC;
 	_right = aRightEC;
-	_signature._left = _left->getRelations();
+	/*_signature._left = _left->getRelations();
 	if(_right != NULL)
 	{
 		_signature._right = _right->getRelations();
-	}
+	}*/
 };
 
 template <typename Bitvector_t>
