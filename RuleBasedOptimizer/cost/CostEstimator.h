@@ -16,18 +16,19 @@ class CostEstimator
 
 public:
 	/**
-	 * @brief [brief description]
-	 * @details [long description]
+	 * @brief Constructor for cost estimation
+	 * @details The constructor of cost estimation has to be initalized by cardiality and selectivity
 	 *
-	 * @param stats [description]
+     * @param cardinality the cardinality of base relations
+	 * @param selectivity the selectivity between two base relations
 	 */
-	CostEstimator(BvDoubleMap_t, BvDoubleMap_t);
+	CostEstimator(BvDoubleMap_t cardiality, BvDoubleMap_t selectivity);
 
 	/**
-	 * @brief [brief description]
-	 * @details [long description]
+	 * @brief generates cheapest plan for a given equivalence class
+	 * @details generates cheapest plan for a given equivalence class by using a cost function
 	 *
-	 * @param input [description]
+	 * @param input a given equivaelnce class
 	 */
 	void getCheapestPlan(EquivalenceClass_t *);
 

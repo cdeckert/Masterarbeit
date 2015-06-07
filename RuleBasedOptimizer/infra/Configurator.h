@@ -42,9 +42,6 @@ typename Configurator<PlanNode_t>::ConfigurationVector_t Configurator<PlanNode_t
 	std::stringstream contents; contents << configFile.rdbuf();
 	configFile.close();
 
-
-
-
 	std::string err;
 	json11::Json inputJson = json11::Json::parse(contents.str(), err);
 
