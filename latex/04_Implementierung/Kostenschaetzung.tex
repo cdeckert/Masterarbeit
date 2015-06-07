@@ -1,0 +1,6 @@
+\section{Kostenschätzung}
+
+Die Kostenschätzung spielt die zentrale Rolle bei der Berechnung des optimalen Plans. Wie andere Optimierer geht der Prototyp davon aus, dass ein optimaler Gesamtplan aus optimalen Teilplänen besteht. Es gibt eine Vielzahl an unterschieldichen Kostenfunktionen. Da für die konkrete Implementierung immer die gleiche Kostenberechnung angewendet wird, wurde sich für eine sehr einfache Form der Kostenberechnung entschieden.
+
+Die implementierte Kostenfunktion basiert auf der Berechnung von Kardinalitäten für einzelne Knoten. Mit einem Bottom-up-Ansatz werden die Kardinalitäten für die einzelnen Planknoten berechnet. Basierend auf den in der Konfiguration vorgegebenen Kardinalitäten für Basis Relationen und Selektivitäten für Join-Kanten, kann von Unten nach Oben die Kardinalität aller Knoten berechnet werden.
+

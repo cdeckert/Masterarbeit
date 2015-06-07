@@ -1,8 +1,8 @@
 \section{GraphRule und Unvollständigkeit von RS-B2}
 
-Die von Pellenkoft et al. entwickelten Regelsets, dienen als Grundlage für regelbasierte Optimierer wie Volcano. \cite{shanbhag2014optimizing} untersuchten die Vollständigkeit der vorgestellten Regel und fügten den bestehenden Regelsets ein neues hinzu, das alle andere Regelsets zum Join Reordering obsolet macht und zudem eine erheblich bessere Performance liefert.
+Die von Pellenkoft et al. entwickelten Regelsets, dienen als Grundlage für regelbasierte Optimierer wie Volcano. \cite{shanbhag2014optimizing} untersuchten die Vollständigkeit der vorgestellten Regel und fügten den bestehenden Regelsets etwas Neues hinzu, das alle andere Regelsets zum Join Reordering obsolet macht und zudem eine erheblich bessere Performance liefert.
 
-Die Untersuchungen \cite{shanbhag2014optimizing} wurden mit dem Optimierer PyroJ durchgeführt. PyroJ ist ein Optimierer, der basierend auf Pyro \cite{roy2001multi} erstellt wurde und dem Volcano Optimizer nachempfunden ist. Zuerst wurden die Regelsets auf ihre Vollständigkeit hin geprüft. Neben der Prüfung auf Vollständigkeit konnte auch die neue Regel GraphRule implementiert und so bzgl. ihrer Performance getestet werden.
+Die Untersuchungen \cite{shanbhag2014optimizing} wurden mit dem Optimierer PyroJ durchgeführt. PyroJ ist ein Optimierer, der basierend auf Pyro \cite{roy2001multi} erstellt wurde und dem Volcano Optimizer nachempfunden ist. Zuerst wurden die Regelsets auf ihre Vollständigkeit hin geprüft. Neben der Prüfung auf Vollständigkeit, konnte auch die neue Regel GraphRule implementiert und so bzgl. ihrer Performance getestet werden.
 
 
 
@@ -16,7 +16,7 @@ Der Volcano Optimizer hingegen berechnet zuerst einen logischen Plan und generie
 
 Genau wie das Volcano Projekt wird eine Memofunktion verwendet. \cite{roy2001multi} weist daraufhin, dass diese Memofunktion erst später dem Volcano Optimizer hinzugefügt wurde. Dadurch war es beispielsweise möglich, dass bei einer Anfrage, die aus $(A \Join B \Join C) \cup (B \Join C \Join D)$ zwei Äquivalenzknoten für den Knoten $B \Join C$ gebildet werden, obwohl alle Teilpläne von $A \Join B$ immer äquivalent sein werden und somit kein Grund besteht, die Pläne mehrfach zu berechnen. Pyro verwendet eine Memodatenstruktur, um die mehrfache Generierung des selben Teilplans zu unterbinden.
 
-Ein weiterer Unterschied zu Volcano ist, dass es  bei Pyro kein Optimizer generiert wird, sondern der Optimizer von vornherein in C++ geschrieben ist. Eine Übersetzung aus einem Description\-File hin zu C\-Code findet daher nicht statt.
+Ein weiterer Unterschied zu Volcano besteht darin, das  bei Pyro kein Optimizer generiert wird, sondern der Optimizer von vornherein in C++ geschrieben ist. Eine Übersetzung aus einem Description\-File hin zu C\-Code findet daher nicht statt.
 
 \subsection{Getestete Regeln und Regelsets}
 
@@ -51,9 +51,9 @@ Ein weiterer Unterschied zu Volcano ist, dass es  bei Pyro kein Optimizer generi
 
 Die Unvollständigkeit von \textit{RS-B2} wurde auf zwei Arten gezeigt. Auf der einen Seite wurde an Hand des Beispiel \ref{Incompleteness_RS} gezeigt. Im konkreten Beispiel sollte \textit{R1} und \textit{R4} getauscht werden, wobei das Regelset \textit{RS-B2} zum Einsatz kommen sollte. Anhand des gegebenen Join Graphen ist die Transformation zwar Teil des Suchraums, kann jedoch durch die Regeln nicht erreicht werden. Das Regelset ist daher unvollständig.
 
-Ebenfalls wurden unterschiedliche Abfragen mit Hilfe des Optimierers optimiert und dahingehend geprüft, ob die selbe Menge an Plänen aus den unterschiedlichen Regelsets entstehen kann. Wie erwartent war die Menge der Pläne, die aus \textit{RS-B0} nur \textit{RS-B1} entstanden sind gleich, die Menge der \textit{RS-B2} Pläne stark reduziert. (vgl. \ref{tabelle)}.
+Ebenfalls wurden unterschiedliche Abfragen mit Hilfe des Optimierers optimiert und dahingehend geprüft, ob die selbe Menge an Plänen aus den unterschiedlichen Regelsets entstehen kann. Wie erwartet war die Menge der Pläne, die aus \textit{RS-B0} nur \textit{RS-B1} entstanden sind gleich, die Menge der \textit{RS-B2} Pläne stark reduziert. (vgl. \ref{tabelle)}.
 
-Da nicht alle Pläne gefunden werden konnten, liegt es nahe, dass der optimale Plan möglicherweise nicht Teil des erforschten Suchraums ist. \cite{shanbhag2014optimizing} stellen fest, dass das Ergebnis mit \textit{RS-B2} erzeugt wurde bzgl. der berechneten Kosten um den Faktor 1.86 schlechter war, als die Pläne, die mit Hilfe eines vollständigen Regelsets erzeugt wurden. Wie genau die Zahl 1.86 zustande gekommen ist, ist nicht genauer begründet.
+Da nicht alle Pläne gefunden werden konnten, liegt es nahe, dass der optimale Plan möglicherweise nicht Teil des erforschten Suchraums ist. \cite{shanbhag2014optimizing} stellten fest, dass das Ergebnis mit \textit{RS-B2} erzeugt wurde bzgl. der berechneten Kosten um den Faktor 1.86 schlechter war, als die Pläne, die mit Hilfe eines vollständigen Regelsets erzeugt wurden. Wie genau die Zahl 1.86 zustande gekommen ist, ist nicht genauer begründet.
 
 Es lässt sich also feststellen, dass mit Hilfe des Regelsets \textit{RS-B2} weniger Pläne im Suchraum gefunden werden konnten, als mit Hilfe des Regelsets \textit{RS-B1} bzw. \textit{RS-B2}. Außerdem wurde festgestellt, dass Pläne aus unvollständigen Regelsets nicht immer den optimalen Plan beinhalten.
 
@@ -84,7 +84,7 @@ Die Vollständigkeit wurde auch mit Hilfe des PyroJ Optimierers geprüft. Hierbe
 \subsection{JOIN SETS}
 
 Basierend auf dem bisherigen Wissen, wurden durch X und Y einige neue Begriffe festgelegt: W.
-Ein Base Equivalenz Knoten in einem expandierten LQDAG ist ein Äquivalenzknoten, der keinen Join Operator als Kinder hat. Ein solcher Knoten kann entweder eine Relation sein oder darf keine Join Operatoren als Kinder beinhalten.
+Ein Base Äquivalezknoten in einem expandierten LQDAG ist ein Äquivalenzknoten, der keinen Join Operator als Kinder hat. Ein solcher Knoten kann entweder eine Relation sein oder darf keine Join Operatoren als Kinder beinhalten.
 
 Ein Join Tree ist in einem expandierten LQDAG ein Baum in der LQDAG dessen Wurzel ein Äuqivalenzknoten und jeder interne Knoten entweder ein Äquivalenzknoten oder ein Join Operator und jeder untergeordneter Knoten ein Äuqivalenzknoten ist.
 
@@ -164,7 +164,7 @@ Um die Funktion der neuen Regel im Detail zu beschreiben, führt \cite{shanbhag2
 
 
 \subsection{Implementierung}
-Die Implementierung des neuen Regelsets wurde auf Basis des Query Optimierers PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ entwickelten Optimierers Pyro, der an der Universität Bombay entwickelt wurde und das Volcano-Framework implementiert.
+Die Implementierung des neuen Regelsets wurde auf der Basis des Query Optimierers PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ entwickelten Optimierers Pyro, der an der Universität Bombay entwickelt wurde und das Volcano-Framework implementiert.
 
 Alle Tests wurden auf einem Computer mit Intels Core i5 3.5 GHz mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 durchgeführt. Die genaue Java Version und Einstellungen der JVM sind (fast) vollständig unbekannt.
 
@@ -176,9 +176,9 @@ Während der Performance Tests wurde festgestellt, dass sich.........
 \subsection{Probleme auf Grund der Plattformwahl}
 Die Implementierung der neuen Regel wurde auf Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des von ITT Bombay entwickelten Systems Pyro, das eine Implementierung des Volcano-Frameworks ist. PyroJ, das in Java implementiert ist, entstand durch eine automatische Konvertierung des C++ Codes von Pyro. 
 
-Die Implementierung der Experimente wurde auf Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ geschriebenen Query Optimierers Pyro nach Java. Der Optimierer wurde an der IIT Bombay gebaut und ist eine Implementierung des Volcano Optimization Frameworks.
+Die Implementierung der Experimente wurde auf der Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ geschriebenen Query Optimierers Pyro nach Java. Der Optimierer wurde an der IIT Bombay gebaut und ist eine Implementierung des Volcano Optimization Frameworks.
 
-Die Experimente wurden auf einem Intel Core i5 3.5 GHz Computer mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 vorgenommen. Es wurde festegestellt, dass die Implementierung des Codes in Java verglichen zu C++ einigen Overhead generiert, der die Laufzeit der Optimierung negativ beeinflusst. Ebenfalls wurde festgestellt, dass die Laufzeit zur Optimierung einer Anfrage erheblichen Schwankungen unterlegen ist. Insbesondere konnten stark unterschiedliche Laufzeiten bei den selben Queries festgestellt werden. Queries, die zu Beginn ausgeführt wurden, wurden langsamer ausgeführt. Dieses Phänomen wurde auf den Java JIT-Compiler (HotSpot) zurückgeführt. Dieser kompiliert nur die zur Ausführung notwendigen Teile des Programms und führt Optimierungen zur Laufzeit durch. Um konstante Laufzeiten für die selbe Anfrage zu erzielen, wurde nach eigenen Angaben die JIT-Kompilierung ausgeschaltet. Außerdem wurde das Java HotSpot JVM flag $-XX:CompileThreshold=1$ gesetzt und einige große Queries ein paar mal optimiert, um sicherzustellen, dass alle Funktionen auch kompiliert werden bevor sie ausgeführt werden.
+Die Experimente wurden auf einem Intel Core i5 3.5 GHz Computer mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 vorgenommen. Es wurde festgestellt, dass die Implementierung des Codes in Java verglichen zu C++ einigen Overhead generiert, der die Laufzeit der Optimierung negativ beeinflusst. Ebenfalls wurde erkannt, dass die Laufzeit zur Optimierung einer Anfrage großen Schwankungen unterlegen ist. Insbesondere konnten erheblich unterschiedliche Laufzeiten bei den selben Queries festgestellt werden. Queries, die zu Beginn ausgeführt wurden, wurden langsamer ausgeführt. Dieses Phänomen wurde auf den Java JIT-Compiler (HotSpot) zurückgeführt. Dieser kompiliert nur die zur Ausführung notwendigen Teile des Programms und führt Optimierungen zur Laufzeit durch. Um konstante Laufzeiten für die selbe Anfrage zu erzielen, wurde nach eigenen Angaben die JIT-Kompilierung ausgeschaltet. Außerdem wurde das Java HotSpot JVM flag $-XX:CompileThreshold=1$ gesetzt und einige große Queries ein paar mal optimiert, um sicherzustellen, dass alle Funktionen auch kompiliert werden bevor sie ausgeführt werden.
  
 
 \subsection{Kritik} \todo{Wo soll dieser Teil eigentlich hin? Evaulation/ Related Work / Implementierung}
