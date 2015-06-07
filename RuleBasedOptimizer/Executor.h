@@ -62,7 +62,7 @@ void Executor<PlanNode_t>::run() const
 	std::cout << "RUN" << std::endl;
 	
 	SimpleCostEstimator<PlanNode_t> *c = new SimpleCostEstimator<PlanNode_t>(_configuration.getCardinality(), _configuration.getSelectivity());
-	
+	Stopwatch watch;
 	for (std::string algo : _configuration.getAlgorithms())
 	{
 		uint64_t duration = 0;
@@ -90,11 +90,11 @@ void Executor<PlanNode_t>::run() const
 			StringAdaptor<PlanNode_t> adaptor;
 			
 
-			Stopwatch watch;
+			
 			c->restart();
 			watch.start();
 			t1->apply(*eq);
-			c->findCheapestPlan(*eq);
+			c->findOptimalPlan(*eq);
 			
 			watch.stop();
 

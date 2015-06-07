@@ -12,7 +12,7 @@ class CostEstimator
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	
 public:
-    virtual void findCheapestPlan(EquivalenceClass_t &) = 0;
+    virtual void findOptimalPlan(EquivalenceClass_t &) = 0;
 };
 
 

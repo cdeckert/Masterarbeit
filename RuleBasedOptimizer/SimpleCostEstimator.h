@@ -30,19 +30,19 @@ public:
      *
      * @param input a given equivaelnce class
      */
-    void findCheapestPlan(EquivalenceClass_t &) override;
+    void findOptimalPlan(EquivalenceClass_t &) override;
     void restart();
     
 private:
     BvDoubleMap_t _cardinality;
-    static BvDoubleMap_t _tempCardinality;
-    static BvDoubleMap_t _tempCost;
     BvDoubleMap_t _selectivity;
     
+    
+    static BvDoubleMap_t _tempCardinality;
+    static BvDoubleMap_t _tempCost;
+    
+    
     double getSelectivity(PlanNode_t &);
-    double calcCost(PlanNode_t *);
-    double calcCardinality(PlanNode_t &);
-    double getSelectivityForPairOfRelations(Bitvector_t &);
 };
 
 
@@ -88,7 +88,11 @@ double SimpleCostEstimator<PlanNode_t>::getSelectivity(PlanNode_t & pn)
                         pairOfRelationsToSearchFor.clear(),
                         pairOfRelationsToSearchFor.set(i);
                         pairOfRelationsToSearchFor.set(j);
-                        selectivity *= getSelectivityForPairOfRelations(pairOfRelationsToSearchFor);
+                        if(_selectivity.count(pairOfRelationsToSearchFor) != 0)
+                        {
+                        selectivity *= _selectivity.at(pairOfRelationsToSearchFor);
+                    
+                        }
                     }
                 }
             }
@@ -100,12 +104,6 @@ double SimpleCostEstimator<PlanNode_t>::getSelectivity(PlanNode_t & pn)
 
 
 
-template <typename PlanNode_t>
-double SimpleCostEstimator<PlanNode_t>::getSelectivityForPairOfRelations(Bitvector_t & b)
-{
-    if(_selectivity.count(b) != 0) return _selectivity.at(b);
-    return 1.0;
-}
 
 template <typename PlanNode_t>
 void SimpleCostEstimator<PlanNode_t>::restart()
@@ -119,7 +117,7 @@ void SimpleCostEstimator<PlanNode_t>::restart()
 
 
 template <typename PlanNode_t>
-void SimpleCostEstimator<PlanNode_t>::findCheapestPlan(EquivalenceClass_t & eq)
+void SimpleCostEstimator<PlanNode_t>::findOptimalPlan(EquivalenceClass_t & eq)
 {
     // in case there is no best plan
     if(!eq.isBest())
@@ -149,17 +147,18 @@ void SimpleCostEstimator<PlanNode_t>::findCheapestPlan(EquivalenceClass_t & eq)
                 // find optimal plans for child nodes
                 if(!aPlanNode.l().isBest())
                 {
-                    findCheapestPlan(aPlanNode.l());
+                    findOptimalPlan(aPlanNode.l());
                 }
                 if(aPlanNode.hasRight() && !aPlanNode.r().isBest())
                 {
-                    findCheapestPlan(aPlanNode.r());
+                    findOptimalPlan(aPlanNode.r());
                 }
-            
+                // calc cardinality and costs
                 double newCardinality = _tempCardinality.at(aPlanNode.l().getRelations()) * _tempCardinality.at(aPlanNode.r().getRelations()) * getSelectivity(aPlanNode);
                 double newCost = newCardinality + _tempCost.at(aPlanNode.l().getRelations()) +  _tempCost.at(aPlanNode.r().getRelations());
                 
-                
+                // in case costs are lower this line is visited for the first time
+                // create a new entry in the cardinality map and in the cost map
                 if(newCost < lowestCost || lowestCost == -1)
                 {
                     eq.setBest(& aPlanNode);
