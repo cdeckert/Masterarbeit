@@ -21,6 +21,7 @@
 #include "Stopwatch.h"
 #include "GraphRuleSet.h"
 #include "BetterTransformation.h"
+#include "SimpleCostEstimator.h"
 
 template <typename PlanNode_t>
 class Executor
@@ -58,12 +59,14 @@ private:
 template <typename PlanNode_t>
 void Executor<PlanNode_t>::run() const
 {
-	std::cout << "RUN";
-
+	std::cout << "RUN" << std::endl;
+	
+	SimpleCostEstimator<PlanNode_t> *c = new SimpleCostEstimator<PlanNode_t>(_configuration.getCardinality(), _configuration.getSelectivity());
+	
 	for (std::string algo : _configuration.getAlgorithms())
 	{
 		uint64_t duration = 0;
-		for (int i = 0; i < 1000; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
 			ExhaustiveTransformation_t *t1 = 0;
 			if (algo == "RS_B0")
@@ -85,22 +88,23 @@ void Executor<PlanNode_t>::run() const
 
 			EquivalenceClass_t *eq = _configuration.getInitalTree();
 			StringAdaptor<PlanNode_t> adaptor;
-			CostEstimator<PlanNode_t> c(_configuration.getCardinality(), _configuration.getSelectivity());
+			
 
 			Stopwatch watch;
-
+			c->restart();
 			watch.start();
 			t1->apply(*eq);
-			c.getCheapestPlan(eq);
+			c->findCheapestPlan(*eq);
+			
 			watch.stop();
 
 
 
 
 			duration += watch.getDuration();
-			//std::cout << adaptor.dump(eq);
+			std::cout << adaptor.dump(eq);
 		}
-		duration = duration / 1000;
+		duration = duration / 1;
 		std::cout << std::endl << "TIME:"  << duration << std::endl;
 	}
 
