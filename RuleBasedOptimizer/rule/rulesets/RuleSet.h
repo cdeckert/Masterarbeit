@@ -20,25 +20,47 @@
 template <typename Rule_t>
 class RuleSet
 {
-	typedef std::vector<Rule_t *> Rule_v;
+	typedef std::vector<Rule_t *> RuleVector;
 
 public:
 	RuleSet() {};
+	~RuleSet();
 
 	/**
 	 * @brief getter for rules
 	 * @return an array of rules
 	 */
-	const Rule_v getRules() const { return _rules; };
+	const RuleVector getRules() const;
     
     /**
      * @brief add rule to ruleset
      * @param aRule a new rule which is added to the ruleset
      */
-	void push_back(Rule_t * aRule) { _rules.push_back(aRule); };
+	void push_back(Rule_t * aRule);
 
 protected:
-	Rule_v _rules;
+	RuleVector _rules;
 };
+
+//
+// Implementation
+//
+
+template <typename Rule_t>
+RuleSet<Rule_t>::~RuleSet()
+{};
+
+template <typename Rule_t>
+const typename RuleSet<Rule_t>::RuleVector RuleSet<Rule_t>::getRules() const
+{
+	return _rules;
+};
+
+template <typename Rule_t>
+void RuleSet<Rule_t>::push_back(Rule_t * aRule)
+{
+	_rules.push_back(aRule);
+};
+
 
 #endif

@@ -124,10 +124,9 @@ Reservoir<T>::Reservoir()
 }
 
 template<class T>
-Reservoir<T>::Reservoir(const uint aLog2ChunkSize)
-	: _log2chunksize(aLog2ChunkSize), _mask((1 << aLog2ChunkSize) - 1),
-	  _firstemptyinchunk(0), _endofchunk(0),
-	  _cardinality(0), _chunks(), _freechunks()
+Reservoir<T>::Reservoir(const uint aLog2ChunkSize) : _log2chunksize(aLog2ChunkSize), _mask((1 << aLog2ChunkSize) - 1),
+	_firstemptyinchunk(0), _endofchunk(0),
+	_cardinality(0), _chunks(), _freechunks()
 {
 	// allocChunk(); // XXX
 }
@@ -146,8 +145,7 @@ Reservoir<T>::~Reservoir()
 }
 
 template<class T>
-void
-Reservoir<T>::init(uint aLog2ChunkSize)
+void Reservoir<T>::init(uint aLog2ChunkSize)
 {
 	_log2chunksize = aLog2ChunkSize;
 	_mask = ((1 << aLog2ChunkSize) - 1);
@@ -155,11 +153,10 @@ Reservoir<T>::init(uint aLog2ChunkSize)
 	_endofchunk = 0;
 	_cardinality = 0;
 	// allocChunk(); // XXX
-}
+};
 
 template<class T>
-T *
-Reservoir<T>::get_new_entry()
+T *Reservoir<T>::get_new_entry()
 {
 	if (_endofchunk <= _firstemptyinchunk)  // XXX was at the end XXX
 	{
@@ -169,11 +166,10 @@ Reservoir<T>::get_new_entry()
 	++_firstemptyinchunk;
 	++_cardinality;
 	return lRes;
-}
+};
 
 template<class T>
-T *
-Reservoir<T>::get_new_entries(const uint k)
+T *Reservoir<T>::get_new_entries(const uint k)
 {
 	if (_endofchunk <= (_firstemptyinchunk + k))  // XXX was at the end XXX
 	{
@@ -187,20 +183,18 @@ Reservoir<T>::get_new_entries(const uint k)
 	_firstemptyinchunk += k;
 	_cardinality += k;
 	return lRes;
-}
+};
 
 template<class T>
-T *
-Reservoir<T>::push_back(T *aT)
+T *Reservoir<T>::push_back(T *aT)
 {
 	T *lRes = get_new_entry();
 	(*lRes) = (*aT);
 	return lRes;
-}
+};
 
 template<class T>
-T *
-Reservoir<T>::allocChunk()
+T *Reservoir<T>::allocChunk()
 {
 	T *lChunk = 0;
 	if (_freechunks.empty())
@@ -219,11 +213,10 @@ Reservoir<T>::allocChunk()
 	_firstemptyinchunk = lChunk;
 	_endofchunk = (&(_chunks[_chunks.size() - 1][_mask + 1]));
 	return _firstemptyinchunk;
-}
+};
 
 template<class T>
-void
-Reservoir<T>::clear()
+void Reservoir<T>::clear()
 {
 	for (typename chunk_vt::iterator iter = _chunks.begin(); iter != _chunks.end(); ++iter)
 	{
@@ -234,11 +227,10 @@ Reservoir<T>::clear()
 	_endofchunk = 0;
 	_cardinality = 0;
 	// allocChunk(); // XXX
-}
+};
 
 template<class T>
-void
-Reservoir<T>::erase()
+void Reservoir<T>::erase()
 {
 	for (; !_freechunks.empty(); _freechunks.pop())
 	{
@@ -254,12 +246,11 @@ Reservoir<T>::erase()
 	_endofchunk = 0;
 	_cardinality = 0;
 	// allocChunk(); // XXX
-}
+};
 
 
 template<class T>
-T *
-Reservoir<T>::end_of_chunk(uint aChunkNo)
+T *Reservoir<T>::end_of_chunk(uint aChunkNo)
 {
 	if ((aChunkNo  + 1) == noChunks())
 	{
@@ -269,11 +260,10 @@ Reservoir<T>::end_of_chunk(uint aChunkNo)
 	{
 		return (&(_chunks[aChunkNo][_mask + 1]));
 	};
-}
+};
 
 template<class T>
-typename Reservoir<T>::iterator &
-Reservoir<T>::iterator::operator++()
+typename Reservoir<T>::iterator &Reservoir<T>::iterator::operator++()
 {
 	++_curr;
 	if (_chunkend <= _curr)
@@ -291,8 +281,7 @@ Reservoir<T>::iterator::operator++()
 		}
 	}
 	return (*this);
-}
-
+};
 
 
 

@@ -23,9 +23,10 @@
 #include "BetterTransformation.h"
 #include "SimpleCostEstimator.h"
 
-template <typename PlanNode_t>
+template <typename T>
 class Executor
 {
+	typedef T PlanNode_t;
 	typedef Configuration<PlanNode_t> Configuration_t;
 	typedef BitVectorSmall<u_int> Bitvector_t;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
@@ -58,10 +59,10 @@ private:
 // Implementation
 //
 
-template <typename PlanNode_t>
-void Executor<PlanNode_t>::run() const
+template <typename T>
+void Executor<T>::run() const
 {
-	SimpleCostEstimator<PlanNode_t> costEstimator = SimpleCostEstimator<PlanNode_t>(_configuration.getCardinality(), _configuration.getSelectivity());
+	SimpleCostEstimator<T> costEstimator = SimpleCostEstimator<T>(_configuration.getCardinality(), _configuration.getSelectivity());
 	std::cout << "RUN" << std::endl;
 	
 	
@@ -117,10 +118,11 @@ void Executor<PlanNode_t>::run() const
 
 };
 
-template <typename PlanNode_t>
-Executor<PlanNode_t>::~Executor()
+template <typename T>
+Executor<T>::~Executor()
 {
 	delete _watch;
+	delete Operations<PlanNode_t>::exemplar();
 }
 
 

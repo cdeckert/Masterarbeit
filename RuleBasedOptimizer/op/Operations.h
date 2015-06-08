@@ -35,7 +35,7 @@ public:
 	 * @brief Constructor to create a bunch of reservoirs
 	 * @details standard constructor runs more specific constructors with default values
 	 */
-	Operations() : Operations(600) {};
+	Operations() : Operations(300) {};
 	/**
 	 * @brief Constructor to create a bunch of reservoirs
 	 * @details Initalizes a bunch of reservoirs based on a given number of expected objects
@@ -43,6 +43,8 @@ public:
 	 * @param  number of expected objects
 	 */
 	Operations(int);
+	~Operations();
+	
 	/**
 	 * @brief copy constructor
 	 * @details copy constructor to copy operations
@@ -93,13 +95,15 @@ public:
 	 * @return a new EquivalenceClass
 	 */
 	EquivalenceClass_t *scan(Bitvector_t b) const;
-	EquivalenceClass_t *rel(u_int i)
-	{
-		Bitvector_t *b = getBitVector(i);
-		EquivalenceClass_t *eqN = _reservoirEC->get_new_entry();
-		eqN->setRelations(*b);
-		return eqN;
-	}
+
+	/**
+	 * @brief Creates a new relational node
+	 * @details Creates a new relational node based on a number
+	 *
+	 * @param i a given number
+	 * @return a new Equivalence Node
+	 */
+	EquivalenceClass_t *rel(u_int i) const;
 
 	/*EquivalenceClass_t * rel(Bitvector_t b)
 	{
@@ -110,19 +114,7 @@ public:
 
 
 
-	EquivalenceClass_t *rel(u_int i, std::initializer_list<u_int> neighbors) const
-	{
-		Bitvector_t *b = getBitVector(i);
-		Bitvector_t *neighbors_bit = _bitvectors->get_new_entry();
-		for (u_int n : neighbors)
-		{
-			neighbors_bit->set(n);
-		}
-		EquivalenceClass_t *eqN = _reservoirEC->get_new_entry();
-		eqN->setRelations(*b);
-		eqN->setNeighbors(*neighbors_bit);
-		return eqN;
-	}
+	EquivalenceClass_t *rel(u_int i, std::initializer_list<u_int> neighbors) const;
 
 
 	/**
@@ -134,12 +126,7 @@ public:
 	 *
 	 * @return plan node with a single plan
 	 */
-	PlanNode_t &joinPN(EquivalenceClass_t &e1, EquivalenceClass_t &e2) const
-	{
-		PlanNode_t &t = * _reservoirPN->get_new_entry();
-		t.set(JOIN, &e1, &e2);
-		return t;
-	}
+	PlanNode_t &joinPN(EquivalenceClass_t &e1, EquivalenceClass_t &e2) const;
 
 
 	/**
@@ -153,19 +140,13 @@ public:
 	 *
 	 * @return equivalence class with a single plan
 	 */
-	EquivalenceClass_t *join(EquivalenceClass_t &e1, EquivalenceClass_t &e2) const
-	{
+	EquivalenceClass_t *join(EquivalenceClass_t &e1, EquivalenceClass_t &e2) const;
 
-		PlanNode_t &t = joinPN(e1, e2);
-		EquivalenceClass_t   *eq = _reservoirEC->get_new_entry();
-		eq->push_back(t);
-		return eq;
-	}
-
-	Bitvector_t *get_new_BV()
-	{
-		return _bitvectors->get_new_entry();
-	}
+	/**
+	 * @brief returns a new bitvector from a reservoir
+	 * @details return a bitvector
+	 * @return bitvector
+	 */
 
 private:
 	Reservoir<EquivalenceClass_t> *_reservoirEC;
@@ -206,6 +187,14 @@ Operations<PlanNode_t>::Operations(int reservoirSite)
 };
 
 template <typename PlanNode_t>
+Operations<PlanNode_t>::~Operations()
+{
+	delete _reservoirEC;
+	delete _reservoirPN;
+	delete _bitvectors;
+};
+
+template <typename PlanNode_t>
 typename Operations<PlanNode_t>::EquivalenceClass_t *Operations<PlanNode_t>::scan(EquivalenceClass_t &relation) const
 {
 	PlanNode_t &t = * _reservoirPN->get_new_entry();
@@ -230,7 +219,47 @@ typename Operations<PlanNode_t>::EquivalenceClass_t *Operations<PlanNode_t>::sca
 	return scan(*relation);
 };
 
+template <typename PlanNode_t>
+typename Operations<PlanNode_t>::EquivalenceClass_t *Operations<PlanNode_t>::rel(u_int i) const
+{
+	Bitvector_t *b = getBitVector(i);
+	EquivalenceClass_t *eqN = _reservoirEC->get_new_entry();
+	eqN->setRelations(*b);
+	return eqN;
+}
 
+template <typename PlanNode_t>
+typename Operations<PlanNode_t>::EquivalenceClass_t *Operations<PlanNode_t>::rel(u_int i, std::initializer_list<u_int> neighbors) const
+{
+	Bitvector_t *b = getBitVector(i);
+	Bitvector_t *neighbors_bit = _bitvectors->get_new_entry();
+	for (u_int n : neighbors)
+	{
+		neighbors_bit->set(n);
+	}
+	EquivalenceClass_t *eqN = _reservoirEC->get_new_entry();
+	eqN->setRelations(*b);
+	eqN->setNeighbors(*neighbors_bit);
+	return eqN;
+}
+
+template <typename PlanNode_t>
+PlanNode_t &Operations<PlanNode_t>::joinPN(EquivalenceClass_t &e1, EquivalenceClass_t &e2) const
+{
+	PlanNode_t &t = * _reservoirPN->get_new_entry();
+	t.set(JOIN, &e1, &e2);
+	return t;
+}
+
+template <typename PlanNode_t>
+typename Operations<PlanNode_t>::EquivalenceClass_t *Operations<PlanNode_t>::join(EquivalenceClass_t &e1, EquivalenceClass_t &e2) const
+{
+
+	PlanNode_t &t = joinPN(e1, e2);
+	EquivalenceClass_t   *eq = _reservoirEC->get_new_entry();
+	eq->push_back(t);
+	return eq;
+}
 
 
 
