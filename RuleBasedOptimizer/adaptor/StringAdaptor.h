@@ -18,7 +18,7 @@ template <typename PlanNode_t>
 class StringAdaptor
 {
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
-	typedef Operations<PlanNode_t, unsigned int> Operations_t;
+	typedef Operations<PlanNode_t> Operations_t;
 	typedef std::unordered_map<unsigned int, EquivalenceClass_t *> RelationsMap_t;
 
 public:

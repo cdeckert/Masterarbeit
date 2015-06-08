@@ -59,10 +59,16 @@ int main(int argc, char *argv[])
 	
 	// read configuration
 	std::string _configPath = getConfigPath(argc, argv);
-	Configurator<PlanNode_t> configManager;
-	for (Configuration<PlanNode_t> &c : configManager.getConfigurations(_configPath))
+	
+	// inialize configurator
+	Configurator<PlanNode_t> configurator;
+	
+	// for each configuration create an executer and run
+	for (Configuration<PlanNode_t> &c : configurator.getConfigurations(_configPath))
 	{
+		
 		Executor<PlanNode_t> exec(c);
+		
 		//execute configurations
 		exec.run();
 	}

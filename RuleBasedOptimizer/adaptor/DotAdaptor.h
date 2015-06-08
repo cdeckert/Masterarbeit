@@ -10,7 +10,7 @@ class DotAdaptor
 {
 	typedef unsigned int u_int;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
-	typedef Operations<PlanNode_t, u_int> Operations_t;
+	typedef Operations<PlanNode_t> Operations_t;
 	typedef std::unordered_map<u_int, EquivalenceClass_t *>  RelationsMap_t;
 
 public:

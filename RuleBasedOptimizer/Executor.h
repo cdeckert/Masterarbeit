@@ -30,7 +30,7 @@ class Executor
 	typedef BitVectorSmall<u_int> Bitvector_t;
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	typedef typename EquivalenceClass_t::Iterator EquivalenceClassIterator_t;
-	typedef Operations<PlanNode_t, u_int> Operations_t;
+	typedef Operations<PlanNode_t> Operations_t;
 	typedef Rule<PlanNode_t, Operations_t> Rule_t;
 	typedef RuleSet<Operations_t> RuleSet_t;
 	typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
@@ -45,11 +45,13 @@ class Executor
 
 public:
 	Executor();
-	Executor(Configuration_t &config) : _configuration(config) {};
+	~Executor();
+	Executor(Configuration_t &config) : _configuration(config){_watch = new Stopwatch();};
 	void run() const;
 
 private:
 	Configuration_t &_configuration;
+	Stopwatch * _watch;
 };
 
 //
@@ -59,16 +61,16 @@ private:
 template <typename PlanNode_t>
 void Executor<PlanNode_t>::run() const
 {
+	SimpleCostEstimator<PlanNode_t> costEstimator = SimpleCostEstimator<PlanNode_t>(_configuration.getCardinality(), _configuration.getSelectivity());
 	std::cout << "RUN" << std::endl;
 	
-	SimpleCostEstimator<PlanNode_t> *c = new SimpleCostEstimator<PlanNode_t>(_configuration.getCardinality(), _configuration.getSelectivity());
-	Stopwatch watch;
+	
 	for (std::string algo : _configuration.getAlgorithms())
 	{
 		uint64_t duration = 0;
 		for (int i = 0; i < 1; ++i)
 		{
-			ExhaustiveTransformation_t *t1 = 0;
+			ExhaustiveTransformation_t  * t1 = 0;
 			if (algo == "RS_B0")
 			{
 				t1 = new ExhaustiveTransformation_t(RS_B0_t());
@@ -86,23 +88,25 @@ void Executor<PlanNode_t>::run() const
 				t1 = new ExhaustiveTransformation_t(GraphRuleSet_t(_configuration.getJoinEdges()));
 			}
 
-			EquivalenceClass_t *eq = _configuration.getInitalTree();
+			EquivalenceClass_t & eq = * _configuration.getInitalTree();
 			StringAdaptor<PlanNode_t> adaptor;
 			
 
 			
-			c->restart();
-			watch.start();
-			t1->apply(*eq);
-			c->findOptimalPlan(*eq);
+			costEstimator.restart();
 			
-			watch.stop();
+			_watch->start();
+			t1->apply(eq);
+			costEstimator.findOptimalPlan(eq);
+			_watch->stop();
 
 
 
 
-			duration += watch.getDuration();
-			std::cout << adaptor.dump(eq);
+			duration += _watch->getDuration();
+			std::cout << adaptor.dump(&eq);
+			
+			delete t1;
 		}
 		duration = duration / 1;
 		std::cout << std::endl << "TIME:"  << duration << std::endl;
@@ -113,7 +117,11 @@ void Executor<PlanNode_t>::run() const
 
 };
 
-
+template <typename PlanNode_t>
+Executor<PlanNode_t>::~Executor()
+{
+	delete _watch;
+}
 
 
 #endif

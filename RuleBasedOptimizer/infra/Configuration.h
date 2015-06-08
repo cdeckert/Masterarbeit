@@ -19,7 +19,7 @@ class Configuration
 {
 	typedef unsigned int u_int;
 	typedef typename json11::Json Json;
-	typedef Operations<PlanNode_t, u_int> Operations_t;
+	typedef Operations<PlanNode_t> Operations_t;
 	typedef std::vector<std::string> StringVector_t;
 	typedef BitVectorSmall<u_int> Bitvector_t;
 	typedef std::unordered_map<Bitvector_t, double, Hasher<Bitvector_t>> BvDoubleMap_t;
