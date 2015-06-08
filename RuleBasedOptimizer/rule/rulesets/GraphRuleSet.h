@@ -47,7 +47,7 @@ GraphRuleSet<PlanNode_t, Operations_t>::GraphRuleSet() : RuleSet<Rule_t>()
 template <typename PlanNode_t, typename Operations_t>
 GraphRuleSet<PlanNode_t, Operations_t>::GraphRuleSet(BvSet_t bvMap) : RuleSet<Rule_t>()
 {
-    //this->push_back(new GraphRule_t(bvMap));
+    this->push_back(new GraphRule_t(bvMap));
 };
 
 
