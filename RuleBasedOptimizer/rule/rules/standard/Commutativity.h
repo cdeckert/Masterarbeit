@@ -5,7 +5,7 @@
 #ifndef RuleBasedOptimizer_Commutativity_h
 #define RuleBasedOptimizer_Commutativity_h
 
-#include "Rule.h"
+//#include "Rule.h"
 
 /**
  * @brief Commutativity

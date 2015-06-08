@@ -10,7 +10,7 @@
 \section{Motivation}
 
 
-Anfrageoptimierung ist eine der wichtigsten Bestandteile bei der Ausführung von Datenbankabfragen. Insbesondere im Kontext von komplexen und automatisch generierten SQL-Statements verspricht die Optimierung hohe Geschwindigkeitsverbesserungen. Der Optimierer ist für das Finden der richtigen Zugriffsstrategie auf Datensätze verantwortlich. Er entscheidet u.a. welche Art von Joins verwendet werden, in welcher Reihenfolge diese Joins angewendet werden, oder ob Index Scans anstatt von Full Table Scans zum Einsatz kommen. Nur durch die erreichte Performance heute gängiger \ac{DBMS} sind Anwendungen und Informationssysteme wie \ac{ERP}, \ac{CRM}, \ac{CMS}, \ac{BDWH} möglich geworden. \ac{DBMS}e sind ein integraler Bestandteil unserer heutigen Wissens- und Informationsgesellschaft. Der schnelle und effiziente Zugriff auf Informationen und damit die Nutzung von \ac{DBMS} ist aus unserer Welt nicht mehr wegzudenken. Anfrageoptimierung ist und bleibt daher ein wichtiger Teil.
+Die Anfrageoptimierung ist einer der wichtigsten Bestandteile bei der Ausführung von Datenbankabfragen. Insbesondere im Kontext von komplexen und automatisch generierten SQL-Statements verspricht die Optimierung hohe Geschwindigkeitsverbesserungen. Der Optimierer ist für das Finden der richtigen Zugriffsstrategie auf Datensätze verantwortlich. Er entscheidet u.a. welche Art von Joins verwendet werden, in welcher Reihenfolge diese Joins angewendet werden, oder ob Index Scans anstatt von Full-Table-Scans zum Einsatz kommen. Nur durch die erreichte Performance heute gängiger \ac{DBMS} sind Anwendungen und Informationssysteme wie \ac{ERP}, \ac{CRM}, \ac{CMS}, \ac{BDWH} möglich geworden. \ac{DBMS}e sind ein integraler Bestandteil unserer heutigen Wissens- und Informationsgesellschaft. Der schnelle und effiziente Zugriff auf Informationen und damit die Nutzung von \ac{DBMS} ist aus unserer Welt nicht mehr wegzudenken. Anfrageoptimierung ist und bleibt daher ein wichtiger Teil.
 
 Anfrageoptimierung ist ein seit Jahrzehnten bedeutungsvolles Thema für Datenbankhersteller. Erkenntnisse, die bereits in den 1970er Jahren gewonnen wurden, kommen auch in modernen Systemen zum Einsatz. Beispielsweise ist IBMs System R, das in den 1970er Jahren entwickelt wurde, die Grundlage für das heutige DB 2  \cite{wade2012ibm}. Auch Microsofts SQL Server lässt sich auf die Entwicklung von Volcano und Exodus in den 1980er Jahren zurückführen.
 In der langen Tradition der Anfrageoptimierer wurden die bekannten Lösungsansätze immer wieder kritisch betrachtet, weiterentwickelt und verbessert. 2014 wurden Regelsets von \cite{pellenkoft1997complexity}, die im Volcano Projekt zur Anpassung der Joinreihenfolge verwendet werden, von \cite{shanbhag2014optimizing} genauer unter die Lupe genommen. 
@@ -27,7 +27,7 @@ Ziel der Arbeit ist es zunächst die Arbeit von \cite{shanbhag2014optimizing} in
 \item Lassen sich die Ergebnisse von \cite{shanbhag2014optimizing} bzgl. ihres neuen Algorithmus und dessen Performanceversprechen auch in einer neuen Implementierung nachvollziehen?
 \end{itemize}
 
-Um erkennen zu können, ob bestehende Regelsets unvollständig sind und als Grundlage für das neue Regelset dienen,  musste ein eigener Prototyp für die Erzeugung von äquivalenten Plänen implementiert werden. Basierend auf dem Prototypen konnten die Fragen untersucht und Ergebnisse gesammelt werden.
+Um erkennen zu können, ob bestehende Regelmengen unvollständig sind und als Grundlage für die neue Regelmenge dienen,  musste ein eigener Prototyp für die Erzeugung von äquivalenten Plänen implementiert werden. Basierend auf dem Prototypen konnten die Fragen untersucht und Ergebnisse gesammelt werden.
 
 
 
@@ -38,12 +38,9 @@ Um erkennen zu können, ob bestehende Regelsets unvollständig sind und als Grun
 \section{Inhaltlicher Aufbau}
 Die Arbeit ist in fünf Teile gegliedert. Nach der Einleitung werden im Kapitel Related Work zuerst die notwendigen Grundlagen besprochen. Insbesondere werden die Begriffe Search Space, Enumerator und Kostenschätzer erläutert. Des weiteren wird der historische Kontext der Anfrageoptimierung hergestellt. Datenbankoptimierer von System R über Volcano bis hin zu Oracle werden erläutert. 
 
-Konkrete Regelmengen werden in Kapitel 3 besprochen. Zuerst werden die von Pellenkoft festgelegten Regelmengen vorgestellt. Diese Regelsets werden beispielsweise als Teil des Volcano Optimierers angewendet. \cite{shanbhag2014optimizing} übernahm als Teil des 
+Konkrete Regelmengen werden in Kapitel 3 besprochen. Zuerst werden die von Pellenkoft festgelegten Regelmengen vorgestellt. Diese Regelmengen werden beispielsweise als Teil des Volcano Optimierers angewendet. \cite{roy2001multi} übernahm die Regelmengen als Teil des Pyro Optimierers, dessen Vorbild Volcano ist. Von \cite{shanbhag2014optimizing} wurden diese Regelmengen auf ihre Vollständigkeit geprüft. Wobei festgestellt wurde, dass eine Regelmenge, namentlich \texttt{RS-B2} nicht vollständig ist.
 
 Im Kapitel Implementierung werden zuerst die Prinzipien,  nach denen die weitere Implementierung gestaltet wird, erklärt. Basierend auf diesen Prinzipien wird dann die weitere Implementierung besprochen. Beginnend mit dem strukturellen Aufbau aller Komponenten wird Stück für Stück auf einzelne Komponenten und deren Funktion eingegangen.
-
-[ HIER ÜBER EVALUATION SPRECHEN]
-
 
 
  

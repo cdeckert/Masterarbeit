@@ -9,7 +9,6 @@
 #define ELPP_LOG_UNORDERED_SET
 #define TESTING_YES
 
-//#include "MinCutConservative.h"
 #include "easylogging++.h"
 /**
  * @brief Graph Rule
@@ -32,8 +31,15 @@ class GraphRule : public Rule<PlanNode, Operations_t>
 
 
 	typedef typename EquivalenceClass_t::Iterator ECItr_t;
-
+    struct BVSet_t
+    {
+        Bitvector_t _bitvector;
+        BVSet_t *_next;
+    };
 public:
+    
+    
+    
 	GraphRule(BvSet_t joinEdges) : Rule<PlanNode, Operations_t>()
 	{
 		_joinEdges = joinEdges;
@@ -47,84 +53,9 @@ public:
 
 
 
-	struct BVSet_t
-	{
-		Bitvector_t _bitvector;
-		BVSet_t *_next;
-	};
+	
 
-	BvSet_t getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
-	{
-		LOG(INFO) << "getConnectedParts";
-		LOG(INFO) << "S:					" << S;
-		LOG(INFO) << "C:					" << C;
-		LOG(INFO) << "T:					" << T;
-
-		BvSet_t O;
-		Bitvector_t D, N, U, L, L_new;
-		N = getNeighbors(T, S).without(C);
-		if (N.size() <= 1)
-		{
-			Bitvector_t b = S.without(C);
-			O.insert({b});
-			O.insert({C});
-			LOG(INFO) << "o:		" << b;
-			return O;
-		}
-		std::cout << "N" << N << std::endl;
-		for (unsigned int i = 0; i < N.capacity(); ++i)
-		{
-			L_new.reset();
-			if (N.test(i))
-			{
-				L_new.set(i);
-
-
-
-				std::cout << "L_new" << L_new << std::endl;
-				U = N.without(L_new);
-				while (L != L_new && U.is_not_empty())
-				{
-					D = L_new.without(L);
-					L = L_new;
-					L_new.union_with(getNeighbors(D, S).without(C));
-					U = U.without(L_new);
-				}
-				if (U.is_not_empty())
-				{
-					O.insert( {S.without(C)});
-				}
-				U = N.without(L);
-				while (U.is_not_empty())
-				{
-					L.reset();
-					for (unsigned int i = 0; i < U.capacity(); ++i)
-					{
-						L_new.reset();
-						if (U.test(i))
-						{
-							L_new.set(i);
-							while (L != L_new)
-							{
-								D = L_new.without(L);
-								L = L_new;
-								L_new.union_with(getNeighbors(D, S).without(C));
-							}
-							O.insert({L});
-							U = U.without(L);
-						}
-
-					}
-				}
-
-			}
-
-
-		}
-
-
-		return O;
-	}
+    BvSet_t getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const;
 
 	Bitvector_t getNeighbors(Bitvector_t relations, Bitvector_t s) const
 	{
@@ -164,43 +95,7 @@ public:
 	}
 
 
-	BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
-	{
-        BvSet_t result;
-        if (connectedRelations == subSetOfRelations)
-		{
-			return result;
-		}
-		if (connectedRelations.is_not_empty())
-		{
-			result.insert({connectedRelations, getNeighbors(connectedRelations, subSetOfRelations)});
-		}
-		
-        Bitvector_t excluded_new = excluded;
-		Bitvector_t neighborhood = getNeighbors(connectedRelations, subSetOfRelations);
-		neighborhood.intersect_with(subSetOfRelations);
-		neighborhood = neighborhood.without(excluded);
-		
-        for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
-		{
-			if (neighborhood.test(i))
-			{
-				Bitvector_t v;
-				v.set(i);
-				BvSet_t O = getConnectedParts(subSetOfRelations, connectedRelations.uni(v), v);
-				excluded_new.union_with(v);
-				for (Bitvector_t o : O)
-				{
-					Bitvector_t newConnectedRelationships;
-					newConnectedRelationships = subSetOfRelations.without(o);
-					BvSet_t r = MinCutConservative(subSetOfRelations, newConnectedRelationships, excluded_new);
-					result.insert(r.begin(), r.end());
-				}
-			}
-		}
-        return result;
-	}
-
+    BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const;
 	/**
 	 * @brief checks whether or not left associativity is applicable
 	 * @details left associativity is applicable in case the given operation is
@@ -258,6 +153,51 @@ private:
 	BvSet_t _joinEdges;
 };
 
+
+
+//
+// Implemenetation
+//
+
+
+template <typename PlanNode, typename Operations_t>
+typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
+{
+    BvSet_t result;
+    if (connectedRelations == subSetOfRelations)
+    {
+        return result;
+    }
+    if (connectedRelations.is_not_empty())
+    {
+        result.insert({connectedRelations, getNeighbors(connectedRelations, subSetOfRelations)});
+    }
+    
+    Bitvector_t excluded_new = excluded;
+    Bitvector_t neighborhood = getNeighbors(connectedRelations, subSetOfRelations);
+    neighborhood.intersect_with(subSetOfRelations);
+    neighborhood = neighborhood.without(excluded);
+    
+    for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
+    {
+        if (neighborhood.test(i))
+        {
+            Bitvector_t v;
+            v.set(i);
+            BvSet_t O = getConnectedParts(subSetOfRelations, connectedRelations.uni(v), v);
+            excluded_new.union_with(v);
+            for (Bitvector_t o : O)
+            {
+                Bitvector_t newConnectedRelationships;
+                newConnectedRelationships = subSetOfRelations.without(o);
+                BvSet_t r = MinCutConservative(subSetOfRelations, newConnectedRelationships, excluded_new);
+                result.insert(r.begin(), r.end());
+            }
+        }
+    }
+    return result;
+}
+
 template <typename PlanNode, typename Operations_t>
 typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 {
@@ -266,6 +206,80 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operatio
 	Bitvector_t b;
 	return MinCutConservative(input, b, b);
 };
+
+template <typename PlanNode, typename Operations_t>
+typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operations_t>::getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
+{
+    LOG(INFO) << "getConnectedParts";
+    LOG(INFO) << "S:					" << S;
+    LOG(INFO) << "C:					" << C;
+    LOG(INFO) << "T:					" << T;
+    
+    BvSet_t O;
+    Bitvector_t D, N, U, L, L_new;
+    N = getNeighbors(T, S).without(C);
+    if (N.size() <= 1)
+    {
+        Bitvector_t b = S.without(C);
+        O.insert({b});
+        O.insert({C});
+        LOG(INFO) << "o:		" << b;
+        return O;
+    }
+    std::cout << "N" << N << std::endl;
+    for (unsigned int i = 0; i < N.capacity(); ++i)
+    {
+        L_new.reset();
+        if (N.test(i))
+        {
+            L_new.set(i);
+            
+            
+            
+            std::cout << "L_new" << L_new << std::endl;
+            U = N.without(L_new);
+            while (L != L_new && U.is_not_empty())
+            {
+                D = L_new.without(L);
+                L = L_new;
+                L_new.union_with(getNeighbors(D, S).without(C));
+                U = U.without(L_new);
+            }
+            if (U.is_not_empty())
+            {
+                O.insert( {S.without(C)});
+            }
+            U = N.without(L);
+            while (U.is_not_empty())
+            {
+                L.reset();
+                for (unsigned int i = 0; i < U.capacity(); ++i)
+                {
+                    L_new.reset();
+                    if (U.test(i))
+                    {
+                        L_new.set(i);
+                        while (L != L_new)
+                        {
+                            D = L_new.without(L);
+                            L = L_new;
+                            L_new.union_with(getNeighbors(D, S).without(C));
+                        }
+                        O.insert({L});
+                        U = U.without(L);
+                    }
+                    
+                }
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    return O;
+}
 
 
 #endif
