@@ -5,16 +5,9 @@ Die unterschiedlichen Pläne werden in diesem Protypen als Äquivalenzklassen un
 \subsection{Repräsentation von Relationen}
 \label{sec:Bitvector}
 
-Die einzelnen Relationen werden mit Hilfe eines Bitvektors dargestellt. Jeder Basis-Relation - sie repräsentiert eine physische Relation - ist eine ID zugeordnet. Eine Basis-Relation wird in diesem Prototypen mit Hilfe eines auf \texttt{TRUE} gesetzten Bits in einem Bitvektor repräsentiert. Auch mehrere Relationen können durch einen Bitvektor abgebildet werden dazu werden mehrere Bits auf \texttt{TRUE} gesetzt.
+Die einzelnen Relationen werden mit Hilfe eines Bitvektors dargestellt. Jeder Basis-Relation - sie repräsentiert eine physische Relation - ist eine ID zugeordnet. Eine Basis-Relation wird in diesem Prototypen mit Hilfe eines auf \texttt{TRUE} gesetzten Bits in einem Bitvektor repräsentiert. Auch mehrere Relationen können durch einen Bitvektor abgebildet werden. Um dies zu tun, werden mehrere Bits  im Bitvektor auf \texttt{TRUE} gesetzt.
 
 \subsubsection{Implementierung}
-
-Als Basis für die Implementierung dient ein Bitvektor. Ein Bitvektor sind mehrere Bits, die entweder \texttt{TRUE} also \texttt{1} oder \texttt{FALSE} also \texttt{0} sein können. Ist das n-te Bit eines Bitvektors gesetzt, so repräsentiert dieses Bit die n-te Relation. Beispielsweise bezeichnet der Bitvektor \texttt{010000000} die Relation mit der ID \texttt{1}. Mit Hilfe des Bitvektors können auch mehrere Relationen gespeichert werden \texttt{01010000000} bezeichnet folglich die Relation mit dem Name \texttt{1} und die Relation mit der ID \texttt{3}. Für die durchgeführten Berechnungen ist es nicht notwendig, dass eine Relation mit ihrem tatsächlichen Namen bekannt ist. Es reicht eine Bezeichnung mit Hilfe von Nummern aus.
-
-Vorteil für die Verwendung von Bitvektoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame JOIN Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. (vgl. Abb. \ref{Bitvector}) Dies ist besonders effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
-
-
-
 \begin{figure}[ht]
   \centering
   \includegraphics{04_Implementierung/00_media/Bitvector.pdf}
@@ -22,19 +15,24 @@ Vorteil für die Verwendung von Bitvektoren ist, dass einfach Mengenoperationen 
   \label{Bitvektor}
 \end{figure}
 
+Als Basis für die Implementierung dient ein Bitvektor. Ein Bitvektor sind mehrere Bits, die entweder \texttt{TRUE} also \texttt{1} oder \texttt{FALSE} also \texttt{0} sein können. Ist das n-te Bit eines Bitvektors gesetzt, so repräsentiert dieses Bit die n-te Relation. Beispielsweise bezeichnet der Bitvektor \texttt{010000000} die Relation mit der ID \texttt{1}. Mit Hilfe des Bitvektors können auch mehrere Relationen gespeichert werden. \texttt{01010000000} bezeichnet folglich die Relation mit der ID \texttt{1} und die Relation mit der ID \texttt{3}. Für die durchgeführten Berechnungen ist es nicht notwendig, dass eine Relation mit ihrem tatsächlichen Namen bekannt ist. Es reicht eine Bezeichnung mit Hilfe von Nummern aus.
 
-Die konkrete Erzeugung von Bitvektoren zu repräsentation von Relationen entsteht bei der Erstellung neuer Pläne bzgl. Äquivalenzklassen. Bezeichnet eine Äquivalenzklasse nur eine Basis-Relation so ist ihr Bitevektor \texttt{\_relations} auf nur einen Wert gesetzt. Wird einer Äuqivalenzklasse ein Planknoten hinzugefügt, wird die Variable \texttt{\_relations} mit den Relationen, die links bzw. rechts an einem Planknoten hängen, angereichert.
+Vorteil für die Verwendung von Bitvektoren ist, dass einfach Mengenoperationen durchgeführt werden können. So kann einfach geprüft werden, ob Äquivalenzklassen gemeinsame \texttt{JOIN}-Kanten besitzen oder neue Relationen einer Äquivalenzklasse hinzugefügt werden. (vgl. Abb. \ref{Bitvector}) Dies ist besonders effizient, da nur Bits und keine komplexen Objekte wie Strings verarbeitet werden müssen.
+
+
+
+Bitvektoren kommen immer in Äquivalenzklassen zum Einsatz. Wenn es sich um eine Äquivalenzklasse handelt, die eine Basis-Relation abbildet, dann ist nur ein Bit im Vektor auf \texttt{TRUE} gesetzt. Wenn es sich hingegen um eine Äquivalenzklasse handelt, die mehrere Relationen repräsentiert, werden auch mehere Bits im Bitvektor gesetzt.
 
 
 
 \subsubsection{Erweiterbarkeit}
-Die Implementierung des Bitvektors erlaubt es mit Hilfe eines Templateparameters die Länge des Bitevektors anzupassen.
 
+Da der Bitvektor, wie viele andere Klassen auch, einen Template Parameter besitzt, kann die Datenstruktur, auf deren Basis der Vektor implementiert ist ausgetauscht werden. Beispielsweise kann anstatt eines \texttt{unsigned int} auch ein \texttt{unsigned long long} verwendet werden.
+
+Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klasse. Der gesamte Bitvektor kann also ersetzt werden ohne dabei den Code anderer Klassen anpassen zu müssen.
 
 
 \subsection{Planknoten und Äquivalenzklassen}
-
-
 
 
 \begin{figure}[ht]
@@ -44,7 +42,7 @@ Die Implementierung des Bitvektors erlaubt es mit Hilfe eines Templateparameters
   \label{PlanAequi}
 \end{figure}
 
-Die Datenstruktur in der Pläne gespeichert sind, sind sowohl \texttt{Plan\-Node} und \texttt{Equi\-valence\-Classes}. Einem Planknoten ist ein Operator zugewiesen. Beispielsweise \texttt{JOIN} oder \texttt{SCAN}. In \texttt{Equi\-valence\-Class} werden mehrere Pläne gespeichert, die alle semantisch gleich sind. Ein einfaches Beispiel ist in Abbildung \ref{PlanAequi} zu finden. Ein einfacher Plan bestehend aus einem Join und zwei Scans ist zu sehen. Der oberste Knoten \texttt{E3} ist eine Äquivalenzklasse. In ihr findet sich der erste Planknoten ein Join. Der Join hat zwei Seiten, eine linke und eine rechte. Beide Seiten sind mit einer Äquivalenzklasse verbunden \texttt{E1} resp. \texttt{E2}, die jeweils einen Scan beinhalten, der die Basis-Relationen \texttt{R1} bzw. \texttt{R2} einliest. Die beiden Basis-Relationen sind ebenso wie die Äquivalenzklassen als \texttt{Equi\-valence\-Class} im System abgelegt.
+\texttt{Plan\-Node} und \texttt{Equi\-valence\-Classes} sind die Datenstrukturen in der Pläne gespeichert sind. Einem Planknoten ist ein Operator zugewiesen. Beispielsweise \texttt{JOIN} oder \texttt{SCAN}. In \texttt{Equi\-valence\-Class} werden mehrere Pläne gespeichert, die alle semantisch gleich sind. Ein einfaches Beispiel ist in Abbildung \ref{PlanAequi} zu finden. Ein einfacher Plan bestehend aus einem \texttt{JOIN}- und zwei \texttt{SCAN}-Operatoren ist zu sehen. Der oberste Knoten \texttt{E3} ist eine Äquivalenzklasse. In ihr findet sich der erste Planknoten ein \texttt{JOIN}. Der \texttt{JOIN} hat zwei Seiten, eine linke und eine rechte. Beide Seiten sind mit einer Äquivalenzklasse verbunden \texttt{E1} resp. \texttt{E2}, die jeweils einen \texttt{SCAN} beinhalten, der die Basis-Relationen \texttt{R1} bzw. \texttt{R2} einliest. Die beiden Basis-Relationen sind ebenso wie die Äquivalenzklassen als \texttt{Equi\-valence\-Class} im System abgelegt.
 
 
 
@@ -66,7 +64,7 @@ Bevor ein Plan einer Äquivalenzklasse zugeordnet werden kann oder eine Relation
 
 Von diesem Startpunkt aus, kann eine Äquivalenzklasse zwei Wege einschlagen: entweder eine Menge von Plänen speichern oder Basis-Relationen speichern. 
 
-Wird eine Basis-Relation gespeichert, so kann mit der Methode \texttt{setRelations( Bitvector\_t \& )} eine Bitevektor übergeben werden. Die Nachbarschaft einer \texttt{Equi\-valence\-Class} kann mit der Methode \texttt{setNeighbors( Bitvector\_t \& )} festgelegt werden. Als Nachbarschaft werden die Knoten bezeichnet, mit denen eine Join-Kante besteht.
+Wird eine Basis-Relation gespeichert, so kann mit der Methode \texttt{setRelations( Bitvector\_t \& )} eine Bitevektor übergeben werden. Die Nachbarschaft einer \texttt{Equi\-valence\-Class} kann mit der Methode \texttt{set\-Neighbors( Bitvector\_t \& )} festgelegt werden. Als Nachbarschaft werden die Knoten bezeichnet, mit denen eine Join-Kante besteht.
 
 
 
@@ -81,7 +79,7 @@ Eine weitere Möglichkeit Pläne an eine Äquivalenzklasse anzuhängen ist die M
 
 Ein weiterer wichtiger Teil, der gesondert hervorgehoben werden muss, ist die Methode \texttt{isOverlapping( Bitevector\_t \& )} Die Methode wird  verwendet um zu prüfen, ob die Nachbarn einer Äquivalenzklasse in einem gegebenen Bitvektor vorkommen. Repräsentiert eine Äquivalenzklasse beispielsweise die Relation 1,2,3 und hat die Nachbarn 4, 5 und 6., so gibt die Methode \texttt{isOverlapping true} zurück, falls der Eingabe-Bitvektor 4, 5 und/oder 6 enthält. Dieser Zustand wird im weiteren auch als überlappend bezeichnet und wird genutzt um zu prüfen, ob eine Regel anwendbar ist.
 
-Ebenfalls ist es notwendig, über die in einer Äquivalenzklasse gespeicherten Pläne zu iterieren. Eine Äuqivalenzklasse kann sich wie in Abb. \ref{EquivalenceClassList}. Die Äquivalenzklasse zeigt mit dem Zeiger \texttt{\_first} auf den ersten Planknoten. Dieser Zeit auf den nächsten Planknoten. Auf den letzten Planknoten wird von der Äuqivalenzklasse mit dem Zeiger \texttt{\_last} gezeigt. Der beste Plan wird mit dem Zeiger \texttt{\_best} markiert. Bei der Iteration über die Pläne einer Äquivalenzklasse kommt die Methode \texttt{begin()} zum Einsatz, die einen Iterator für den ersten Plan zurückliefert. Wird die Methode \texttt{node()} auf den Iterator angewendet, wird der jeweilige Planknoten zurückgeliefert. Neben der Methode für den ersten Knoten, lässt sich auch mit \texttt{last()} das letzte Element zurückliefern. So kann über die Menge der Planknoten iteriert werden.
+Ebenfalls ist es notwendig, über die in einer Äquivalenzklasse gespeicherten Pläne zu iterieren. Eine Äuqivalenzklasse kann wie in Abb. \ref{EquivalenceClassList} dargestellt aussehen. Die Äquivalenzklasse zeigt mit dem Zeiger \texttt{\_first} auf den ersten Planknoten. Dieser Zeit auf den nächsten Planknoten. Auf den letzten Planknoten wird von der Äuqivalenzklasse mit dem Zeiger \texttt{\_last} gezeigt. Der beste Plan wird mit dem Zeiger \texttt{\_best} markiert. Bei der Iteration über die Pläne einer Äquivalenzklasse kommt die Methode \texttt{begin()} zum Einsatz, die einen Iterator für den ersten Plan zurückliefert. Wird die Methode \texttt{node()} auf den Iterator angewendet, wird der jeweilige Planknoten zurückgeliefert. Neben der Methode für den ersten Knoten, lässt sich auch mit \texttt{last()} das letzte Element ausgeben. Durch diese Methoden kann über die Äquivalenzklasse iteriert werden.
 
 \begin{figure}[ht]
   \centering
@@ -100,15 +98,13 @@ Ebenfalls ist es notwendig, über die in einer Äquivalenzklasse gespeicherten P
   \label{PlanNodeClass}
 \end{figure}
 
-Wie bereits beschrieben, können Äuqivalenzklassen zur Speicherung von Plänen genutzt werden. Ein Planknoten repräsentiert eine Operation und kann bis zu zwei Äquivalenzklassen beinhalten. Wie in Abbildung \ref{PlanNodeClass} zu sehen, beinhaltet der Planknoten Zeiger auf einen linken und einen rechten Äquivalenzknoten, sowie einen Zeiger auf den nächsten Planknoten. Ebenso ist ein Operator Teil des Planknotens. Auch sind vier boolean Variablen vorhanden. \texttt{\_commutativity\-Enabaled}, \texttt{\_left\-Associativity\-Enabled},  \texttt{\_right\-Associativity\-Enabled},  \texttt{\_exchange\-Enabled}. Durch den Konstruktor werden die boolean Variablen auf \texttt{true} gesetzt und die Zeiger mit \texttt{NULL} initialisiert. Den Zeigern und dem Operator können später durch die Methode \texttt{set} mit konkreten Zeigern und einem Operator zugewiesen werden.
+Wie bereits beschrieben, können Äuqivalenzklassen zur Speicherung von Plänen genutzt werden. Ein Planknoten repräsentiert eine Operation und kann bis zu zwei Äquivalenzklassen beinhalten. Wie in Abbildung \ref{PlanNodeClass} zu sehen, beinhaltet der Planknoten Zeiger auf einen linken und einen rechten Äquivalenzknoten, sowie einen Zeiger auf den nächsten Planknoten. Ebenso ist ein Operator Teil des Planknotens. Auch sind vier boolean Variablen vorhanden: \texttt{\_commutativity\-Enabaled}, \texttt{\_left\-Associativity\-Enabled},  \texttt{\_right\-Associativity\-Enabled},  \texttt{\_exchange\-Enabled}. Die boolean-Variablen werden nur für die Regelmenge \texttt{RS-B2} verwendet und werden durch den Konstruktor auf \texttt{TRUE} gesetzt. Im selben Schritt werden die Zeiger mit \texttt{NULL} initialisiert. Den Zeigern und dem Operator können später durch die Methode \texttt{set} mit konkreten Zeigern und einem Operator zugewiesen werden.
 
+Planknoten können aneinander gehängt werden, wie in Abb. \ref{EquivalenceClassList} zu sehen. Dies geschieht mit der Methode \texttt{concat}. Falls der aktuelle Knoten nicht der letzte ist,kann mit der Methode contact (PlanNode *) zuerst zum letzten Knoten gesprungen werden und dort der neue Knoten eingefügt werden. 
 
+Die Methoden \texttt{disable\-All\-Rules()} und \texttt{disable\-All\-And\-Enable\-Commutativity()} kommen bei der Verwendung der Regelmenge \texttt{RS-B2} zum Einsatz. Nach Anwendung einer Regel wird so im Planknoten festgelegt, dass bestimmte Regeln nicht mehr auf einen Knoten angewendet werden dürfen. Um sicherzustellen, dass die Regeln nur \texttt{is\-Left\-Associativity\-Enabled()}, \texttt{is\-Right\-Associativity\-Enabled()} und \texttt{is\-Exchange\-Enabled()} geprüft, ob eine Regel zur Anwendung kommen darf.
 
-Der nächste Planknoten wird an den bestehenden Planknoten mittels der Methode \texttt{concat( PlanNode * )} angefügt.Falls der aktuelle Knoten nicht der letzte ist,kann mit der Methode contact (PlanNode *) zuerst zum letzten Knoten gesprungen werden und dort der neue Knoten eingefügt werden. 
-
-Die Methoden \texttt{disable\-All\-Rules()} und \texttt{disable\-All\-And\-Enable\-Commutativity()} kommen bei der Verwendung des Regelsets \texttt{RS-B2} zum Einsatz. Nach Anwendung einer Regel wird so im Planknoten festgelegt, dass bestimmte Regeln nicht mehr auf einen Knoten angewendet werden dürfen. Um sicherzustellen, dass die Regeln nur \texttt{is\-Left\-Associativity\-Enabled()}, \texttt{is\-Right\-Associativity\-Enabled()} und \texttt{is\-Exchange\-Enabled()} geprüft, ob eine Regel zur Anwendung kommen darf.
-
-Um die Äquivalenzklasse eines Planknotens zu erreichen ist es möglich mit der Methode \texttt{left()} bzw. \texttt{l()} einen Zeiger auf die entsprechende Klasse zu erhalten. Analog dazu können die Methoden \texttt{right()} bzw. \texttt{r()} verwendet werden. Mit den Methoden \texttt{has\-Left()} bzw. \texttt{has\-Right()} kann geprüft werden, ob ein Planknoten eine rechte bzw. linke Äquivalenzklasse besitzt. Diese Methoden sind insbesondere für die Implementierung von Regeln wichtig.
+Um die Äquivalenzklasse eines Planknotens zu erreichen ist es möglich mit der Methode \texttt{left()} bzw. \texttt{l()} einen Zeiger auf die entsprechende Klasse zu erhalten. Analog dazu können die Methoden \texttt{right()} bzw. \texttt{r()} verwendet werden. Mit den Methoden \texttt{has\-Left()} bzw. \texttt{has\-Right()} wird geprüft, ob ein Planknoten eine rechte bzw. linke Äquivalenzklasse besitzt. Diese Methoden sind insbesondere für die Implementierung von Regelnbedingungen wichtig.
 
 
 \subsubsection{Erweiterbarkeit}

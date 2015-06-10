@@ -1,17 +1,16 @@
 \section{Pellenkoft Regelmengen}
 \label{sec:pellenkoftRulesets}
-Bei der Erforschung eines Search Spaces kommen in regelbasierten \ac{QO} Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelsets zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
-
+Bei der Erforschung eines Search Spaces kommen in regelbasierten Anfrageoptimierer Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelmengen zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
 
 
 Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt den Startpunkt dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
 
-Mehrere Transformationsregeln werden gemeinsam als Regelsets bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelsets, die Pläne mehrfach generieren können und Regelsets, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat  der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelsets vorgestellt, die Duplikate bilden und ein Regelset, das duplikatsfrei ist.
+Mehrere Transformationsregeln werden gemeinsam als Regelmenge bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelmengen, die Pläne mehrfach generieren können und Regelmengen, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat  der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelsets vorgestellt, die Duplikate bilden und ein Regelset, das duplikatsfrei ist.
 
 
-\subsection{Regelset mit Duplikaten}
+\subsection{Regelmengen mit Duplikaten}
 
-Eines der Regelsets, das zur Erzeugung eines Bushy Tree Space genutzt werden kann, ist \textit{RS-B0}. Es besteht aus drei Regeln:
+Eines der Regelmengen, das zur Erzeugung eines Bushy Tree Space genutzt werden kann, ist \textit{RS-B0}. Es besteht aus drei Regeln:
 
 \begin{itemize}
 \item Kommutativität: $$ A \Join B \to B \Join A$$
@@ -19,7 +18,7 @@ Eines der Regelsets, das zur Erzeugung eines Bushy Tree Space genutzt werden kan
 \item Linke Assoziativität: $$A \Join (B \Join C) \to (A \Join B) \Join C$$
 \end{itemize}
 
-Das Regelset ist redundant, da mit Hilfe von Kommutativität und rechter Assoziativität linke Assoziativität (und vis-à-vis) erzeugt werden kann. Möchte man die Redundanz vermeiden, lässt sich Regelset \textit{RS-B1} erstellen. Es basiert auf Kommutativität und einer Swap genannten Regel:
+Die Regelmenge ist redundant, da mit Hilfe von Kommutativität und rechter Assoziativität linke Assoziativität (und vis-à-vis) erzeugt werden kann. Möchte man die Redundanz vermeiden, lässt sich die Regelmenge \textit{RS-B1} ableiten. Sie basiert auf Kommutativität und einer Swap genannten Regel:
 
 \begin{itemize}
 \item Swap $$ (A \Join B) \Join C \to (A \Join C) \Join B $$
@@ -30,36 +29,42 @@ Das Regelset ist redundant, da mit Hilfe von Kommutativität und rechter Assozia
 
 Durch die Anwendung der Regeln aus \textit{RS-B0} und \textit{RS-B1} können Pläne doppelt erzeugt werden. Am einfachsten ist dies an Hand von Kommutativität zu zeigen. Wird auf den Plan $A \Join B$ Kommutativität angewendet, entsteht $B \Join A$, dann entsteht durch  die erneute Anwendung von Kommutativität auf den neuen Plan $B \Join A$ wieder der ursprüngliche Plan.
 
-Ebenfalls können sich bei komplexeren Plänen  Teilpläne gleichen. Beispielsweise enthält der Plan $(A \Join B) \Join C$ den gleichen Subplan wie $C \Join (A \Join B)$. Um solche Duplikate zu verhindern, wird von Pellenkoft das Prinzip der Äquivalenzklasse angewendet.
+Ebenfalls können sich bei komplexeren Plänen  Teilpläne gleichen. Beispielsweise enthält der Plan $(A \Join B) \Join C$ den gleichen Subplan wie $C \Join (A \Join B)$.
 
 
 
-\subsection{Duplikatfreie Regelsets}
-Durch die Anwendung von \textit{RS-B0} bzw. \textit{RS-B1} ist es möglich, dass Varianten des Plans erneut erzeugt werden. Dieser Gefahr trägt das Regelset \textit{RS-B2} Rechnung. Es sieht vor, dass eine Regel nur genau einmal ausgeführt und andere Regeln nur einmal pro Operator ausgeführt werden dürfen. Dieses Regelset besteht aus:
+\subsection{Duplikatfreie Regelmenge}
+Durch die Anwendung von \textit{RS-B0} bzw. \textit{RS-B1} ist es möglich, dass Varianten des Plans erneut erzeugt werden. Dieser Gefahr trägt die Regelmenge \textit{RS-B2} Rechnung. Sie sieht vor, dass eine Regel nur genau einmal ausgeführt und andere Regeln nur einmal pro Operator ausgeführt werden dürfen. Dieses Regelmenge besteht aus:
 
 
 \begin{itemize}
-\item Kommutativität: $$ A \Join B \to B \Join A$$
-\item Rechte Assoziativität: $$(A \Join B) \Join C \to A \Join (B \Join C) $$
-\item Linke Assoziativität: $$A \Join (B \Join C) \to (A \Join B) \Join C$$
+\item Kommutativität: $$ A \Join_1 B \to B \Join_2 A$$
+Alle Regeln sind für den Operator $\Join_2$ deaktiviert.
+\item Rechte Assoziativität: $$(A \Join_1 B) \Join_2 C \to A \Join_3 (B \Join_4 C) $$
+Alle Regeln außer Kommutativität sind für $\Join_3$ deaktiviert.
+\item Linke Assoziativität: $$A \Join_1 (B \Join_2 C) \to (A \Join_3 B) \Join_4 C$$
+Alle Regeln außer Kommutativität sind für $\Join_4$ deaktiviert.
 
-\item Exchange $$(A \Join B) \Join (C \Join D) \to (A \Join D) \Join (C \Join B) $$
+\item Exchange: $$(A \Join_1 B) \Join_2 (C \Join_3 D) \to (A \Join_4 D) \Join_5 (C \Join_6 B) $$
+Alle Regeln außer Kommutativität sind für $\Join_5$ deaktiviert.
 \end{itemize}
 
+Regeln, die für einen Operator deaktiviert wurden, dürfen für diesen Operator nicht mehr ausgeführt werden.
 
 
-\subsubsection{Kreuzproduktfreie Regelsets und Vollständigkeit}
 
-Die bisherigen Regelsets können zu Kreuzprodukten führen. Ebenfalls ist nicht geklärt, ob die Regelsets vollständig sind und alle möglichen kreuzproduktfreien Bäume erzeugen. Im Folgenden wird zuerst der Begriff der Kreuzproduktfreiheit eingeführt und basierend auf diesem Begriff die Vollständigkeit erläutert.
+%\subsubsection{Kreuzproduktfreie Regelsets und Vollständigkeit}
 
-Ein Kreuzprodukt kann bei den vorliegenden Plänen dann entstehen, wenn durch die Anwendung einer Regel ein Join zwischen zwei Relationen gebildet wird, die zuvor keine Kante auf einem gegeben Join Tree hatten.
+%Die bisherigen Regelmengen können zu Kreuzprodukten führen. Ebenfalls ist nicht geklärt, ob die Regelsets vollständig sind und alle möglichen kreuzproduktfreien Bäume erzeugen. Im Folgenden wird zuerst der Begriff der Kreuzproduktfreiheit eingeführt und basierend auf diesem Begriff die Vollständigkeit erläutert.
 
-Eine Technik um Kreuzproduktfreiheit bei den bisherigen Regelsets herzustellen, ist die Unterdrückung von Kreuzprodukten die auch als \ac{CPS} bezeichnet wird. Der Ansatz funktioniert so, dass eine Regel, falls sie ein Kreuzprodukt erzeugt zwar als ausgeführt markiert, jedoch nicht der Baum in den Search Space aufgenommen wird. Somit werden Kreuzprodukte zwar erzeugt, aber nicht in den Suchrraum aufgenommen. Regelsets, die diese Art von Kreuzproduktunterdrückung anwenden, erhalten das Suffix CPS. Somit entstehen aus den Regelsets \textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} die Regelsets \textit{RS-B0-CPS}, \textit{RS-B1-CPS} und \textit{RS-B2-CPS}.
+%Ein Kreuzprodukt kann bei den vorliegenden Plänen dann entstehen, wenn durch die Anwendung einer Regel ein Join zwischen zwei Relationen gebildet wird, die zuvor keine Kante auf einem gegeben Join Tree hatten.
 
-
-Eine andere wichtige Eigenschaft von Regelsets ist Vollständigkeit. Vollständig ist ein Regelset dann, wenn alle kreuzproduktfreien Pläne mit einem Regelset gefunden werden.
+%Eine Technik um Kreuzproduktfreiheit bei den bisherigen Regelsets herzustellen, ist die Unterdrückung von Kreuzprodukten die auch als \ac{CPS} bezeichnet wird. Der Ansatz funktioniert so, dass eine Regel, falls sie ein Kreuzprodukt erzeugt zwar als ausgeführt markiert, jedoch nicht der Baum in den Search Space aufgenommen wird. Somit werden Kreuzprodukte zwar erzeugt, aber nicht in den Suchrraum aufgenommen. Regelsets, die diese Art von Kreuzproduktunterdrückung anwenden, erhalten das Suffix CPS. Somit entstehen aus den Regelsets \textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} die Regelsets \textit{RS-B0-CPS}, \textit{RS-B1-CPS} und \textit{RS-B2-CPS}.
 
 
-Die Regelsets textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} liegen dem Volcano Query Optimizer zu Grunde und sind die Basis der regelbasierten Transformation.
+%Eine andere wichtige Eigenschaft von Regelsets ist Vollständigkeit. Vollständig ist ein Regelset dann, wenn alle kreuzproduktfreien Pläne mit einem Regelset gefunden werden.
+
+
+%Die Regelsets textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} liegen dem Volcano Query Optimizer zu Grunde und sind die Basis der regelbasierten Transformation.
 
 

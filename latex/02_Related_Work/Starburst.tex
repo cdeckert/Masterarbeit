@@ -58,7 +58,7 @@ Die Regelmaschine basiert auf fünf Prinzipien:
 
 Der Plan Optimierer selbst ist regelbasiert, nutzt aber nicht den transformierenden, sondern einen generierenden Ansatz. Mit Hilfe von Basisoperatoren sog. \ac{LOLEPOP}s werden mit Hilfe von Regeln sog. \ac{STAR}s Pläne erzeugt. Die Basisoperatoren \ac{LOLEPOP}s bilden einfach Operationen wie SCAN und SORT. Ein Plan besteht aus mehreren dieser \ac{LOLEPOP}s, die gemeinsam einen Plan ergeben.
 
-Der \ac{STAR} definiert ein bekanntes parametrisiertes Objekt. Es besteht aus einer Bedingung zur Anwendbarkeit und einer Definition  eines Plans. Ist ein STAR auf einen Teilplan anwendbar, wird dieser STAR an dieser Stelle referenziert. Der Plan selbst hat einen rootSTAR als Startpunkt. Mit Hilfe der STARs\todo{Stil} innerhalb des \ac{QGM}s ist eine Grammatik mit deren Hilfe alternative Pläne zu finden sind. 
+Der \ac{STAR} definiert ein bekanntes parametrisiertes Objekt. Es besteht aus einer Bedingung zur Anwendbarkeit und einer Definition  eines Plans. Ist ein STAR auf einen Teilplan anwendbar, wird dieser STAR an dieser Stelle referenziert. Der Plan selbst hat einen rootSTAR als Startpunkt. Mit Hilfe der STARs\todo{Stil} innerhalb des \ac{QGM}s entsteht  eine Grammatik mit deren Hilfe alternative Pläne zu finden sind. 
 
 Bei der Zusammensetzung von verschiedenen alternativen Plänen kommt ein Gluemechanismus zu Einsatz. Er verhindert, dass die Anzahl der Alternativen die in Plänen vorkommen vervielfacht werden. So entstehen aus GQMs QEPs deren Kosten geschätzt werden können.
 
