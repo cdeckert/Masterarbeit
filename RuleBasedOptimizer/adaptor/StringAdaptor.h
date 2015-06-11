@@ -87,7 +87,7 @@ StringAdaptor<PlanNode_t>::writeString(EquivalenceClass_t *input)
 {
 	std::vector<std::string> plans;
 	typedef typename EquivalenceClass_t::Iterator EItr;
-	if (input->getOperator() == Operator::SCAN)
+	if (input != NULL && input->getOperator() == Operator::SCAN)
 	{
 		int rel = input->getRel();
 		std::string plan =  input->getOperatorAsString() + "(" + std::to_string(rel) + ")";

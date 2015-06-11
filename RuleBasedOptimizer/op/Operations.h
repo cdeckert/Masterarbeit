@@ -35,7 +35,7 @@ public:
 	 * @brief Constructor to create a bunch of reservoirs
 	 * @details standard constructor runs more specific constructors with default values
 	 */
-	Operations() : Operations(300) {};
+	Operations() : Operations(10) {};
 	/**
 	 * @brief Constructor to create a bunch of reservoirs
 	 * @details Initalizes a bunch of reservoirs based on a given number of expected objects

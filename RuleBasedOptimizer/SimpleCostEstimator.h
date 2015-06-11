@@ -154,9 +154,17 @@ void SimpleCostEstimator<PlanNode_t>::findOptimalPlan(EquivalenceClass_t & eq)
                     findOptimalPlan(aPlanNode.r());
                 }
                 // calc cardinality and costs
-                double newCardinality = _tempCardinality.at(aPlanNode.l().getRelations()) * _tempCardinality.at(aPlanNode.r().getRelations()) * getSelectivity(aPlanNode);
-                double newCost = newCardinality + _tempCost.at(aPlanNode.l().getRelations()) +  _tempCost.at(aPlanNode.r().getRelations());
-                
+				double newCost = 0;
+				double newCardinality = 0;
+				try
+				{
+				newCardinality = _tempCardinality.at(aPlanNode.l().getRelations()) * _tempCardinality.at(aPlanNode.r().getRelations()) * getSelectivity(aPlanNode);
+                 newCost = newCardinality + _tempCost.at(aPlanNode.l().getRelations()) +  _tempCost.at(aPlanNode.r().getRelations());
+				}catch(std::exception e)
+				{
+					LOG(INFO) << aPlanNode.l().getRelations();
+					newCost = 9999999999999;
+				}
                 // in case costs are lower this line is visited for the first time
                 // create a new entry in the cardinality map and in the cost map
                 if(newCost < lowestCost || lowestCost == -1)

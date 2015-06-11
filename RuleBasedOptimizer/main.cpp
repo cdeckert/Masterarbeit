@@ -10,7 +10,6 @@
 #include "Configurator.h"
 #include "PlanNode.h"
 #include "JSONAdaptor.h"
-#include "DotAdaptor.h"
 #include "StringAdaptor.h"
 #include "CostEstimator.h"
 #include "Stopwatch.h"
