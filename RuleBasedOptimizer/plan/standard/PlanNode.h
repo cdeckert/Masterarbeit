@@ -124,7 +124,9 @@ public:
 	 * @return integer which represents the number of explored plans
 	 */
 	u_int getSize() const;
-
+	
+	
+	
 	/**
 	 * @brief Accessor for operation (e.g. join)
 	 * @return enum
@@ -208,6 +210,7 @@ public:
 	bool isExchangeEnabled() const;
 	
 	void debug() const;
+	
 
 private:
 	Operator _op;
@@ -230,6 +233,8 @@ std::string PlanNode<Bitvector_t>::getOperatorAsString() const
 {
 	return operatorname[_op];
 };
+
+
 
 template <typename Bitvector_t>
 Bitvector_t PlanNode<Bitvector_t>::getSignature() const

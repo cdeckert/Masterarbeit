@@ -24,6 +24,7 @@ class EquivalenceClassIterator
 {
 	typedef EquivalenceClassIterator self_type;
 	typedef typename PlanNode_t::BV Bitvector_t;
+	
 
 
 public:
@@ -99,8 +100,8 @@ private:
 
 
 /**
- * @brief [brief description]
- * @details [long description]
+ * @brief Equivalence Class Contains a bunch of palnnodes
+ * @details It contains a bunch of logical equal plan nodes
  *
  * @tparam Bitvector_t  [description]
  * @tparam PlanNode_t [description]
@@ -112,7 +113,8 @@ struct EquivalenceClass
 	typedef typename PlanNode_t::BV Bitvector_t;
 	typedef EquivalenceClassIterator<PlanNode_t> Iterator;
 	typedef Reservoir<self_type> Reservoir_t;
-
+	typedef unsigned int u_int;
+	
 	friend Iterator;
 
 public:
@@ -397,6 +399,15 @@ public:
 	{
 		return _explored ||(!hasPlanNodes() || getOperator() == SCAN);
 	}
+	
+	
+	/**
+	 * @brief counts all Equivalence Nodes
+	 * @details counts all unique Equivalence Nodes
+	 * @return number of Equivalence Nodes
+	 */
+	
+	u_int countEQs();
 
 
 private:
@@ -406,6 +417,8 @@ private:
 	PlanNode_t *_first = NULL;
 	PlanNode_t *_last = NULL;
 	PlanNode_t *_best = NULL;
+	
+	bool _counted = false;
 
 	bool _explored;
 
@@ -430,6 +443,32 @@ private:
  *
  */
 
+
+template <typename PlanNode_t>
+typename EquivalenceClass<PlanNode_t>::u_int EquivalenceClass<PlanNode_t>::countEQs()
+{
+	u_int count = 0;
+	
+	if(!_counted)
+	{
+		_counted = true;
+		count++;
+	}
+	
+	if(!isEmpty())
+	{
+		for (Iterator itr = begin(); itr.isOK(); ++itr)
+		{
+			count += itr.node()->l().countEQs();
+			if(itr.node()->hasRight())
+			{
+				count += itr.node()->r().countEQs();
+			}
+		}
+	}
+	
+	return count;
+}
 
 template <typename PlanNode_t>
 void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
