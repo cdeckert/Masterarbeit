@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-6 col-sm-12">
+	<div class="col-md-6 col-sm-6">
 		<h2>Relationships</h2>
 
 		<table class="table table-bordered">
@@ -14,7 +14,7 @@
 		</table>
 		<button class="btn btn-default" ng-click="addRelation()" tabindex="99">Add relation</button> <button class="btn btn-danger" ng-click="removeLastLine(relations)" tabindex="100" ng-show="relations.length > 1">remove relation</button>
 	</div>
-	<div class="col-md-6 col-sm-12">
+	<div class="col-md-6 col-sm-6">
 		<h2>Join Edges</h2>
 
 		<table class="table table-bordered">
@@ -33,13 +33,13 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-6 col-sm-12">
+	<div class="col-md-6 col-sm-6">
 		<h2>Algorithms</h2>
 		<div class="btn-group" role="group">
 			<button type="button" ng-class="!containsAlgo(a)? 'btn-default':'btn-success'" class="btn" ng-click="clickAlgo(a)" ng-repeat="a in potentialRuelSets">{{a}}</button>
 		</div>
 	</div>
-	<div class="col-md-6 col-sm-12">
+	<div class="col-md-6 col-sm-6">
 		
 		<h2>Inital Tree</h2>
 

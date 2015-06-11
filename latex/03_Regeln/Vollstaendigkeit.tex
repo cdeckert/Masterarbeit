@@ -1,0 +1,42 @@
+\section{Prüfung der Vollständigkeit}
+
+Von \cite{shanbhag2014optimizing} wurde die Vollständigkeit der Regelmenegen geprüft. Eine Regelmenge wird dann als Vollständig gewertet, wenn es genutzt werden kann, um einen Suchraum von allen kreuzproduktfreien Plänen aus einem initialen Plan, der keine Kreuzprodukte enthält, zu erzeugen. In diesem Zusammenhang lassen sich drei Aspekte genauer betrachteten: (1) alle Pläne müssen gefunden werden; (2) Die Pläne müssen kreuzproduktfrei sein; (3) Sie müssen aus einem initialen Plan ohne Kreuzprodukte gebildet werden.
+
+Um sicherzustellen, dass die erzeugten Pläne kreuproduktfrei sind, wurde von \cite{shanbhag2014optimizing} ein Mechanismus zur Kreuzproduktunterdrückung implementiert. Der Mechanismus sieht vor, dass nachdem ein neuer Plan mit Hilfe einer Regel erzeugt wurde, geprüft wird ob der erzeugte Plan kreuzproduktfrei ist. Nur wenn das der Fall ist wird der neue Plan gespeichert. Falls der neue Plan Kreuzprodukte enthält, wird die Regel zwar als ausgeführt markiert, aber das Ergebnis nicht gespeichert.
+
+
+\subsection{Prüfung von Regelmenge RS-B0 und RS-B1}
+
+Bei der Prüfung der beiden Regelmengen RS-B0 und RS-B1 auf Vollständigkeit wurde zuerst festgestellt, dass wenn RS-B1 vollständig ist auch automatisch RS-B0 als vollständig gilt. Dies lässt sich darauf zurückführen, dass im Gegensatz zu RS-B1 RS-B2 eine weitere, zusätzliche Regel implementiert. Diese zusätzliche Regel kann keine Auswirkung auf den Suchraum haben. Wenn alle Pläne bereits durch die beiden Regeln, die auch in RS-B1 vorhanden sind, gefunden werden können.
+
+
+Es wurde angenommen, dass für einen kreuzproduktfreien Baum mit den Relationen $R_1, R_2, ..., R_k$
+
+
+\subsection{Unvollständigkeit von RS-B2}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{02_Related_Work/Graphs.pdf}
+  \caption{Incompletness of RS-B2-CPS}
+  \label{Incompleteness_RS-B2-CPS}
+\end{figure}
+
+
+Die Unvollständigkeit wurde mit Hilfe eines Beispiels belegt. Als Beispiel wurde der Bushy-Tree gewählt der in Abbildung \ref{Incompleteness_RS-B2-CPS} zu sehen ist. Mit Hilfe der Regeln aus der Regelmenge RS-B2 sollte der initale Plan () in den Plan () umgewandelt werden. Dabei werden die vier Regeln der Regelmenge angewendet.
+
+\begin{itemize}
+\item Mit der Kommutativitätsregel ist es möglich ein Spiegelbild des original Baums herzustellen, aber nicht den Plan grundlegend zu verändern.
+\item Bei der Anwendung von linker Assoziativität auf den Root-Knoten des Baum würde ein neuer Baum erzeugt werden dessen
+\item Das Ergebnis von rechter Assoziativität ist symmetrisch zu linker Assoziativität.
+\end{itemize}
+
+
+Welche Regel auch immer auf den Baum angewendet wird, es ist nicht möglich den einen in den anderen Baum zu transformieren.
+
+\subsection{Unvollständigkeit von RS-B2 mit Hilfe von PyroJ}
+
+Mit Hilfe des Optimierers PyroJ - sein Aufbau wird in \ref{} behandelt - wurden die Regelsets ebenfalls auf ihre Vollständigkeit hin geprüft. Es wurde angenommen, dass zwei Ergebnismengen dann gleich sind, wenn die Anzahl der Äquivalenzklassen und die Anzahl der Operatorknoten gleich ist. Da wie zuvor festgestellt RS-B1 vollständig ist, wurde RS-B1 als Benchmark für andere Regelsets genutzt. Als Test-Case wurden Starqueries verwendet. Wie in Tabelle \ref{} zu sehen ist, wurde mit Hilfe von RS-B2 erheblich weniger Operatoren-Knoten erzeugt als mit RS-B1. \cite{} schliesst daher darauf, dass RS-B2 unvollständig ist.
+
+Ebenfalls stellt \cite{} hervor, dass eine bestimmte Anfrage (Anfrage 7 des TPC-DS Benchmarks) bei der Nutzung des RS-B2 eine um 1.86 höhere geschätzte Kosten als RS-B1 hatte.
+

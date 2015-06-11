@@ -36,7 +36,7 @@ Diese Regeln werden gemeinsam mit Hilfe des Optimierer Generators in C Code umge
 
 Bei der Anwendung der Regeln wird zuerst geprüft, welche Regeln anwendbar sind. Diese Regeln werden in der Liste OPEN abgelegt. Durch einen Auswahlmechanismus wird festgelegt, welche Regel zum Einsatz kommt. Nachdem eine Regel angewendet wurde, wird sie aus der OPEN Liste entfernt. Regelanwendungen, die durch diese Transformation möglich wurden, werden der OPEN Liste hinzugefügt. Der Auswahlmechanismus sieht vor, dass die potenziell gebildeteten Pläne auf Grund ihrer Kosten bewertet werden und die Regel ausgeführt wird, die zum günstigsten Plan führt. Die Suchstrategie wird als Hill climbing bezeichnet.
 
-Einer der Nachteile dieses Ansatzes ist, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Auch Graefe selbst sieht einige weitere Nachteile \cite{graefe1993volcano}:
+Einer der Nachteile dieses Ansatzes ist, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Graefe selbst sieht auch einige weitere Nachteile \cite{graefe1993volcano}:
 
 \begin{itemize}
 \item nicht-triviale Kostenmodelle

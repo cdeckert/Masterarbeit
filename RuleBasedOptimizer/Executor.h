@@ -83,6 +83,7 @@ void Executor<T>::run() const
 			}
 			else if(algo == "RS_B2")
 			{
+				LOG(INFO) << "RS-B2";
 				t1 = new ExhaustiveTransformation_t(RS_B2_t());
 			}else
 			{
@@ -101,7 +102,7 @@ void Executor<T>::run() const
 			costEstimator.findOptimalPlan(eq);
 			_watch->stop();
 
-
+			LOG(INFO) << "NUMBER OF EQs:" << eq.countEQs();
 
 
 			duration += _watch->getDuration();

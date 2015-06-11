@@ -36,11 +36,15 @@ public:
     
     bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
     {
+        
         return aPlanNode.isExchangeEnabled() &&
         aPlanNode.getOperator() == JOIN &&
         left.getOperator() == JOIN &&
         right.getOperator() == JOIN &&
-        left.r().isOverlapping(right.r());
+        left.l().isOverlapping(right.l())&&
+        left.r().isOverlapping(right.r())&&
+        left.r().isOverlapping(right.l())&&
+        left.l().isOverlapping(right.r());
     };
 
 	/**
