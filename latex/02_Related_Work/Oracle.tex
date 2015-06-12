@@ -4,26 +4,24 @@
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{02_Related_Work/OracleArchitecture.png}
+  \includegraphics[width=\textwidth]{02_Related_Work/Oracle.pdf}
   \caption{Oracle Architecture \cite{Oracle2004Basics}}
   \label{OracleArchitecture}
 \end{figure}
 
 
-Die Oracle Architektur zur Verarbeitung von Anfragen \cite{Oracle2004Basics}  (vgl. Abb. \ref{OracleArchitecture})  beginnt wie die meisten Systeme mit einer SQL Anfrage, die von einem Parser in eine Interne Repräsentation gebracht wird. Der Parser übernimmt dabei zwei Funktionen. Auf der einen Seite die syntaktische Analyse, es wird geprüft, ob die SQL Anfrage die korrekte Syntax besitzt. Auf der anderen Seite eine semantische Analyse, diese prüft beispielsweise ob Datenbank Objekte und Objekt-Attribute  korrekt referenziert werden. 
+Die Oracle Architektur zur Verarbeitung von Anfragen \cite{Oracle2004Basics}  (vgl. Abb. \ref{OracleArchitecture})  beginnt wie die meisten Systeme mit einer SQL Anfrage, die von einem Parser in eine Interne Repräsentation gebracht wird. Der Parser übernimmt dabei zwei Funktionen. Auf der einen Seite die syntaktische Analyse. Es wird geprüft, ob die SQL Anfrage die korrekte Syntax besitzt. Auf der anderen Seite eine semantische Analyse. Diese prüft beispielsweise ob Datenbank Objekte und Objekt-Attribute  korrekt referenziert werden. 
 
 Ein wesentlicher Unterschiede war bis zu Version 11g der Oracle Datenbank die Verwendung von \ac{RBO} und \ac{CBO}. Je nach Anfrage konnte durch den \ac{DBI} entschieden werden, ob \ac{RBO} bzw. \ac{CBO} zum Einsatz kommt. Mit Version 11g ist diese Möglichkeit weggefallen \cite{dba_oracle2015}. 
 
-Der \ac{QO} führt bei der Verarbeitung die folgenden drei Schritte aus:
+Der Anfrageoptimierer führt bei der Verarbeitung die folgenden drei Schritte aus:
 
 \begin{itemize}
 \item Eine Menge potenzieller Pläne wird basierend der SQL Anfrage selbst und aufgrund von Hinweisen, die durch den Nutzer eingegeben werden, generiert.
 
-\item Der Optimierer schätzt die Kosten für jeden Plan basierend auf Kosteninformationen über die Anfrage und Storage Charakteristiken der Tabellen, Indexe und Partitionen ,auf die durch ein Statement zugegriffen werden kann.
+\item Der Optimierer schätzt die Kosten für jeden Plan basierend auf Kosteninformationen über die Anfrage und Storage Charakteristiken der Tabellen, Indexe und Partitionen, auf die durch ein Statement zugegriffen werden kann.
 
-Die Kostenschätzung für den Zugriff auf entsprechende Datensätze und die Reihenfolge der Joins wird nach ihrem Verbrauch von Ressourcen wie I/O, CPU und Memory geschätzt.
-
-Pläne mit höheren Kosten benötigen mehr Zeit zur Ausführung, als Pläne mit niedrigeren Kosten. Falls Pläne parallel ausgeführt werden können, ist die Ressourcen Nutzung nicht direkt abhängig von der verwendeten Zeit.
+Die Kostenschätzung für den Zugriff auf entsprechende Datensätze und die Reihenfolge der Joins wird nach ihrem Verbrauch von Ressourcen wie I/O, CPU und Arbeitsspeicher geschätzt.
 
 \item Der Optimierer vergleicht die Kosten der Pläne und wählt den kostengünstigsten Plan aus.
 \end{itemize}
@@ -31,47 +29,36 @@ Pläne mit höheren Kosten benötigen mehr Zeit zur Ausführung, als Pläne mit 
 Das Ergebnis des Optimierers ist ein Plan, der zum Ausführen der Anfrage geeignet ist und als kosten-optimal eingeschätzt wird.
 
 
-\subsubsection{Kostenbasierte Transformation in Oracle}
-
-Traditionelle Relationale Datenbank Systeme führen, wie bereits dargestellt, die Transformation von Anfragen in zwei Phasen durch: Logische und physische Phase. In der logischen Phase wird die gegebene Anfrage zuerst durch einen Rewriter angewendet, hier kommen Heuristiken oder Regeln zum Einsatz. Der traditionelle pyhsische Optimizer arbeitet mit einem einzelnen Query Block aus Restriktionen über Tabellen, Projektionen und Joins. Die physische Optimierungsphase befasst sich mit Access Methoden, Joinreihenfolge und Join Methoden die genutzt werden, um effiziente Pläne zu erzeugen.
-
-Query Transformationen werden entweder als Rewriter Systeme oder als Extention des Plan Generators mit dem pyhsichen Optimierer implementiert. Der erste Ansatz skaliert nicht in komplexen kommerziellen Systemen, der zweite Ansatz ist nur einfach auf ein paar wenige Transformationen anzuwenden. 
-Bisher wurden zuerst Rewriter Rules angewendet und dann die Nutzung von Cost Based Trasnformations angewendet. \cite{ahmed2006cost} argumentiert, dass einige Heueristiken nicht immer ein optimales Ergebnis erzeugen und daher mit Hilfe von Cost Based Methoden geprüft werden sollten, bevor sie auf eine Anfrage angewendet werden.
+\subsubsection{Unterschiedliche Optimierungsansätze}
 
 
-Oracle hat die kostenbasierte Transformation, die logische Transformation und die physische Optimierung kombiniert, um den optimalen Execution Plan zu finden. Der logische Teil des Systems teilt sich in Heueristiken und kostenbasierte Transformationen. Die kostenbasierten Transformationen funktionieren wie folgt:
+
+Bei Oracle ist es möglich zwischen zwei Optimierungsansätzen zu wählen. Der Nutzer kann entscheiden, ob er möglichst schnell das gesamte Resultat der Anfrage benötigt oder ob das erste Resultat möglichst schnell zurückgegeben werden soll. Bei der Optimierung auf alle Resultate geht es darum den Plan zu finden, der mit dem geringsten Ressourceneinsatz alle Zeilen einer Abfrage zurückgibt. Die Optimierung des Durchsatzes geschieht insbesondere durch die Verwendung von Full-Table-Scans anstatt von Index-Scans und der Verwendung von Sort-Merge-Joins anstatt von nested loop-joins. Wenn es hingegen wichtig ist, dass schnell das erste Ergebnis zurückgegeben wird, also die Antwortzeit minimiert werden soll, werden Index-Scans und nested-loop-joins eingesetzt.
+
+Welcher Ansatz zur Suche nach dem optimalen Plan verwendet wird, kann durch den Nutzer festgelegt werden. Für Anwendungen wie Reports sind alle Zeilen einer Datenmenge wichtig. Hier empfiehlt es sich den Durchsatz als Maßstab der Optimierung zu wählen. Bei dynamischeren, interaktiven Anwendungen ist es nicht immer notwendig, dass sofort auf alle Daten zugegriffen werden muss, daher ist eine Optimierung der Antwortzeit angebracht.
+
+
+\subsubsection{Kostenschätzung in Oracle}
+Die Kostenschätzung von Oracle basiert auf drei Komponenten: Selektivität, Kardinalität und Kosten. Ziel der Kostenschätzung ist es anhand der Kosten den günstigsten Plan auszuwählen. Wobei das Ziel der Optimierung nicht aus den Augen gelassen wird.
+
+Die Selektivität bezeichnet das Verhältnis von Datensätzen, vor Anwendung von Prädikaten vorhanden sind und Datensätzen, die nach der Anwendung noch weiterverarbeitet werden. Beispielsweise haben Prädikate, die eine Datenmenge nicht einschränken die Selektivität von 1.0. Werden jedoch durch ein Prädikat alle Datensätze ausgeschlossen ergibt sich eine Selektivität von 0.0. Bei Joins zwischen zwei Datenmengen schränkt das Join-Prädikat die Ausgabe ein. Beispielweise kann bei einem Join wie $Account \Join_account.id=conact.AccountId Contact$ davon ausgegangen werden, dass die Selektvität des Join-Prädikats zwischen 0.0 und 1.0 liegt.
+
+Der zweite Parameter für die Kostenschätzung ist die Kardinalität bei ihr unterscheidet Oracle zwischen fünf verschiedenen Kardinalitäten:
 
 \begin{itemize}
-\item Transformationsalgorithmen konvertieren gesamte Teilanfragebäume in eine sequentiell gleiche Form
-\item State Spaces für verschiedene Transformationen
-\item State Space Search Algorithmen
-\item Möglichkeit zur Deep Copy von Anfrage Böcken und Ihrer Consitutues
-\item Cost estimation techique (physical optimizer)
-Transformation derective und cost annotations
+\item Basis-Kardinalität: Sie ist die Anzahl der Zeilen, die in der Datenmenge einer Basis-Relation vorhanden ist.
+\item Effektive Kardinalität: Die Kardinalität, die nach Anwendung eines Prädikats auf eine Basis-Relation zurückbleibt.
+\item Join-Kardinalität: Die Anzahl der Zeilen einer Datenmenge, die nach Anwendung eines Join Prädikats übrig bleibt.
+\item Group-Kardinalität: Die Anzahl der Zeilen einer Datenmenge, die durch ein Group-Statement zusammengefasst wurde.
+\item Distinct-Kardinalität: Die Anzahl der eindeutigen Zeilen einer Datenmenge.
 \end{itemize}
 
-Unterschiedliche Transformationsregeln werden auf unterschiedliche Teile der Anfrage angewendet. So kann beispielsweise die Entschachtelung nur auf verschachtelte Elemente der Anfrage angewendet werden. 
- Während der Optimierung werden die Bäume Bottom up transformiert. Verschiedene Alternativen für eine oder mehrere Transformationen für Elemente in einem Query Tree generieren unterschiedliche States innerhalb des State Space of Transformation. Eine Deep copy wird gemacht, bevor ein bestimmter Status erreicht wird und dessen Kosten durch den Aufruf des physischen Optimierers geschätzt werden. Die Evaluation von jedem States der Transformationsstage, der die besten Kosten bietet wird zurück auf den Ursprungstree angewendet.
+Kardinalitäten können mit Hilfe dieser fünf Kardinalitätsbegriffe für alle Knoten eines Anfragegraphen berechnet werden.
 
-Die Oracle Transformationen werden immer hintereinander angewendet. Eine Transformatiosnregel wird immer auf den ganzen Baum angewendet, erst danach folgt die nächste Regel. Die Reihenfolge ist diese: Common sub expression factorization, JPS view merging, join elimination, subquery unnesting, group by distinct view merging, group pruning, predicate move around, set operator factorization, disjunction into union-all exansion, star transfomration and join predicate pushdown. Von dieser Reihenfolge kann jedoch in bestimmten Fällen abgewichen werden. 
-
+Der letzte Faktor sind die Kosten. Disk I/O, CPU- und Arbeitsspeicher-Verbrauch fliessen in die Messgrösse ein. Sie wird in \textit{Units of Work} gemessen. Je niedriger die Kosten sind desto besser ist der Plan. Beispielsweise können bei Index-Scans andere Kosten als bei Full-Table Scans auftreten.
 
 
-\subsubsection{State Space Search Techniques}
-Bei der Suche nach einem Plan mit Hilfe von kostenbasierender Transformation stellt sich die grundsätzliche Frage nach einem Trade-off zwischen optimalen Kosten und Execution Kosten. Die Suche nach einer Transformation lohnt sich nur dann, wenn die Kosten für die Suche nach einer besseren Transformation gemeinsam mit der Ausführung der eigentlichen Anfrage geringer sind, als die bisher gefundenen Pläne.
-
-Die Frage nach diesem Problem stellt sich insbesondere, wenn eine große Menge an möglichen alternativen Plänen bestehen. Existieren viele einzelne Objekte einer Anfrage, seien es Query Blocks, Tables join edges predikate, gibt es auch die Möglichkeit, dass viele Regeln auf die Objekte angewendet und somit viele alternative Pläne erzeugt werden können. Wenn $N$ Objekte vorhanden sind und auf diese $N$ Objekte eine Transformation $T$ angewendet wird, dann werden nur durch diese eine Transformation $2^N$ verschiedene Pläne generiert. Diese  Menge wächst weiter, wenn mehrere Transformationen auf die bestehenden Objekte angewendet werden können. 
 
 
-Um dieses kombinatorische Problem der vielen oin permutationen zu lösen wurden mehrere randomizierte Algorithmen vorgeschlagen. Tabu Search, Genetic Search, Iterative Improvement...
-
-chst mit der Anzahl der Trasnfromationsobjekte. Wenn die Anzahl der Transformationsobjekte klein ist, dann ist eine enumerative Transformationstechnik mit Hilfe Exhaustive search des States vielleicht machbar. Da aber die Anzahl der möglichen Optimierungen mit der Zeit steigt, müssen andere Techniken angewendet werden:
 
 
-\subsubsection{Join Elimination}
-Ein Teil der Optimierung sieht vor, dass Joins eliminiert werden. Ein Grund warum Joins aus einer Anfrage entfernt werden können ist, dass diese nicht notwendig für die Erzeugung des Ergebnisses sind (beispielsweise können durch View Merging Joins obsolet werden.)
-
-
-%\subsubsection{Filter Predicate Move Around}
-
-%\subsubsection{Group Pruning}

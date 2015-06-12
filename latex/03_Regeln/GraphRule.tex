@@ -144,36 +144,3 @@ Um die Funktion der neuen Regel im Detail zu beschreiben, führt \cite{shanbhag2
 \item Ein \textit{Maximal join Tree} ist ein Baum, dessen Kinder immer EuqivalenceNodes sind.
 \item Ein \textit{Join Set} für einen Äquivalenzknoten E ist ein Paar $J = (V, P)$ bei dem $V$ ein Set von Äquivalenknoten ist und deren Kinder seine 
 \end{itemize}
-
-
-\subsection{Implementierung}
-Die Implementierung des neuen Regelsets wurde auf der Basis des Query Optimierers PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ entwickelten Optimierers Pyro, der an der Universität Bombay entwickelt wurde und das Volcano-Framework implementiert.
-
-Alle Tests wurden auf einem Computer mit Intels Core i5 3.5 GHz mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 durchgeführt. Die genaue Java Version und Einstellungen der JVM sind (fast) vollständig unbekannt.
-
-Wie von \cite{shanbhag2014optimizing} beschrieben, wurde während er Performance Test festgestellt,dass sich die Dauer für die Ausführung einer Optimierung stark unterscheidet.Für die Durchführung einer Optimierung wurden zu Beginn erheblich höhere Werte festgestellt. Gerade die ersten Anfragen hatten eine besonders hohe Laufzeit. Erklärt wurde dieses Verhalten durch den Java \ac{JIT}-Compiler. Ebenfalls wurde erkannt, dass der Java eigene Code Optimierer HotSpot die Ergebnisse verfälschen kann. 
-
-Während der Performance Tests wurde festgestellt, dass sich.........
-
-
-\subsection{Probleme auf Grund der Plattformwahl}
-Die Implementierung der neuen Regel wurde auf Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des von ITT Bombay entwickelten Systems Pyro, das eine Implementierung des Volcano-Frameworks ist. PyroJ, das in Java implementiert ist, entstand durch eine automatische Konvertierung des C++ Codes von Pyro. 
-
-Die Implementierung der Experimente wurde auf der Basis von PyroJ vorgenommen. PyroJ ist eine Übersetzung des in C++ geschriebenen Query Optimierers Pyro nach Java. Der Optimierer wurde an der IIT Bombay gebaut und ist eine Implementierung des Volcano Optimization Frameworks.
-
-Die Experimente wurden auf einem Intel Core i5 3.5 GHz Computer mit 8 Gbyte Arbeitsspeicher und Ubuntu 11.10 vorgenommen. Es wurde festgestellt, dass die Implementierung des Codes in Java verglichen zu C++ einigen Overhead generiert, der die Laufzeit der Optimierung negativ beeinflusst. Ebenfalls wurde erkannt, dass die Laufzeit zur Optimierung einer Anfrage großen Schwankungen unterlegen ist. Insbesondere konnten erheblich unterschiedliche Laufzeiten bei den selben Queries festgestellt werden. Queries, die zu Beginn ausgeführt wurden, wurden langsamer ausgeführt. Dieses Phänomen wurde auf den Java JIT-Compiler (HotSpot) zurückgeführt. Dieser kompiliert nur die zur Ausführung notwendigen Teile des Programms und führt Optimierungen zur Laufzeit durch. Um konstante Laufzeiten für die selbe Anfrage zu erzielen, wurde nach eigenen Angaben die JIT-Kompilierung ausgeschaltet. Außerdem wurde das Java HotSpot JVM flag $-XX:CompileThreshold=1$ gesetzt und einige große Queries ein paar mal optimiert, um sicherzustellen, dass alle Funktionen auch kompiliert werden bevor sie ausgeführt werden.
- 
-
-\subsection{Kritik} \todo{Wo soll dieser Teil eigentlich hin? Evaulation/ Related Work / Implementierung}
-
-
-Die Implementierung des Frameworks wirft einige Fragen auf. Auf der einen Seite wird durch den Autor selbst festgestellt, dass durch die Wahl einer anderen Code Basis (C++ statt Java) Ergebnisse mit weniger Overhead erzielt werden könnten. Warum also die Entscheidung zur Implementierung in Java gefallen ist, bleibt unbeantwortet.
-
-Auch die Probleme, die durch den JIT Compiler entstanden sind, sind außergewöhnlich. Zuerst wurde die Kompilierung nach eigenen Angaben abgeschaltet und dann wiederum sichergestellt, dass alles kompiliert wurde, indem große Anfragen optimiert wurden. Was genau mit dieser Aussage gemeint ist bleibt unbeantwortet.  Ich nehme an, dass nur das JVM Flag $-XX:CompileThreshold=1$ gesetzt wurde. Dieses Flag gibt an, nach wie vielen Methodenaufrufen ein Stück Java Code in Maschinencode kompiliert wird. Der Standardwert liegt bei 10000 \cite{oracle2015VMOptions}. Dank dieses Flags wird bereits beim ersten Aufruf einer Methode die Methode auch kompiliert. Warum dieser Umweg gewählt wurde, bleibt wage.
-
-Ein weiterer Grund für Fehler bei der Messung kann die Wahl der Plattform im Allgemeinen sein. Da die Ausführung des Programms zu jedem beliebigen Zeitpunkt durch die Garbage Collection unterbrochen werden kann, können Messungen der Laufzeit nur schwer vorgenommen werden. Um wenigstens einen Hinweis auf diese Messfehler zu finden, wäre eine Nutzung der JVM Flags $ -verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCDetails$ möglich gewesen. Diese Flags geben an, wann die Garbage Collection zuschlägt und wieviel Zeit diese zur Ausführung benötgt. \cite{andreasson2015JVM}  
-
-
-Warum also trotz all dieser möglichen Fehlerquellen und Ungenauigkeiten gerade Java zum Einsatz gekommen ist, ist unklar und wenig verständlich. Insbesondere da eine Alternative in C++ mit Pyro bereitstand.
-
-
