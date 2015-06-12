@@ -118,10 +118,10 @@ public:
 	bool hasRight() const;
 
 	/**
-	 * @brief Calculates size based on all subordinary nodes
-	 * @details [long description]
+	 * @brief Number of planNodes
+	 * @details returns the number of plan nodes which are subsidaries of a given EQ
 	 *
-	 * @return integer which represents the number of explored plans
+	 * @return number of plan nodes
 	 */
 	u_int getSize() const;
 	
@@ -368,23 +368,7 @@ bool PlanNode<Bitvector_t>::hasRight() const
 	return _right != NULL;
 };
 
-template <typename Bitvector_t>
-typename PlanNode<Bitvector_t>::u_int PlanNode<Bitvector_t>::getSize() const
-{
-	if (_op == SCAN)
-	{
-		return 0;
-	}
-	if (_op == JOIN)
-	{
-		u_int size = 0;
-		size += _left->getSize();
-		size += _right->getSize();
-		if (size == 0) return 1;
-		return size;
-	}
-	return 0;
-};
+
 
 template <typename Bitvector_t>
 Operator PlanNode<Bitvector_t>::getOperator() const

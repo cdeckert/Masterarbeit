@@ -154,7 +154,7 @@ public:
 		return _neighbors;
 	};
 	
-	bool isEmpty();
+	bool isEmpty() const;
 	
 	inline void concat(self_type * next)
 	{
@@ -235,6 +235,7 @@ public:
 	 * @return the number of already explored plans
 	 */
 	u_int getSize() const;
+	
 
 	/**
 	 * @brief [brief description]
@@ -338,6 +339,13 @@ public:
 	{
 		_neighbors = neighbors;
 	};
+	
+	/**
+	 * @brief number of plans
+	 * @details number of plan which explored
+	 *
+	 */
+	u_int getNumberOfPlans() const;
 
 	/**
 	 * @brief [brief description]
@@ -449,6 +457,12 @@ typename EquivalenceClass<PlanNode_t>::u_int EquivalenceClass<PlanNode_t>::count
 {
 	u_int count = 0;
 	
+	if(isEmpty())
+	{
+		_counted = true;
+	}
+	
+	
 	if(!_counted)
 	{
 		_counted = true;
@@ -493,31 +507,41 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
 template <typename PlanNode_t>
 u_int EquivalenceClass<PlanNode_t>::getSize() const
 {
-	u_int size = 0;
-	for (Iterator itr = begin(); itr.isOK(); ++itr)
-	{
-		size += itr.node()->getSize();
-	}
-
-	return size;
-};
-
-template <typename PlanNode_t>
-bool EquivalenceClass<PlanNode_t>::isEmpty()
-{
-	return _first == NULL && _explored == false && _last == NULL;
-}
-
-template <typename PlanNode_t>
-u_int EquivalenceClass<PlanNode_t>::getCount() const
-{
 	u_int count = 0;
-	for (Iterator itr = begin(); itr.isOK(); ++itr)
+	if(!isEmpty())
+	for (Iterator eq = begin(); eq.isOK(); ++eq)
 	{
-		count += itr.node().getCount();
+		count++;
 	}
 	return count;
 };
+
+template <typename PlanNode_t>
+u_int EquivalenceClass<PlanNode_t>::getNumberOfPlans() const
+{
+	u_int count = 1;
+	
+	
+	for(Iterator itr = begin(); itr.isOK(); ++itr)
+	{
+		if(itr.node()->getOperator() == SCAN)
+		{
+			//count = itr.node()->l()->
+		}
+	}
+	
+	
+	
+	return count;
+}
+
+
+
+template <typename PlanNode_t>
+bool EquivalenceClass<PlanNode_t>::isEmpty() const
+{
+	return _first == NULL && _explored == false && _last == NULL;
+}
 
 template <typename PlanNode_t>
 std::ostream &EquivalenceClass<PlanNode_t>::print(std::ostream &os) const

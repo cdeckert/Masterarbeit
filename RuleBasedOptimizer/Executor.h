@@ -101,12 +101,16 @@ void Executor<T>::run() const
 			t1->apply(eq);
 			costEstimator.findOptimalPlan(eq);
 			_watch->stop();
-
-			LOG(INFO) << "NUMBER OF EQs:" << eq.countEQs();
-
-
+			
 			duration += _watch->getDuration();
 			std::cout << adaptor.dump(&eq);
+
+			LOG(INFO) << "NUMBER OF EQs:" << eq.countEQs();
+			
+			LOG(INFO) << "Number of Plans:" << eq.getNumberOfPlans();
+
+
+			
 			
 			delete t1;
 		}
