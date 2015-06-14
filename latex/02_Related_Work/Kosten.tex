@@ -4,11 +4,11 @@ Um den optimalen Plan zu finden, müssen die Kosten für einen Plan bewertet wer
 
 Die Kosten einer Datenbankabfrage sind von mehreren Faktoren abhängig. Um eine Grundlage für den Vergleich von verschiedenen Plänen zu haben, müssen die Kosten für jeden einzelnen Plan abgeschätzt werden. Die Kosten für die gesamte Abfrage setzten sich dabei aus den Kosten für die Enumeration der Anfrage, der Berechnung der Kosten und der Ausführung der eigentlichen Anfrage zusammen. Da die Kosten für Enumeration und Cost-Estimation für jeden Plan gleich sind und die Kosten für die Berechnung verglichen zu den Kosten des Auslesens der Daten wenig signifikant sind \cite{selinger1979access}, kann das Augenmerk auf die Abschätzung der Kosten der Ausführung gelegt werden.
 
-Bei der Ausführung einer Anfrage sind vor allem die CPU, die Eingabe / Ausgabe und Arbeitsspeicherkosten entscheidend. Die Kosten können für jede dieser Ressourcen getrennt oder gemeinsam betrachtet werden. Die Kostenabschätzung muss insgesamt jedoch akkurat sein, da der \ac{QO} nur so gut sein kann, wie es der Kostenschätzer erlaubt. Die Berechnung der Kosten geschieht i.d.R. nach folgender Maßgabe:
+Bei der Ausführung einer Anfrage sind vor allem die CPU, die Eingabe / Ausgabe und Arbeitsspeicherkosten entscheidend. Die Kosten können für jede dieser Ressourcen getrennt oder gemeinsam betrachtet werden. Die Kostenabschätzung muss insgesamt jedoch akkurat sein, da der Anfrageoptimierer nur so gut sein kann, wie es der Kostenschätzer erlaubt. Die Berechnung der Kosten geschieht i.d.R. nach folgender Maßgabe:
 
 \begin{enumerate}
-\item statistische Informationen werden gesammelt
-\item für einen Operator im \ac{QEP} werden die Informationen aus Subbäumen berechnet und zusammengezählt
+\item Statistische Informationen werden gesammelt
+\item Für einen Operator im \ac{QEP} werden die Informationen aus Subbäumen berechnet und zusammengezählt
 \end{enumerate}
 
 Bei der Kostenrechnung ist die Datenmenge entscheidend. Daher ist insbesondere die Kardinalit von Relationen und die Selektivität von Operatoren für die Berechnung der Kosten

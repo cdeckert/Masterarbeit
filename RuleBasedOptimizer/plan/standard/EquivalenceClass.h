@@ -408,6 +408,8 @@ public:
 		return _explored ||(!hasPlanNodes() || getOperator() == SCAN);
 	}
 	
+	bool isBaseRelation() const {return _baseRelation; }
+	
 	
 	/**
 	 * @brief counts all Equivalence Nodes
@@ -416,7 +418,9 @@ public:
 	 */
 	
 	u_int countEQs();
-
+	
+	
+	
 
 private:
 	Bitvector_t _neighbors;
@@ -429,7 +433,8 @@ private:
 	bool _counted = false;
 
 	bool _explored;
-
+	bool _baseRelation = true;
+	
 	/**
 	 * @brief initalizes values
 	 * @details default init
@@ -494,9 +499,12 @@ void EquivalenceClass<PlanNode_t>::push_back(PlanNode_t &aPlanNode)
 		_relations = _relations.union_with(_first->getRelations());
 		_neighbors = _neighbors.union_with(_first->getNeighbors());
 		_neighbors.set_to_difference(_neighbors, _relations);
+		
+		
 	}
 	else
 	{
+		_baseRelation = false;
 		_explored = true;
 		_last->setNext(& aPlanNode.getLast());
 		_last = &aPlanNode;

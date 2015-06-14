@@ -1,12 +1,12 @@
 \section{Evaluation der Vollständigkeit}
 
-In einem ersten Schritt wird auf die Vollständigkeit der Pellenkoft Regelsets eingeangen. Im folgenden wird dann die Vollständigkeit von RS-Rule genauer betrachtet.
+In einem ersten Schritt wird auf die Vollständigkeit der Pellenkoft Regelsets eingegangen. Im Folgenden wird dann die Vollständigkeit von RS-Rule genauer betrachtet.
 
 \subsection{Vollständigkeit von RS-B0, RS-B1 und RS-B2}
 
-Mit Hilfe des implementierten Optimierers können unterschiedliche Regelmengen ausgeführt werden. Wie in Kapitel 4 beschrieben lassen sich neue Regeln leicht hinzufügen, Testszenarien generieren und die Ergebnisse speichern. Um die Vollständigkeit der Regelmengen zu prüfen, wurden unterschiedliche Testszenarien generiert und die einzelnen Regelmengen auf ihre Ausgabe hin überprüft. In einem ersten Schritt musste die Korrektheit der Implementierung geprüft werden.
+Mit Hilfe des implementierten Optimierers können unterschiedliche Regelmengen ausgeführt werden. Wie in Kapitel 4 beschrieben, lassen sich neue Regeln leicht hinzufügen, Testszenarien generieren und die Ergebnisse speichern. Um die Vollständigkeit der Regelmengen zu prüfen, wurden unterschiedliche Testszenarien generiert und die einzelnen Regelmengen auf ihre Ausgabe hin überprüft. In einem ersten Schritt musste die Korrektheit der Implementierung geprüft werden.
 
-Die Test wurden mit Hilfe des folgenden morphologischen Kastens gebildet und ausgeführt. So konnten unterschiedliche Test Arten geprüft werden:
+Die Tests wurden mit Hilfe des folgenden morphologischen Kastens gebildet und ausgeführt. So konnten unterschiedliche Test Arten geprüft werden:
 
 \begin{table}[h]
 \centering
@@ -101,9 +101,9 @@ Hypothese 2: Auf Basis eines azyklischen, sternförmigen Join-Trees lässt sich 
 \end{figure}
 
 
-Um die Hypothese zu untersuchen wurde eine Konfiguration gewählt, die der aus Test 1 gleicht. Einziger Unterschied sind andere Join Kanten. Wie in  Abb. \ref{Konfiguration:Test2} zu sehen, sind hier alle Knoten per Join mit Knoten 5 verbunden. Es ergibt sich eine Sternform.
+Um die Hypothese zu untersuchen, wurde eine Konfiguration gewählt, die der aus Test 1 gleicht. Einziger Unterschied sind andere Join Kanten. Wie in  Abb. \ref{Konfiguration:Test2} zu sehen, sind hier alle Knoten per Join mit Knoten 5 verbunden. Es ergibt sich eine Sternform.
 
-Nach den vorhergehenden Tests von \cite{shanbhag2014optimizing} wurde erwartet, dass durch RS-B2 nicht alle Pläne gefunden werden würden. Wie in Tabelle \ref{Result:Test2} zu sehen ist, wurde jedoch genau gleich viele Pläne mit Hilfe RS-B2 wie mit RS-B1 gefunden. 
+Nach den vorhergehenden Tests von \cite{shanbhag2014optimizing} wurde erwartet, dass durch RS-B2 nicht alle Pläne gefunden werden würden. Wie in Tabelle \ref{Result:Test2} zu sehen ist, wurden jedoch genau gleich viele Pläne mit Hilfe RS-B2 wie mit RS-B1 gefunden. 
 
 \begin{table}[h]
 \centering
@@ -131,7 +131,7 @@ Auch die Pläne aus Test 2 wurden verglichen. Pro Regelmenge wurden die gleichen
 \end{figure}
 
 
-Um Sicherzustellen, dass die Aussage von \cite{shanbhag2014optimizing} nicht abhängig von der Form des Baums ist, wurde ein weiterer Test durchgeführt. Dieses mal wurde ein recht-tiefer Baum gewählt. Die Konfiguration (vgl. Abb. \ref{Konfiguration:Test3}) gleicht der vorhergehend, ausschließlich die Join-Reihenfolge wurde verändert.
+Um sicherzustellen, dass die Aussage von \cite{shanbhag2014optimizing} nicht abhängig von der Form des Baums ist, wurde ein weiterer Test durchgeführt. Dieses mal wurde ein recht-tiefer Baum gewählt. Die Konfiguration (vgl. Abb. \ref{Konfiguration:Test3}) gleicht der vorhergehenden, ausschließlich die Join-Reihenfolge wurde verändert.
 
 \begin{table}[h]
 \centering
@@ -148,7 +148,7 @@ Um Sicherzustellen, dass die Aussage von \cite{shanbhag2014optimizing} nicht abh
 \end{table}
 
 
-Wie schon im vorhergehenden Test wurden alle Pläne geprüft. Es wurden gleich viele und die gleichen Pläne wie im vorhergehenden Falle ausgegeben. Daher kann davon ausgegangen werden, dass bei einer Menge von 5 Relationen es nicht entscheidend für die Vollständigkeit ist, ob es sich initial um einen linkstiefen oder einen rechttiefen Baum gehandelt hat.
+Wie schon im vorhergehenden Test wurden alle Pläne geprüft. Es wurden gleich viele und die gleichen Pläne wie im vorhergehenden Falle ausgegeben. Daher kann davon ausgegangen werden, dass bei einer Menge von 5 Relationen es für die Vollständigkeit nicht entscheidend  ist, ob es sich initial um einen linkstiefen oder einen rechtstiefen Baum gehandelt hat.
 
 
 
@@ -157,7 +157,7 @@ Um dennoch Unvollständigkeit zu finden, wurde eine neue Hypothese aufgestellt:
 
 Hypothese 3: RS-B2 ist bei azyklischen Join Graphen unvollständig.
 
-Um diese Hypothese zu prüfen wurde Test 3 herangezogen und eine neue Join-Kante zwischen 3 und 4 eingezogen (vgl. Abb. \ref{Konfiguration:Test3}. Durch diese zusätzliche Kante ist eine zyklischer Join-Graph entstanden. 
+Um diese Hypothese zu prüfen, wurde Test 3 herangezogen und eine neue Join-Kante zwischen 3 und 4 eingezogen (vgl. Abb. \ref{Konfiguration:Test3}. Durch diese zusätzliche Kante ist ein zyklischer Join-Graph entstanden. 
 
 
 \begin{figure}[ht]
@@ -167,7 +167,7 @@ Um diese Hypothese zu prüfen wurde Test 3 herangezogen und eine neue Join-Kante
   \label{Konfiguration:Test4}
 \end{figure}
 
-Wie erwartet wurden weniger (ca. 50\%) Pläne gefunden (vgl. Tabelle \ref{Result:Test4}). Bei einem Vergleich fiel auf, dass gerade entlang der zyklischen-Join-Kanten weniger Pläne generiert wurden.
+Wie erwartet, wurden weniger (ca. 50\%) Pläne gefunden (vgl. Tabelle \ref{Result:Test4}). Bei einem Vergleich fiel auf, dass gerade entlang der zyklischen-Join-Kanten weniger Pläne generiert wurden.
 
 
 \begin{table}[h]

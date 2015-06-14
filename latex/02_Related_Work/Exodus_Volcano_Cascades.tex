@@ -39,16 +39,16 @@ Bei der Anwendung der Regeln wird zuerst geprüft, welche Regeln anwendbar sind.
 Einer der Nachteile dieses Ansatzes ist, dass Pläne nicht bzgl. ihrer Güte auf einem globalen Level bewertet werden können. Es ist nicht möglich festzustellen, ob es sich um den absolut günstigsten Plan handelt, da weitere Transformationen noch angewendet werden können. Auch Kostenreduktionen, die erst durch die Kombination mehrerer Regeln entstehen, werden nicht berücksichtigt. Graefe selbst sieht auch einige weitere Nachteile \cite{graefe1993volcano}:
 
 \begin{itemize}
-\item nicht-triviale Kostenmodelle
-\item keine Eigenschaften
-\item keine Heuristiken
-\item keine Transformation von Subscripten von algebraischen Operatoren nach algebraische Operatoren
+\item Nicht-triviale Kostenmodelle
+\item Keine Eigenschaften
+\item Keine Heuristiken
+\item Keine Transformation von Subscripten von algebraischen Operatoren nach algebraische Operatoren
 \end{itemize}
 
 
 \subsubsection{Volcano Optimierer}
 
-Volcano ist der verbesserte Nachfolger von EXODUS. Zuerst war Volcano nur ein erweiterbares, paralleles System zur Anfragenausführung. Später wurde ein neuer Anfrageoptimierer-Generator hinzugefügt. Im Gegensatz zu der bisher verwendeteten Programmiersprache E in der der Optimierer erzeugt wurde, setzt das Projekt auf C Code. 
+Volcano ist der verbesserte Nachfolger von EXODUS. Zuerst war Volcano nur ein erweiterbares, paralleles System zur Anfragenausführung. Später wurde ein neuer Anfrageoptimierer-Generator hinzugefügt. Im Gegensatz zu der bisher verwendeten Programmiersprache E in der der Optimierer erzeugt wurde, setzt das Projekt auf C Code. 
 
 
 Bei der Generierung eines Plans auf Grund einer Anfrage kommt bei Volcano ein Optimierer zur Anwendung, der speziell für den Anwendungsfall generiert wurde. Der Optimierer ist das Resultat einer Model Spezifikation, die von einem \ac{DBI} erstellt und durch einen Optimierer Generator in Source Code umgewandelt wird. Dieser Code wird mit Hilfe eines Compilers in das Endprodukt, den Optimierer, umgewandelt.

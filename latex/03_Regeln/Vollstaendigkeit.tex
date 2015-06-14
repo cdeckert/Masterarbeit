@@ -1,16 +1,16 @@
 \section{Prüfung der Vollständigkeit}
 
-Von \cite{shanbhag2014optimizing} wurde die Vollständigkeit der Regelmenegen geprüft. Eine Regelmenge wird dann als Vollständig gewertet, wenn es genutzt werden kann, um einen Suchraum von allen kreuzproduktfreien Plänen aus einem initialen Plan, der keine Kreuzprodukte enthält, zu erzeugen. In diesem Zusammenhang lassen sich drei Aspekte genauer betrachteten: (1) alle Pläne müssen gefunden werden; (2) Die Pläne müssen kreuzproduktfrei sein; (3) Sie müssen aus einem initialen Plan ohne Kreuzprodukte gebildet werden.
+Von \cite{shanbhag2014optimizing} wurde die Vollständigkeit der Regelmenegen geprüft. Eine Regelmenge wird dann als vollständig gewertet, wenn sie genutzt werden kann, um einen Suchraum von allen kreuzproduktfreien Plänen aus einem initialen Plan, der keine Kreuzprodukte enthält, zu erzeugen. In diesem Zusammenhang lassen sich drei Aspekte genauer betrachteten: (1) alle Pläne müssen gefunden werden; (2) die Pläne müssen kreuzproduktfrei sein; (3) sie müssen aus einem initialen Plan ohne Kreuzprodukte gebildet werden.
 
-Um sicherzustellen, dass die erzeugten Pläne kreuproduktfrei sind, wurde von \cite{shanbhag2014optimizing} ein Mechanismus zur Kreuzproduktunterdrückung implementiert. Der Mechanismus sieht vor, dass nachdem ein neuer Plan mit Hilfe einer Regel erzeugt wurde, geprüft wird ob der erzeugte Plan kreuzproduktfrei ist. Nur wenn das der Fall ist wird der neue Plan gespeichert. Falls der neue Plan Kreuzprodukte enthält, wird die Regel zwar als ausgeführt markiert, aber das Ergebnis nicht gespeichert. Nur Ergebnisse, die kreuzproduktfrei sind werden als Input für eine Regel akzeptiert. 
-
-
-\subsection{Prüfung von Regelmenge RS-B0 und RS-B1}
-
-Bei der Prüfung der beiden Regelmengen RS-B0 und RS-B1 auf Vollständigkeit wurde zuerst festgestellt, dass wenn RS-B1 vollständig ist auch automatisch RS-B0 als vollständig gilt. Dies lässt sich darauf zurückführen, dass im Gegensatz zu RS-B1 die Regelmenge RS-B0 eine weitere, zusätzliche Regel implementiert. Da bereits die Regelmenge RS-B1 vollständig ist, ist auch automatisch die Regel RS-B0 vollständig, da die zusätzliche Regel keine bisher unbekannten Pläne erzeugen kann.
+Um sicherzustellen, dass die erzeugten Pläne kreuproduktfrei sind, wurde von \cite{shanbhag2014optimizing} ein Mechanismus zur Kreuzproduktunterdrückung implementiert. Der Mechanismus sieht vor, dass nachdem ein neuer Plan mit Hilfe einer Regel erzeugt wurde, geprüft wird ob der erzeugte Plan kreuzproduktfrei ist. Nur wenn das der Fall ist wird der neue Plan gespeichert. Falls der neue Plan Kreuzprodukte enthält, wird die Regel zwar als ausgeführt markiert, aber das Ergebnis nicht gespeichert. Nur Ergebnisse, die kreuzproduktfrei sind, werden als Input für eine Regel akzeptiert. Regelmengen, die Kreuzprodukte durch diesen Mechnanismus verhindern,  werden mit dem Postfix -CPS versehen. So entstehen die neuen Regelmengen RS-B0-CPS, RS-B1-CPS und RS-B2-CPS.
 
 
-Die Vollständigkeit von RS-B1 wird auf drei Wegen bewiesen. Zuerst wird gezeigt, dass in einem linkstiefen Baum, der kreuzproduktfrei ist, die letzte gejointe Relation mit Hilfe der Regeln an das obere Ende des Baums bewegt werden kann. In einem zweiten Schritt wird gezeigt, dass aus jedem kreuzproduktfreien Baum jeder andere kreuzproduktfreie Baum gebildet werden kann. In einem letzten Schritt wird an Hand eines konkreten Beispiels gezeigt, dass in einem Bushy-Tree \todo{Vervollständigen}
+\subsection{Prüfung von Regelmenge RS-B0-CPS und RS-B1-CPS}
+
+Bei der Prüfung der beiden Regelmengen RS-B0-CPS und RS-B1-CPS auf Vollständigkeit wurde zuerst festgestellt, dass wenn RS-B1-CPS vollständig ist auch automatisch RS-B0-CPS als vollständig gilt. Dies lässt sich darauf zurückführen, dass im Gegensatz zu RS-B1-CPS die Regelmenge RS-B0-CPS eine weitere, zusätzliche Regel implementiert. Da bereits die Regelmenge RS-B1-CPS vollständig ist, ist auch automatisch die Regel RS-B0-CPS vollständig, da die zusätzliche Regel keine bisher unbekannten Pläne erzeugen kann.
+
+
+Die Vollständigkeit von RS-B1-CPS wird auf drei Wegen bewiesen. Zuerst wird gezeigt, dass in einem linkstiefen Baum, der kreuzproduktfrei ist, die letzte gejointe Relation mit Hilfe der Regeln an das obere Ende des Baums bewegt werden kann. In einem zweiten Schritt wird gezeigt, dass aus jedem kreuzproduktfreien Baum jeder andere kreuzproduktfreie Baum gebildet werden kann. In einem letzten Schritt wird an Hand eines konkreten Beispiels gezeigt, dass in einem Bushy-Tree \todo{Vervollständigen}
 
 
 
@@ -33,7 +33,7 @@ Es wurde angenommen, dass für einen kreuzproduktfreien Baum mit den Relationen 
 \end{figure}
 
 
-Die Unvollständigkeit wurde mit Hilfe eines Beispiels belegt. Als Beispiel wurde der Bushy-Tree gewählt der in Abbildung \ref{Incompleteness_RS-B2-CPS} zu sehen ist. Mit Hilfe der Regeln aus der Regelmenge RS-B2 sollte der initale Plan () in den Plan () umgewandelt werden. Dabei werden die vier Regeln der Regelmenge angewendet.
+Die Unvollständigkeit wurde mit Hilfe eines Beispiels belegt. Als Beispiel wurde der Bushy-Tree gewählt, der in Abbildung \ref{Incompleteness_RS-B2-CPS} zu sehen ist. Mit Hilfe der Regeln aus der Regelmenge RS-B2 sollte der initale Plan () in den Plan () umgewandelt werden. Dabei werden die vier Regeln der Regelmenge angewendet.
 
 \begin{itemize}
 \item Mit der Kommutativitätsregel ist es möglich ein Spiegelbild des original Baums herzustellen, aber nicht den Plan grundlegend zu verändern.

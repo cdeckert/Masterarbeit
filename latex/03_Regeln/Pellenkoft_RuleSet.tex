@@ -5,12 +5,12 @@ Bei der Erforschung eines Search Spaces kommen in regelbasierten Anfrageoptimier
 
 Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt den Startpunkt dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
 
-Mehrere Transformationsregeln werden gemeinsam als Regelmenge bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelmengen, die Pläne mehrfach generieren können und Regelmengen, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat  der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelsets vorgestellt, die Duplikate bilden und ein Regelset, das duplikatsfrei ist.
+Mehrere Transformationsregeln werden gemeinsam als Regelmenge bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelmengen, die Pläne mehrfach generieren können und Regelmengen, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat  der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelmengen vorgestellt, die Duplikate bilden und eine Regelmenge, die duplikatfrei ist.
 
 
 \subsection{Regelmengen mit Duplikaten}
 
-Eines der Regelmengen, das zur Erzeugung eines Bushy Tree Space genutzt werden kann, ist \textit{RS-B0}. Es besteht aus drei Regeln:
+Eine der Regelmengen, die zur Erzeugung eines Bushy Tree Space genutzt werden kann, ist \textit{RS-B0}. Sie besteht aus drei Regeln:
 
 \begin{itemize}
 \item Kommutativität: $$ A \Join B \to B \Join A$$
@@ -27,7 +27,7 @@ Die Regelmenge ist redundant, da mit Hilfe von Kommutativität und rechter Assoz
 
 
 
-Durch die Anwendung der Regeln aus \textit{RS-B0} und \textit{RS-B1} können Pläne doppelt erzeugt werden. Am einfachsten ist dies an Hand von Kommutativität zu zeigen. Wird auf den Plan $A \Join B$ Kommutativität angewendet, entsteht $B \Join A$, dann entsteht durch  die erneute Anwendung von Kommutativität auf den neuen Plan $B \Join A$ wieder der ursprüngliche Plan.
+Durch die Anwendung der Regeln aus \textit{RS-B0} und \textit{RS-B1} können Pläne doppelt erzeugt werden. Am einfachsten ist es, dies an Hand von Kommutativität zu zeigen. Wird auf den Plan $A \Join B$ Kommutativität angewendet, entsteht $B \Join A$, dann entsteht durch die erneute Anwendung von Kommutativität auf den neuen Plan $B \Join A$ wieder der ursprüngliche Plan.
 
 Ebenfalls können sich bei komplexeren Plänen  Teilpläne gleichen. Beispielsweise enthält der Plan $(A \Join B) \Join C$ den gleichen Subplan wie $C \Join (A \Join B)$.
 

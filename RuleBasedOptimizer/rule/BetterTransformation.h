@@ -90,7 +90,9 @@ std::unordered_map<typename PlanNode_t::BV, std::unordered_set<BitVectorSmall<ui
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
 void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransformation<PlanNode_t, Operations_t, Rule_t>::EquivalenceClass_t &aEquivalenceClass) const
 {
-
+    std::cout << aEquivalenceClass.getSignature() << std::endl;
+    
+    
 
 	//LOG(INFO) << "Start\t"<<  aEquivalenceClass.getRelations();
 
@@ -107,7 +109,15 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
     }
     if(aEquivalenceClass.getSize() > 0)
     _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(* aEquivalenceClass.getFirst())}});
-
+    
+    
+    if(aEquivalenceClass.isBaseRelation())
+    {
+        _knownEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), aEquivalenceClass}});
+        std::cout << "SMALL";
+    }
+    else
+    {
 	//LOG(INFO) << "INTER\t"<<  aEquivalenceClass.getRelations();
 
 
@@ -139,8 +149,11 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
 		isNew = false;
 		for (EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
 		{
+            if(!eq->l().isBaseRelation())
+            {
             apply(eq->l());
-			if (eq->hasRight())
+            }
+            if (eq->hasRight() && !eq->r().isBaseRelation())
 			{
                 apply(eq->r());
 				knownEQSignatures.insert({{eq.node()->getSignature()}});
@@ -164,7 +177,7 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
 								{
 									p->setLeft(& _knownEquivalenceClasses.at(p->l().getRelations()));
 								}
-                                else
+                                else if(!p->l().isBaseRelation())
                                 {
                                     apply(p->l());
                                 }
@@ -173,7 +186,7 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
 								{
 									p->setRight(& _knownEquivalenceClasses.at(p->r().getRelations()));
 								}
-                                else{
+                                else if(!p->l().isBaseRelation()){
                                     apply(p->r());
                                 }
 
@@ -197,13 +210,13 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
 
 
 			}
-		}
+        }
         
         
         //LOG(INFO) << "ERUN:" << i;
 	}
 	//LOG(INFO) << "END\t\t"<<  aEquivalenceClass.getRelations();
-
+    }
 
 
 };

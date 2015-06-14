@@ -1,6 +1,45 @@
 \section{GraphRule}
 
-Die GraphRule ist die Neuerung und Innovation, die von \cite{shanbhag2014optimizing} vorgestellt wurde, mit deren Hilfe die Performance des Join-Orderings erheblich verbessert werden soll. Die neue Regel, wie bereits beschrieben, ersetzt die bestehenden Transformationsregeln von Pellenkoft. Sie stellt also keine Erweiterung im engeren Sinne, sondern einen Ersatz der Regel dar.
+
+Der Volcano Optimierer ist für seine Erweiterbarkeit und Anpassungsfähigkeit bekannt. Aus diesem Grund wurde er als Vorbild für Pyro(J) gewählt. Die Join-Reihenfolge wird bei diesen Systemen durch Regelmengen wie das von Pellenkoft bestimmt. Leider sind diese Systeme zwar erweiterbar jedoch verglichen mit anderen state-of-the-art Enumeratoren ineffizient. Ein solcher Enumerator ist beispielsweise \texttt{MinCutConservative}. Dieses Verfahren ist zwar erheblich effizient, jedoch nicht im selben Masse erweiterbar. Um die Vorteile beider Systeme zu vereinen, wurde von \cite{shanbhag2014optimizing} eine neue Regel mit dem Titel GraphRule vorgestellt. Diese Regel ist die einzige Regel der Regelmenge RS-Graph. Die neue Regelmenge ist keine Erweiterung im eigentlichen Sinne. Sie ersetzt die bisherigen Regelmengen.
+
+Im Folgenden werden die Grundlagen der Regel erläutert, ihr vorgehen vorgestellt und die Geschwindigkeitsverbesserungen, die gemessen werden konnten behandelt.
+
+\subsection{Top-Down-Enumeration}
+
+Um mit der neuen Regel GraphRule zu starten muss zuerst auf alternative Ansätze zur kreuzproduktfreien Erzeugung von Plänen eingegangen werden. Es gibt zwei unterschiedliche Ansätze: Top-Down-Join-Enumeration mit Memorizing und Bottom-Up-Join-Enumeration mit Dynamic Programming. Ein Bottom-Up-Enumerator ist DPccp, der von \cite{moerkotte2006analysis} entwickelt wurde. Der Nachteil dieser Enumeratoren ist, dass die generierten Bäume nicht beschnitten werden können, was bei Top-Down-Join-Enumeratoren der Fall ist.
+
+Der von \cite{dehaan2007optimal} entwickelte Algorithmus TDMinCutLazy ist der erste effiziente Top-Down-Join-Enumerator. Der alternativer top-down Algorithmus TDMinCutBranch, der fast an die Geschwindigkeit von DPccp heranreichte, wurde in der Folge von \cite{fender2011new} präsentiert. Im Gegensatz zu TDMinCutLazy, der auch Kreuzprodukte generierte, nutzte TDMinCutBranch eine Graphen-basierte Enumerationsstrategie, die nur valide Pläne erzeugt.  Auf Basis dieses Algorithmus wurde der weiter verbesserte Algorithmus TDMinCutConservative von \cite{fender2012effective} vorgestellt. Der Algorithmus ist leichter zu implementieren und noch schneller als sein Vorgänger. 
+
+
+
+\subsubsection{Generische Top-Down-Enumeration}
+
+In Abbildung \ref{} ist ein generischer Top-Down-Join-Enumerator zu sehen. Der Algorithmus TDPlanGen basiert auf Memorierung. Wie bei dynamischer Programmierung wird TdPlanGen mit Bausteinen untrennbarer Relationen aufgerufen (Zeile 2). Daraufhin wird die Subroutine TDPGSub aufgerufen. Sie durchläuft den Search Space rekursiv.  Wie bei dem namen TDPlanGen zu vermuten, geschieht die Enumeration von oben nach unten. Es beginnt mit der Eckpunktemenge V. Daher wird die Funktion TDPGSub auf dem Root-Knoten aufgerufen und das
+
+
+
+
+Um die Funktionsweise eines solchen Algorithmus besser verstehen zu können, wird hier ein generischer Ansatz vorgestellt. Wie bei der dynamischen Programmierung wird der Algorithmus TDPlanGen (vgl. Abbildung ) mit einem Konstrukt von atomaren Relationen initialisiert (Zeile 2). In seiner drei wird die Subroutinge TDPGSub auferufen, die den Search Space rekursiv durchläuft.  Wie der Name impliziert, findet die Enumerierung von oben nach unten statt. Sie gebinnt mit der Knotenmenge V. Da mit dem Root-Knoten gestartet wird, wird TDPGSub mit der Knotenmenge S aufgerufen, die zu Beginn gleich der Menge V des Query-Graphen ist. Bei jedem Rekursionsschritt von TDPlanGen werden alle möglichen
+
+
+
+
+\subsection{Grundlagen}
+Ziel der Regel ist es mit nur einem Aufruf alle direkt Verbundenen Varianten für einen Join-Tree zu erhalten. Zu diesem Zweck wird der Query-Baum mit seinen Teilbäumen betrachtet. Es ist möglich, dass in einem solchen Baum mehrere Join-Trees vorkommen. Dies kann beispielsweise durch Aggregation und Inner-Queries geschehen. Außerdem ist es möglich, dass andere Elemente in diesem Query-Graphen vorkommen, die kein Join-Tree sind. Die neue Regel soll auf alle Teil-Bäume des Query-Tree angewendet werden, die Join-Trees sind und die keinen direktübergeordneten Join-Trees unterstellt sind. Die Regel soll also immer am oberen Ende eines Join-Trees zum Einsatz kommen.
+
+Um die Regel zur Anwendung zu bringen, müssen neue Begriffe eingeührt werden:
+
+\begin{itemize}
+\item Als Basis-Äquivalenzklasse werden in einem expandierted Query-Graphen die Äquivalenzklassen bezeichnet, die keine Join Operatoren als Kinder untergeordnet haben; eine solche Äquivalenzklasse kann entweder eine Basis-Relation repräsentieren oder Nicht-Join Operatoren als Kinder besitzen.
+
+\item Als Join Äuqivalenzklasse werden in einem expandierten Query-Graphen die Äquivalenzklassen bezeichnet, deren Kinder Join-Operatoren sind.
+
+\item Ein Join-Tree sind in einem expandierten Query-Graphen die 
+
+
+\end{itemize}
+
 
 \subsection{Transformationsregel}
 
@@ -14,5 +53,13 @@ Im Gegensatz zu den bisher vorgestellten Regeln, sind hier mehrere Routinen Teil
 \subsubsection{merge}
 
 Die \texttt{Merge}-Methode hat zwei Input Parameter. Jeder Parameter ist ein JoinSet-Element und kann beispielsweise ein Bitvektor sein. Diese beiden Vektoren werden zusammengefügt, so dass sie eine Repräsentation für beide JoinSet-Elemente bilden. Dieser neue Wert wird zurückgegeben.
+
+
+\subsubsection{Partition}
+
+In der Partition Subroutine wird aus einem verbundenen Join-Graphen wird aus der Menge der Knoten, die aus Subsets S_1 und S_2 gebildet werden wobei S_1 und S_2 = S sind. Wenn diese gefunden sind, dann glt dies auch für S_1 und S_2 auch für S_2 und S_1. Da es unterschliedliche Graph Based Partitionierungsalgorithmen gibt, wurde einer ausgewählt das ist MinCutConservative. Es wurde sich für diesen Algorithmus entscheiden, da er der performantestete ist. [Hier 6]
+
+
+
 
 

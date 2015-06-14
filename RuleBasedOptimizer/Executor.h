@@ -103,7 +103,7 @@ void Executor<T>::run() const
 			_watch->stop();
 			
 			duration += _watch->getDuration();
-			std::cout << adaptor.dump(&eq);
+			//std::cout << adaptor.dump(&eq);
 
 			LOG(INFO) << "NUMBER OF EQs:" << eq.countEQs();
 			
