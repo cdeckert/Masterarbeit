@@ -29,9 +29,11 @@ Neben Join-Kanten und Relationen sind auch die zu testendeden Algorithmen gespei
 
 Auch ein initialer Plan wird im Test-Objekt gespeichert. Ein Baum besteht immer aus Knoten. Für jeden Knoten wird ein Operator im Attribut \texttt{op} gespeichert. Es wird der Operator \texttt{SCAN} und der Operator \texttt{JOIN} unterstützt. Ein Knoten kann eine linke und eine rechte Seite haben. In Zeile 14 ist eine Scan Operation zu sehen. Es wird nur die linke Seite verwendet. Im Attribut \texttt{l} ist die ID der Relation abgelegt, die zu scannen ist. Bei \texttt{JOINs} wird auch die rechte Seite verwendet (vgl. Zeile 16). In den Attributen \texttt{l} und \texttt{r} können entweder weitere Knoten oder Relations-Ids gespeichert werden. Neben Operator, links und rechts ist das Attribut \texttt{relations} Teil des Knotens. Hier ist eine einfache Repräsentation des Knotens gespeichert. Im Falle von Zeite 14 \texttt{1}. sind komplexere Knoten und Subknoten vorhanden, können komplexere Daten im Feld \texttt{Relations} abgelegt sein. Beispielsweise ist eine solche komplexere Form in Zeile 19 ( \texttt{JOIN(1,2)}) zu erkennen. Hier ist ein Join zwischen 1 und 2 zu sehen.
 
-\begin{minipage}{\linewidth}
-\lstinputlisting[caption=JSON: Konfigurations-File, label=JsonConfigFile]{04_Implementierung/00_media/config.json}
-\end{minipage}
+\begin{figure}[ht]
+\lstinputlisting{04_Implementierung/00_media/config.json}
+\caption{JSON: Konfigurations-File}
+\label{JsonConfigFile}
+\end{figure}
 
 \subsection{Konfiguration eines Test innerhalb des Prototypen}
 

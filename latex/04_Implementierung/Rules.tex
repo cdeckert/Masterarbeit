@@ -4,7 +4,7 @@ Auf die Planknoten müssen während der Enumeration Regeln angewendet werden. Di
 \subsection{Regelmengen}
 Mehrere Regeln werden in einer Regelmenge zusammengefasst.
 Insgesamt wurden vier unterschiedliche Regelmenegen implementiert: \textit{RS-B0}, \textit{RS-B1}, \textit{RS-B2} und \textit{GraphRule}.
-Alle Mengen basieren auf den von Pellenkoft et al. vorgestellten Regelsets und dem von \ref{shanbhag2014optimizing} implementierten GraphRule.
+Alle Mengen basieren auf den von Pellenkoft et al. vorgestellten Regelmengen und dem von \cite{shanbhag2014optimizing} implementierten GraphRule.
 
 \begin{figure}[ht]
   \centering
@@ -82,7 +82,13 @@ Bei der Regelanwendung kommt wie bei anderen Regeln die Hilfs Klasse \texttt{Ope
 Die genaue Implementierung der Regel ist in \ref{CommutativityCode} zu sehen.
 
 
-\lstinputlisting[caption=C++: Kommutativität, label=CommutativityCode]{04_Implementierung/00_media/Commutativity.h}
+\begin{figure}[ht]
+\lstinputlisting{04_Implementierung/00_media/Commutativity.h}
+\caption{C++: Kommutativität}
+\label{CommutativityCode}
+\end{figure}
+
+
 
 
 \subsubsection{Implementierung von Assoziativität}
@@ -93,9 +99,20 @@ Bei der Anwendung wird zuerst ein neuer Planknoten erzeugt, der direkt einer neu
 
 Diese Implementierung ist auch in \ref{LeftAssociativityCode} nachzuvollziehen und funktioniert analog zur Implementierung der rechten Assiziaitvität, die in \ref{RightAssociativityCode} zu sehen ist.
 
-\lstinputlisting[caption=C++: Linke Assoziativität, label=LeftAssociativityCode]{04_Implementierung/00_media/LeftAssociativity.h}
 
-\lstinputlisting[caption=C++: Right Assotiativität, label=RightAssociativityCode]{04_Implementierung/00_media/RightAssociativity.h}
+\begin{figure}[ht]
+\lstinputlisting{04_Implementierung/00_media/LeftAssociativity.h}
+\caption{C++: Linke Assoziativität}
+\label{LeftAssociativityCode}
+\end{figure}
+
+\begin{figure}[ht]
+\lstinputlisting{04_Implementierung/00_media/RightAssociativity.h}
+\caption{C++: Rechte Assoziativität}
+\label{RightAssociativityCode}
+\end{figure}
+
+
 
 
 \subsubsection{Implementierung von abgeleiteten RS-B2 Regeln}
@@ -108,7 +125,13 @@ Bei der Ausführung der \texttt{apply}-Methode wird die zuerst die geerbte Metho
 
 Konkret kann diese Implementierung in \ref{CommutativityB2Code} nachvollzogen werden.
 
-\lstinputlisting[caption=C++: Kommutativität B2, label=CommutativityB2Code]{04_Implementierung/00_media/Commutativity_B2.h}
+
+\begin{figure}[ht]
+\lstinputlisting{04_Implementierung/00_media/Commutativity_B2.h}
+\caption{C++: Kommutativität B2}
+\label{CommutativityB2Code}
+\end{figure}
+
 
 
 \subsubsection{Implementierung der Exchange Rule}

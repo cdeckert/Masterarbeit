@@ -15,39 +15,90 @@ Der von \cite{dehaan2007optimal} entwickelte Algorithmus TDMinCutLazy ist der er
 
 \subsubsection{Generische Top-Down-Enumeration}
 
-In Abbildung \ref{} ist ein generischer Top-Down-Join-Enumerator zu sehen. Der Algorithmus TDPlanGen basiert auf Memorierung. Wie bei dynamischer Programmierung wird TdPlanGen mit Bausteinen untrennbarer Relationen aufgerufen (Zeile 2). Daraufhin wird die Subroutine TDPGSub aufgerufen. Sie durchläuft den Search Space rekursiv.  Wie bei dem namen TDPlanGen zu vermuten, geschieht die Enumeration von oben nach unten. Es beginnt mit der Eckpunktemenge V. Daher wird die Funktion TDPGSub auf dem Root-Knoten aufgerufen und das
-
-
-
-
-Um die Funktionsweise eines solchen Algorithmus besser verstehen zu können, wird hier ein generischer Ansatz vorgestellt. Wie bei der dynamischen Programmierung wird der Algorithmus TDPlanGen (vgl. Abbildung ) mit einem Konstrukt von atomaren Relationen initialisiert (Zeile 2). In seiner drei wird die Subroutinge TDPGSub auferufen, die den Search Space rekursiv durchläuft.  Wie der Name impliziert, findet die Enumerierung von oben nach unten statt. Sie gebinnt mit der Knotenmenge V. Da mit dem Root-Knoten gestartet wird, wird TDPGSub mit der Knotenmenge S aufgerufen, die zu Beginn gleich der Menge V des Query-Graphen ist. Bei jedem Rekursionsschritt von TDPlanGen werden alle möglichen
-
-
-
-
-\subsection{Grundlagen}
-Ziel der Regel ist es mit nur einem Aufruf alle direkt Verbundenen Varianten für einen Join-Tree zu erhalten. Zu diesem Zweck wird der Query-Baum mit seinen Teilbäumen betrachtet. Es ist möglich, dass in einem solchen Baum mehrere Join-Trees vorkommen. Dies kann beispielsweise durch Aggregation und Inner-Queries geschehen. Außerdem ist es möglich, dass andere Elemente in diesem Query-Graphen vorkommen, die kein Join-Tree sind. Die neue Regel soll auf alle Teil-Bäume des Query-Tree angewendet werden, die Join-Trees sind und die keinen direktübergeordneten Join-Trees unterstellt sind. Die Regel soll also immer am oberen Ende eines Join-Trees zum Einsatz kommen.
-
-Um die Regel zur Anwendung zu bringen, müssen neue Begriffe eingeührt werden:
+Die Funktionsweise eines generischen Top-Down-Enumerators lässt sich am einfachsten an einem Codebeispiel nachvollziehen. Hierzu ist die folgende Notation notwendig zu verstehen:
 
 \begin{itemize}
-\item Als Basis-Äquivalenzklasse werden in einem expandierted Query-Graphen die Äquivalenzklassen bezeichnet, die keine Join Operatoren als Kinder untergeordnet haben; eine solche Äquivalenzklasse kann entweder eine Basis-Relation repräsentieren oder Nicht-Join Operatoren als Kinder besitzen.
-
-\item Als Join Äuqivalenzklasse werden in einem expandierten Query-Graphen die Äquivalenzklassen bezeichnet, deren Kinder Join-Operatoren sind.
-
-\item Ein Join-Tree sind in einem expandierten Query-Graphen die 
-
-
+\item $E$: Kanten zwischen Knoten
+\item $V$: Knoten eines Baums
+\item $G$: Graph von Kanten und Knoten
+\item $R$: Relationen, die auch als Knoten dargestellt werden können
 \end{itemize}
 
 
-\subsection{Transformationsregel}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.4]{03_Regeln/00_media/TDPlanGen.png}
+  \caption{PseudoCode: TDPlanGen}
+  \label{TDPlanGen}
+\end{figure}
 
 
-Die Graph Rule hat das selbe Interface \texttt{GraphRule($\Join, E_1, E_2, parent$)} wie alle anderen Regeln. Ziel der Regel ist es alle möglichen Transformationen für einen initalen Anfragegraphen mit nur einem Aufruf auszugeben. Daher wird der Operator, die linke und rechte Äquivalenzknoten sowie der Vater-Äquivalenzknoten übergeben. Aus der Menge der Join-Sets von linker und rechter Seite wird je ein JoinSet-Element genommen und mit Hilfe einer \texttt{merge}-Operation zusammengefügt. Falls dieses neue Element noch nicht Teil der Menge der JoinSet-Elemente des Vater-Äquivalenzknotens ist, wird weiter fortgefahren und das neue Element dem Vater bekanntgegeben. Aus dem neuen JoinSet-Element wird mit der Methode \texttt{CreateGraph} ein JoinGraph erzeugt. Dieser JoinGraph wird mit einer Partitionierungsmethode getrennt und so einzelne zusammenhängende Stücke des Graphen gebildet, die durch die Methode \texttt{CreateTree} zu einem neuen Baum zusammengefügt werden und damit ein Ergebnis bilden. Sobald über alle Join-Sets der linken und rechten Seite ($E_1, E_2$) iteriert wurde, kann das Gesamtergebnis zurückgeliefert werden. Eine weitere Ausführung der Regel ist ab diesem Moment nicht mehr notwendig, da bereits alle Pläne gefunden wurden.
+Wie in Abb. \ref{TDPlanGen} zu erkennen, beginnt die Top-Down-Enumeration mit einem Aufruf der Methode \texttt{TDPlanGen(G)} ihr wird ein Graph übergeben. Der Graph besteht aus Knoten und Kanten. Das Ergebnis der Methode ist ein optimaler Join-Tree.
+
+Zuerst wird wie in Zeile 2 zu sehen für jede Relation - sie sind nicht weiter trennbar, daher können keine Alternativen gebildet werden - als beste Variante für ihren jeweiligen Knoten festgelegt. Hierauf wird die Methode \texttt{TDGPSub(V)} aufgerufen. Es wird der gesamte Graph übergeben.
 
 
-Im Gegensatz zu den bisher vorgestellten Regeln, sind hier mehrere Routinen Teil der Regel und eine komplexere Bearbeitung notwendig. Die einzelnen bestandteile \texttt{merge}, \texttt{CreateTree}, \texttt{Partition}, \texttt{CreateGraph} werden nun im Detail angesprochen:
+Die Methode \texttt{TDPGSub} prüft zuerst, ob für einen zu untersuchenden Subgraphen bereits ein bester Plan existiert. Ist dies der Fall wird abgebrochen. Falls noch kein bester Plan ermittelt wurde, wir aus dem Subgraphen \texttt{S} durch eine Partitionierungsmethode - sie wird später erläutert - Paare von Subgraphen erzeugt. Aus jedem paar wird ein neuer Baum erstellt. Aus der Menge der neuen Bäume wird dann der beste ausgewählt und ausgegeben. 
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.4]{03_Regeln/00_media/BuildTree.png}
+  \caption{PseudoCode: BuildTree}
+  \label{BuildTree}
+\end{figure}
+
+In der Methode \texttt{BuildTree} (vgl. Abb. \ref{BuildTree}) wird aus zweit Teilbäumen zuerst zuerst ein neuer Baum gebildet. Falls die kosten dieses neuen Baums niedriger für den Subgraphen \texttt{S} sind als alle bisher bekannten Pläne, wird der neue Plan als Optimaler Plan gespeichert. Nachdem diese Methode für alle Partitionen eines Subgraphen durchlaufen ist, ist so sichergestellt, dass die Kosten für jeden einzelnen alternativen Graphen verglichen wurden und auch der beste alternative Plan ausgewählt wurde.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.4]{03_Regeln/00_media/Partition.png}
+  \caption{PseudoCode: Partition}
+  \label{Partition}
+\end{figure}
+
+
+Die Paritionierung eines Graphen in Subgraphen geschieht mit der Methode \texttt{Partition} (vgl. Abb. \ref{Partition}). Aus dem Ausgangsgraphen wird zuerst ein Teilstück \texttt{C} herausgeschnitten. Dieser Teil ist Bestandteil des Subgraphen \texttt{S}. Für jedes TeilStück wird geprüft, ob es mit dem Graphen \texttt{S} verbunden ist. Ist dies der Fall wird ein neues Paar an Subgraphen erstellt. Es besteht aus aus \texttt{C} und  \texttt{S\textbackslash C}. \texttt{S\textbackslash C} und \texttt{C} ergeben so gemeinsam \texttt{S}.
+
+
+\subsubsection{Partitionierung mit MinCutConservative}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.5]{03_Regeln/00_media/MinCutConservative.png}
+  \caption{PseudoCode: MinCutConservative}
+  \label{MinCutConservative}
+\end{figure}
+
+\texttt{MinCutConerservative} ist eine konkrete Implementierung eines Partitionierungsalgorithmus, der auch für GraphRule zum Einsatz kommt. In bestimmten Szearios wie sternförmigen Abfragen, kann die generierung von jeder Teilmenge \texttt{T} eines Subgraphen \texttt{S} exponenziellen Overhead erzeugen, da die meisten komplementären Bäume \texttt{S\textbackslash C} nicht miteinander verbunden sind und somit keine validen, kreuzprduktfreien Teilbäume entstehen. Um zu vermeiden, dass ein komlementärer Baum entsteht, der nicht verbunden ist, wird in diesem konservativen Ansatz nur ein \texttt{C} gewählt, dessen Komplement auch verbunden ist. 
+
+
+
+
+
+
+
+\subsection{Transformationsregel: GraphRule}
+
+Die GraphRule bedient sich der zuvor vorgestellten Implementierung von Top-Down-Enumeratoren. Die Regel, um kompatibel zu anderen Regel und den Regelmengen zu sein, verwendet das selbe Interface wie andere Regeln: \texttt{GraphRule($\Join, E_1, E_2, parent$)}.  Ziel der Regel ist es alle möglichen Transformationen für einen initialen Anfragegraphen mit nur einem Aufruf auszugeben. 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.4]{03_Regeln/00_media/GraphRule.png}
+  \caption{PseudoCode: GraphRule}
+  \label{GraphRule}
+\end{figure}
+
+Im Vergleich zu Abb. \ref{TDPlanGen} fällt in Abb. \ref{GraphRule} auf, dass JoinSets verwendet werden. Eine neue \texttt{merge}-Methode verwendet wird und \texttt{CreateGraph} als Methode vorkommen. Ein weiterer grundlegender unterschied ist, dass anstatt von Knoten, die Relationen repräsentieren, Äquivalenzklassen zum Einsatz kommen.
+
+
+
+
+
+Daher wird der Operator, die linke und rechte Äquivalenzknoten sowie der Vater-Äquivalenzknoten übergeben. Aus der Menge der Join-Sets von linker und rechter Seite wird je ein JoinSet-Element genommen und mit Hilfe einer \texttt{merge}-Operation zusammengefügt. Falls dieses neue Element noch nicht Teil der Menge der JoinSet-Elemente des Vater-Äquivalenzknotens ist, wird weiter fortgefahren und das neue Element dem Vater bekanntgegeben. Aus dem neuen JoinSet-Element wird mit der Methode \texttt{CreateGraph} ein JoinGraph erzeugt. Dieser JoinGraph wird mit einer Partitionierungsmethode getrennt und so einzelne zusammenhängende Stücke des Graphen gebildet, die durch die Methode \texttt{CreateTree} zu einem neuen Baum zusammengefügt werden und damit ein Ergebnis bilden. Sobald über alle Join-Sets der linken und rechten Seite ($E_1, E_2$) iteriert wurde, kann das Gesamtergebnis zurückgeliefert werden. Eine weitere Ausführung der Regel ist ab diesem Moment nicht mehr notwendig, da bereits alle Pläne gefunden wurden.
+
+
+Im Gegensatz zu den bisher vorgestellten Regeln, sind hier mehrere Routinen Teil der Regel und eine komplexere Bearbeitung notwendig. Die einzelnen Bestandteile \texttt{merge}, \texttt{CreateTree}, \texttt{Partition}, \texttt{CreateGraph} werden nun im Detail angesprochen:
 
 
 \subsubsection{merge}
@@ -57,7 +108,7 @@ Die \texttt{Merge}-Methode hat zwei Input Parameter. Jeder Parameter ist ein Joi
 
 \subsubsection{Partition}
 
-In der Partition Subroutine wird aus einem verbundenen Join-Graphen wird aus der Menge der Knoten, die aus Subsets S_1 und S_2 gebildet werden wobei S_1 und S_2 = S sind. Wenn diese gefunden sind, dann glt dies auch für S_1 und S_2 auch für S_2 und S_1. Da es unterschliedliche Graph Based Partitionierungsalgorithmen gibt, wurde einer ausgewählt das ist MinCutConservative. Es wurde sich für diesen Algorithmus entscheiden, da er der performantestete ist. [Hier 6]
+%In der Partition Subroutine wird aus einem verbundenen Join-Graphen wird aus der Menge der Knoten, die aus Subsets S_1 und S_2 gebildet werden wobei S_1 und S_2 = S sind. Wenn diese gefunden sind, dann glt dies auch für S_1 und S_2 auch für S_2 und S_1. Da es unterschliedliche Graph Based Partitionierungsalgorithmen gibt, wurde einer ausgewählt das ist MinCutConservative. Es wurde sich für diesen Algorithmus entscheiden, da er der performantestete ist. [Hier 6]
 
 
 

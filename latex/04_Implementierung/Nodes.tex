@@ -71,7 +71,13 @@ Wird eine Basis-Relation gespeichert, so kann mit der Methode \texttt{setRelatio
 
 Falls die Äquivalenzklasse mehrere Pläne speichert, kann auf einen Knoten mit Hilfe der Methode \texttt{push\_back( PlanNode\_t \& )} ein Planknoten angehängt werden. Zuerst wird geprüft, ob bereits ein Planknoten vorhanden ist. Falls das nicht der Fall ist, wird der Knoten als erster, \texttt{\_first}, und als letzter, \texttt{\_last}, Knoten in der Äquivalenzklasse festgelegt. Im selben Schritt wird von dem Planknoten die Nachbar- und die vorkommenden Relationen in den dafür vorgesehenen Bitevektoren gespeichert. Falls ein Knoten schon vorhanden ist, wird auf dem letzten Knoten die Methode \texttt{setNext( PlanNode\_t \& )} aufgerufen. Diese hängt an einen Planknoten einen weiteren an. Die konkrete Implementierung hängt vom jeweils verwendeteten Planknoten ab. Die exakte Implementierung ist im Code-Beispiel \ref{listing:Push-Back} zu sehen.
 
-\lstinputlisting[caption=C++: EquivalenceClass push\_back, label=listing:Push-Back]{04_Implementierung/00_media/Push_back.h}
+
+\begin{figure}[ht]
+\lstinputlisting{04_Implementierung/00_media/Push_back.h}
+\caption{C++: EquivalenceClass push\_back}
+\label{listing:Push-Back}
+\end{figure}
+
 
 Eine weitere Möglichkeit Pläne an eine Äquivalenzklasse anzuhängen ist die Methode \texttt{concat(EquivalenceClass *)} Eine andere Äuqivalenzklasse kann übergeben werden und wird automatisch an die bestehende Klasse angehängt. So können zwei Äquivalenzklassen kombiniert werden.
 
