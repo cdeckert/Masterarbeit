@@ -1,6 +1,6 @@
 \section{Pellenkoft Regelmengen}
 \label{sec:pellenkoftRulesets}
-Bei der Erforschung eines Search Spaces kommen in regelbasierten Anfrageoptimierer Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelmengen zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
+Bei der Erforschung eines Search Spaces kommen in regelbasierten Anfrageoptimierern Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelmengen zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
 
 
 Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt den Startpunkt dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
@@ -31,6 +31,8 @@ Durch die Anwendung der Regeln aus \textit{RS-B0} und \textit{RS-B1} können Pl�
 
 Ebenfalls können sich bei komplexeren Plänen  Teilpläne gleichen. Beispielsweise enthält der Plan $(A \Join B) \Join C$ den gleichen Subplan wie $C \Join (A \Join B)$.
 
+Um Duplikate zu verhindern, muss während des Ausführens der Regeln darauf geachtet werden, dass Duplikate erkannt und behandelt werden. Allerdings existiert auch eine Regelmenge, die per se keine Duplikate bildet. Diese wird im Folgenden behandelt.
+
 
 
 \subsection{Duplikatfreie Regelmenge}
@@ -52,19 +54,7 @@ Alle Regeln außer Kommutativität sind für $\Join_5$ deaktiviert.
 Regeln, die für einen Operator deaktiviert wurden, dürfen für diesen Operator nicht mehr ausgeführt werden.
 
 
+Die Duplikatfreiheit wird dadurch erreicht, dass beispielsweise Kommutativität nur einmal auf einen Knoten angewendet werden kann. Knoten, die aus dieser Anwendung entstehen dürfen Kommutativität nicht mehr anwenden. Da nach Kommutativität keine weiteren Regeln auf einen Knoten angewendet werden dürfen, ist nach der Ausführung von Kommutativität klar, dass der ursprüngliche Plan nicht mehr erreicht werden kann. Bei den anderen Regeln ist es erlaubt, dass Kommutativität noch zur Anwendung kommt. Dies erlaubt es jedoch ebenfalls nicht den Ursprungszustand wieder zu erreichen. Somit ist es nicht möglich, dass Duplikate einstehen. Somit ist die Regelmege duplikatfrei.
 
-%\subsubsection{Kreuzproduktfreie Regelsets und Vollständigkeit}
-
-%Die bisherigen Regelmengen können zu Kreuzprodukten führen. Ebenfalls ist nicht geklärt, ob die Regelsets vollständig sind und alle möglichen kreuzproduktfreien Bäume erzeugen. Im Folgenden wird zuerst der Begriff der Kreuzproduktfreiheit eingeführt und basierend auf diesem Begriff die Vollständigkeit erläutert.
-
-%Ein Kreuzprodukt kann bei den vorliegenden Plänen dann entstehen, wenn durch die Anwendung einer Regel ein Join zwischen zwei Relationen gebildet wird, die zuvor keine Kante auf einem gegeben Join Tree hatten.
-
-%Eine Technik um Kreuzproduktfreiheit bei den bisherigen Regelsets herzustellen, ist die Unterdrückung von Kreuzprodukten die auch als \ac{CPS} bezeichnet wird. Der Ansatz funktioniert so, dass eine Regel, falls sie ein Kreuzprodukt erzeugt zwar als ausgeführt markiert, jedoch nicht der Baum in den Search Space aufgenommen wird. Somit werden Kreuzprodukte zwar erzeugt, aber nicht in den Suchrraum aufgenommen. Regelsets, die diese Art von Kreuzproduktunterdrückung anwenden, erhalten das Suffix CPS. Somit entstehen aus den Regelsets \textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} die Regelsets \textit{RS-B0-CPS}, \textit{RS-B1-CPS} und \textit{RS-B2-CPS}.
-
-
-%Eine andere wichtige Eigenschaft von Regelsets ist Vollständigkeit. Vollständig ist ein Regelset dann, wenn alle kreuzproduktfreien Pläne mit einem Regelset gefunden werden.
-
-
-%Die Regelsets textit{RS-B0}, \textit{RS-B1} und \textit{RS-B2} liegen dem Volcano Query Optimizer zu Grunde und sind die Basis der regelbasierten Transformation.
 
 

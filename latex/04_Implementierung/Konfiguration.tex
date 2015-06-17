@@ -25,9 +25,9 @@ Ein konkretes Test File ist in \ref{JsonConfigFile} zu sehen. Jedes Test File is
 
 Auch für Join-Kanten werden Objekte erzeugt. Ein Join-Kanten Objekt bezeichnet eine Kante zwischen zwei Relationen. Eine Kante könnte, wie im Beispiel zu sehen von der Relation 1 zu der Relation 2 verlaufen, wobei die Richtung nicht entscheidend ist. Einer Join-Kante wird auch eine Selektivität zugeordnet. Mehrere dieser Join-Edge-Objekte werden als Array im Attribut \texttt{joinEdges} hinterlegt.
 
-Neben Join-Kanten und Relationen sind auch die zu testendeden Algorithmen gespeichert. Sie werden in einem Array abgelegt und sind dem Attribut \texttt{algorithms} zugewiesen. Im vorliegenden Beispiel werden die Regelsets \texttt{RS-B0}, \texttt{RS-B1} und \texttt{RS-B2} getestet.
+Neben Join-Kanten und Relationen sind auch die zu testenden Algorithmen gespeichert. Sie werden in einem Array abgelegt und sind dem Attribut \texttt{algorithms} zugewiesen. Im vorliegenden Beispiel werden die Regelsets \texttt{RS-B0}, \texttt{RS-B1} und \texttt{RS-B2} getestet.
 
-Auch ein initialer Plan wird im Test-Objekt gespeichert. Ein Baum besteht immer aus Knoten. Für jeden Knoten wird ein Operator im Attribut \texttt{op} gespeichert. Es wird der Operator \texttt{SCAN} und der Operator \texttt{JOIN} unterstützt. Ein Knoten kann eine linke und eine rechte Seite haben. In Zeile 14 ist eine Scan Operation zu sehen. Es wird nur die linke Seite verwendet. Im Attribut \texttt{l} ist die ID der Relation abgelegt, die zu scannen ist. Bei \texttt{JOINs} wird auch die rechte Seite verwendet (vgl. Zeile 16). In den Attributen \texttt{l} und \texttt{r} können entweder weitere Knoten oder Relations-Ids gespeichert werden. Neben Operator, links und rechts ist das Attribut \texttt{relations} Teil des Knotens. Hier ist eine einfache Repräsentation des Knotens gespeichert. Im Falle von Zeite 14 \texttt{1}. sind komplexere Knoten und Subknoten vorhanden, können komplexere Daten im Feld \texttt{Relations} abgelegt sein. Beispielsweise ist eine solche komplexere Form in Zeile 19 ( \texttt{JOIN(1,2)}) zu erkennen. Hier ist ein Join zwischen 1 und 2 zu sehen.
+Auch ein initialer Plan wird im Test-Objekt gespeichert. Ein Baum besteht immer aus Knoten. Für jeden Knoten wird ein Operator im Attribut \texttt{op} gespeichert. Es wird der Operator \texttt{SCAN} und der Operator \texttt{JOIN} unterstützt. Ein Knoten kann eine linke und eine rechte Seite haben. In Zeile 14 ist eine Scan Operation zu sehen. Es wird nur die linke Seite verwendet. Im Attribut \texttt{l} ist die ID der Relation abgelegt, die zu scannen ist. Bei \texttt{JOINs} wird auch die rechte Seite verwendet (vgl. Zeile 16). In den Attributen \texttt{l} und \texttt{r} können entweder weitere Knoten oder Relations-Ids gespeichert werden. Neben Operator, links und rechts ist das Attribut \texttt{relations} Teil des Knotens. Hier ist eine einfache Repräsentation des Knotens gespeichert. Im Falle von Zeite 14 \texttt{1}. sind komplexere Knoten und Subknoten vorhanden,deshalb  können komplexere Daten im Feld \texttt{Relations} abgelegt sein. Beispielsweise ist eine solche komplexere Form in Zeile 19 ( \texttt{JOIN(1,2)}) zu erkennen. Hier ist ein Join zwischen 1 und 2 zu sehen.
 
 \begin{figure}[ht]
 \lstinputlisting{04_Implementierung/00_media/config.json}
@@ -41,14 +41,14 @@ Die eigentliche Konfiguration findet in C++ statt. Mit der Bibliothek json11 \ci
 
 Jedes Konfigurationsobjekt (vgl. Abb. \ref{Konfiguration}) bietet eine Menge unterschiedlicher Methoden an, um Informationen über den aktuellen Test zu erlangen.
 
-Mit Hilfe der Methode \texttt{getInitaleTree()} wird ein Baum aus Äquivalenzklassen und Planknoten erzeugt, die den initalen Plan erzeugen. Die Methode erzeugt immer eine neue Instanz des gesamten Baums.
+Mit Hilfe der Methode \texttt{getInitaleTree()} wird ein Baum aus Äquivalenzklassen und Planknoten erstellt, die den initialen Plan erzeugen. Die Methode ergibt immer eine neue Instanz des gesamten Baums.
 
 Die Kardinalität und Selektivität, die als ausschlaggebende Kennzahlen zur Berechnung des optimalen Plans herangezogen werden, sind mit den Methoden \texttt{get\-Cardinaility()} und \texttt{get\-Selectivity()} zu erfragen. Auch die getesteten Algorithmen können mit der Methode \texttt{getAlgorithms()} ausgelesen werden.
 
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.75\textwidth]{04_Implementierung/00_media/ConfigurationClass.pdf}
+  \includegraphics[scale=0.75]{04_Implementierung/00_media/ConfigurationClass.pdf}
   \caption{Klassendiagramm: Konfiguration}
   \label{Konfiguration}
 \end{figure}

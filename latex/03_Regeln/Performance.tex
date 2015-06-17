@@ -3,26 +3,50 @@
 
 
 
-Die Tests, die von \cite{} bzgl. der Effizienz der Regelmengen durchgeführt wurden betrachten die Regelmengen RS-B1-CPS, RS-B2 und RS-Graph Rule. Es wird in allen Fällen die Dauer der Kostenberechnung nicht mit einbezogen, ebenfalls fällt die Zeit weg, die zur Generierung eines phyischen Search Spaces benötigt wird. Damit belibt nur die Zeit zur Erzeugung von äquivalenten logischen Plänen, die gemessen wurde.
 
-Die Evaluation testet sowohl kettenförmige, zyklische, sternförmige und kreisförmige Anfragen wobei die Menge der Relationen varriert. Je mehr Relationen verwendet wurden, desto besser schnitt RS-Graph in den vergleichstests ab. Die Anfragen, die für die Test verwendet wurden, beinhalteteten nur Join-Operatoren. Aggregationen von Relationen wurden daher nicht verwendet.
+
+Die Tests, die von \cite{shanbhag2014optimizing} bzgl. der Effizienz der Regelmengen durchgeführt wurden betrachten die Regelmengen RS-B1-CPS, RS-B2 und RS-Graph Rule. Wobei ein unterschied zwischen Pellenkoft und Pyro(J) in Abbildung \ref{PellenkoftVsPyro} deutlich wird: Die Regelmenge RS-B1 verwendet Left-Associativity anstatt der Swap Regel. Beide Regeln können mit Hilfe von Kommutativität in einander umgewandelt werden. 
+Bei allen Regeln wird die Dauer der Kostenberechnung nicht in die Messung einbezogen. Eine Umwandlung in physische Pläne wurde ebenfalls nicht gemessen.
+
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{|l|l|l|}
+\cline{1-3}
+{\bf } & {\bf Pellenkoft}                                                                                                  & {\bf Pyro(J)}                                                                                                       \\ \cline{1-3}
+{\bf RS-B0-CPS}   & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\end{tabular}            & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\end{tabular}              \\ \cline{1-3}
+{\bf RS-B1-CPS }  & \begin{tabular}[c]{@{}l@{}}Swap\\ Bottom Commutativity\end{tabular}                                         & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Commutativity\end{tabular}                                    \\ \cline{1-3}
+{\bf RS-B2 }  & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\\ Exchange\end{tabular} & \begin{tabular}[c]{@{}l@{}}Left Associativity\\ Right Associativity\\ Commutativity\\ Exchange\end{tabular}   \\ \cline{1-3}
+
+{\bf RS-Graph }  &  & \begin{tabular}[c]{@{}l@{}}GraphRule\end{tabular}   \\ \cline{1-3}
+\end{tabular}
+\caption{Unterschiede zwischen Pellenkoft und Pyro(J)}
+\label{PellenkoftVsPyro}
+\center
+\end{figure}
+
+
+
+Die Evaluation testet sowohl kettenförmige, zyklische, sternförmige und kreisförmige Anfragen wobei die Menge der Relationen varriert. Je mehr Relationen verwendet wurden, desto besser schnitt RS-Graph in den Vergleichstests ab. Die Anfragen, die für die Test verwendet wurden, beinhalteteten nur Join-Operatoren. Aggregationen von Relationen wurden daher nicht verwendet.
+
+
 
 Begonnen wurde mit den kettenförmigen Anfragen. In Abbildung \ref{} sind die Ergebnisse zu sehen. Es wurde die Anzahl der Relationen in einer Anfrage immer weiter gesteigert. Eine kettenförmige Anfrage mit $n$ Relationen ist die einfachste Anfrage. 
 
-\subsection{Performance}
+\subsection{Evaluation}
 
-Bei der Evaulation der unterschiedlichen Regeln hat sich gezeigt, dass GraphRule eine sehr effektive Regel ist. Sie konnte die beste Performance in allen Vergleichstests erreichen. Die Frage, die sich dabei stellt: War dieses Ergebnis zu erwarten?
+Bei der Evaluation der unterschiedlichen Regeln hat sich gezeigt, dass GraphRule eine sehr effektive Regel ist. Sie konnte die beste Performance in allen Vergleichstests erreichen. 
 
 Bei der Beantwortung der Frage hilft es einen Blick auf die eigentliche Implementierung der GraphRule zu werfen und die Innovation selbst zu betrachten. GraphRule - die genaue Implementierung wurde in Kapitel 3 nachvollzogen - besteht aus einem Interface, dass das Interface der Pyro(J) Regeln erfüllt und einer Implementierung von \texttt{MitCutConservative}. Einiger Code um das Interface mit diesem Algorithmus zu verbinden, war ebenfalls nötig. Wenn man \texttt{MitCutConservative} für sich betrachtet, fällt auf, dass dieser Ansatz in Sachen Performance anderen Verfahren, wie dem Pellenkoft Regelset überlegt ist. Wenn man nun diesem überlegenen Verfahren, das Interface gibt, einer gewöhnlichen Regel in Pyro(J) und alle anderen Regeln entfernt, bleibt dieses Verfahren überlegen. Dieses Ergebnis kann nicht nur intuitiv nachvollzogen, sondern auch durch echte Tests, wie zuvor gesehen, bestätigt werden.
 
 
 \subsection{Erweiterbarkeit}
 
-Einer der Claims, die von \cite{} gemacht wurden, ist dass durch die Zusammenführung eines Alorithmus wie \texttt{MitCutConservative} und einem System wie Volcano ein schnelles Verfahren mit Erweiterbarkeit kombiniert wurde, kann ebenfalls kritisch betrachtet werden. Es stellen sich zwei Fragen: Hat Volcano / Pyro(J) an Performance durch GraphRule gewonnen? Und hat \texttt{MitCutConservative} an Erweiterbarkeit zugelegt?
+Einer der Claims, die von \cite{} gemacht wurden, ist dass durch die Zusammenführung eines Algorithmus wie \texttt{MitCutConservative} und eines Systems wie Volcano, ein schnelles Verfahren mit Erweiterbarkeit kombiniert worden.Dies  kann ebenfalls kritisch betrachtet werden. Es stellen sich zwei Fragen: Hat Volcano / Pyro(J) an Performance durch GraphRule gewonnen? Und hat \texttt{MitCutConservative} an Erweiterbarkeit zugelegt?
 
-Die erste Frage wurde durch die Performance Tests klar beantwortet: Ja, GraphRule sorgt für einen Zugewinn an Performance. Diese Forschungsfrage kann also klar beantwortet werden. Jedoch die Frage nach der Erweiterbarkeit, die mit Hilfe von Pyro(J) hinzukommt bleibt. \texttt{MitCutConservative} wurde nicht verändert. Somit wurde dieser Algorithmus nicht leichter erweiterbar oder einfacher zu durchschauen. Was stattdessen passiert ist, ist ein neues Interface für einen bekannten Algorithmus. Mit diesem Interface kann auch dieser Algorithmus leicht angedockt werden. Dadurch hat sich bestätigt, dass Pyro(J) erweiterbar ist. Die Erweiterbarkeit von \texttt{MitCutConservative} bleibt auf dem selben Level.
+Die erste Frage wurde durch die Performance Tests klar beantwortet: Ja, GraphRule sorgt für einen Zugewinn an Performance. Diese Forschungsfrage kann also klar beantwortet werden. Jedoch die Frage nach der Erweiterbarkeit, die mit Hilfe von Pyro(J) hinzukommt, bleibt. \texttt{MitCutConservative} wurde nicht verändert. Somit wurde dieser Algorithmus weder leichter erweiterbar noch einfacher zu durchschauen. Stattdessen ist ein neues Interface für einen bekannten Algorithmus entstanden  Mit diesem Interface kann auch dieser Algorithmus leicht angedockt werden. Dadurch hat sich bestätigt, dass Pyro(J) erweiterbar ist. Die Erweiterbarkeit von \texttt{MitCutConservative} bleibt auf dem selben Level.
 
-Wie in Kapietl 6 bemerkt, eröffnet die Implementierung von GraphRule völlig neue Forschungshorizonte. Bekannte Algorithmen können mit bekannten Optimierern kombiniert werden und so deren Eigenschaften und Nachteile ausgeglichen werden.
+Wie in Kapitel 6 bemerkt, eröffnet die Implementierung von GraphRule völlig neue Forschungshorizonte. Bekannte Algorithmen können mit bekannten Optimierern kombiniert und so deren Eigenschaften und Nachteile ausgeglichen werden.
 
 
 

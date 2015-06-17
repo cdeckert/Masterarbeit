@@ -4,13 +4,13 @@
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{02_Related_Work/Oracle.pdf}
-  \caption{Oracle Architecture \cite{Oracle2004Basics}}
+  \includegraphics[scale=0.75]{02_Related_Work/Oracle.pdf}
+  \caption{Architektur: Oracle \cite{Oracle2004Basics}}
   \label{OracleArchitecture}
 \end{figure}
 
 
-Die Oracle Architektur zur Verarbeitung von Anfragen \cite{Oracle2004Basics}  (vgl. Abb. \ref{OracleArchitecture})  beginnt wie die meisten Systeme mit einer SQL Anfrage, die von einem Parser in eine Interne Repräsentation gebracht wird. Der Parser übernimmt dabei zwei Funktionen. Auf der einen Seite die syntaktische Analyse. Es wird geprüft, ob die SQL Anfrage die korrekte Syntax besitzt. Auf der anderen Seite eine semantische Analyse. Diese prüft beispielsweise ob Datenbank Objekte und Objekt-Attribute  korrekt referenziert werden. 
+Die Oracle Architektur zur Verarbeitung von Anfragen \cite{Oracle2004Basics}  (vgl. Abb. \ref{OracleArchitecture})  beginnt wie die meisten Systeme mit einer SQL Anfrage, die von einem Parser in eine Interne Repräsentation gebracht wird. Der Parser übernimmt dabei zwei Funktionen. Auf der einen Seite die syntaktische Analyse. Es wird geprüft, ob die SQL Anfrage die korrekte Syntax besitzt. Auf der anderen Seite eine semantische Analyse. Diese prüft beispielsweise, ob Datenbank Objekte und Objekt-Attribute  korrekt referenziert werden. 
 
 Ein wesentlicher Unterschied war bis zu Version 11g der Oracle Datenbank,  die Verwendung von \ac{RBO} und \ac{CBO}. Je nach Anfrage konnte durch den \ac{DBI} entschieden werden, ob \ac{RBO} bzw. \ac{CBO} zum Einsatz kommt. Mit Version 11g ist diese Möglichkeit weggefallen \cite{dba_oracle2015}. 
 
@@ -19,7 +19,7 @@ Der Anfrageoptimierer führt bei der Verarbeitung die drei folgenden Schritte au
 \begin{itemize}
 \item Eine Menge potenzieller Pläne wird basierend der SQL Anfrage selbst und aufgrund von Hinweisen, die durch den Nutzer eingegeben werden, generiert.
 
-\item Der Optimierer schätzt die Kosten für jeden Plan basierend auf Kosteninformationen über die Anfrage und Storage Charakteristiken der Tabellen, Indexe und Partitionen, auf die durch ein Statement zugegriffen werden kann.
+\item Der Optimierer schätzt die Kosten für jeden Plan, basierend auf Kosteninformationen über die Anfrage und Storage Charakteristiken der Tabellen, Indexe und Partitionen, auf die durch ein Statement zugegriffen werden kann.
 
 Die Kostenschätzung für den Zugriff auf entsprechende Datensätze und die Reihenfolge der Joins wird nach ihrem Verbrauch von Ressourcen wie I/O, CPU und Arbeitsspeicher geschätzt.
 
@@ -33,7 +33,7 @@ Das Ergebnis des Optimierers ist ein Plan, der zum Ausführen der Anfrage geeign
 
 
 
-Bei Oracle ist es möglich zwischen zwei Optimierungsansätzen zu wählen. Der Nutzer kann entscheiden, ob er möglichst schnell das gesamte Resultat der Anfrage benötigt oder ob das erste Resultat möglichst schnell zurückgegeben werden soll. Bei der Optimierung auf alle Resultate geht es darum den Plan zu finden, der mit dem geringsten Ressourceneinsatz alle Zeilen einer Abfrage zurückgibt. Die Optimierung des Durchsatzes geschieht insbesondere durch die Verwendung von Full-Table-Scans anstatt von Index-Scans und der Verwendung von Sort-Merge-Joins anstatt von nested loop-joins. Wenn es hingegen wichtig ist, dass schnell das erste Ergebnis zurückgegeben wird, also die Antwortzeit minimiert werden soll, werden Index-Scans und nested-loop-joins eingesetzt.
+Bei Oracle ist es möglich zwischen zwei Optimierungsansätzen zu wählen. Der Nutzer kann entscheiden, ob er möglichst schnell das gesamte Resultat der Anfrage benötigt oder ob das erste Resultat möglichst schnell zurückgegeben werden soll. Bei der Optimierung auf alle Resultate geht es darum den Plan zu finden, der mit dem geringsten Ressourceneinsatz alle Zeilen einer Abfrage zurückgibt. Die Optimierung des Durchsatzes geschieht insbesondere durch die Verwendung von Full-Table-Scans anstatt von Index-Scans und der Verwendung von Sort-Merge-Joins anstatt von Nested Loop-Joins. Wenn es hingegen wichtig ist, dass schnell das erste Ergebnis zurückgegeben wird, also die Antwortzeit minimiert werden soll, werden Index-Scans und Nested-Loop-Joins eingesetzt.
 
 Welcher Ansatz zur Suche nach dem optimalen Plan verwendet wird, kann durch den Nutzer festgelegt werden. Für Anwendungen wie Reports sind alle Zeilen einer Datenmenge wichtig. Hier empfiehlt es sich den Durchsatz als Maßstab der Optimierung zu wählen. Bei dynamischeren, interaktiven Anwendungen ist es nicht immer notwendig, dass sofort auf alle Daten zugegriffen werden muss, daher ist eine Optimierung der Antwortzeit angebracht.
 

@@ -1,0 +1,6 @@
+\section{GraphRule}
+
+
+Bei der Betrachtung der GraphRule (Kapitel 3) fällt auf, dass es sich bei GraphRule nicht um eine neue Transformationsregel im eigentlichen Sinn handelt. Sondern, um die Implementierung eines Top-Down-Enumerators. Wobei - und das ist die eigentliche Innovation - ein bestehender Algorithmus zur Top-Down-Enumeration mit einem Adapter an das bestehende Regelinterface angeschlossen wurde. Hierzu musste die Methode \texttt{CreateGraph} implementiert werden, die den Übergang zwischen den Verfahren ermöglicht. Auch das Resultat muss wieder zurück umgewandet werden, um das Interface der Regeln zu erfüllen. Zu diesem Zweck wurde \texttt{CreateTree} implementiert. Im Gegensatz zu der eigentlich vorgesehenen Methode \texttt{BuildTree} handelt es sich bei der Implementierung dieser Methode nur um die Zusammensetzung von Bäumen. Es wird nicht wie bei \texttt{BuildTree} auch gleich der optimale Plan bestimmt. Somit muss später noch eine Kostenschätzung stattfinden.
+
+Das Vorgehen, die bereits implementierte Kostenschätzung weiter zu verwenden, kann auch von Vorteil sein: Insbesondere wird ermöglicht, dass die Kostenfunktion zu einem späteren Zeitpunkt überarbeitet wird und nur an einer Stelle im Code diese Funktion angepasst werden muss.

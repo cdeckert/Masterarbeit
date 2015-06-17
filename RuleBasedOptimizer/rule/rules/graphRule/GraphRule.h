@@ -163,8 +163,6 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operatio
 template <typename PlanNode, typename Operations_t>
 typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
 {
-	BvSet_t empty;
-	empty.insert(Bitvector_t());
 	Bitvector_t b;
 	return MinCutConservative(input, b, b);
 };
@@ -196,11 +194,6 @@ typename GraphRule<PlanNode, Operations_t>::EquivalenceClass_t *GraphRule<PlanNo
 template <typename PlanNode, typename Operations_t>
 typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operations_t>::getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
 {
-	/*LOG(INFO) << "getConnectedParts";
-	LOG(INFO) << "S:                    " << S;
-	LOG(INFO) << "C:                    " << C;
-	LOG(INFO) << "T:                    " << T;*/
-
 	BvSet_t O;
 	Bitvector_t D, N, U, L, L_new;
 	N = getNeighbors(T, S).without(C);
@@ -209,20 +202,14 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operati
 		Bitvector_t b = S.without(C);
 		O.insert({b});
 		O.insert({C});
-		//LOG(INFO) << "o:      " << b;
 		return O;
 	}
-	//std::cout << "N" << N << std::endl;
 	for (unsigned int i = 0; i < N.capacity(); ++i)
 	{
 		L_new.reset();
 		if (N.test(i))
 		{
 			L_new.set(i);
-
-
-
-			std::cout << "L_new" << L_new << std::endl;
 			U = N.without(L_new);
 			while (L != L_new && U.is_not_empty())
 			{
@@ -259,11 +246,7 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operati
 			}
 
 		}
-
-
 	}
-
-
 	return O;
 };
 

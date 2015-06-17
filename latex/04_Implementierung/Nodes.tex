@@ -1,16 +1,16 @@
 \section{Planknoten und Äquivalenzklassen}
 
-Die unterschiedlichen Pläne werden in diesem Protypen als Äquivalenzklassen und Planknoten implementiert. Die Relationen werden mit Hilfe von Bitvektoren dargestellt. Im Folgenden wird auf die genaue Implementierung von Bitvektoren, Äquivalenzklassen und Planknoten eingegangen.
+Die unterschiedlichen Pläne werden in diesem Protoypen als Äquivalenzklassen und Planknoten implementiert. Die Relationen werden mit Hilfe von Bitvektoren dargestellt. Im Folgenden wird auf die genaue Implementierung von Bitvektoren, Äquivalenzklassen und Planknoten eingegangen.
 
 \subsection{Repräsentation von Relationen}
 \label{sec:Bitvector}
 
-Die einzelnen Relationen werden mit Hilfe eines Bitvektors dargestellt. Jeder Basis-Relation - sie repräsentiert eine physische Relation - ist eine ID zugeordnet. Eine Basis-Relation wird in diesem Prototypen mit Hilfe eines auf \texttt{TRUE} gesetzten Bits in einem Bitvektor repräsentiert. Auch mehrere Relationen können durch einen Bitvektor abgebildet werden. Um dies zu tun, werden mehrere Bits  im Bitvektor auf \texttt{TRUE} gesetzt.
+Die einzelnen Relationen, die mit Hilfe eines Bitvektors dargestellt werden, zeigt,dass jeder Basis-Relation - sie repräsentiert eine physische Relation - eine ID zugeordnet ist. Eine Basis-Relation wird in diesem Prototypen mit Hilfe eines auf \texttt{TRUE} gesetzten Bits in einem Bitvektor repräsentiert. Auch mehrere Relationen können durch einen Bitvektor abgebildet werden. Um dies zu tun, werden mehrere Bits  im Bitvektor auf \texttt{TRUE} gesetzt.
 
 \subsubsection{Implementierung}
 \begin{figure}[ht]
   \centering
-  \includegraphics{04_Implementierung/00_media/Bitvector.pdf}
+  \includegraphics[scale=0.75]{04_Implementierung/00_media/Bitvector.pdf}
   \caption{Bitvekotren als Repräsentation von Relationen oder Joins}
   \label{Bitvektor}
 \end{figure}
@@ -29,7 +29,7 @@ Bitvektoren kommen immer in Äquivalenzklassen zum Einsatz. Wenn es sich um eine
 
 Da der Bitvektor, wie viele andere Klassen auch, einen Template Parameter besitzt, kann die Datenstruktur, auf deren Basis der Vektor implementiert ist ausgetauscht werden. Beispielsweise kann anstatt eines \texttt{unsigned int} auch ein \texttt{unsigned long long} verwendet werden.
 
-Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klasse. Der gesamte Bitvektor kann also ersetzt werden ohne dabei den Code anderer Klassen anpassen zu müssen.
+Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klasse. Der gesamte Bitvektor kann also ersetzt werden, ohne dabei den Code anderer Klassen anpassen zu müssen.
 
 
 \subsection{Planknoten und Äquivalenzklassen}
@@ -37,12 +37,12 @@ Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klas
 
 \begin{figure}[ht]
   \centering
-  \includegraphics{04_Implementierung/00_media/JoinScan.pdf}
+  \includegraphics[scale=0.75]{04_Implementierung/00_media/JoinScan.pdf}
   \caption{Planknoten und Äquivalenzklassen}
   \label{PlanAequi}
 \end{figure}
 
-\texttt{Plan\-Node} und \texttt{Equi\-valence\-Classes} sind die Datenstrukturen in der Pläne gespeichert sind. Einem Planknoten ist ein Operator zugewiesen. Beispielsweise \texttt{JOIN} oder \texttt{SCAN}. In \texttt{Equi\-valence\-Class} werden mehrere Pläne gespeichert, die alle semantisch gleich sind. Ein einfaches Beispiel ist in Abbildung \ref{PlanAequi} zu finden. Ein einfacher Plan bestehend aus einem \texttt{JOIN}- und zwei \texttt{SCAN}-Operatoren ist zu sehen. Der oberste Knoten \texttt{E3} ist eine Äquivalenzklasse. In ihr findet sich der erste Planknoten ein \texttt{JOIN}. Der \texttt{JOIN} hat zwei Seiten, eine linke und eine rechte. Beide Seiten sind mit einer Äquivalenzklasse verbunden \texttt{E1} resp. \texttt{E2}, die jeweils einen \texttt{SCAN} beinhalten, der die Basis-Relationen \texttt{R1} bzw. \texttt{R2} einliest. Die beiden Basis-Relationen sind ebenso wie die Äquivalenzklassen als \texttt{Equi\-valence\-Class} im System abgelegt.
+\texttt{Plan\-Node} und \texttt{Equi\-valence\-Classes} sind die Datenstrukturen in der Pläne gespeichert sind. Einem Planknoten ist ein Operator zugewiesen. Beispielsweise \texttt{JOIN} oder \texttt{SCAN}. In \texttt{Equi\-valence\-Class} werden mehrere Pläne gespeichert, die alle semantisch gleich sind. Ein einfaches Beispiel ist in Abbildung \ref{PlanAequi} zu finden. Ein einfacher Plan bestehend aus einem \texttt{JOIN}- und zwei \texttt{SCAN}-Operatoren ist zu sehen. Der oberste Knoten \texttt{E3} ist eine Äquivalenzklasse. In ihr findet sich der erste Planknoten, ein \texttt{JOIN}. Der \texttt{JOIN} hat zwei Seiten, eine linke und eine rechte. Beide Seiten sind mit einer Äquivalenzklasse verbunden \texttt{E1} resp. \texttt{E2}, die jeweils einen \texttt{SCAN} beinhalten, der die Basis-Relationen \texttt{R1} bzw. \texttt{R2} einliest. Die beiden Basis-Relationen sind ebenso wie die Äquivalenzklassen als \texttt{Equi\-valence\-Class} im System abgelegt.
 
 
 
@@ -51,7 +51,7 @@ Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klas
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=1\textwidth]{04_Implementierung/00_media/ClassEquivalenceClass.pdf}
+  \includegraphics[scale=0.75]{04_Implementierung/00_media/ClassEquivalenceClass.pdf}
   \caption{Klassendiagramm: Äquivalenzklasse}
   \label{ClassEquivalenceClass}
 \end{figure}
@@ -69,11 +69,11 @@ Wird eine Basis-Relation gespeichert, so kann mit der Methode \texttt{setRelatio
 
 
 
-Falls die Äquivalenzklasse mehrere Pläne speichert, kann auf einen Knoten mit Hilfe der Methode \texttt{push\_back( PlanNode\_t \& )} ein Planknoten angehängt werden. Zuerst wird geprüft, ob bereits ein Planknoten vorhanden ist. Falls das nicht der Fall ist, wird der Knoten als erster, \texttt{\_first}, und als letzter, \texttt{\_last}, Knoten in der Äquivalenzklasse festgelegt. Im selben Schritt wird von dem Planknoten die Nachbar- und die vorkommenden Relationen in den dafür vorgesehenen Bitevektoren gespeichert. Falls ein Knoten schon vorhanden ist, wird auf dem letzten Knoten die Methode \texttt{setNext( PlanNode\_t \& )} aufgerufen. Diese hängt an einen Planknoten einen weiteren an. Die konkrete Implementierung hängt vom jeweils verwendeteten Planknoten ab. Die exakte Implementierung ist im Code-Beispiel \ref{listing:Push-Back} zu sehen.
+Falls die Äquivalenzklasse mehrere Pläne speichert, kann auf einen Knoten mit Hilfe der Methode \texttt{push\_back( PlanNode\_t \& )} ein Planknoten angehängt werden. Zuerst wird geprüft, ob bereits ein Planknoten vorhanden ist. Falls das nicht der Fall ist, wird der Knoten als erster, \texttt{\_first}, und als letzter, \texttt{\_last}, Knoten in der Äquivalenzklasse festgelegt. Im selben Schritt werden von dem Planknoten die Nachbar- und die vorkommenden Relationen in den dafür vorgesehenen Bitevektoren gespeichert. Falls ein Knoten schon vorhanden ist, wird auf dem letzten Knoten die Methode \texttt{setNext( PlanNode\_t \& )} aufgerufen. Diese hängt an einen Planknoten einen weiteren an. Die konkrete Implementierung hängt vom jeweils verwendeteten Planknoten ab. Die exakte Implementierung ist im Code-Beispiel \ref{listing:Push-Back} zu sehen.
 
 
 \begin{figure}[ht]
-\lstinputlisting{04_Implementierung/00_media/Push_back.h}
+\lstinputlisting[scale=0.75]{04_Implementierung/00_media/Push_back.h}
 \caption{C++: EquivalenceClass push\_back}
 \label{listing:Push-Back}
 \end{figure}
@@ -85,11 +85,11 @@ Eine weitere Möglichkeit Pläne an eine Äquivalenzklasse anzuhängen ist die M
 
 Ein weiterer wichtiger Teil, der gesondert hervorgehoben werden muss, ist die Methode \texttt{isOverlapping( Bitevector\_t \& )} Die Methode wird  verwendet, um zu prüfen, ob die Nachbarn einer Äquivalenzklasse in einem gegebenen Bitvektor vorkommen. Repräsentiert eine Äquivalenzklasse beispielsweise die Relation 1,2,3 und hat die Nachbarn 4, 5 und 6., so gibt die Methode \texttt{isOverlapping true} zurück, falls der Eingabe-Bitvektor 4, 5 und/oder 6 enthält. Dieser Zustand wird im weiteren auch als überlappend bezeichnet und wird genutzt um zu prüfen, ob eine Regel anwendbar ist.
 
-Ebenfalls ist es notwendig, über die in einer Äquivalenzklasse gespeicherten Pläne zu iterieren. Eine Äuqivalenzklasse kann aussehen,  wie in Abb. \ref{EquivalenceClassList} dargestellt. Die Äquivalenzklasse zeigt mit dem Zeiger \texttt{\_first} auf den ersten Planknoten. Dieser Zeit auf den nächsten Planknoten. Auf den letzten Planknoten wird von der Äuqivalenzklasse mit dem Zeiger \texttt{\_last} gezeigt. Der beste Plan wird mit dem Zeiger \texttt{\_best} markiert. Bei der Iteration über die Pläne einer Äquivalenzklasse kommt die Methode \texttt{begin()} zum Einsatz, die einen Iterator für den ersten Plan zurückliefert. Wird die Methode \texttt{node()} auf den Iterator angewendet, wird der jeweilige Planknoten zurückgeliefert. Neben der Methode für den ersten Knoten, lässt sich auch mit \texttt{last()} das letzte Element ausgeben. Durch diese Methoden kann über die Äquivalenzklasse iteriert werden.
+Ebenfalls ist es notwendig, über die in einer Äquivalenzklasse gespeicherten Pläne zu iterieren. Eine Äuqivalenzklasse kann aussehen,  wie in Abb. \ref{EquivalenceClassList} dargestellt. Die Äquivalenzklasse zeigt mit dem Zeiger \texttt{\_first} auf den ersten Planknoten. Dieser zeigt auf den nächsten Planknoten. Auf den letzten Planknoten wird von der Äuqivalenzklasse mit dem Zeiger \texttt{\_last} gezeigt. Der beste Plan wird mit dem Zeiger \texttt{\_best} markiert. Bei der Iteration über die Pläne einer Äquivalenzklasse kommt die Methode \texttt{begin()} zum Einsatz, die einen Iterator für den ersten Plan zurückliefert. Wird die Methode \texttt{node()} auf den Iterator angewendet, wird der jeweilige Planknoten zurückgeliefert. Neben der Methode für den ersten Knoten, lässt sich auch mit \texttt{last()} das letzte Element ausgeben. Durch diese Methoden kann über die Äquivalenzklasse iteriert werden.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics{04_Implementierung/00_media/EquivalenceClassList.pdf}
+  \includegraphics[scale=0.75]{04_Implementierung/00_media/EquivalenceClassList.pdf}
   \caption{Schematische Darstellung einer Äquivalenzklasse mit mehreren Planknoten}
   \label{EquivalenceClassList}
 \end{figure}
@@ -99,7 +99,7 @@ Ebenfalls ist es notwendig, über die in einer Äquivalenzklasse gespeicherten P
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{04_Implementierung/00_media/PlanNodeClass.pdf}
+  \includegraphics[scale=0.75]{04_Implementierung/00_media/PlanNodeClass.pdf}
   \caption{Klassendiagramm: PlanNode}
   \label{PlanNodeClass}
 \end{figure}
@@ -115,4 +115,4 @@ Um die Äquivalenzklasse eines Planknotens zu erreichen, ist es möglich mit der
 
 \subsubsection{Erweiterbarkeit}
 
-Auch Planknoten und Äquivalenzklassen sind leicht erweiterbar. Auf der einen Seite ist es möglich die \texttt{Plan\-Node} vollkommen auszutauschen. Dies ist besonders einfach möglich, da die Äquivalenzklasse \texttt{PlanNode\_t} als Template-Parameter vorsieht und somit der Weg geebnet ist einen weiteren Knoten anzufügen. Neben dieser Erweiterung ist es ebenfalls denkbar, dass mehr als zwei Äquivalenzklassen einem Planknoten zugeordnet sind. 
+ Planknoten und Äquivalenzklassen sind leicht erweiterbar. Auf der einen Seite ist es möglich die \texttt{Plan\-Node} vollkommen auszutauschen. Dies ist besonders einfach möglich, da die Äquivalenzklasse \texttt{PlanNode\_t} als Template-Parameter vorsieht und somit der Weg geebnet ist einen weiteren Knoten anzufügen. Neben dieser Erweiterung ist es ebenfalls denkbar, dass mehr als zwei Äquivalenzklassen einem Planknoten zugeordnet sind. 

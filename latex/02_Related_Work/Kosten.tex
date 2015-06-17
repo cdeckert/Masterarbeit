@@ -11,5 +11,4 @@ Bei der Ausführung einer Anfrage sind vor allem die CPU, die Eingabe / Ausgabe 
 \item Für einen Operator im \ac{QEP} werden die Informationen aus Subbäumen berechnet und zusammengezählt
 \end{enumerate}
 
-Bei der Kostenrechnung ist die Datenmenge entscheidend. Daher ist insbesondere die Kardinalit von Relationen und die Selektivität von Operatoren für die Berechnung der Kosten
-wichtig. Eine einfache Berechnung der Kosten kann beispielsweise so durchgeführt werden, dass für jeden Tree und Subtree die jeweilige Kardinalität nach einem Join berechnet wird. Die Summe dieser Kardinalitäten ergibt die Kosten der Anfrage. Der Baum mit den niedrigsten Kosten wird als optimal bezeichnet.
+Bei der Sammlung statistischer Informationen können neben der Kardinalität von Relationen, der Selektivität von Operatoren und andere Werte vorkommen. Falls noch keine Werte über ein bestimmtes Datum gesammelt wurde, werden i.d.R. Standardwerte angenommen. Am Ende ist der Plan optimal, der die niedrigsten Kosten aufweist. Einige Datenbanksysteme setzten bei der Berechnung der Kosten auf das Optimalitätsprinzip von Bellman \cite{Bellman:1957}, das aussagt, dass eine optimale Lösung immer aus optimalen Teillösungen besteht. Dieses Prinzip wird in diesem Kapitel im Abschnitt System R genauer besprochen und von Kapitel 5 Implementierung im Bereich der Kostenschätzung aufgegriffen.

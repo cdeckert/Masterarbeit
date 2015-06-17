@@ -5,11 +5,11 @@ In diesem Kapitel werden die Grundlagen für die folgenden Kapitel gelegt und Zu
 
 Neben diesen Grundbegriffen werden auch konkrete Implementierungen von Datenbanksystemen und deren Anfrageoptimierern besprochen. Neben System R, das die Grundlage für alle weiteren Anfrageoptimierer bildet, wird auch IBMs Starburst Projekt, die Projekte rund um Volcano und Oracles DBMS reflektiert und deren Unterschiede aufgezeigt.
 
-Im nächsten Schritt wird auf die konkrete Implementierung der Suche nach alternativen Plänen am Beispiel von Volcano und dessen regelbasierten Anfrageoptimierer eingegangen. Die Regelsets von \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate} werden abgegbildet.
+Im nächsten Schritt wird auf die konkrete Implementierung der Suche nach alternativen Plänen am Beispiel von Volcano und dessen regelbasierten Anfrageoptimierer eingegangen. Die Regelmengen von \cite{pellenkoft1997complexity}, \cite{pellenkoft1997duplicate} werden abgebildet.
 
-Nachdem der Aufbau von DBMS, Anfrageoptimierern und konkrete Beispiele bekannt sind, wird auf die Arbeit von \cite{shanbhag2014optimizing} eingegangen. Die Unvollständigkeit eines Regelsets wird beleuchtet, der Versuchsaufbau besprochen und das neue Regelset erläutert.
+Nachdem der Aufbau von DBMS, Anfrageoptimierern und konkrete Beispiele bekannt sind, wird auf die Arbeit von \cite{shanbhag2014optimizing} eingegangen. Die Unvollständigkeit einer Regelmenge (RS-B2) wird beleuchtet, der Versuchsaufbau besprochen und die neue Regelmenge erläutert.
 
-All diese Bestandteile bilden die Grundlage und den weiteren Kontext für die Implementierung des regelbasierten Join Enumerators, der im nächsten Kapitel vorgestellt wird.
+All diese Bestandteile bilden die Grundlage und den weiteren Kontext für die Implementierung des regelbasierten Join-Enumerators, der im nächsten Kapitel vorgestellt wird.
 
 
 
@@ -33,22 +33,6 @@ In diesem Teil werden die theoretischen Grundlagen gelegt. Die Architektur eines
 \section{Datenbanksystme und Anfrageoptimierer}
 
 Der Grundstein für Anfrageoptimierung wurde durch das System R gelegt. Das System beinhaltet einen Algorithmus, der mit Hilfe von dynamischer Programmierung eine optimale Joinreihenfolge für eine Anfrage bildet. Bei späteren Systemen  wurde die Menge der optimierten Operatoren weiter vergrößert und regelbasierte Optimierungstechniken eingeführt. Ein Beispiel für diese Systeme ist Starburst, das im Folgenden weiter besprochen wird. Dabei handelt es sich um die Weiterentwicklung von System R bei IBM und ist  auch der Prototyp für DB2. Starburst begann mehrere interne Repräsentationen der Anfrage einzuführen, genauso wie Grammer-like Regeln zur Kombination von LOLEPOPs in Execution Plans. Ähnlich wie System R nutzt es einen Buttom-Up Ansatz bei der Enumeration. Eine andere Familie an Optimierern fußt auf der Arbeit von  EXODUS, aus dem Volcano und schließlich Cascades entstand. Im Gegensatz zu dem Bottom-up Ansatz nutzt Volcano einen transformativen Top-Down-Optimierungsansatz mit Memorization.
-
-
-
-
-Eine Übersicht über die unterschiedlichen Systeme findet sich in \ref{DatabasesOverview}.
-
-\begin{table}[h]
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-{\bf }                & {\bf System R} & {\bf Starburst} & {\bf Volcano} & {\bf Pyro(J)} \\ \hline
-{\bf Transformation}  &                &                 &               &               \\ \hline
-{\bf Enumeration}     &                &                 &               &               \\ \hline
-{\bf Erweiterbarkeit} &                &                 &               &               \\ \hline
-\end{tabular}
-\label{DatabasesOverview}
-\end{table}
 
 
 \input{02_Related_Work/SystemR.tex}

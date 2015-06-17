@@ -1,24 +1,6 @@
 \chapter{Resultate und Evaluation}
 
-Alle Tests wurde auf einem XY Computer ausgeführt.
-
-Bei der Implementierung wurde wie bereits beschrieben auf die Implementierung eines pysical plan Optimierers verzichtet und sich stattdessen auf die Optimierung und die Enumeration von Join Trees beschränkt. Ebenfalls wurde die Kostenberechnung immer einbezogen.
-
-\section{Vollständigkeit von RS-B2}
-
-Bei der Prüfung der Vollständigkeit von RS-B2 wurden mehrere Eingabebäume als mögliche Startpunkte genommen. Es wurden sowohl Left-Deep, Right-Deep als auch Bushy Trees einbezogen. 
-
-Ebenfalls wurde bei der Verwendung von RS-B1 sowohl das Regelset nach Pellenkoft als auch das Regelset des Pyro Projekts verwendet. Da beide Regelsets wie bereits im Teil Implementierung logisch äquivalent sind, sind die Ergebnisse bei der Implementierungen gleich.
-
-Ebenfalls konnten weitere Arten von  Anfragen getestet werden. Wie sich herausstellt, performen chain-Queries XY besser als XY queries.
-
-
-Wie auch von \cite{XY} belegt, sind durch die geringere Menge der gefundenen Pläne nicht immer die optimalen Pläne Teil der Lösung. Somit kann der beste Plan, der mit Hilfe von RS-B1 gefunden wurde signifikant schneller sein als der beste Plan, der mit Hilfe RS-B2 gefunden wurde. 
-
-
-\section{Evaluation von RS-Graph}
-
-Da es sich bei RS-Graph zu großen Teilen, um eine Neuimplementierung des von \cite{Moerkotte} gezeigten Ansatzes handelt, wurde auch hier eine höhere Geschwindigkeit für das Ausführen von RS-Graph im Vergleich zu allen anderen Regelmengen  gemessen. Im Gegensatz zu \cite{} wurde auch die Berechnung der Kosten einbezogen. 
+Nachdem die Grundlagen besprochen, ein Prototyp implementiert ist, wurden unterschiedliche Experimente durchgeführt und die bisherige Arbeit kritisch reflektiert. In diesem Kapitel werden die Ergebnisse auf unterschiedlichen Feldern beleuchtet: Zuerst wird auf die Regelmengen eingegangen. In Tests wurde festgestellt, welche Regeln unter welchen Umständen vollständig sind. Außerdem wurde die neue Regel GraphRule mit der Regelmenge RS-Graph auf ihre Performance hin geprüft. Nachdem dieser Abschnitt abgeschlossen ist, wird die Implementierung von Pyro(J) genauer beleuchtet und insbesondere die Plattformwahl und die Erweiterbarkeit des Systems besprochen.
 
 
 \input{05_ResultsEvaluation/Rulsets.tex}

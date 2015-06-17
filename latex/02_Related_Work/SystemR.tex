@@ -7,15 +7,15 @@ System R ist ein von IBM in den 1970er Jahren durchgeführtes Datenbank Research
 
 \begin{figure}[ht]
   \centering
-  \includegraphics{02_Related_Work/SystemR.pdf}
-  \caption{System R Architektur \cite{astrahan1976system} \cite{astrahan1978system}}
+  \includegraphics[scale=0.75]{02_Related_Work/SystemR.pdf}
+  \caption{Architektur: System R  \cite{astrahan1976system} \cite{astrahan1978system}}
   \label{SystemRArchitecture}
 \end{figure}
 
 
 Wie in Abbildung \ref{SystemRArchitecture} zu erkennen ist,  besteht das System aus zwei Teilsystemen: \ac{RSS}, das dem RTS entspricht, und \ac{RDS}, das äquivalent zu einem CTS ist.
 
-Das \ac{RSS} ist für die physische Verwaltung der Datenbank verantwortlich. Es kontrolliert u.a. die Speicherverwaltung, das Device-Management, die Transaktionskonsistenz, die Transations- und System-Wiederherstellung. Im Besonderen fällt in den Aufgabenbereich der Zugriff auf einzelne Tupel von Base-Relations. Diese Funktionen werden gegenüber des \ac{RDS} mit Hilfe des \ac{RSI} bereitgestellt.
+Das \ac{RSS} ist für die physische Verwaltung der Datenbank verantwortlich. Es kontrolliert u.a. die Speicherverwaltung, das Device-Management, die Transaktionskonsistenz, die Transaktions- und System-Wiederherstellung. Im Besonderen fällt in den Aufgabenbereich der Zugriff auf einzelne Tupel von Base-Relations. Diese Funktionen werden gegenüber des \ac{RDS} mit Hilfe des \ac{RSI} bereitgestellt.
 
 Das \ac{RDS} übernimmt via \ac{RDI} die Kommunikation nach außen und leitet Befehle über das \ac{RSI} weiter. Anfragen von außen werden mit Hilfe von \ac{SQL} an das System gestellt. Es ist auch möglich, dass externe Sprachen wie Cobol verwendet werden, die ohne Weiteres mit dem \ac{RDI} kommunizieren. In diesen Fällen muss SQL nicht verwendet werden. Das \ac{RSS} wandelt die Umfrage in eine für das \ac{RSI} verständliche Form um. Über das RSI wird die Anfrage entgegen genommen und ausgeführt.
 
@@ -31,7 +31,7 @@ Im ersten Schritt, Parsen, wird wie bei späteren Systemen die Syntax geprüft u
 
 Sobald die Anfrage in Query Blöcke verarbeitet wurde, kommt der \ac{QO} zum Einsatz. Der Optimierer prüft zuerst, ob die genutzten Relationen und Felder auch in der Datenbank vorhanden sind und schlägt Informationen über diese im System R Katalog nach. Teil dieser Informationen sind statistische Informationen der referenzierten Relationen. Diese werden später für die Auswahl der richtigen Access Plans verwendet. Auf die Planauswahl wird in \ref{sec:SystemRKostenberechnung} genauer eingegangen.
 
-Im nächsten Schritt, Optimieren, bestimmt der Optimizer für jeden Query Block den optimalen Access-Pfad. Zuerst wird die Evaluationsreihenfolge der Query Blocks im Statement festgelegt. Dann wird für jeden Query Block die FROM Relationen betrachtet. Sind mehr als eine Relation vorhanden, werden Permutationen der JOIN-Reihenfolge gebildet. Es wird der Pfad mit den günstigsten Kosten gewählt und die notwendigen Modifikationen werden an der Anfrage vorgenommen. Das Resultat des Prozesses ist ein Plan in der \ac{ASL}.
+Im nächsten Schritt, Optimieren, bestimmt der Optimizer für jeden Query Block den optimalen Access-Pfad. Zuerst wird die Evaluationsreihenfolge der Query Blocks im Statement festgelegt. Dann werden für jeden Query Block die FROM Relationen betrachtet. Sind mehr als eine Relation vorhanden, werden Permutationen der JOIN-Reihenfolge gebildet. Es wird der Pfad mit den günstigsten Kosten gewählt und die notwendigen Modifikationen werden an der Anfrage vorgenommen. Das Resultat des Prozesses ist ein Plan in der \ac{ASL}.
 
 Nachdem der Plan gefunden und als \ac{ASL}-Tree vorhanden ist, kommt der Code Generator zum Einsatz. Er übersetzt den \ac{ASL}-Plan in einen  Maschinencode. Dieser Code führt die Anfrage des Nutzers auf der Datenbank aus. 
 
@@ -68,10 +68,10 @@ Auf Basis dieser Kennzahlen werden die Kosten je nach Operator festgestellt und 
 
 
 \subsubsection{Plan Enumerator}
-Die Enumeration des System R Optimierers zeigt zwei wichtige Aspekte eines Enumerators: Auf der einen Seite die interesting order, auf der anderen Seite die dynamic programming:
+Die Enumeration des System R Optimierers zeigt zwei wichtige Aspekte eines Enumerators: Auf der einen Seite die Interesting Order, auf der anderen Seite die Dynamic Programming:
 
-Dynamische Programmierung geht davon aus, dass das Kostenmodell dem Optimalitätsprinzip von Bellman \cite{Bellman:1957} gehorcht. Das Prinzip sagt aus, dass sich eine Optimallösung aus optimalen Teillösungen zusammensetzt. In unserem konkreten Fall sagt das Prinzip, dass der optimale Plan nur aus optimalen Teilbäumen bestehen kann. Somit müssen nur optimale Subplans zur Erzeugung des optimalen Plans verwendet werden. I.a.w. sucht man mit Hilfe eine bottom-up Enumeration Algorithmus nach dem optimalen Plan. So müssen nur Subpläne in Betracht für eine optimale Gesamtlösung gezogen werden, die für sich optimal sind.
+Dynamische Programmierung geht davon aus, dass das Kostenmodell dem Optimalitätsprinzip von Bellman \cite{Bellman:1957} gehorcht. Das Prinzip sagt aus, dass sich eine Optimallösung aus optimalen Teillösungen zusammensetzt. In unserem konkreten Fall sagt das Prinzip, dass der optimale Plan nur aus optimalen Teilbäumen bestehen kann. Somit müssen nur optimale Subplans zur Erzeugung des optimalen Plans verwendet werden. I.a.w. sucht man mit Hilfe eine Bottom-up Enumeration Algorithmus nach dem optimalen Plan. So müssen nur Subpläne in Betracht für eine optimale Gesamtlösung gezogen werden, die für sich optimal sind.
 
 
 
-Ein weiterer wichtiger Aspekt von System R ist die Verwendung von Interesting Orders. Als Interesting Orders werden Reihenfolgen, die innerhalb eines Joins entstehen bezeichnet, die zwar höhere direkte Kosten verursachen, jedoch zu niedrigeren Gesamtkosten beitragen können. So ist es möglich, dass die Kosten durch einen Nested-Loop Join zwar höher sind als durch einen Merge-Join, allerdings die Gesamtkostenbilanz durch den teureren Nested-Loop Join positiv beeinflusst wird. Gerade beim Einsatz von Prunning Algorithmen ist es möglich, dass so ein global suboptimaler Plan gewählt wird. System R identifiziert diese geordneten Resultate, die für die zukünftige Ausführung von Vorteil sein können. Außerdem werden Pläne in System R nur dann verglichen, wenn sie die selbe Reihenfolge und den selben Ausdruck besitzen. 
+Ein weiterer wichtiger Aspekt von System R ist die Verwendung von Interesting Orders. Als Interesting Orders werden Reihenfolgen, die innerhalb eines Joins entstehen bezeichnet, die zwar höhere direkte Kosten verursachen, jedoch zu niedrigeren Gesamtkosten beitragen können. So ist es möglich, dass die Kosten durch einen Nested-Loop Join zwar höher sind als durch einen Merge-Join, allerdings die Gesamtkostenbilanz durch den teureren Nested-Loop Join positiv beeinflusst wird. Gerade beim Einsatz von Prunning Algorithmen ist es möglich, dass so ein global suboptimaler Plan gewählt wird. System R identifiziert diese geordneten Resultate, die für die zukünftige Ausführung von Vorteil sein können. Außerdem werden Pläne in System R nur dann verglichen, wenn sie dieselbe Reihenfolge und den selben Ausdruck besitzen. 

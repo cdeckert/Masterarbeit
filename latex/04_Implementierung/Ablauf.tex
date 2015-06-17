@@ -2,7 +2,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics{04_Implementierung/00_media/Ablauf.pdf}
+  \includegraphics[scale=0.8]{04_Implementierung/00_media/Ablauf.pdf}
   \caption{Ablauf der eigenen Implementierung}
   \label{Ablauf}
 \end{figure}
@@ -28,4 +28,4 @@ In einem finalen Schritt findet die Kostenberechnung statt um aus den möglichen
 \end{figure}
 
 
-Die genaue Reihenfolge der Aufrufe beginnend mit der Hauptmethode lässt sich in Abbildung \ref{SequenceDiagramConfiguration}, einem Sequenzdiagramm, am besten ablesen. Zuerst muss die Konfiguration abgefragt werden. Diese Konfiguration wird dann an einen Exektor weitergegeben, der für Zusammenstellung von Regelmengen und Enumerator verantwortlich ist, ebenfalls ruft er die Kostenschätzung auf und ruft die Zeitmessung auf. Die einzelnen Komponenten werden im Folgenden genau besprochen.
+Der genaue Ablauf des Programms lässt sich in Abbildung \ref{SequenceDiagramConfiguration} ablesen. Das Sequenzdiagram beginnt mit der Hauptmethode. Diese Hauptmethode erhält durch den Konfigurator die aktuelle Konfiguration. Einer Executor genannten Klasse wird diese Konfiguration übergeben. Der Executer stellt den Test zusammen, wählt den Enumerator und die Regelmenge aus. Die Zeitmessung wird gestartet und aus ein initaler Plan an den Enumerator übergeben. Sobald die Enumeration abgeschlossen ist, beginnt die Kostenschätzung. Nach Abschluss der Kostenschätzung wird die Zeitmessung angehalten. Je nachdem ob weitere Test-Szenarien vorgesehen sind wird der Executor erneut aufgerufen. Andernfalls ist an dieser Stelle das Programm beendet und die Messung kann an den Nutzer ausgegeben werden.
