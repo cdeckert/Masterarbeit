@@ -29,7 +29,7 @@ Bitvektoren kommen immer in Äquivalenzklassen zum Einsatz. Wenn es sich um eine
 
 Da der Bitvektor, wie viele andere Klassen auch, einen Template Parameter besitzt, kann die Datenstruktur, auf deren Basis der Vektor implementiert ist ausgetauscht werden. Beispielsweise kann anstatt eines \texttt{unsigned int} auch ein \texttt{unsigned long long} verwendet werden.
 
-Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klasse. Der gesamte Bitvektor kann also ersetzt werden, ohne dabei den Code anderer Klassen anpassen zu müssen.
+Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klasse. Der gesamte Bitvektor kann also ersetzt werden, ohne dabei den Code anderer Klassen anpassen zu müssen. Somit ist das Liskov Substitutions Prinzip eingehalten.
 
 
 \subsection{Planknoten und Äquivalenzklassen}
@@ -57,7 +57,7 @@ Auf der anderen Seite dient der Bitvektor als Parameter für die Planknoten-Klas
 \end{figure}
 
 
-Wie bereits beschrieben, werden semantisch gleiche Planknoten in Äquivalenzklassen gespeichert und Basis-Relationen durch Äquivalenzklassen repräsentiert. Die konkrete Implementierung der Äquivalenzklasse ist in Abb. \ref{ClassEquivalenceClass} zu erkennen.
+Wie bereits beschrieben, werden semantisch gleiche Planknoten in Äquivalenzklassen gespeichert und Basis-Relationen durch Äquivalenzklassen repräsentiert. Die konkrete Implementierung der Äquivalenzklasse ist in Abb. \ref{ClassEquivalenceClass} dargestellt.
 
 Bevor ein Plan einer Äquivalenzklasse zugeordnet werden kann oder eine Relation repräsentiert werden kann, muss die Äquivalenzklasse instantiiert werden. Bei der Instantiierung befinden sich noch keine Informationen über Planknoten oder Relationen in der Äquivalenzklasse. Die Variablen \texttt{\_first}, \texttt{\_last} und \texttt{\_best}, die den ersten, den letzten und den besten Plan anzeigen, sind auf \texttt{NULL} gesetzt. Die Bitvektoren \texttt{\_relations} und \texttt{\_neighbors} sind leer und repräsentieren noch keine Relationen. Auch die boolean variable \texttt{\_explored}, die anzeigt, ob eine Äquivalenzklasse schon vollständig erforscht ist, ist auf falsch gesetzt.
 
@@ -110,9 +110,10 @@ Planknoten können aneinander gehängt werden, wie in Abb. \ref{EquivalenceClass
 
 Die Methoden \texttt{disable\-All\-Rules()} und \texttt{disable\-All\-And\-Enable\-Commutativity()} kommen bei der Verwendung der Regelmenge \texttt{RS-B2} zum Einsatz. Nach Anwendung einer Regel wird so im Planknoten festgelegt, dass bestimmte Regeln nicht mehr auf einen Knoten angewendet werden dürfen. Um sicherzustellen, dass die Regeln nur \texttt{is\-Left\-Associativity\-Enabled()}, \texttt{is\-Right\-Associativity\-Enabled()} und \texttt{is\-Exchange\-Enabled()} geprüft, ob eine Regel zur Anwendung kommen darf.
 
-Um die Äquivalenzklasse eines Planknotens zu erreichen, ist es möglich mit der Methode \texttt{left()} bzw. \texttt{l()} einen Zeiger auf die entsprechende Klasse zu erhalten. Analog dazu können die Methoden \texttt{right()} bzw. \texttt{r()} verwendet werden. Mit den Methoden \texttt{has\-Left()} bzw. \texttt{has\-Right()} wird geprüft, ob ein Planknoten eine rechte bzw. linke Äquivalenzklasse besitzt. Diese Methoden sind insbesondere für die Implementierung von Regelnbedingungen wichtig.
+Um die Äquivalenzklasse eines Planknotens zu erreichen, ist es möglich mit der Methode \texttt{left()} bzw. \texttt{l()} einen Zeiger auf die entsprechende Klasse zu erhalten. Analog dazu können die Methoden \texttt{right()} bzw. \texttt{r()} verwendet werden. Mit den Methoden \texttt{has\-Left()} bzw. \texttt{has\-Right()} wird geprüft, ob ein Planknoten eine rechte bzw. linke Äquivalenzklasse besitzt. Diese Methoden sind insbesondere für die Implementierung von Regelbedingungen wichtig.
 
 
 \subsubsection{Erweiterbarkeit}
 
- Planknoten und Äquivalenzklassen sind leicht erweiterbar. Auf der einen Seite ist es möglich die \texttt{Plan\-Node} vollkommen auszutauschen. Dies ist besonders einfach möglich, da die Äquivalenzklasse \texttt{PlanNode\_t} als Template-Parameter vorsieht und somit der Weg geebnet ist einen weiteren Knoten anzufügen. Neben dieser Erweiterung ist es ebenfalls denkbar, dass mehr als zwei Äquivalenzklassen einem Planknoten zugeordnet sind. 
+
+Planknoten und Äquivalenzklassen sind leicht erweiterbar. Auf der einen Seite ist es möglich die \texttt{Plan\-Node} vollkommen auszutauschen (Liskov Substitution Prinzip). Dies ist besonders einfach möglich, da die Äquivalenzklasse \texttt{PlanNode\_t} als Template-Parameter vorsieht und somit der Weg geebnet ist einen weiteren Knoten anzufügen. Auch Kohäsion zwischen Äquivalenzklasse und Planknoten ist gewahrt. Der Planknoten ist für die Repräsentation eines Operators verantwortlich, die Äquivalenzklassen aggregieren Planknoten und repräsentieren Relationen. 

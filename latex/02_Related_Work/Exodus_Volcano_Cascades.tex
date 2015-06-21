@@ -1,6 +1,6 @@
 \subsection{Exodus, Volcano, Cascades}
 
-Das Volcano Projekt mit seinem Vorgänger \ac{EXODUS} und dem Nachfolger Cascades bildet die Grundlage für den Microsoft SQL Server und dessen Anfrageoptimierer. Bei der Implementierung des Volcano Optimierers ist insbesondere die Implementierung des Anfrageoptimierers von Interesse und wird daher ausführlich behandelt.
+Das Volcano Projekt mit seinem Vorgänger EXODUS und dem Nachfolger Cascades bildet die Grundlage für den Microsoft SQL Server und dessen Anfrageoptimierer. Bei der Implementierung des Volcano Optimierers ist insbesondere die Implementierung des Anfrageoptimierers von Interesse und wird daher ausführlich behandelt.
 
 \subsubsection{Exodus}
 
@@ -20,9 +20,9 @@ Der Baukasten von EXODUS besteht aus drei Arten von Bausteinen: Bausteine die fi
 
 Neben den generierten Komponenten gibt es den E Compiler, der E Code in Objekt-Code übersetzt. Er kommt zum Einsatz, um die durch den Anfrageoptimierer optimierte Anfrage in eine kompilierte Anfrage umzusetzen. Diese Komponente ist ähnlich wie der Storage Manager, der für die Verwaltung von Daten in der Datenbank genutzt wird, unveränderlich. 
 
-Zwischen der kompilierten Anfrage und dem Storage Manager kommen zwei Komponenten zum Einsatz, die von einem DBI geschrieben werden müssen: Die Operator Methoden und Access Methoden. Diese beiden Komponenten dienen dazu, die Anfrage in Code zu übersetzen, der durch den  Storage Manager ausgeführt wird.
+Zwischen der kompilierten Anfrage und dem Storage Manager kommen zwei Komponenten zum Einsatz, die von einem DBI geschrieben werden müssen: Die Operator Methoden und Access Methoden. Diese beiden Komponenten dienen dazu, die Anfrage in einen Code zu übersetzen, der durch den  Storage Manager ausgeführt wird.
 
-Bei der Implementierung eines Optimierers kommen grundsätzlich zwei mögliche Ansätze in Frage: (1) interpretierte und (2) kompilierte Programmiersprachen. Bei EXODUS wurde zuerst die Implementierung mittels sog.\"AI\" Sprachen versucht. In einem Prototypen wurde mit Hilfe von Prolog ein Optimierer entwickelt. Für Prolog hat man sich entschieden, da diese Sprache Pattern Matching und eine Search Engine bereitstellt. (Auch unification konnte zum Einsatz gebracht werden, um elegant Anfrage Trees zu erstellen.) Der Hauptvorteil eines interpretierten Ansatzes war aus Sicht von EXODUS die Möglichkeit neue Regeln zur Laufzeit des Programms hinzuzufügen. Trotz dieser Vorteile wurde der Ansatz als zu langsam verworfen. Auch der Vorteil Regeln während der Laufzeit hinzuzufügen, wird in der Literatur \todo{QUELLE} als wenig nützlich bewertet. Statt dieses Ansatzes wurde in der Folge auf die Erstellung eines Generators, der in C geschrieben wurde, gesetzt. Der Generator erstellt basierend auf Regeln einen Optimierer in C, der wiederum kompiliert werden kann. Zwar war die Entwicklung des C Generators aufwändiger als die Implementierung in Prolog, jedoch konnte auf applikationsspezifische Notwendigkeiten, wie die Implementierung von speziellen Suchverfahren, punktgenau eingegangen werden.
+Bei der Implementierung eines Optimierers kommen grundsätzlich zwei mögliche Ansätze in Frage: (1) interpretierte und (2) kompilierte Programmiersprachen. Bei EXODUS wurde zuerst die Implementierung mittels sog.\"AI\" Sprachen versucht. In einem Prototypen wurde mit Hilfe von Prolog ein Optimierer entwickelt. Für Prolog hat man sich entschieden, da diese Sprache Pattern Matching und eine Search Engine bereitstellt. (Auch unification konnte zum Einsatz gebracht werden, um elegant Anfrage Trees zu erstellen.) Der Hauptvorteil eines interpretierten Ansatzes war aus Sicht von EXODUS, die Möglichkeit neue Regeln zur Laufzeit des Programms hinzuzufügen. Trotz dieser Vorteile wurde der Ansatz als zu langsam verworfen. Auch der Vorteil Regeln während der Laufzeit hinzuzufügen, wird in der Literatur \todo{QUELLE} als wenig nützlich bewertet. Statt dieses Ansatzes wurde in der Folge auf die Erstellung eines Generators, der in C geschrieben wurde, gesetzt. Der Generator erstellt basierend auf Regeln einen Optimierer in C, der wiederum kompiliert werden kann. Zwar war die Entwicklung des C Generators aufwändiger als die Implementierung in Prolog, jedoch konnte auf applikationsspezifische Notwendigkeiten, wie die Implementierung von speziellen Suchverfahren, punktgenau eingegangen werden.
 
 
 Die Generierung des Optimierers geschieht auf Basis eines Description-Files. Dieses File setzt sich aus drei Komponenten zusammen: Operatoren, Methoden und Regeln.
@@ -54,22 +54,22 @@ Volcano ist der verbesserte Nachfolger von EXODUS. Zuerst war Volcano nur ein er
 Bei der Generierung eines Plans auf Grund einer Anfrage kommt bei Volcano ein Optimierer zur Anwendung, der speziell für den Anwendungsfall generiert wurde. Der Optimierer ist das Resultat einer Model Spezifikation, die von einem \ac{DBI} erstellt und durch einen Optimierer Generator in Source Code umgewandelt wird. Dieser Code wird mit Hilfe eines Compilers in das Endprodukt, den Optimierer, umgewandelt.
 
 
-Der Volcano Optimierer wurde von Grund auf neu entwickelt und begegnet den von Graefe identifizierten Nachteilen des EXODUS Optimierer Generators. Ebenfalls wird die Arbeit mit der Sprache E eingestellt und vollumfänglich auf C gesetzt. Die Verbesserungen werden in fünf fundamentalen Designentscheidungen\cite{graefe1993volcano} sichbar, die eine effiziente Suche des Optimierers erlauben:
+Der Volcano Optimierer wurde von Grund auf neu entwickelt und begegnet den von Graefe identifizierten Nachteilen des EXODUS Optimierer Generators. Ebenfalls wird die Arbeit mit der Sprache E eingestellt und vollumfänglich auf C gesetzt. Die Verbesserungen werden in fünf fundamentalen Designentscheidungen\cite{graefe1993volcano} sichtbar, die eine effiziente Suche des Optimierers erlauben:
 
 
 \begin{enumerate}
 
-\item Die erste Grundlage des Volcano Optimierers ist die Anwendung von algebraischen Techniken wie algebraische Operatoren und Äquivalenzklassen. Volcano unterscheidet dabei zwischen logischer und physischer Algebra. Die Umwandlung von logischer Algebra (der Anfrage) in die physische Algebra (einem Anfrage Evaluation Plans) geschieht durch die Transformation der logischen Algebra mit Hilfe von kostenbasierten Mappings von logischen Algorithmen. \todo{Unklar}
+\item Die erste Grundlage des Volcano Optimierers ist die Anwendung von algebraischen Techniken wie algebraische Operatoren und Äquivalenzklassen. Volcano unterscheidet dabei zwischen logischer und physischer Algebra. Bei der Umwandlung von logischer Algebra (eine Anfrage) in physische Algebra (Evaluation Plans) kommt ein Mapping zum Einsatz, das für logische Operatoren ein oder mehrere physische Operatoren vorsieht. Mit Hilfe eines kostenbasierten Ansatzen, wird dann der beste Plan ausgewählt.
 
 
-\item Das zweite Prinzip sieht vor, dass die Information über algebraische Gesetze, die zur Transformation von Algebraischen Ausdrücken genutzt werden als Regeln und Pattern modular erfasst sind. Durch dieses Prinzip sind die einzelnen Regeln klar und transparent von einander getrennt und können zu Regelsets zusammengestellt werden. Einige dieser Regelsets werden im folgenden Kapitel behandelt.
+\item Das zweite Prinzip sieht vor, dass die Information über algebraische Gesetze, die zur Transformation von algebraischen Ausdrücken genutzt werden als Regeln und Pattern modular erfasst sind. Durch dieses Prinzip sind die einzelnen Regeln klar und transparent von einander getrennt und können zu Regelmengen zusammengestellt werden. Einige dieser Regelmengen werden im folgenden Kapitel behandelt.
 
 
 \item Das dritte Prinzip betrifft die Eingabe des Optimierers. Im Gegensatz zu anderen Optimierern (namentlich Starbust) setzt der Volcano Optimierer auf algebraische Äquivalenzen als Eingabe Parameter. Andere Systeme nutzen hier mehrere Stufen an Umwandlung, um zwischen Anfrage und Optimierer Eingabe zu vermitteln. 
 
-\item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer daduch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen. Jedoch wird diese Möglichkeit in der Praxis nicht benötigt. 
+\item Kompilierung über Interpretierung von Regeln ist das vierte Prinzip, das zur Anwendung kommt. Da es sich bei der Generierung von äquivalenten Plänen um ein CPU intensives Geschäft handelt, wurde entschieden, dass die Regeln zur Transformation der Pläne kompiliert und nicht interpretiert werden. Zwar verliert der Optimierer dadurch die Möglichkeit ad hoc neue Regeln in den Optimierer aufzunehmen, jedoch wird diese Möglichkeit in der Praxis nicht benötigt. 
 
-\item Das letzte Prinzip ist, dass der Volcano Optimierer auf dynamisches Programmieren bei der Generierung von Programmen setzt. \todo{Unklar}
+\item Das letzte Prinzip des Optimierers ist, dass dynamische Programmierung zum Einsatz kommt.
 \end{enumerate}
 
 

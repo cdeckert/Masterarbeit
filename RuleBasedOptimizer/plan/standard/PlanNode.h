@@ -283,7 +283,7 @@ Bitvector_t PlanNode<Bitvector_t>::getNeighbors() const
 	Bitvector_t b;
 	b += _left->getNeighbors();
 	if (_right != NULL)
-		b += _right->getNeighbors();
+		b.union_of(b, _right->getNeighbors());
 	return b;
 };
 

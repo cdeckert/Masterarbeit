@@ -34,7 +34,17 @@ public:
     
     bool isApplicable(PlanNode_t & aPlanNode, PlanNode_t & left, PlanNode_t & right) const override
     {
-        //if(!aPlanNode.isCommutativityEnabled()) LOG(INFO) << "STOP";
+        /*if(!aPlanNode.isCommutativityEnabled())
+        {
+            LOG(INFO) << "STOP";
+            LOG(INFO) << "L:R:"<< left.getRelations();
+            LOG(INFO) << "L:N:"<< left.getNeighbors();
+            
+            LOG(INFO) << "R:R:"<< right.getRelations();
+            LOG(INFO) << "R:N:"<< right.getNeighbors();
+            LOG(INFO) << "APPL:" << Parent_t::isApplicable(aPlanNode, left, right);
+            
+        }*/
         return aPlanNode.isCommutativityEnabled() && Parent_t::isApplicable(aPlanNode, left, right);
     }
 

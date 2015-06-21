@@ -74,11 +74,12 @@ void Executor<T>::run() const
 			ExhaustiveTransformation_t  * t1 = 0;
 			if (algo == "RS_B0")
 			{
+				LOG(INFO) << "RS-B0";
 				t1 = new ExhaustiveTransformation_t(RS_B0_t());
 			}
 			else if (algo == "RS_B1")
 			{
-
+				LOG(INFO) << "RS-B1";
 				t1 = new ExhaustiveTransformation_t(RS_B1_t());
 			}
 			else if(algo == "RS_B2")
@@ -103,7 +104,7 @@ void Executor<T>::run() const
 			_watch->stop();
 			
 			duration += _watch->getDuration();
-			//std::cout << adaptor.dump(&eq);
+			std::cout << adaptor.dump(&eq);
 
 			LOG(INFO) << "NUMBER OF EQs:" << eq.countEQs();
 			

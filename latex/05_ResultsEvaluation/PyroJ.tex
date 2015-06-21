@@ -1,25 +1,30 @@
 \section{Plattform-Wahl}
 
+PyroJ wurde als Plattform für die initale Implementierung der GraphRule bzw. RS-Graph verwendet. Da diese Platform auf Java basiert und schon während der Test Schwankungen in der Zuverlässigkeit der Messungen aufgetreten sind, muss die Wahl der Platform kritisch betrachtet werden. Ebenfalls ist eines der erklärten Ziele von PyroJ Volcano nachzuahmen und somit erweiterbar zu sein. Beides wird im Folgenden kritisch beleuchtet.
+
+
 \subsection{PyroJ als Plattform}
 
 Wie bereits in Kapitel 2 beschrieben und in Kapitel 3 näher beleuchtet, wurde PyroJ als Optimierer gewählt, um die Regelmengen RS-B0 bis B2 zu testen und die neue Regelmenge GraphRule zu implementieren.
 
-Wie durch \cite{shanbhag2014optimizing} festgestellt wurde, variierten die Performance-Messungen einer einzelnen Anfrage erheblich. Eine Abfrage wurde mehrfach durch PyroJ optimiert, wobei unterschiedliche Ergebnisse gemessen wurden. Die Zeit die benötigt wurde, um eine Anfrage zu optimieren war nicht nur davon abhängig, ob die Anfrage zuvor schon einmal optimiert wurde, sondern konnte auch durch andere Anfragen beeinflusst werden. Diese Schwankungen wurden von \cite{shanbhag2014optimizing} auf den Java JIT-Compiler (HotSpot) zurückgeführt. Es wurde erkannt, dass zur Laufzeit Optimierungen durchgeführt werden, die die Schwankungen in der Laufzeit der einzelnen Tests erklären können. Um dieses Phänomen auszugleichen, wurden das HotSpot JVM Flag \texttt{-XX:CompileThreshold=1} gesetzt. Dieses Flag gibt an, nach wie vielen Methodenaufrufen ein Stück Java Code in Maschinencode kompiliert wird. Der Standardwert liegt bei 10000 \cite{oracle2015VMOptions}. Dank dieses Flags wird bereits beim ersten Aufruf einer Methode die Methode auch kompiliert. Neben diesem Flag wurden noch große Anfragen durchgeführt, um den Code zu kompilieren. Erst dann wurden die einzelnen Tests gestartet.
+Wie durch \cite{shanbhag2014optimizing} festgestellt wurde, variierten die Performance-Messungen einer einzelnen Anfrage erheblich. Bei ein und der selben Anfrage wurden unterschiedliche Ergebnisse gemessen. Bei Anfragen, die mehrfach optimiert wurden, dauerte die Optimierung zu Beginn länger als nach einigen Durchläufen. Auch konnten Anfragen, die zuvor ausgeführt wurden das Ergebnis erheblich beeinflussen. Dieses suboptimale Verhalten des Optimierers wurde auch von \cite{shanbhag2014optimizing} als ungünstig beurteilt.
+
+\cite{shanbhag2014optimizing} führte diese Schwankungen auf den Java JIT-Compiler (HotSpot) zurückgeführt. Es wurde erkannt, dass zur Laufzeit Optimierungen durchgeführt werden, die die Schwankungen in der Laufzeit der einzelnen Tests erklären können. Um dieses Phänomen auszugleichen, wurden das HotSpot JVM Flag \texttt{-XX:CompileThreshold=1} gesetzt. Dieses Flag gibt an, nach wie vielen Methodenaufrufen ein Stück Java Code in Maschinencode kompiliert wird. Der Standardwert liegt bei 10000 \cite{oracle2015VMOptions}. Dank dieses Flags wird bereits beim ersten Aufruf einer Methode die Methode auch kompiliert. Neben diesem Flag wurden noch große Anfragen durchgeführt, um den Code zu kompilieren. Erst dann wurden die einzelnen Tests gestartet.
 
 
-Durch das Anschalten des JVM Flags \texttt{-XX:CompileThreshold=1} konnte ein erträgliches Maß an Konstanz in den Messergebnissen erzielt werden. Ob durch die Optimierung von komplexen Anfragen der gesamte Code, der später genutzt wurde auch kompiliert wurde, ist unbekannt. Somit ist nicht festzustellen, ob weitere Optimierungen während der Messungen ausgeführt wurden und ob so die Messergebnisse verfälscht wurden.
+Durch das Anschalten des JVM Flags \texttt{-XX:CompileThreshold=1} konnte ein erträgliches Maß an Konstanz in den Messergebnissen erzielt werden. 
+Ob die Durchführung von komplexen Anfragen zum Zweck der Kompilierung des Java Codes zu dem gewünschten Ergebniss führt und aller Code optimiert ist, bleibt unbekannt. Es kann nicht festgestellt werden, ob die Testergebnisse von unoptimiertem Code beeinflusst sind und so einige Messergebnisse verfälscht und somit obsolet sind.
 
-Andere Ausnahmen, die zur Veränderung der Messergebnisse führen konnten, wurden nicht in Betracht gezogen. Beispielsweise kann auch die Java eigene  Garbage Collection das Ausführen des Programms zu jedem beliebigen Zeitpunkt unterbrechen und so die Messergebnisse verfälschen. Um einen Hinweis auf das Ausführen der Garbage Collection zu erhalten, wäre es möglich gewesen, sich mit Hilfe des  JVM Flags \texttt{-verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCDetails} über eine Unterbrechung informieren zu lassen  \cite{andreasson2015JVM}  und so nur Ergebnisse in den Performancevergleich einfließen zu lassen, bei denen keine Unterbrechung stattgefunden hat. Ebenfalls ist nicht auszuschließen, dass bei der Übersetzung von Pyro aus C++ nach Java einige für die Performance des Programms ungünstige Entscheidungen getroffen wurden. 
+\cite{shanbhag2014optimizing} stellt fest, dass keine weiteren Optimierungen und Änderungen an der JVM vorgenommen wurden, um die Messungen durchzuführen. Leider wurden andere Aussnahmen, die zur Veränderung der Messergebnisse führen konnten, nicht beachtet. Beispielsweise kann auch die Java eigene  Garbage Collection das Ausführen des Programms zu jedem beliebigen Zeitpunkt unterbrechen und so die Messergebnisse verfälschen. Um einen Hinweis auf das Ausführen der Garbage Collection zu erhalten, wäre es möglich gewesen, sich mit Hilfe des  JVM Flags \texttt{-verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCDetails} über eine Unterbrechung informieren zu lassen  \cite{andreasson2015JVM}  und so nur Ergebnisse in den Performancevergleich einfließen zu lassen, bei denen keine Unterbrechung stattgefunden hat. Ebenfalls ist nicht auszuschließen, dass bei der Übersetzung von Pyro aus C++ nach Java einige für die Performance des Programms ungünstige Entscheidungen getroffen wurden. 
 
 
 
 
-Die Messergebnisse des PyroJ Optimierers sind wenigstens in Frage zu stellen. Warum all diese Unwägbarkeiten eingegangen wurden, bleibt unklar. Insbesondere ist hervorzuheben, dass mit Pyro eine Alternative vorhanden gewesen wäre, die in C++ programmiert wurde und daher die vielen Java eigenen Nachteile nicht zum Tragen kommen. 
+Die Messergebnisse des PyroJ Optimierers sind wenigstens in Frage zu stellen. Warum trotz dieser Unwägbarkeiten eine Java-basierte Anwendung zum Einsatz gekommen ist, bleibt unklar. Insbesondere ist hervorzuheben, dass mit Pyro eine Alternative vorhanden gewesen wäre, die in C++ programmiert wurde und daher die vielen Java eigenen Nachteile nicht zum Tragen kommen. 
 
 
 \subsection{Erweiterbarkeit von PyroJ}
 
+Ebenfalls ist die Erweiterbarkeit von PyroJ und Pyro kritisch zu betrachteten. Das Vorbild Volcano konnte mit Hilfe von Descriptoren konfiguriert werden. Neue, bisher unbekannte Datenbankstrukturen konnten implementiert werden und das durch einfache Konfiguration. Pyro ist im Gegensatz zu seinem Vorbild nicht in diesem Masse erweiterbar. Pyro wird nicht auf Basis eines Descriptor-Files generiert. Es ist ein fixes Konstrukt aus C++ Code. Eine Erweiterbarkeit des Systems ist daher nicht immanent.
 
 
-
-\subsection{Erweiterbarkeit des }

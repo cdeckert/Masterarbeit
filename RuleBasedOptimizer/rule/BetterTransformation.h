@@ -90,7 +90,7 @@ std::unordered_map<typename PlanNode_t::BV, std::unordered_set<BitVectorSmall<ui
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
 void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransformation<PlanNode_t, Operations_t, Rule_t>::EquivalenceClass_t &aEquivalenceClass) const
 {
-    std::cout << aEquivalenceClass.getSignature() << std::endl;
+    //std::cout << aEquivalenceClass.getSignature() << std::endl;
     
     
 
@@ -114,7 +114,7 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
     if(aEquivalenceClass.isBaseRelation())
     {
         _knownEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), aEquivalenceClass}});
-        std::cout << "SMALL";
+        //std::cout << "SMALL";
     }
     else
     {

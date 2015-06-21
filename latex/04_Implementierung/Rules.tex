@@ -165,3 +165,4 @@ Wie in Abbildung \ref{GraphRuleApply} zu erkennen, wird sowohl das Interface \te
 \label{fig:MinCutConservative}
 \end{figure}
 
+Bei dem Zusammenbau der Bäume mit Hilfe der Methode \texttt{createTree} werden die einzelnen Bäume aus Äquivalenzklassen und Planknoten zustammgesetzt. Auf oberster Ebene wird eine Äquivalenzklasse gebildet, die jedoch, um das Interface zu erfüllen nicht zurückgeben wird. Stattdessen wird der erste Planknoten übergeben, der mit Hilfe des Zeigers \texttt{\_next} auf den nächsten Knoten zeigt und somit den ganzen Baum übergeben kann.

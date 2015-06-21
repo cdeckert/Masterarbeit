@@ -70,7 +70,7 @@ std::string StringAdaptor<PlanNode_t>::dump(EquivalenceClass_t *input)
 	std::string result = "";
 
 	std::vector<std::string> plans = writeString(input);
-
+	result += "\n Plans:";
 	for (std::string p : plans)
 	{
 		result += "\n" + p;
@@ -105,7 +105,7 @@ StringAdaptor<PlanNode_t>::writeString(EquivalenceClass_t *input)
 					for (std::string right : writeString(& eq->r()))
 					{
 						std::string plan = eq->getOperatorAsString() + "(" + left + "," + right + ")";
-						plans.push_back(plan);
+							plans.push_back(plan);
 					}
 				}
 			}

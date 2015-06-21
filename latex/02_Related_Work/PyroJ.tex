@@ -1,14 +1,14 @@
 \subsection{Implementierung von Pyro(J)}
 \label{sec:pyroJ}
 PyroJ ist der Optimierer, der von \cite{shanbhag2014optimizing} für die Prüfung der Vollständigkeit von Pellenkofts Regelmenge RS-B2 genutzt wurde. Dies wird im folgenden Kapitel genauer beschrieben. Ebenfalls wurde auf Basis dieses Optimierers die neue Regelmenge RS-Graph implementiert und getestet. 
-PyroJ basiert auf dem von \cite{roy2001multi} in C++ implementierten Optimierer Pyro und wurde automatisch von C++ nach Java übersetzt. Der Optimierer Pyro wurde nach dem Vorbild des Volcano Optimierers entwickelt. Volcano wurde als Vorbild gewählt, da es sich bei Volcano um einen hoch-respektierten, state-of-the-art, regelbasierten Optimierer handelt, der auch die Basis von kommerziellen Datenbanksytemen wie MS SQL Server ist. Gerade die Erweiterbarkeit im Hinblick auf das Datenmodell, Executionmodell und die Möglichkeit Transformationsregeln und Operatoren hinzuzufügen, sollten übernommen werden.
+PyroJ basiert auf dem von \cite{roy2001multi} in C++ implementierten Optimierer Pyro und wurde automatisch von C++ nach Java übersetzt. Der Optimierer Pyro wurde nach dem Vorbild des Volcano Optimierers entwickelt. Volcano wurde als Vorbild gewählt, da es sich bei Volcano um einen hoch-respektierten, state-of-the-art, regelbasierten Optimierer handelt, der auch die Basis von kommerziellen Datenbanksytemen wie MS SQL Server ist. Gerade die Erweiterbarkeit im Hinblick auf das Datenmodell, Executionsmodell und die Möglichkeit Transformationsregeln und Operatoren hinzuzufügen, sollten übernommen werden.
 
 
 Einige Unterschiede zwischen Volcano und Pyro bestehen jedoch aus Sicht von \cite{roy2001multi}:
 
-\subsubsection{Trennung zwischen logischem und physischen Planspace}
+\subsubsection{Trennung zwischen logischem und physischem Planspace}
 
-Pyro generiert zuerst logische Pläne, die dann in physische Pläne umgesetzt werden und aus denen in einem dritten Schritt der optimale Plan ausgewählt werden kann. Diese Schritte werden nacheinander unabhängig ausgeführt. In der Realität können diese drei Schritte überlappen. So ist es möglich, dass zuerst für einen logischen Plan alle physischen Pläne erzeugt werden und dann aus diesen Plänen nur der günstigste behalten wird. Daraufhin kann dann der nächste logische Plan erzeugt werden und für ihn der günstigste physische Plan gesucht werden. Nur wenn dieser günstigste Plan billiger ist als der bisher gefundene Plan, wird der physische Plan auch weiterhin gespeichert. Dieser Ansatz kann Resourcen-schonender sein, als der in Pyro verwendete Ansatz, bei dem immer alle Daten vorgehalten werden. 
+Pyro generiert zuerst logische Pläne, die dann in physische Pläne umgesetzt werden. In einem dritten Schritt kann daraus der optimale Plan ausgewählt werden. Diese Schritte werden nacheinander unabhängig ausgeführt. In der Realität können diese drei Schritte überlappen. So ist es möglich, dass zuerst für einen logischen Plan alle physischen Pläne erzeugt werden und dann aus diesen Plänen nur der günstigste behalten wird. Daraufhin kann dann der nächste logische Plan erzeugt und für ihn der günstigste physische Plan gesucht werden. Nur wenn dieser günstigste Plan billiger ist als der bisher gefundene Plan, wird der physische Plan auch weiterhin gespeichert. Dieser Ansatz kann Ressourcen-schonender sein, als der in Pyro verwendete Ansatz, bei dem immer alle Daten vorgehalten werden. 
 
 \subsubsection{Vereinigung von Äuqivalenten-Subausdrücken}
 
@@ -24,4 +24,4 @@ Ein fundamentaler Unterschied zwischen Volcano und Pyro auf den von \cite{roy200
 
 \subsubsection{Ausführung der Experimente}
 
-Auf PyroJ wurden von \cite{shanbhag2014optimizing} Experimente zur Überprüfung der Pellenkoft Regelmengen durchgeführt. Wie im folgenden Kapitel beschrieben, wurden Regelmengen auf ihre Vollständigkeit und Performance getestet.Außerdem  wurde eine neue Regel implementiert. 
+Auf PyroJ wurden von \cite{shanbhag2014optimizing} Experimente zur Überprüfung der Pellenkoft Regelmengen durchgeführt. Wie im folgenden Kapitel beschrieben, wurden Regelmengen auf ihre Vollständigkeit und Performance getestet. Außerdem wurde eine neue Regel implementiert. 
