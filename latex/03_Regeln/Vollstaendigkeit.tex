@@ -114,9 +114,27 @@ Welche Regel auch immer auf den Baum angewendet wird, es ist nicht möglich den 
 
 \subsection{Unvollständigkeit von RS-B2 mit Hilfe von PyroJ}
 
-Mit Hilfe des Optimierers PyroJ - sein Aufbau wird in \ref{sec:pyroJ} behandelt - wurden die Regelsets ebenfalls auf ihre Vollständigkeit hin geprüft. Es wurde angenommen, dass zwei Ergebnismengen dann gleich sind, wenn die Anzahl der Äquivalenzklassen und die Anzahl der Operatorknoten gleich ist. Da wie zuvor festgestellt RS-B1 vollständig ist, wurde RS-B1 als Benchmark für andere Regelsets genutzt. Als Test-Case wurden Starqueries verwendet. Wie in Tabelle \ref{} zu sehen ist, wurde mit Hilfe von RS-B2 erheblich weniger Operatoren-Knoten erzeugt als mit RS-B1. \cite{} schlisst daher darauf, dass RS-B2 unvollständig ist.
+Die Unvollständigkeit wurde auch mit Hilfe von PyroJ gezeigt. Hierzu wurden für die Regeln RS-B1-CPS und RS-B2-CPS. Die Tests wurden mit sternförmigen Anfragen durchgeführt. In Tabelle \ref{pyroIncomplete} ist die Menge der Relationen, die verwendet wurden und die korrespondierenden Operatoren-Knoten zu sehen, die durch die beiden Algorithmen generiert wurden. Es wird klar, dass erheblich weniger Knoten gefunden wurden. 
 
-Ebenfalls stellt \cite{} hervor, dass eine bestimmte Anfrage (Anfrage 7 des TPC-DS Benchmarks) bei der Nutzung des RS-B2 eine um 1.86 höher geschätzte Kosten als RS-B1 verursacht hatte.
+\begin{figure}[ht]
+\centering
+
+\begin{tabular}{lll}
+Relationen & RS-B2-CPS & RS-B1-CPS \\
+5          & 43        & 75        \\
+7          & 207       & 399       \\
+9          & 1043      & 2067      \\
+11         & 5143      &          
+\end{tabular}
+\caption{Operatorenknoten-Vergleich bei Sternförmigen initalen Plänen}
+\label{pyroIncomplete}
+\end{figure}
+
+
+Bei den Test, die von \cite{bachelor} durchgeführt wurden, wurde außerdem festgestellt, dass für eine bestimmte Anfrage (Query 7 des TPC-DS benchmarks ohne Aggregation) Gesamtkosten mit Hilfe von RS-B2 geschätzt wurden, die um den Faktor 1.86 höher sind als die von RS-B1 ermittelten.
+
+Diese Ergebnisse werden in Kaptel 5 erneut aufgegriffen und überprüft.
+
 
 
 

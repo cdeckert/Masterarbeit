@@ -33,7 +33,7 @@ Die Funktionsweise eines generischen Top-Down-Enumerators lässt sich am einfach
 \end{figure}
 
 
-Wie in Abb. \ref{TDPlanGen} zu erkennen, beginnt die Top-Down-Enumeration mit einem Aufruf der Methode \texttt{TDPlanGen(G). Ihr wird ein Graph übergeben. Der Graph besteht aus Knoten und Kanten. Das Ergebnis der Methode ist ein optimaler Join-Tree.
+Wie in Abb. \ref{TDPlanGen} zu erkennen, beginnt die Top-Down-Enumeration mit einem Aufruf der Methode \texttt{TDPlanGen(G)}. Ihr wird ein Graph übergeben. Der Graph besteht aus Knoten und Kanten. Das Ergebnis der Methode ist ein optimaler Join-Tree.
 
 Zuerst wird wie in Zeile 2 zu sehen, für jede Relation - sie sind nicht weiter trennbar, daher können keine Alternativen gebildet werden - die beste Variante für ihren jeweiligen Knoten festgelegt. Hierauf wird die Methode \texttt{TDGPSub(V)} aufgerufen. Es wird der gesamte Graph übergeben.
 

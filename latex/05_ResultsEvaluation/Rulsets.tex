@@ -28,7 +28,7 @@ Für jeden Test wurde das exakte Testszenario, Beobachtungen und Ergebnisse doku
 
 
 
-
+\newtheorem{hypo}{Hypothese} 
 
 
 
@@ -38,7 +38,9 @@ Einige Tests wurden ausgeführt, um die Performance und Vollständigkeit der ein
 
 \subsection{Vollständigkeit der Regelmengen bei azyklischen linkstiefen Bäumen }
 
-Hypothese 1: Alle Regelmengen sind bei azyklischen Join-Bäumen und linkstiefen initialen-Bäumen vollständig.
+\begin{hypo}
+Alle Regelmengen sind bei azyklischen Join-Bäumen und linkstiefen initialen-Bäumen vollständig.
+\end{hypo}
 
 \begin{figure}[ht]
   \centering
@@ -61,11 +63,11 @@ Um festzustellen, ob alle Algorithmen für diesen speziellen Fall korrekt funkti
                          & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
 {\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
 {\bf Anzahl Bäume}       & 224       & 224       & 224       \\ \hline
-{\bf Dauer}              & 21947086  & 20535481  & 17939373  \\ \hline
+{\bf Dauer}              & 28558  & 25523  & 23280  \\ \hline
 \end{tabular}
 
 \caption{Resultat: Test 1}
-\label{Result:Test1}
+\label{Resultat:Test1}
 \end{figure}
 
 Wie in Tabelle \ref{Resultat:Test1} zu sehen ist, wurden je 224 unterschiedliche Bäume erzeugt. Eine Prüfung ergab, dass die Pläne, die durch die drei Regelmengen erzeugt wurden, alle gleich sind.
@@ -91,7 +93,11 @@ Es lässt sich also feststellen, dass alle Regelmengen in Bezug auf linkstiefe, 
 
 In einem zweiten Schritt wurde die Aussage von \cite{shanbhag2014optimizing} als Grundlage genommen, der behauptete, dass sternförmige Join-Trees zu umvollständigen Resultaten führen würden.
 
-Hypothese 2: Auf Basis eines azyklischen, sternförmigen Join-Trees lässt sich mit RS-B2 der Suchraum nicht vollständig erforschen.
+
+\begin{hypo}
+Auf Basis eines azyklischen, sternförmigen Join-Trees lässt sich mit RS-B2 der Suchraum nicht vollständig erforschen.
+\end{hypo}
+
 
 \begin{figure}[ht]
   \centering
@@ -101,7 +107,7 @@ Hypothese 2: Auf Basis eines azyklischen, sternförmigen Join-Trees lässt sich 
 \end{figure}
 
 
-Um die Hypothese zu untersuchen, wurde eine Konfiguration gewählt, die der aus Test 1 gleicht. Einziger Unterschied sind andere Join Kanten. Wie in  Abb. \ref{Konfiguration:Test2} zu sehen, sind hier alle Knoten per Join mit Knoten 5 verbunden. Eine Sternform ergibt sich.
+Um die Hypothese zu untersuchen, wurde eine Konfiguration gewählt, die der aus Test 1 gleicht. Einziger Unterschied sind andere Join Kanten. Wie in  Abb. \ref{Konfiguration:Test2} zu sehen, sind hier alle Knoten per Join mit Knoten 1 verbunden. Eine Sternform ergibt sich.
 
 Nach den vorhergehenden Tests von \cite{shanbhag2014optimizing} wurde erwartet, dass durch RS-B2 nicht alle Pläne gefunden werden würden. Wie in Tabelle \ref{Result:Test2} zu sehen ist, wurden jedoch genau gleich viele Pläne mit Hilfe RS-B2 wie mit RS-B1 gefunden. 
 
@@ -113,7 +119,7 @@ Nach den vorhergehenden Tests von \cite{shanbhag2014optimizing} wurde erwartet, 
                          & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
 {\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
 {\bf Anzahl Bäume}       & 384       & 384       & 384       \\ \hline
-{\bf Dauer}              & 52420049  & 49732772  & 43895234  \\ \hline
+{\bf Dauer}              & 66643  & 65110  & 58225   \\ \hline
 \end{tabular}
 
 \caption{Resultat: Test 2}
@@ -140,7 +146,7 @@ Um sicherzustellen, dass die Aussage von \cite{shanbhag2014optimizing} nicht abh
                          & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
 {\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
 {\bf Anzahl Bäume}       & 384       & 384       & 384       \\ \hline
-{\bf Dauer}              & 53115341  & 49566404  & 44812378  \\ \hline
+{\bf Dauer}              & 66643  & 65110  & 58225  \\ \hline
 \end{tabular}
 
 \caption{Resultat: Test 3}
@@ -152,10 +158,10 @@ Wie schon im vorhergehenden Test wurden alle Pläne geprüft. Es wurden gleich v
 
 
 
-\subsection{RS-B2 ist unvollständig bei zyklischen Graphen}
+\subsection{RS-B2 ist vollständig bei zyklischen Graphen}
 Um dennoch Unvollständigkeit zu finden, wurde eine neue Hypothese aufgestellt:
 
-Hypothese 3: RS-B2 ist bei azyklischen Join Graphen unvollständig.
+Hypothese 3: RS-B2 ist bei zyklischen Join Graphen unvollständig.
 
 Um diese Hypothese zu prüfen, wurde Test 3 herangezogen und eine neue Join-Kante zwischen 3 und 4 eingezogen (vgl. Abb. \ref{Konfiguration:Test3}. Durch diese zusätzliche Kante ist ein zyklischer Join-Graph entstanden. 
 
@@ -193,4 +199,65 @@ Es zeigt sich mit diesem Experiment, dass RS-B2 nicht geeignet sind, um alle Pl�
 
 
 
+
+\subsection{RS-B2-CPS Vollständigkeit bzgl. sternförmigen Anfragen}
+
+Wie in Kapitel 3 gesehen wurde die Unvollständigkeit von \cite{bachelor}  mit Hilfe einer sternförmigen Anfrage nachgewiesen. Dieses Ergebnisse sollte reproduziert werden. Da diese Ergebnisse so nicht reproduzierbar waren, wird ein Erklärungsansatz vorgeschlagen.
+
+\subsubsection{Prüfung der Ergebnisse aus Kapitel 3}
+Es wurden zwei Tests durchgeführt. hierzu wurden zwei sternförmige Anfragen erzeugt. Jede Anfrage wurde ausgeführt und die Anzahl der unterschiedlichen Pläne gemessen.
+
+\begin{figure}[h]
+\centering
+
+\begin{tabular}{|l|l|l|}
+\hline
+Relationen & RS-B2-CPS & RS-B1-CPS \\ \hline
+5          & 284       & 284       \\ \hline
+7          & 46080     & 46080     \\ \hline
+\end{tabular}
+
+
+
+
+
+\caption{Anzahl Pläne nach Regelmenge und Anzahl-Relationen}
+\label{protoUnvollstaendig}
+\endfigure
+
+Im Gegensatz zu \cite{bachelor} konnte nicht festgestellt werden, dass RS-B2 schlechter als die Vergleichsregelmenge RS-B1 funktioniert.
+
+
+\subsubsection{Erklärungsansatz: Pyros Expansionsalgorithmus}
+
+Der Grund für die Abweichung mag am Expansionsalgorithmus in Pyro liegen. Der verwendete Expansionsalgorithmus (vgl. Abb. \ref{ExpandDAG}) ist vollständig für die Regelmenge RS-B1. Ob dies auch für die Regelmenge RS-B2 zutrifft, wird im folgenden an einem konkreten Beispiel geprüft.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/PyroInital_0.pdf}
+  \caption{Initialer Query Tree}
+  \label{PyroInital}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/PyroJoinGraph.pdf}
+  \caption{Join-Graph}
+  \label{PyroJoinGraph}
+\end{figure}
+
+Die Prüfung des Algorithmus erfolgt in vereinfachter Form am Beispiel des in Abb. \ref{PyroInital} dargestellten Query-Tree und Join-Graphen aus Abb. \ref{PyroJoinGraph}. Um die Darstellung zu vereinfachen, wird die Regel Kommutativität der Regelmenge nicht angewendet. Es bleiben also linke-Assoziativität, rechte-Assoziativität und Exchange erhalten.
+
+In einem ersten Schritt sollen die Regeln auf Planknoten 1 angewendet werden. Da die untergeordneten Planknoten noch nicht expandiert wurden, muss die Expansion auf die Knoten 2 bzw. 3 angewendet werden. Da sich auf Knoten 3 keine Regel anwenden lässt, wird dieser Knoten als expandiert markiert. Auf den Knoten 2 kann Assoziativität angewendet werden. Es entsteht so der neue Knoten 4. Auf Knoten 4 lässt sich keine Regel anwenden. Alle Regeln wurden für Knoten 2 angewendet, daher kann Knoten 2 als expandiert markiert werden.
+
+Da nun alle untergeordneten Knoten expandiert sind, kann auf Ebene von Knoten 1 alle Regeln angewendet werden. Hier ist die Anwendung von Exchange am interessantesten. Es werden die neuen Knoten 7, 8, 9, 10, 11 geschaffen. Da auf die Knoten 7, 9 keine weiteren Regeln angewendet werden dürfen, bricht der Algorithmus ab. 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/PyroResult.pdf}
+  \caption{Expandierter Query Tree}
+  \label{ExpandedQueryTree}
+\end{figure}
+
+Wie in Abb. \ref{ExpandedQueryTree} zu erkennen, sind die Regeln nicht auf alle Teilbäume angewendet worden. Der gesamte Suchraum wurde nicht erforscht. Einer der Unterschiede zwischen dem von Pyro verwendeten und dem in Abb. \ref{Pseudocod:enumerator} gezeigten Expander ist, dass sobald ein neuer Planknoten gefunden wurde versucht wird alle Regeln, solange es möglich ist auf den gesamten Teilbaum erneut anzuwenden. So werden auch neue, untergeordnete Teilbäume in die Expansion einbezogen und der gesamte Suchraum im konkreten Beispiel erforscht.
 

@@ -108,8 +108,9 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
         _foundEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), {{}}}});
     }
     if(aEquivalenceClass.getSize() > 0)
-    _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(* aEquivalenceClass.getFirst())}});
-    
+    {
+        _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(* aEquivalenceClass.getFirst())}});
+    }
     
     if(aEquivalenceClass.isBaseRelation())
     {
@@ -194,10 +195,19 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
                                 //LOG(INFO) << r->getName();
                                 if(_foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).count(signature(*p)) == 0)
                                 {
+                                    if(_foundEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
+                                    {
+                                        //std::cout << "ADD\n";
+                                        _foundEquivalenceClasses.insert({{aEquivalenceClass.getRelations(),{{}}}});
+                                        //std::cout << _foundEquivalenceClasses.count(aEquivalenceClass.getRelations());
+                                    }
                                     aEquivalenceClass.push_back(* p);
                                     knownEQSignatures.insert({{p->getSignature()}});
                                     isNew = true;
-                                    
+                                    //std::cout << _foundEquivalenceClasses.count(aEquivalenceClass.getRelations());
+                                    //std::cout << signature(*p);
+                                    //std::cout << std::endl;
+                                    _foundEquivalenceClasses.at(aEquivalenceClass.getRelations());
                                     _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(*p)}});
 
                                 }

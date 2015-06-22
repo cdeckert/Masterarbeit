@@ -24,4 +24,16 @@ Ein fundamentaler Unterschied zwischen Volcano und Pyro auf den von \cite{roy200
 
 \subsubsection{Ausführung der Experimente}
 
-Auf PyroJ wurden von \cite{shanbhag2014optimizing} Experimente zur Überprüfung der Pellenkoft Regelmengen durchgeführt. Wie im folgenden Kapitel beschrieben, wurden Regelmengen auf ihre Vollständigkeit und Performance getestet. Außerdem wurde eine neue Regel implementiert. 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.75]{02_Related_Work/ExpandDAG.png}
+  \caption{Pseudocode: ExpandDAG}
+  \label{ExpandDAG}
+\end{figure}
+
+Auf PyroJ wurden von \cite{shanbhag2014optimizing} Experimente zur Überprüfung der Pellenkoft Regelmengen durchgeführt. Die Durchführung der Tests geschah mit Hilfe des Expanders \texttt{ExpandDAG}. Die Prozedur (vgl. Abb. \ref{ExpandDAG}) expandiert basierend auf einem Äquivalenzknoten unterschiedliche Transformationen aus und speichert diese in Äquivalenzklassen. Der Algorithmus, der von \cite{roy2001multi} implementiert wurde sieht vor, dass in jeder Äquivalenzklasse über die Menge der bisher noch nicht expandierten Planknoten iteriert wird. Falls die dem Planknoten untergeordneten Äquivalenzklassen bisher noch unbekannt sind, werden diese Äquivalenzklassen expandiert. Sobald alle untergeordneten Pläne expandiert wurden, werden die Regeln auf den aktuellen Planknoten angewendet. Neue alternativen werden der bestehenden Äquivalenzklasse untergeordnet.
+
+\cite{roy2001multi} legt außerdem in einem Beweis dar, dass dieser Algorithmus für RS-B1 mit Prädikatpushdown (vgl. Kapietl 3) vollständig ist und alle Pläne gefunden werden können. 
+
+Wie im folgenden Kapitel beschrieben, wurden unterschiedliche Regelmengen auf ihre Vollständigkeit und Performance getestet. Außerdem wurde eine neue Regel implementiert. 

@@ -1,0 +1,136 @@
+RUN
+2015-06-22 11:09:51,459 INFO  [default] RS-B0
+
+ Plans:
+join(scan(5),join(scan(4),join(scan(3),join(scan(1),scan(2)))))
+join(scan(5),join(scan(4),join(join(scan(1),scan(2)),scan(3))))
+join(scan(5),join(scan(4),join(join(scan(3),scan(1)),scan(2))))
+join(scan(5),join(join(scan(3),join(scan(1),scan(2))),scan(4)))
+join(scan(5),join(join(join(scan(1),scan(2)),scan(3)),scan(4)))
+join(scan(5),join(join(join(scan(3),scan(1)),scan(2)),scan(4)))
+join(scan(5),join(join(scan(4),join(scan(1),scan(2))),scan(3)))
+join(scan(5),join(join(join(scan(1),scan(2)),scan(4)),scan(3)))
+join(scan(5),join(join(join(scan(4),scan(1)),scan(2)),scan(3)))
+join(scan(5),join(join(scan(4),join(scan(3),scan(1))),scan(2)))
+join(scan(5),join(join(join(scan(3),scan(1)),scan(4)),scan(2)))
+join(join(scan(4),join(scan(3),join(scan(1),scan(2)))),scan(5))
+join(join(scan(4),join(join(scan(1),scan(2)),scan(3))),scan(5))
+join(join(scan(4),join(join(scan(3),scan(1)),scan(2))),scan(5))
+join(join(join(scan(3),join(scan(1),scan(2))),scan(4)),scan(5))
+join(join(join(join(scan(1),scan(2)),scan(3)),scan(4)),scan(5))
+join(join(join(join(scan(3),scan(1)),scan(2)),scan(4)),scan(5))
+join(join(join(scan(4),join(scan(1),scan(2))),scan(3)),scan(5))
+join(join(join(join(scan(1),scan(2)),scan(4)),scan(3)),scan(5))
+join(join(join(join(scan(4),scan(1)),scan(2)),scan(3)),scan(5))
+join(join(join(scan(4),join(scan(3),scan(1))),scan(2)),scan(5))
+join(join(join(join(scan(3),scan(1)),scan(4)),scan(2)),scan(5))
+join(join(scan(5),join(scan(3),join(scan(1),scan(2)))),scan(4))
+join(join(scan(5),join(join(scan(1),scan(2)),scan(3))),scan(4))
+join(join(scan(5),join(join(scan(3),scan(1)),scan(2))),scan(4))
+join(join(join(scan(3),join(scan(1),scan(2))),scan(5)),scan(4))
+join(join(join(join(scan(1),scan(2)),scan(3)),scan(5)),scan(4))
+join(join(join(join(scan(3),scan(1)),scan(2)),scan(5)),scan(4))
+join(join(join(scan(5),join(scan(1),scan(2))),scan(3)),scan(4))
+join(join(join(join(scan(1),scan(2)),scan(5)),scan(3)),scan(4))
+join(join(join(join(scan(5),scan(1)),scan(2)),scan(3)),scan(4))
+join(join(join(scan(5),join(scan(3),scan(1))),scan(2)),scan(4))
+join(join(join(join(scan(3),scan(1)),scan(5)),scan(2)),scan(4))
+join(join(scan(5),join(scan(4),join(scan(1),scan(2)))),scan(3))
+join(join(scan(5),join(join(scan(1),scan(2)),scan(4))),scan(3))
+join(join(scan(5),join(join(scan(4),scan(1)),scan(2))),scan(3))
+join(join(join(scan(4),join(scan(1),scan(2))),scan(5)),scan(3))
+join(join(join(join(scan(1),scan(2)),scan(4)),scan(5)),scan(3))
+join(join(join(join(scan(4),scan(1)),scan(2)),scan(5)),scan(3))
+join(join(join(scan(5),join(scan(1),scan(2))),scan(4)),scan(3))
+join(join(join(join(scan(1),scan(2)),scan(5)),scan(4)),scan(3))
+join(join(join(join(scan(5),scan(1)),scan(2)),scan(4)),scan(3))
+join(join(join(scan(5),join(scan(4),scan(1))),scan(2)),scan(3))
+join(join(join(join(scan(4),scan(1)),scan(5)),scan(2)),scan(3))
+join(join(scan(5),join(scan(4),join(scan(3),scan(1)))),scan(2))
+join(join(scan(5),join(join(scan(3),scan(1)),scan(4))),scan(2))
+join(join(join(scan(4),join(scan(3),scan(1))),scan(5)),scan(2))
+join(join(join(join(scan(3),scan(1)),scan(4)),scan(5)),scan(2))
+join(join(join(scan(5),join(scan(3),scan(1))),scan(4)),scan(2))
+join(join(join(join(scan(3),scan(1)),scan(5)),scan(4)),scan(2))
+
+****BEST PLAN: 
+join(join(join(join(scan(1),scan(2)),scan(5)),scan(4)),scan(3))2015-06-22 11:09:51,509 INFO  [default] NUMBER OF EQs:33
+2015-06-22 11:09:51,510 INFO  [default] Number of Plans:1
+
+TIME:4851
+2015-06-22 11:09:51,510 INFO  [default] RS-B1
+
+ Plans:
+join(scan(5),join(scan(4),join(scan(3),join(scan(1),scan(2)))))
+join(scan(5),join(scan(4),join(join(scan(1),scan(2)),scan(3))))
+join(scan(5),join(join(scan(3),join(scan(1),scan(2))),scan(4)))
+join(scan(5),join(join(join(scan(1),scan(2)),scan(3)),scan(4)))
+join(join(scan(4),join(scan(3),join(scan(1),scan(2)))),scan(5))
+join(join(scan(4),join(join(scan(1),scan(2)),scan(3))),scan(5))
+join(join(join(scan(3),join(scan(1),scan(2))),scan(4)),scan(5))
+join(join(join(join(scan(1),scan(2)),scan(3)),scan(4)),scan(5))
+
+****BEST PLAN: 
+join(join(join(join(scan(1),scan(2)),scan(3)),scan(4)),scan(5))2015-06-22 11:09:51,511 INFO  [default] NUMBER OF EQs:15
+2015-06-22 11:09:51,511 INFO  [default] Number of Plans:1
+
+TIME:809
+2015-06-22 11:09:51,511 INFO  [default] RS-B2
+
+ Plans:
+join(scan(5),join(scan(4),join(scan(3),join(scan(1),scan(2)))))
+join(scan(5),join(scan(4),join(join(scan(1),scan(2)),scan(3))))
+join(scan(5),join(scan(4),join(join(scan(3),scan(1)),scan(2))))
+join(scan(5),join(join(scan(3),join(scan(1),scan(2))),scan(4)))
+join(scan(5),join(join(join(scan(1),scan(2)),scan(3)),scan(4)))
+join(scan(5),join(join(join(scan(3),scan(1)),scan(2)),scan(4)))
+join(scan(5),join(join(scan(4),join(scan(1),scan(2))),scan(3)))
+join(scan(5),join(join(join(scan(1),scan(2)),scan(4)),scan(3)))
+join(scan(5),join(join(join(scan(4),scan(1)),scan(2)),scan(3)))
+join(scan(5),join(join(scan(4),join(scan(3),scan(1))),scan(2)))
+join(scan(5),join(join(join(scan(3),scan(1)),scan(4)),scan(2)))
+join(join(scan(4),join(scan(3),join(scan(1),scan(2)))),scan(5))
+join(join(scan(4),join(join(scan(1),scan(2)),scan(3))),scan(5))
+join(join(scan(4),join(join(scan(3),scan(1)),scan(2))),scan(5))
+join(join(join(scan(3),join(scan(1),scan(2))),scan(4)),scan(5))
+join(join(join(join(scan(1),scan(2)),scan(3)),scan(4)),scan(5))
+join(join(join(join(scan(3),scan(1)),scan(2)),scan(4)),scan(5))
+join(join(join(scan(4),join(scan(1),scan(2))),scan(3)),scan(5))
+join(join(join(join(scan(1),scan(2)),scan(4)),scan(3)),scan(5))
+join(join(join(join(scan(4),scan(1)),scan(2)),scan(3)),scan(5))
+join(join(join(scan(4),join(scan(3),scan(1))),scan(2)),scan(5))
+join(join(join(join(scan(3),scan(1)),scan(4)),scan(2)),scan(5))
+join(join(scan(5),join(scan(3),join(scan(1),scan(2)))),scan(4))
+join(join(scan(5),join(join(scan(1),scan(2)),scan(3))),scan(4))
+join(join(scan(5),join(join(scan(3),scan(1)),scan(2))),scan(4))
+join(join(join(scan(3),join(scan(1),scan(2))),scan(5)),scan(4))
+join(join(join(join(scan(1),scan(2)),scan(3)),scan(5)),scan(4))
+join(join(join(join(scan(3),scan(1)),scan(2)),scan(5)),scan(4))
+join(join(join(scan(5),join(scan(1),scan(2))),scan(3)),scan(4))
+join(join(join(join(scan(1),scan(2)),scan(5)),scan(3)),scan(4))
+join(join(join(join(scan(5),scan(1)),scan(2)),scan(3)),scan(4))
+join(join(join(scan(5),join(scan(3),scan(1))),scan(2)),scan(4))
+join(join(join(join(scan(3),scan(1)),scan(5)),scan(2)),scan(4))
+join(join(scan(5),join(scan(4),join(scan(1),scan(2)))),scan(3))
+join(join(scan(5),join(join(scan(1),scan(2)),scan(4))),scan(3))
+join(join(scan(5),join(join(scan(4),scan(1)),scan(2))),scan(3))
+join(join(join(scan(4),join(scan(1),scan(2))),scan(5)),scan(3))
+join(join(join(join(scan(1),scan(2)),scan(4)),scan(5)),scan(3))
+join(join(join(join(scan(4),scan(1)),scan(2)),scan(5)),scan(3))
+join(join(join(scan(5),join(scan(1),scan(2))),scan(4)),scan(3))
+join(join(join(join(scan(1),scan(2)),scan(5)),scan(4)),scan(3))
+join(join(join(join(scan(5),scan(1)),scan(2)),scan(4)),scan(3))
+join(join(join(scan(5),join(scan(4),scan(1))),scan(2)),scan(3))
+join(join(join(join(scan(4),scan(1)),scan(5)),scan(2)),scan(3))
+join(join(scan(5),join(scan(4),join(scan(3),scan(1)))),scan(2))
+join(join(scan(5),join(join(scan(3),scan(1)),scan(4))),scan(2))
+join(join(join(scan(4),join(scan(3),scan(1))),scan(5)),scan(2))
+join(join(join(join(scan(3),scan(1)),scan(4)),scan(5)),scan(2))
+join(join(join(scan(5),join(scan(3),scan(1))),scan(4)),scan(2))
+join(join(join(join(scan(3),scan(1)),scan(5)),scan(4)),scan(2))
+
+****BEST PLAN: 
+join(join(join(join(scan(1),scan(2)),scan(5)),scan(4)),scan(3))2015-06-22 11:09:51,587 INFO  [default] NUMBER OF EQs:33
+2015-06-22 11:09:51,587 INFO  [default] Number of Plans:1
+
+TIME:5039

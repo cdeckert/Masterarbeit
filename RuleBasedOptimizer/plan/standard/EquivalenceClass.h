@@ -408,7 +408,7 @@ public:
 		return _explored ||(!hasPlanNodes() || getOperator() == SCAN);
 	}
 	
-	bool isBaseRelation() const {return !hasPlanNodes(); }
+	bool isBaseRelation() const {return !hasPlanNodes() || getFirst()->getOperator() == SCAN; }
 	
 	
 	/**

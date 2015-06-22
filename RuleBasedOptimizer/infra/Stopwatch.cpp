@@ -24,5 +24,5 @@ void Stopwatch::stop()
 
 u_int Stopwatch::getDuration()
 {
-	return std::chrono::duration_cast<std::chrono::nanoseconds>(_end - _start).count();
+	return std::chrono::duration_cast<std::chrono::microseconds>(_end - _start).count();
 };
