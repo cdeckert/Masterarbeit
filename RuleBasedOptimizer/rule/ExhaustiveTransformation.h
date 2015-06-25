@@ -1,6 +1,5 @@
 //
 //  ExhaustiveTransformation.h
-// TO.DO: Prio B aber mal ganz dringend ansehen
 //
 
 #ifndef RuleBasedOptimizer_ExhaustiveTransformation_h

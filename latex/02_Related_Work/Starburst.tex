@@ -18,14 +18,13 @@ Der Ablauf der Ausführung (vgl. \ref{StarburstFlow}) ist vergleichbar mit dem A
 
 Zur Compile-Time wird eine gegebene Anfrage - die Anfrage ist in Hydrogen (ähnlich SQL) formuliert - auf semantische Korrektheit geprüft und in ein \ac{QGM} übersetzt.
 
-Der wichtigste Teil eines \ac{QGM} ist der Select-Operator. In diesem findet sich eine Projektionsliste und das Anfrageprädikat in Graphform. Die Knoten des Graphen referenzieren Relationen oder weitere \ac{QGM}-Operatoren. Mengenbegrenzungen \todo{was ist das?}  tragen zur Erzeugung des Ergebnisses eines Operators bei, Quantoren zu dessen Einschränkung. Die Kanten des Graphen sind mit Predikaten wie insert, update, intersection, union oder group-by markiert. Neben dem Graphen enthält das \ac{QGM} auch aus Schema- und statistische Informationen. 
+Der wichtigste Teil eines \ac{QGM} ist der Select-Operator. In diesem findet sich eine Projektionsliste und das Anfrageprädikat in Graphform. Die Knoten des Graphen referenzieren Relationen oder weitere \ac{QGM}-Operatoren. Die Kanten des Graphen sind mit Predikaten wie insert, update, intersection, union oder group-by markiert. Neben dem Graphen enthält das \ac{QGM} auch aus Schema- und statistische Informationen. 
 
 Basierend auf diesem \ac{QGM} wird die Optimierung der Anfrage zuerst durch einen Query Rewriter, einen Plan Optimierer und einen Plan Refiner durchgeführt.
 
 Der Query Rewriter hat zwei konkrete Aufgaben: Auf der einen Seite soll die Anfrage in eine möglichst deklarative Form umgewandelt werden, hierbei werden insbesondere Anfragen entschachtelt. Auf der anderen Seite sollen weithin in der Forschung akzeptierte Heuristiken, beispielsweise der Push-Down von Argumenten, angewandt werden.
 
 
-Bei der Planoptimierung durchläuft der Plan vom \ac{QGM} hin zu einem QEM drei Stationen. Die drei wesentlichen Aspekte sind der Plan Generator, die Berechnung der Plankosten, um den optimalen Plan auszuwählen. \todo{Hier fehlt ein dritter teil}
 
 \subsubsection{Regel-Maschine}
 
@@ -47,18 +46,18 @@ Die Regelmaschine basiert auf fünf Prinzipien:
 \item Bei der Nutzung eines \ac{QGM} kann entweder eine Tiefen- als auch eine Breitensuche zur Anwendung kommen. Diese Art der Suche ist weder an die Regel noch an das Regelset geknüpft, sondern mit dem QGM selbst verbunden.
 
 
-\item Die Regeln werden bei Starburst in Regelsets unterteilt. Ein Regelset besteht aus mehreren Regeln, die entweder sequenziell nach einer vorab vergebenen Priorität oder einem statistischen Verfahren aufgerufen werden. Jede Regel und jedes Regelset kann andere Regeln und Regelsets als Teil einer Subroutine ausführen. Neben der Funktion der Zusammenfassung der Regeln ist dies Aufgabe der Regelsets.
+\item Die Regeln werden bei Starburst in Regelsets unterteilt. Eine Regelmenge besteht aus mehreren Regeln, die entweder sequenziell nach einer vorab vergebenen Priorität oder einem statistischen Verfahren aufgerufen werden. Jede Regel und jede Regelmenge kann andere Regeln und Regelmengen als Teil einer Subroutine ausführen. Neben der Funktion der Zusammenfassung der Regeln ist dies Aufgabe der Regelmengen.
 
 \item Um die Ausführung von Transformationen zu limitieren, insbesondere bei der Ausführung des Rewriters, kann ein Budget vorgeschrieben werden. Sobald dieses Zeitbudget aufgebraucht ist, wird die Ausführung von Regeln abgebrochen. Es ist für diese Funktion unbedingt notwendig, dass Regeln immer vollständige QGMs zurückliefern, da sonst ein unvollständiger QGM als Resultat des Optimierers entstehen kann.
 
 \item Schlussendlich ist es dem Nutzer der Datenbank möglich zu jedem beliebigen Zeitpunkt Regeln außer Kraft zu setzen. Dies geschieht nur für den Nutzer lokal andere Nutzer der Datenbank sind nicht betroffen. Spezielle Anwendungsfälle können so passgenau optimiert werden.
 \end{enumerate}
 
-\subsubsection{Plan Optimierer}
+\subsubsection{Plan Expander}
 
-Der Plan Optimierer selbst ist regelbasiert, nutzt aber nicht den transformierenden, sondern einen generierenden Ansatz. Mit Hilfe von Basisoperatoren sog. \ac{LOLEPOP}s werden mit Hilfe von Regeln sog. \ac{STAR}s Pläne erzeugt. Die Basisoperatoren \ac{LOLEPOP}s bilden einfach Operationen wie SCAN und SORT. Ein Plan besteht aus mehreren dieser \ac{LOLEPOP}s, die gemeinsam einen Plan ergeben.
+Der Plan Expander selbst ist regelbasiert, nutzt aber nicht den transformierenden, sondern einen generierenden Ansatz. Mit Hilfe von Basisoperatoren sog. \ac{LOLEPOP}s werden mit Hilfe von Regeln sog. \ac{STAR}s Pläne erzeugt. Die Basisoperatoren \ac{LOLEPOP}s bilden einfach Operationen wie SCAN und SORT. Ein Plan besteht aus mehreren dieser \ac{LOLEPOP}s, die gemeinsam einen Plan ergeben.
 
-Der \ac{STAR} definiert ein bekanntes parametrisiertes Objekt. Es besteht aus einer Bedingung zur Anwendbarkeit und einer Definition  eines Plans. Ist ein STAR auf einen Teilplan anwendbar, wird dieser STAR an dieser Stelle referenziert. Der Plan selbst hat einen rootSTAR als Startpunkt. Mit Hilfe der STARs\todo{Stil} innerhalb des \ac{QGM}s entsteht  eine Grammatik mit deren Hilfe alternative Pläne zu finden sind. 
+Der \ac{STAR} definiert ein bekanntes parametrisiertes Objekt. Es besteht aus einer Bedingung zur Anwendbarkeit und einer Definition  eines Plans. Ist ein STAR auf einen Teilplan anwendbar, wird dieser STAR an dieser Stelle referenziert. Der Plan selbst hat einen rootSTAR als Startpunkt. Mit Hilfe der Stars können alternative Pläne zusammengesetzt werden und so gefunden werden.
 
-Bei der Zusammensetzung von verschiedenen alternativen Plänen kommt ein Gluemechanismus zum Einsatz. Er verhindert, dass die Anzahl der Alternativen die in Plänen vorkommen vervielfacht werden. So entstehen aus GQMs QEPs deren Kosten geschätzt werden können.
+Bei der Zusammensetzung von verschiedenen alternativen Plänen kommt ein Gluemechanismus zum Einsatz. Er verhindert, dass die Anzahl der Alternativen die in Plänen vorkommen vervielfacht werden. So entstehen aus GQMs QEPs, deren Kosten geschätzt werden können.
 

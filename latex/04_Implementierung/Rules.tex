@@ -3,7 +3,7 @@ Auf die Planknoten müssen während der Enumeration Regeln angewendet werden. Di
 
 \subsection{Regelmengen}
 Mehrere Regeln werden in einer Regelmenge zusammengefasst.
-Insgesamt wurden vier unterschiedliche Regelmenegen implementiert: \textit{RS-B0}, \textit{RS-B1}, \textit{RS-B2} und \textit{GraphRule}.
+Insgesamt wurden vier unterschiedliche Regelmengen implementiert: \textit{RS-B0}, \textit{RS-B1}, \textit{RS-B2} und \textit{GraphRule}.
 Alle Mengen basieren auf den von Pellenkoft et al. vorgestellten Regelmengen und dem von \cite{shanbhag2014optimizing} implementierten GraphRule.
 
 \begin{figure}[ht]
@@ -28,7 +28,7 @@ Die Erweiterung der Regelmengen ist in verschiedenen Dimensionen möglich. Neue 
 Auf funktionaler Ebene ist es vorstellbar, dass die Reihenfolge der Regeln dynamisiert werden. Aktuell ist es nur möglich, die Regeln in Form eines Vektors auszugeben, dessen Reihenfolge immer gleich ist. Da alle konkreten Regelmengen von der selben Klasse \texttt{RuleSet} erben, ist die Implementierung einer anpassbaren Reihenfolge leicht möglich und muss für alle Klassen nur einmal vorgenommen werden.
 
 
-Auch das Hinzufügen von neuen Regeln zu bestehenden Regelmengen oder die Erweiterung von bestehenden Regelmengen ist möglich. Beispielsweise kann von bestehenden Regelmengen geerbt wird bzw. neue Regeln und deren Regelmengen durch die Implementierung der standardisierten Interfaces \textit{RuleSet} entstehen.
+Auch das Hinzufügen von neuen Regeln zu bestehenden Regelmengen oder die Erweiterung von bestehenden Regelmengen ist möglich. Beispielsweise kann von bestehenden Regelmengen geerbt werden, bzw. neue Regeln und deren Regelmengen durch die Implementierung der standardisierten Interfaces \textit{RuleSet} entstehen.
 
 Die Erweiterbarkeit konnte mit der Implementierung der Regelmenge  \textit{Graph Rule} unter Beweis gestellt werden, da diese Regelmenge erst später entwickelt wurde und auf die bestehende Infrastruktur aufsetzte.
 
@@ -44,9 +44,9 @@ Die Erweiterbarkeit konnte mit der Implementierung der Regelmenge  \textit{Graph
   \label{RuleClassDiagram}
 \end{figure}
 
-Die einzelnen Regeln, die Teil der Regelmengen sind, werden jeweils in einer eignen Klasse abgelegt. Aktuell sind acht Regeln vorhanden: (1) \texttt{Commutativity}, (2) \texttt{Left Associativity}, (3) \texttt{Right\-Associativity}, (4) \texttt{Commu\-tativity B2}, (5) \texttt{Left\-Associtativity-B2}, (6) \texttt{Right\-Associativity-B2}, (7) \texttt{Exchange}, (8) \texttt{Graph Rule}. Die Zuordnung der Regeln zu den unterschiedlichen Regelmenegen wurde in \ref{sec:RuleImplementation} erklärt und in Abb. \ref{RuleSetClass} veranschaulicht.
+Die einzelnen Regeln, die Teil der Regelmengen sind, werden jeweils in einer eigenen Klasse abgelegt. Aktuell sind acht Regeln vorhanden: (1) \texttt{Commutativity}, (2) \texttt{Left\-Associativity}, (3) \texttt{Right\-Associativity}, (4) \texttt{Commu\-tativity B2}, (5) \texttt{Left\-Associtativity-B2}, (6) \texttt{Right\-Associativity-B2}, (7) \texttt{Exchange}, (8) \texttt{GraphRule}. Die Zuordnung der Regeln zu den unterschiedlichen Regelmenegen wurde in \ref{sec:RuleImplementation} erklärt und in Abb. \ref{RuleSetClass} veranschaulicht.
 
-Einer der konzeptionellen Unterschiede zwischen den in Kapietl 3 beschriebenen Regeln und den hier implementierten Regeln ist, dass die hier implementierten Regeln per se kreuzproduktfrei sind. Es wird bereits vor der Anwendung einer Regel geprüft, ob eine Regel ein Kreuzprodukt generieren wird, nur wenn das Ergebnis kreuzproduktfrei sein wird, kommt die Regel zur Anwendung. Dieses Vorgehen ermöglicht,  bereits frühzeitig die Generierung von Plänen abzubrechen, wenn die erzeugten Pläne nicht zielführend sind. Da die Regeln nicht prüfen, ob nach ihrer Anwendung ein Kreuzprodukt entstanden ist, sondern diese Prüfung bereits zuvor geschieht, werden die Regelmengen im Folgenden auch nicht mit dem Post-Fix -CPS bezeichnet.
+Einer der konzeptionellen Unterschiede zwischen den in Kapitel 3 beschriebenen Regeln und den hier implementierten Regeln ist, dass die hier implementierten Regeln per se kreuzproduktfrei sind. Es wird bereits vor der Anwendung einer Regel geprüft, ob eine Regel ein Kreuzprodukt generieren wird. Nur wenn das Ergebnis kreuzproduktfrei sein wird, kommt die Regel zur Anwendung. Dieses Vorgehen ermöglicht es,  bereits frühzeitig die Generierung von Plänen abzubrechen, wenn die erzeugten Pläne nicht zielführend sind. Da die Regeln nicht prüfen, ob nach ihrer Anwendung ein Kreuzprodukt entstanden ist, sondern diese Prüfung bereits zuvor geschieht, werden die Regelmengen im Folgenden auch nicht mit dem Post-Fix -CPS bezeichnet.
 
 \subsubsection{Implementierung}
 
@@ -67,7 +67,7 @@ Die konkrete Implementierung der Regeln lässt sich am besten am Beispiel eines 
 Wie bereits bekannt, kann eine Äquivalenzklasse mehrere Planknoten beheimaten. Bei der Ausführung der Regeln wird ein Planknoten nach dem anderen betrachtet und für diesen eine Regel ausgeführt. In diesem Falle ist der Äquivalenzklasse \textit{parent.left} und \textit{parent.right} je nur ein Planknoten zugeordnet. Diesen Planknoten sind selbst wieder je zwei Äquivalenzklassen untergeordnet.
 
 
-Bei der Ausführung einer Regeln wird in die konkrete Regel der \textit{parent} und je ein konkreter Planknoten der untergeordneten Äuqivalenzklassen übergeben. Im konkreten Fall sind das \textit{left} und \textit{right}
+Bei der Ausführung einer Regel wird in die konkrete Regel der \textit{parent} und je ein konkreter Planknoten der untergeordneten Äuqivalenzklassen übergeben. Im konkreten Fall sind das \textit{left} und \textit{right}
 
 
 

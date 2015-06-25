@@ -3,7 +3,8 @@
 Bei der Erforschung eines Search Spaces kommen in regelbasierten Anfrageoptimierern Transformationsregeln zum Einsatz. Pellenkoft et al. \cite{pellenkoft1997duplicate} \cite{manegold2000multi} \cite{pellenkoft1997complexity} stellt drei Regelmengen zur Verfügung, die bei der Erzeugung eines Search Spaces zum Einsatz kommen können.
 
 
-Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt den Startpunkt dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht vorhanden sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
+
+Zu Beginn besteht ein Search Space aus einem Plan. Dieser Plan stellt den Startpunkt dar. Auf ihn werden Transformationsregeln angewendet. Neue Pläne entstehen. Sollten diese Pläne noch nicht bekannt sein, werden sie dem Suchraum hinzugefügt. Pläne auf die bereits alle anwendbaren Transformationsregeln angewendet wurden, werden als besuchte Pläne bezeichnet. Sobald alle Pläne besucht wurden und somit auf alle Pläne Transformationsregeln angewendet wurden, ist der Suchraum vollständig erforscht und keine weiteren Pläne können gefunden werden. Der Actual Search Space ist ausgeschöpft.
 
 Mehrere Transformationsregeln werden gemeinsam als Regelmenge bezeichnet. Pellenkoft et al. unterscheidet zwischen Regelmengen, die Pläne mehrfach generieren können und Regelmengen, die duplikatfrei sind. Beispielsweise kann durch die Anwendung der Regel Kommutativität auf einen Plan und erneute Anwendung auf dessen Resultat  der ursprüngliche Plan generiert werden. Im Folgenden werden zwei Regelmengen vorgestellt, die Duplikate bilden und eine Regelmenge, die duplikatfrei ist.
 
@@ -31,7 +32,7 @@ Durch die Anwendung der Regeln aus \textit{RS-B0} und \textit{RS-B1} können Pl�
 
 Ebenfalls können sich bei komplexeren Plänen  Teilpläne gleichen. Beispielsweise enthält der Plan $(A \Join B) \Join C$ den gleichen Subplan wie $C \Join (A \Join B)$.
 
-Um Duplikate zu verhindern, muss während des Ausführens der Regeln darauf geachtet werden, dass Duplikate erkannt und behandelt werden. Allerdings existiert auch eine Regelmenge, die per se keine Duplikate bildet. Diese wird im Folgenden behandelt.
+Um Duplikate zu verhindern, muss während des Ausführens der Regeln darauf geachtet werden, dass Duplikate erkannt und behandelt werden. Allerdings existiert auch eine Regelmenge, die per se keine Duplikate generiert. Diese wird im Folgenden behandelt.
 
 
 
@@ -54,7 +55,7 @@ Alle Regeln außer Kommutativität sind für $\Join_5$ deaktiviert.
 Regeln, die für einen Operator deaktiviert wurden, dürfen für diesen Operator nicht mehr ausgeführt werden.
 
 
-Die Duplikatfreiheit wird dadurch erreicht, dass beispielsweise Kommutativität nur einmal auf einen Knoten angewendet werden kann. Knoten, die aus dieser Anwendung entstehen, dürfen Kommutativität nicht mehr anwenden. Da nach Kommutativität keine weiteren Regeln auf einen Knoten angewendet werden dürfen, ist nach der Ausführung von Kommutativität klar, dass der ursprüngliche Plan nicht mehr erreicht werden kann. Bei den anderen Regeln ist es erlaubt, dass Kommutativität noch zur Anwendung kommt. Dies erlaubt es jedoch ebenfalls nicht den Ursprungszustand wieder zu erreichen. Somit ist es nicht möglich, dass Duplikate entstehen. Somit ist die Regelmenge duplikatfrei.
+Die Duplikatfreiheit wird dadurch erreicht, dass beispielsweise Kommutativität nur einmal auf einen Knoten angewendet werden kann. Knoten, die aus dieser Anwendung entstehen, dürfen Kommutativität nicht mehr anwenden. Da nach der Kommutativität keine weiteren Regeln auf einen Knoten angewendet werden dürfen, ist nach der Ausführung der Kommutativität klar, dass der ursprüngliche Plan nicht mehr erreicht werden kann. Bei den anderen Regeln ist es erlaubt, dass Kommutativität noch zur Anwendung kommt. Dies erlaubt es jedoch ebenfalls nicht den Ursprungszustand wieder zu erreichen. Somit ist es nicht möglich, dass Duplikate entstehen. Somit ist die Regelmenge duplikatfrei.
 
 
 

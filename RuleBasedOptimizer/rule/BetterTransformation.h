@@ -90,13 +90,9 @@ std::unordered_map<typename PlanNode_t::BV, std::unordered_set<BitVectorSmall<ui
 template <typename PlanNode_t, typename Operations_t, typename Rule_t>
 void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransformation<PlanNode_t, Operations_t, Rule_t>::EquivalenceClass_t &aEquivalenceClass) const
 {
-    //std::cout << aEquivalenceClass.getSignature() << std::endl;
-    
-    
-
-	//LOG(INFO) << "Start\t"<<  aEquivalenceClass.getRelations();
-
 	typedef typename EquivalenceClass_t::Iterator EItr;
+    
+    
 	// insert to known map in case it doesnt exist
 	if (_knownEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
 	{
@@ -112,18 +108,12 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
         _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(* aEquivalenceClass.getFirst())}});
     }
     
-    if(aEquivalenceClass.isBaseRelation())
+    if(aEquivalenceClass.isBaseRelation() && aEquivalenceClass.getRelations().size() == 1)
     {
         _knownEquivalenceClasses.insert({{aEquivalenceClass.getRelations(), aEquivalenceClass}});
-        //std::cout << "SMALL";
     }
     else
     {
-	//LOG(INFO) << "INTER\t"<<  aEquivalenceClass.getRelations();
-
-
-	
-	//LOG(INFO) << "INTER2\t"<<  aEquivalenceClass.getRelations();
 	std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> knownEQSignatures;
 	bool isNew = true;
     int i = 0;
@@ -133,26 +123,22 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
         for (EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
         {
             apply(eq->l());
-            
-            //LOG(INFO) << "APPLY TO: " << eq->l().getRelations();
             if (eq->hasRight())
             {
                 apply(eq->r());
-                //LOG(INFO) << "APPLY TO: " << eq->r().getRelations();
             }
         }
         i++;
         
-        //if(i > 1) LOG(INFO) << "RE RUN";
+        isNew = false;
         
-        
-        //LOG(INFO) << "RUN: "<< i;
-		isNew = false;
+
+		
 		for (EItr eq = aEquivalenceClass.begin(); eq.isOK(); ++eq)
 		{
             if(!eq->l().isBaseRelation())
             {
-            apply(eq->l());
+                apply(eq->l());
             }
             if (eq->hasRight() && !eq->r().isBaseRelation())
 			{
@@ -167,10 +153,17 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
 						{
 							if (r->isApplicable(* eq.node(), * leftItr.node(), * rightItr.node()))
 							{
-								PlanNode_t *p = r->apply(* eq.node(), * leftItr.node(), * rightItr.node());
                                 
-                                
-                                
+								PlanNode_t *p_new = r->apply(* eq.node(), * leftItr.node(), * rightItr.node());
+                                if(r->getName() != "Commutativity" && r->getName() != "Commutativity_B2")
+                                {
+                                /*std::cout << "\n"<< r->getName() << "";
+                                eq.node()->print();
+                                std::cout << "->";
+                                p_new->print();
+                                */
+                                }
+                                PlanNode_t *p = p_new;
                                 
 
 								// if left or right is known
@@ -191,28 +184,34 @@ void BetterTransformation<PlanNode_t, Operations_t, Rule_t>::apply(BetterTransfo
                                     apply(p->r());
                                 }
 
-								//LOG(WARNING) << "SIG\t\t"<< p->getSignature();
-                                //LOG(INFO) << r->getName();
+                                bool run = true;
+                                while(run)
+                                {
+                                    run = p->hasNext();
                                 if(_foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).count(signature(*p)) == 0)
                                 {
                                     if(_foundEquivalenceClasses.count(aEquivalenceClass.getRelations()) == 0)
                                     {
-                                        //std::cout << "ADD\n";
                                         _foundEquivalenceClasses.insert({{aEquivalenceClass.getRelations(),{{}}}});
-                                        //std::cout << _foundEquivalenceClasses.count(aEquivalenceClass.getRelations());
                                     }
                                     aEquivalenceClass.push_back(* p);
                                     knownEQSignatures.insert({{p->getSignature()}});
                                     isNew = true;
-                                    //std::cout << _foundEquivalenceClasses.count(aEquivalenceClass.getRelations());
-                                    //std::cout << signature(*p);
-                                    //std::cout << std::endl;
                                     _foundEquivalenceClasses.at(aEquivalenceClass.getRelations());
                                     _foundEquivalenceClasses.at(aEquivalenceClass.getRelations()).insert({{signature(*p)}});
 
                                 }
+                                    if(p->hasNext())
+                                    {
+                                        
+                                        p = p->getNext();
+                                    }
+                                    
+                                    
+                                    
+                                }
 
-							}
+                            }
 						}
 					}
 				}

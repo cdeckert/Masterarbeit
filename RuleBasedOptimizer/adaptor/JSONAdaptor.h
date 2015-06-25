@@ -11,6 +11,12 @@
 #include "json11.hpp"
 #include "Operations.h"
 
+/**
+ * @brief Adaptor to build a tree based on JSON
+ * @details This adaptor is used to generate json based on a given JSON rep.
+ *
+ * @tparam PlanNode_t a Standard PlanNode
+ */
 template <typename PlanNode_t>
 class JSONAdaptor
 {
@@ -20,27 +26,23 @@ class JSONAdaptor
 	typedef std::unordered_map<u_int, EquivalenceClass_t *>  RelationsMap_t;
 
 public:
-	/**
-	 * @brief [brief description]
-	 * @details [long description]
-	 */
-	JSONAdaptor() {};
+
 
 	/**
-	 * @brief [brief description]
-	 * @details [long description]
+	 * @brief Parsing a json-string and returns  a new initial tree
+	 * @details Based on json-string the method returns a new Equivalence Class
 	 *
-	 * @param  [description]
-	 * @return [description]
+	 * @param  a json reprsentation of a tree
+	 * @return a tree which is part of a equivalence class
 	 */
 	EquivalenceClass_t *parse(std::string);
 
 	/**
-	 * @brief [brief description]
-	 * @details [long description]
+	 * @brief Dumping the data back
+	 * @details Creates based on a given Equivalnceclass a json object
 	 *
-	 * @param t [description]
-	 * @return [description]
+	 * @param t a given Equivalence Class
+	 * @return a json object
 	 */
 	json11::Json dump(EquivalenceClass_t *);
 
@@ -74,7 +76,7 @@ JSONAdaptor<PlanNode_t>::getRelations(json11::Json json)
 		relations.at(edge["to"].int_value())->addNeighbor(edge["from"].int_value());
 	}
 	return relations;
-}
+};
 
 template <typename PlanNode_t>
 typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *
@@ -88,7 +90,7 @@ JSONAdaptor<PlanNode_t>::createJoinTree(json11::Json query)
 	{
 		return o->join( * createJoinTree(query["l"]), * createJoinTree(query["r"]));
 	}
-}
+};
 
 template <typename PlanNode_t>
 typename JSONAdaptor<PlanNode_t>::EquivalenceClass_t *
@@ -101,7 +103,7 @@ JSONAdaptor<PlanNode_t>::parse(std::string input)
 	relationMap = getRelations(json);
 
 	return createJoinTree(json["query"]);
-}
+};
 
 template <typename PlanNode_t>
 json11::Json JSONAdaptor<PlanNode_t>::dump(EquivalenceClass_t *input)
@@ -111,7 +113,7 @@ json11::Json JSONAdaptor<PlanNode_t>::dump(EquivalenceClass_t *input)
 	result = json11::Json::array(plans);
 	std::cout << result.dump();
 	return result;
-}
+};
 
 template <typename PlanNode_t>
 std::vector<json11::Json>
@@ -148,5 +150,5 @@ JSONAdaptor<PlanNode_t>::writeJson(EquivalenceClass_t *input)
 	}
 
 	return plans;
-}
+};
 #endif

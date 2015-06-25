@@ -1,0 +1,57 @@
+\begin{algorithm}[ht]
+\SetAlgoLined
+\SetKwFunction{apply}{apply}
+\SetKwProg{myalg}{Algorithm}{}{}
+
+\myalg{\apply{EquivalenceClass eq}}{
+    isNewEquivalenceClassSpotted = true
+    
+    \While{isNewEquivalenceClassSpotted}{
+    
+        isNewEquivalenceClassSpotted = false
+        
+        \For{PlanNode p in eq.PlanNodes}{
+            
+            \If{p.hasLeft()}
+            {
+                apply(p.getLeft())
+            }
+            
+            \If{p.hasRight()}
+            {
+                apply(p.getRight())
+            }
+            
+            \For{Rule r in rules}{
+                \If{r.isApplicable(p)}{
+                    PlanNode newPlan = r.apply(p)
+                    
+                    \If{isEquivalenceClassKnown(planNode.getLeft())}{
+                        planNode.setLeft(getKnownClass(planNode.getLeft())
+                    }
+                    \Else
+                    {
+                        apply(planNode.getLeft())
+                        isNewEquivalenceClassSpotted = true
+                    }
+                    
+                    \If{isEquivalenceClassKnown(planNode.getRight())}{
+                        planNode.setRight(getKnownClass(planNode.getRight())
+                    }
+                    \Else
+                    {
+                        apply(planNode.getRight())
+                        isNewEquivalenceClassSpotted = true
+                    }
+                    
+                    
+                }
+            }
+            
+            
+        }
+    }
+}
+\label{Pseudocod:enumerator}
+\caption{Rekusiver Enumerator}
+\end{algorithm}

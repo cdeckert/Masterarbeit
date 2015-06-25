@@ -8,20 +8,20 @@
   \label{ScenarioGenerator}
 \end{figure}
 
-Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien (vgl. Abb. \ref{ScenarioGenerator}), auf der anderen Seite ein in C++ implementiertes Modul zum Einlesen der Konfiguration. Mit Hilfe der HTML-Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem, das in  zu sehen ist, bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, Selektivitäten festzulegen und schlussendlich einen initialen Plan zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelmengen, die geprüft werden sollen, festzulegen.
+Das Konfigurationsmodul besteht aus zwei Komponenten. Auf der einen Seite eine Javascript-HTML Anwendung zur Generierung von Test-Szenarien (vgl. Abb. \ref{ScenarioGenerator}), auf der anderen Seite ein in C++ implementiertes Modul zum Einlesen der Konfiguration. Mit Hilfe der HTML-Anwendung können Konfigurationsfiles für den späteren Test erstellt werden. Dieses Konfigurationssystem bietet dem Nutzer die Möglichkeit Relationen mit Kardinalitäten zu erzeugen, Selektivitäten festzulegen und schlussendlich einen initialen Plan zu erzeugen. Ebenfalls ist es möglich die verschiedenen Regelmengen, die geprüft werden sollen, festzulegen.
 
 Das Ergebnis dieses Moduls ist eine Konfigurationsdatei im JSON-Format. Das Tool unterstützt die Erzeugung mehrerer Szenarien in einem Konfigurationsfile. So können mehrere Szenarien in einem Test-Run durchgespielt werden. Die Verwendung des JSON-Formats bietet viele Vorteile. U.a. waren die folgenden Vorteile ausschlaggebend für die Verwendung von JSON:
 
 \begin{itemize}
 \item Im Gegensatz zu XML ist JSON einfacher. Weniger Grammatik ist vorhanden.
-\item Das Format ist hoch interoperable und kann nativ von Javasciript ausgegeben werden. Ebenfalls ist es möglich mit Hilfe von einfachen Parsern JSON in C++ zu verarbeiten.
+\item Das Format ist hoch interoperable und kann nativ von JavaScript ausgegeben werden. Ebenfalls ist es möglich mit Hilfe von einfachen Parsern JSON in C++ zu verarbeiten.
 \item JSON ist durch die einfache, jedoch standardisierte Form leicht für den Menschen zu lesen und Fehler sind leichter aufzuspüren.
 \item Das gewählte Format zur Repräsentation der unterschiedlichen Parameter ist einfach erweiterbar. Attribute und neue Objekte können jederzeit hinzugefügt werden.
 \end{itemize}
 
 \subsection{Aufbau und Funktion der Konfigurationsdatei}
 
-Ein konkretes Konfigurations-File ist in \ref{JsonConfigFile} zu sehen. Jedes Konfigurations-File ist ein Array von Test-Objekten. Für jeden Test wird mit dem Attribut \texttt{name} ein Name gespeichert. Für jede Relation, die in einem Test vorkommt, wird ein Relations-Objekt erzeugt. Es besteht aus einer \texttt{id}, der Relations-Id, und der dazugehörigen Kardinalität. Mehrere dieser Relations-Objekte werden in einem Array gespeichert und sind dem \texttt{relation}-Attribut des Test-Objekts zugewiesen. Im konkreten Fall sind zwei Relationen vorhanden. Eine mit der \texttt{id:1} und eine mit der \texttt{id:2} 2. Für Beide wurde eine Kardinalität zugewiesen. 
+Ein konkretes Konfigurations-File ist in \ref{JsonConfigFile} zu sehen. Jedes Konfigurations-File ist ein Array von Test-Objekten. Für jeden Test wird mit dem Attribut \texttt{name} ein Name gespeichert. Für jede Relation, die in einem Test vorkommt, wird ein Relations-Objekt erzeugt. Es besteht aus einer \texttt{id}, der Relations-Id, und der dazugehörigen Kardinalität. Mehrere dieser Relations-Objekte werden in einem Array gespeichert und sind dem \texttt{relation}-Attribut des Test-Objekts zugewiesen. Im konkreten Fall sind zwei Relationen vorhanden. Eine mit der \texttt{id:1} und eine mit der \texttt{id:2}. Für Beide wurde eine Kardinalität zugewiesen. 
 
 Auch für Join-Kanten werden Objekte erzeugt. Ein Join-Kanten Objekt bezeichnet eine Kante zwischen zwei Relationen. Eine Kante könnte, wie im Beispiel zu sehen von der Relation 1 zu der Relation 2 verlaufen, wobei die Richtung nicht entscheidend ist. Einer Join-Kante wird auch eine Selektivität zugeordnet. Mehrere dieser Join-Edge-Objekte werden als Array im Attribut \texttt{joinEdges} hinterlegt.
 
@@ -41,7 +41,7 @@ Die eigentliche Konfiguration findet in C++ statt. Mit der Bibliothek json11 \ci
 
 Jedes Konfigurationsobjekt (vgl. Abb. \ref{Konfiguration}) bietet eine Menge unterschiedlicher Methoden an, um Informationen über den aktuellen Test zu erlangen.
 
-Mit Hilfe der Methode \texttt{getInitaleTree()} wird ein Baum aus Äquivalenzklassen und Planknoten erstellt, die den initialen Plan erzeugen. Die Methode ergibt immer eine neue Instanz des gesamten Baums.
+Mit Hilfe der Methode \texttt{getInitialTree()} wird ein Baum aus Äquivalenzklassen und Planknoten erstellt, die den initialen Plan erzeugen. Die Methode ergibt immer eine neue Instanz des gesamten Baums.
 
 Die Kardinalität und Selektivität, die als ausschlaggebende Kennzahlen zur Berechnung des optimalen Plans herangezogen werden, sind mit den Methoden \texttt{get\-Cardinaility()} und \texttt{get\-Selectivity()} zu erfragen. Auch die getesteten Algorithmen können mit der Methode \texttt{getAlgorithms()} ausgelesen werden.
 

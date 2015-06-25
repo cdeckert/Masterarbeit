@@ -1,8 +1,8 @@
-\section{Prüfung der Vollständigkeit}
+\section{Prüfung auf Vollständigkeit}
 
-Von \cite{shanbhag2014optimizing} wurde die Vollständigkeit der Regelmenegen geprüft. Eine Regelmenge wird dann als vollständig gewertet, wenn sie genutzt werden kann, um einen Suchraum von allen kreuzproduktfreien Plänen aus einem initialen Plan, der keine Kreuzprodukte enthält, zu erzeugen. In diesem Zusammenhang lassen sich drei Aspekte genauer betrachteten: (1) alle Pläne müssen gefunden werden; (2) die Pläne müssen kreuzproduktfrei sein; (3) sie müssen aus einem initialen Plan ohne Kreuzprodukte gebildet werden.
+Von \cite{shanbhag2014optimizing} wurde die Vollständigkeit der Regelmenegen geprüft. Eine Regelmenge wird dann als vollständig gewertet, wenn sie genutzt werden kann, um einen Suchraum von allen kreuzproduktfreien Plänen aus einem initialen Plan, der keine Kreuzprodukte enthält, zu erzeugen. In diesem Zusammenhang lassen sich drei Aspekte genauer betrachten: (1) alle Pläne müssen gefunden werden; (2) die Pläne müssen kreuzproduktfrei sein; (3) sie müssen aus einem initialen Plan ohne Kreuzprodukte gebildet werden.
 
-Um sicherzustellen, dass die erzeugten Pläne kreuproduktfrei sind, wurde von \cite{shanbhag2014optimizing} ein Mechanismus zur Kreuzproduktunterdrückung implementiert. Der Mechanismus sieht vor, dass nachdem ein neuer Plan mit Hilfe einer Regel erzeugt wurde, geprüft wird ob der erzeugte Plan kreuzproduktfrei ist. Nur wenn das der Fall ist wird der neue Plan gespeichert. Falls der neue Plan Kreuzprodukte enthält, wird die Regel zwar als ausgeführt markiert, aber das Ergebnis nicht gespeichert. Nur Ergebnisse, die kreuzproduktfrei sind, werden als Input für eine Regel akzeptiert. Regelmengen, die Kreuzprodukte durch diesen Mechnanismus verhindern,  werden mit dem Postfix -CPS versehen. So entstehen die neuen Regelmengen RS-B0-CPS, RS-B1-CPS und RS-B2-CPS.
+Um sicherzustellen, dass die erzeugten Pläne kreuzproduktfrei sind, wurde von \cite{shanbhag2014optimizing} ein Mechanismus zur Kreuzproduktunterdrückung implementiert. Der Mechanismus sieht vor, dass nachdem ein neuer Plan mit Hilfe einer Regel erzeugt wurde, geprüft wird, ob der erzeugte Plan kreuzproduktfrei ist. Nur wenn das der Fall ist, wird der neue Plan gespeichert. Falls der neue Plan Kreuzprodukte enthält, wird die Regel zwar als ausgeführt markiert, aber das Ergebnis nicht gespeichert. Nur Ergebnisse, die kreuzproduktfrei sind, werden als Input für eine Regel akzeptiert. Regelmengen, die Kreuzprodukte durch diesen Mechanismus verhindern,  werden mit dem Postfix -CPS versehen. So entstehen die neuen Regelmengen RS-B0-CPS, RS-B1-CPS und RS-B2-CPS.
 
 
 
@@ -10,132 +10,75 @@ Um sicherzustellen, dass die erzeugten Pläne kreuproduktfrei sind, wurde von \c
 
 \subsection{Prüfung von Regelmenge RS-B0-CPS und RS-B1-CPS}
 
-Bei der Prüfung der beiden Regelmengen RS-B0-CPS und RS-B1-CPS auf Voll\-ständigkeit wurde zuerst festgestellt, dass wenn RS-B1-CPS vollständig ist auch automatisch RS-B0-CPS als vollständig gilt. Dies lässt sich darauf zurückführen, dass im Gegensatz zu RS-B1-CPS die Regelmenge RS-B0-CPS eine weitere, zusätzliche Regel implementiert. Da bereits die Regelmenge RS-B1-CPS vollständig ist, ist auch automatisch die Regel RS-B0-CPS vollständig, da die zusätzliche Regel keine bisher unbekannten Pläne erzeugen kann.
+Bei der Prüfung der beiden Regelmengen RS-B0-CPS und RS-B1-CPS auf Voll\-ständigkeit wurde zuerst festgestellt, dass wenn RS-B1-CPS vollständig ist und damit auch RS-B0-CPS. Dies lässt sich darauf zurückführen, dass im Gegensatz zu RS-B1-CPS die Regelmenge RS-B0-CPS eine weitere, zusätzliche Regel implementiert.
 
-In einem ersten Schritt wird gezeigt, dass für jeden Join-Graphen ein kreuzprodukfreier links-tiefer Baum erzeugt werden kann. 
-Aus einem gegebenenen Join-Graphen $G = (V, E)$ kann ein links-tiefer Baum gebildet werden, indem ein belibiger Knoten $v \in V$ als Start-Teilbaum $T_1$ gewählt wird. Aus dem $G$ wird dann ein beliebiger Knoten ausgewählt, der mit einem Knoten aus $T_i$ über eine Kante $e \in E$ verbunden ist, aber nicht Teil von $T_i$. Dieser Knoten wird dann mit dem Teilbaum $T_i$ verknüpft, so dass ein neuer Teilbaum entsteht. Sobald alle Knoten $V$ Teil des Teilbaums sind, ist ein kreuzproduktfreier Baum gebildet.
+In einem ersten Schritt wird von \cite{shanbhag2014optimizing} gezeigt, dass für jeden Join-Graphen ein kreuzprodukfreier links-tiefer Baum erzeugt werden kann.  \cite{shanbhag2014optimizing} führt drei Lemmas ein, die die Vollständigkeit belegen:
 
+\begin{enumerate}
+\item Gegeben sei ein kreuzproduktfreier Baum mit den Relationen $R_1, ..., R_k$. Es ist möglich diesen Baum so zu transformieren, dass $T \Join R_k$ entsteht, wobei $T$ ein Join-Tree aus $R_1, ..., R_{k-1}$ ist.
+\item Aus jedem kreuzproduktfreien Baum kann ein links-tiefer kreuzproduktfreier Baum erzeugt werden.
+\item Aus jedem links-tiefen Baum, kann jeder beliebige kreuzproduktfreie Baum erzeugt werden.
+\end{enumerate}
 
+Mit Hilfe des ersten Lemmas ist es möglich, dass einzelne Relationen bzw. Teilbäume innerhalb des Plans so verschoben werden, dass sie als letzte gejoint werden.
 
-
-\newtheorem{lem}{Lemma} 
-\newtheorem{teo}{Theorem}
-\begin{lem}
-Gegeben sei ein kreuzproduktfreier Baum mit den Relationen $R_1, R_2, ... , R_k$. Mit Hilfe von RS-B1-CPS kann dieser Baum so transformiert werden, dass $T \Join R_k$ entsteht, wobei $T$ ein Join-Tree ist, der aus den Relationen $R_1, .., R_{k-1}$ zusammengesetzt ist.
-\end{lem}
-
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[scale=0.4]{03_Regeln/00_media/ReducedQueryTree.png}
-  \caption{Reduzierter Query-Tree}
-  \label{ReducedQueryTree}
-\end{figure}
-
-
-
-$Beweis:$ Das Ziel des Lemma ist es zu zeigen, dass aus einem gegebenen kreuzproduktfreien Baum die Relation mit der höchsten Nummer ($R_k$) so nach oben verschoben werden kann, dass diese Relation zuletzt gejoint wird.
-
-Sei $R_k$ die Relation mit der höchsten nummer und die Relationen $R_1, ..., R_{k-1}$ andere Relationen innerhalb des Baums. Unter verwendung der Kummutativitätsregel können wir den gegebenen Query-Tree so transformieren, dass ein Baum entsteht, wie er in Abbildung \ref{ReducedQueryTree} zu sehen ist. $C_1, C_2, .. C_m$ sind hierbei Join Trees, die wiederum aus einer Menge von Relationen bestehen. Da die Anwendung von Kommutatvitität niemals ein Kreuzprodukt erzeugt, ist diese und alle zwischen Zustände des Graphen kreuzproduktfrei. Die in $m$ angegebene Zahl ist nicht nur die höchste Nummer mit der ein $C$ bezeichnet wird, sondern drückt zudem die Tiefe von $R_k$ aus.
-
-\textbf{Basis Fall:} Bei einer Tiefe von $m = 1$, ist die Relation $R_k$ automatisch die letzte Relation die gejoint wird. Daher ist das Lemma für diesen Fall korrekt.
-
-\textbf{Induktion:} Angenommen Lemma 1 ist korrekt für $m <= j$. Sei die Tiefe von $R_k$ $m = j+1$. 
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[scale=0.4]{03_Regeln/00_media/SwapC1.png}
-  \caption{Tausch von $C_i$ und $C_{i-1}$}
-  \label{SwapC1}
-\end{figure}
-
-
-
-Angenommen Lemma 1 sei korrekt für $ m <= j$ und die Tiefe von $R_k$ $m = j + 1$. Angenommen es existiert ein Subbaum aus $R_1, R_2,.. , R_k$. Solange $R_k$ die letzte Relation ist die gejoint wird, dann gibt es ein $C_1$ das jeoint werden kann mit mindestenens einem andereren der $C$ beispielsweie mit $C_i$. Dadurch ist es möglich, dass $C_i$ nach unten zu $C_1$ verschoben wird indem die folgende Sequenz an Regeln angewendet wird.
-
-Wie in Abbildung \ref{SwapC1} a zu sehen ist, gibt es ein X, das die rechte Seite eines Subtrees darstellt und der mit $C_{i-1}$ gejoint ist. Wir wenden auf den Join $\Join_2$ die Kommutativitätsregel an, so entsteht Abbildung \ref{SwapC1} b. Auf den Join $\Join_1$ wird linke-Assoziativität angewendet, so entsteht $\Join_3$. Mit einer finalen Anwendung von Kommutativität auf $\Join_3$ entsteht \ref{SwapC1} d.
-
-Jeder Zwischenschritt ist kreuzproduktfrei, da $C_i$ ein Join Prädikat mit $C_1$ besitzt welches Teil des Subtrees $X$  wie auch $C_{i-1}$.
-
-Am Ende der Sequenz von Transformationen ist $C_i$ einen Schritt näher an $C_1$ gerückt. Jedes Mal, wenn die Sequenz angewendet wird, rückt $C_1$ noch ein Stück näher.
-
-Zum Schnluss ist $C_1$ auf dem selben Level wie $C_i$ wie es in Abbildung \ref{} a zu sehen ist.  Mit Hilfe von linker Assoziativität kann dann der Baum aus Abbildung \ref{} b erzeugt werden.  Dieser Baum ist auch kreuzproduktfrei, da $C_i$ und $C_1$ ein gemeinsames Prädikat besitzen und so tuen es auch $R_k$ und $C_1$.
-
-Die Tiefe von $R_k$ ist nun von $j + 1$ auf $j$ verkleinert, dies induziert, dass die Hypothese für $m <= j$ korrekt ist und somit das Lemma bewiesen.
-
-
-\begin{lem}
-Gegeben Sei ein Join-Graph $G$ und ein kreuzproduktfreier Query Tree, der aus G gebildet wurde, dann kann dieser in einen links-tiefen Tree basierend auf $G$ transformiert werden mit Hilfe von $RS-B1-CPS$.
-
-
-\end{lem}
-
-$Beweis:$ Angenommen die Relationen eines links-liefen Join-Trees sind nummeriert von $R_1$ bis $R_n$. Wie bereits zeigt in Lemma 1, ist die Transformation mit RS-B1-CPS möglich, die $R_n$ nach oben bewegt, sodass sie die letzte Relation ist, die gejoint wird. Die Regeln, die in RS-B1-CPS sind können angewendet werden, um den linken subTree des Resukatsbaums in einen Baum mit $R_{n-1}$ nach oben zu schieben. Es ist einfach zu zeigen, dass mit Hilfe von Indution, dass der gewünschte link-tiefe Baum erzeugt werden kann durch die Anwendung von RS-B1-CPS.
-
-\begin{lem}
-Gegeben sei ein Join Graph G. Ein beliebiger link-liefer Join Tree $T1$ kann in jeden kreuzproduktfrein Query Tree T2 transformiert werden mit RS-B1-CPS.
-\end{lem}
-
-$Beweis:$ Wie in Lemma 2 zu sehen, kann jeder Kreuzproduzktfreie Join Treee T2 in einen kreuzproduktfreien links-liefen Baum transfomriert werden. Wenn diese Sequenz, die zur Erzeugung des links-liefen baums ausgeführt wird, rückwärts abläuft, kann so der links-liefe Baum aus dem beliebigen Baum gebildet werden. Wobei anstatt von linker-Assoziativität rechte-Assoziativität zum Einsatz kommen muss. Zwar ist rechte-Assoziativität Teil nicht Teil von RS-B1-CPS kann jedoch mit Hilfe von Assoziativität und Kommutativität hergestellt werden. 
- 
-
-\begin{teo}
-Die Regelmenge RS-B1-CPS ist vollständig, gegeben sei ein beliebiger kreuzproduktfreier Join Tree T1. dann ist es möglich alle anderen kreuzproduktfreien Bäume aus diesem zu erstellen, indem eine Reihe von Regeln als RS-B1-CPS angewendet werden.
-\end{teo}
-
-$Beweis:$ Der Bereis für die Vollständigkeit lässt sich aus Lemma 2 und Lemma 3 ableiten. Wir können jeden Tree in einen links-tiefen Baum umwnadeln und dies wieder 
+Dank Lemma 2 und 3 kann die Vollständigkeit belegt werden. Da Lemma 2 aussagt, dass aus jedem Baum ein links-tiefer Baum gebildet werden kann und mit Hilfe von Lemma 3 aus jedem links-tiefen Baum jeder andere Baum gebildet werden kann, können Bäume immer zuerst in einen links-tiefen und von dort aus in jeden anderen kreuzproduktfreien Baum transformiert werden. Die Regelmenge RS-B1-CPS ist somit vollständig. 
 
 
 
 
-Es wurde angenommen, dass für einen kreuzproduktfreien Baum mit den Relationen $R_1, R_2, ..., R_k$
 
 
 \subsection{Unvollständigkeit von RS-B2}
 
+
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{02_Related_Work/Graphs.pdf}
-  \caption{Incompletness of RS-B2-CPS}
+  \caption{Unvollständigkeit von RS-B2-CPS}
   \label{Incompleteness_RS-B2-CPS}
 \end{figure}
 
 
-Die Unvollständigkeit wurde mit Hilfe eines Beispiels belegt. Als Beispiel wurde der Bushy-Tree gewählt, der in Abbildung \ref{Incompleteness_RS-B2-CPS} zu sehen ist. Mit Hilfe der Regeln aus der Regelmenge RS-B2 sollte der initale Plan () in den Plan () umgewandelt werden. Dabei werden die vier Regeln der Regelmenge angewendet.
+Die Unvollständigkeit wurde mit Hilfe eines Beispiels belegt. Als Beispiel wurde der Bushy-Tree gewählt, der in Abbildung \ref{Incompleteness_RS-B2-CPS} zu sehen ist. Mit Hilfe der Regeln aus der Regelmenge RS-B2 sollte der initiale Plan (Q1) in den Plan (Q2) umgewandelt werden. Es wird versucht,  mit allen Regeln, der Regelmenge RS-B2 den Baum so zu transformieren, dass der gewünschte Zustand entsteht.
 
-\begin{itemize}
-\item Mit der Kommutativitätsregel ist es möglich ein Spiegelbild des original Baums herzustellen, aber nicht den Plan grundlegend zu verändern.
-\item Bei der Anwendung von linker Assoziativität auf den Root-Knoten des Baum würde ein neuer Baum erzeugt werden dessen
-\item Das Ergebnis von rechter Assoziativität ist symmetrisch zu linker Assoziativität.
-\end{itemize}
+Zuerst soll der Baum mit der Kommutativitätsregel transformiert werden. Bei der Anwendung der Regel auf alle Planknoten wird klar, dass nur eine Kopie des Baums erzeugt werden kann, der den Baum spiegelt.
+
+Durch die Anwendung von rechter Assoziativität kann auch R1 und R4 nicht vertauscht werden. Wendet man beispielsweise rechte Assoziativität auf den obersten Join-Knoten an, so entsteht ein neuer Baum, der ähnlich dem Graphen Q1 ist. Dem neuen Graphen wird auf der linken Seite der Knoten R5 hinzugefügt, wobei R4 und R6 eine Ebene weiter nach oben rutschen. Da auf diesen Knoten nur noch die Kommutativitätsregel angewendet werden kann, ist es nicht möglich, trotz eines späteren Tausches von R1 und R4 mit Hilfe der Exchange Regeln den in Abbildung Q2 vorgesehenen Endzustand zu erreichen. Auch eine Anwendung der Regel auf die untergeordneten Sub-Bäume kann die R1 und R4 nicht vertauschen.
+
+Für die Anwendung der Exchange Rule ist es notwendig, dass Q1 in der Form ist, dass der linke Subbaum die Form $(R2 \Join R3) \Join R1$ besitzt und die rechte Seite die Form $R4 \Join (R5 \Join R6)$. Da jedoch die Knoten R2 und R3 keine Verbindung zueinander haben, ist es auch nicht möglich die Regel auszuführen. Daher ist der Austausch nicht möglich.
+
+Es ist zwar möglich R2 und R5, R2 und R6, R3 und R5 sowie R3 und R6 zu vertauschen indem die Exchange-Regel angewendet wird. So können zwar alternative Pläne erzeugt werden, jedoch durch die Abschaltung der Regeln auf den entsprechenden Join-Knotwen wird es unmöglich die Exchange-Regel so anzuwenden, dass R1 und R4 vertauscht werden.
 
 
-Welche Regel auch immer auf den Baum angewendet wird, es ist nicht möglich den einen in den anderen Baum zu transformieren.
+Somit ist klar, dass RS-B2 nicht vollständig ist und der gesamte Suchraum nicht exploriert werden kann.
+
+
+
+
 
 \subsection{Unvollständigkeit von RS-B2 mit Hilfe von PyroJ}
 
-Die Unvollständigkeit wurde auch mit Hilfe von PyroJ gezeigt. Hierzu wurden für die Regeln RS-B1-CPS und RS-B2-CPS. Die Tests wurden mit sternförmigen Anfragen durchgeführt. In Tabelle \ref{pyroIncomplete} ist die Menge der Relationen, die verwendet wurden und die korrespondierenden Operatoren-Knoten zu sehen, die durch die beiden Algorithmen generiert wurden. Es wird klar, dass erheblich weniger Knoten gefunden wurden. 
+Die Unvollständigkeit wurde auch mit Hilfe von PyroJ gezeigt. Hierzu wurden für die Regeln RS-B1-CPS und RS-B2-CPS verwendet. Die Tests wurden mit sternförmigen Anfragen durchgeführt. In Tabelle \ref{pyroIncomplete} sind die Anzahl der Relationen, die verwendet wurden und die korrespondierende Anzahl der Operatoren-Knoten zu sehen, die durch die beiden Algorithmen generiert wurden. Es wird klar, dass mit RS-B2 erheblich weniger Knoten gefunden wurden. 
 
 \begin{figure}[ht]
 \centering
 
-\begin{tabular}{lll}
+\begin{tabular}{|l|l|l|}
 Relationen & RS-B2-CPS & RS-B1-CPS \\
 5          & 43        & 75        \\
 7          & 207       & 399       \\
 9          & 1043      & 2067      \\
-11         & 5143      &          
+11         & 5143      & 10263 \\         
 \end{tabular}
-\caption{Operatorenknoten-Vergleich bei Sternförmigen initalen Plänen}
+\caption{Operatorenknoten-Vergleich bei Sternförmigen initialen Plänen}
 \label{pyroIncomplete}
 \end{figure}
 
 
-Bei den Test, die von \cite{bachelor} durchgeführt wurden, wurde außerdem festgestellt, dass für eine bestimmte Anfrage (Query 7 des TPC-DS benchmarks ohne Aggregation) Gesamtkosten mit Hilfe von RS-B2 geschätzt wurden, die um den Faktor 1.86 höher sind als die von RS-B1 ermittelten.
+%Bei den Tests, die von \cite{bachelor} durchgeführt wurden, wurde außerdem festgestellt, dass für eine bestimmte Anfrage (Query 7 des TPC-DS Benchmarks ohne Aggregation) Gesamtkosten mit Hilfe von RS-B2 geschätzt wurden, die um den Faktor 1.86 höher sind als die von RS-B1 ermittelten.
 
 Diese Ergebnisse werden in Kaptel 5 erneut aufgegriffen und überprüft.
 
 
 
-
-\subsection{Hinweise auf Unvollständigkeit}

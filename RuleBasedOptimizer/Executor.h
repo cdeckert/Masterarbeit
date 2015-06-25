@@ -22,6 +22,7 @@
 #include "GraphRuleSet.h"
 #include "BetterTransformation.h"
 #include "SimpleCostEstimator.h"
+#include "ExpandDAG.h"
 
 template <typename T>
 class Executor
@@ -40,8 +41,8 @@ class Executor
 	typedef GraphRuleSet<PlanNode_t, Operations_t> GraphRuleSet_t;
 
 	typedef BetterTransformation<PlanNode_t, Operations_t, Rule_t> BetterTransformation_t;
-	//typedef ExhaustiveTransformation<PlanNode_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 	typedef BetterTransformation_t ExhaustiveTransformation_t;
+	//typedef ExpandDAG<PlanNode_t, Operations_t, Rule_t> ExhaustiveTransformation_t;
 	//typedef RS_B0<PlanNode_t, Operations_t> RS_B0_t;
 
 public:
@@ -108,15 +109,16 @@ void Executor<T>::run() const
 
 			LOG(INFO) << "NUMBER OF EQs:" << eq.countEQs();
 			
-			LOG(INFO) << "Number of Plans:" << eq.getNumberOfPlans();
-
+			//LOG(INFO) << "numberOfPNs:" <<t1->numberOfPNs << std::endl;
 
 			
 			
 			delete t1;
 		}
 		duration = duration / 1;
-		std::cout << std::endl << "TIME:"  << duration << std::endl;
+		
+		
+		LOG(INFO)<< "TIME:"  << duration << std::endl<< std::endl;
 	}
 
 

@@ -22,7 +22,7 @@ class StringAdaptor
 	typedef std::unordered_map<unsigned int, EquivalenceClass_t *> RelationsMap_t;
 
 public:
-	StringAdaptor() {};
+
 	EquivalenceClass_t *parse(std::string);
 	std::string dump(EquivalenceClass_t *);
 
@@ -63,7 +63,6 @@ std::string StringAdaptor<PlanNode_t>::getBestPlan(EquivalenceClass_t *input)
 	}
 };
 
-
 template <typename PlanNode_t>
 std::string StringAdaptor<PlanNode_t>::dump(EquivalenceClass_t *input)
 {
@@ -78,8 +77,7 @@ std::string StringAdaptor<PlanNode_t>::dump(EquivalenceClass_t *input)
 
 	result += "\n\n****BEST PLAN: \n" + getBestPlan(input);
 	return result;
-}
-
+};
 
 template <typename PlanNode_t>
 std::vector<std::string>
@@ -87,7 +85,7 @@ StringAdaptor<PlanNode_t>::writeString(EquivalenceClass_t *input)
 {
 	std::vector<std::string> plans;
 	typedef typename EquivalenceClass_t::Iterator EItr;
-	if (input != NULL && input->getOperator() == Operator::SCAN)
+	if (input != NULL && input->getFirst() != NULL && input->getOperator() == Operator::SCAN)
 	{
 		int rel = input->getRel();
 		std::string plan =  input->getOperatorAsString() + "(" + std::to_string(rel) + ")";
@@ -105,12 +103,12 @@ StringAdaptor<PlanNode_t>::writeString(EquivalenceClass_t *input)
 					for (std::string right : writeString(& eq->r()))
 					{
 						std::string plan = eq->getOperatorAsString() + "(" + left + "," + right + ")";
-							plans.push_back(plan);
+						plans.push_back(plan);
 					}
 				}
 			}
 		}
 	}
 	return plans;
-}
+};
 #endif

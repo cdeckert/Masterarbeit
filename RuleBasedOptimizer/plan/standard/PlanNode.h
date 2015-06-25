@@ -211,7 +211,10 @@ public:
 	
 	void debug() const;
 	
-
+	void print() const;
+	int count(int) const;
+	
+	bool _explored = false;
 private:
 	Operator _op;
 	self_type *_next;
@@ -222,6 +225,7 @@ private:
 	bool _leftAssociativityEnabled = true;
 	bool _rightAssociativityEnabled = true;
 	bool _exchangeEnabled = true;
+	bool _wasCounted = false;
 };
 
 //
@@ -234,12 +238,36 @@ std::string PlanNode<Bitvector_t>::getOperatorAsString() const
 	return operatorname[_op];
 };
 
+template <typename Bitvector_t>
+int PlanNode<Bitvector_t>::count(int before) const
+{
+	if(_wasCounted)
+	return before;
+	_wasCounted = true;
+	return ++before;
+};
+
 
 
 template <typename Bitvector_t>
 Bitvector_t PlanNode<Bitvector_t>::getSignature() const
 {
 	return _left->getRelations();
+};
+
+template <typename Bitvector_t>
+void PlanNode<Bitvector_t>::print() const
+{
+	std::cout << "(";
+	std::string right = "";
+	for(u_int i = 0; i < l().getRelations().capacity(); ++i)
+	{
+		if(l().getRelations().test(i)) std::cout << i;
+		if(hasRight() && r().getRelations().test(i)) right += std::to_string(i);
+	}
+	if(hasRight()) std::cout <<","<<right;
+	std::cout << ")";
+	std::cout.flush();
 };
 
 template <typename Bitvector_t>

@@ -1,5 +1,6 @@
 documentation/latex/
 documentation/html/
+paper/
 .DS_Store
 RuleBasedOptimizer.xcodeproj/project.xcworkspace/xcuserdata/christiandeckert.xcuserdatad/UserInterfaceState.xcuserstate
 

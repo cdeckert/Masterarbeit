@@ -1,14 +1,27 @@
 \chapter{Resultate und Evaluation}
 
-Nachdem die Grundlagen besprochen, ein Prototyp implementiert ist, wurden unterschiedliche Experimente durchgeführt und die bisherige Arbeit kritisch reflektiert. In diesem Kapitel werden die Ergebnisse auf unterschiedlichen Feldern beleuchtet: Zuerst wird auf die Regelmengen eingegangen. In Tests wurde festgestellt, welche Regeln unter welchen Umständen vollständig sind. Außerdem wurde die neue Regel GraphRule mit der Regelmenge RS-Graph auf ihre Performance hin geprüft. Nachdem dieser Abschnitt abgeschlossen ist, wird die Implementierung von Pyro(J) genauer beleuchtet und insbesondere die Plattformwahl und die Erweiterbarkeit des Systems besprochen.
+Nachdem die Grundlagen besprochen  und ein Prototyp implementiert worden ist, wurden unterschiedliche Experimente durchgeführt und die bisherige Arbeit kritisch reflektiert. In diesem Kapitel werden die Ergebnisse auf unterschiedlichen Feldern beleuchtet: Zuerst wird auf die Regelmengen eingegangen. Es wird die Unvollständigkeit von RS-B2 als Anlass für eine genaue Prüfung genommen. Zuerst werden die in Kapitel 3 aufgestellten Beispiele für Unvollständigkeit von sternförmigen Abfragen mit eigenen Messungen überprüft. Ebenfalls wird auf das theoretische Beispiel, das als Beleg für die Unvollständigkeit herhalten musste mit eigenen Mitteln nachstellt.
+
+Auf Basis der Ergebnisse werden Indizien gesucht, in welchen Fällen RS-B2 unvollständig ist. Hierzu wird zuerst ein morphologischer Kasten aufgestellt. Aus ihm werden Test gebildet und besprochen.
+
+
+Die Geschwindigkeit der Regelmengen wurde in 5.2 verglichen. Hier zeigt sich, dass die Geschwindigkeit erheblich von einem passenden Enumerator bzw. Expander abhängt. GraphRule bzw. MinCutConservative ist, wie zu erwarten, in allen Fällen am schnellsten.
+
+Nachdem diese Messergebnisse besprochen wurden, wird noch auf die Wahl von Pyro(J) als Testplattform eingegangen. Die Plattform war die Grundlage für die in Kapitel 3 vorgestellten Test. Wie in 5.1 festgestellt wurde, kann die Plattform auch der Grund für die z.T. gemessene Unvollständigkeit von RS-B2 sein.
+
+
+
+
+\input{05_ResultsEvaluation/UnvollstaendigkeitBeweis.tex}
+
 
 
 \input{05_ResultsEvaluation/Rulsets.tex}
 
+\input{05_ResultsEvaluation/Evaluation.tex}
 
 \input{05_ResultsEvaluation/PyroJ.tex}
 
 
 
 
-\input{05_ResultsEvaluation/Evaluation.tex}

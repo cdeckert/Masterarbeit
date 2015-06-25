@@ -1,12 +1,7 @@
-\section{Evaluation der Vollständigkeit}
+\section{Unvollständigkeit von RS-B2 in unterschiedlichen Szenarien}
 
-In einem ersten Schritt wird auf die Vollständigkeit der Pellenkoft Regelmengen eingegangen. Im Folgenden wird dann die Vollständigkeit von RS-Rule genauer betrachtet.
+In dieser Sektion wir die Unvollständigkeit von RS-B2, die nun auch experimentell gezeigt wurde, noch weiter ausgelotet. Zu diesem Zweck wurde der in Abb. \ref{Morphologischer} Kasten gebildet. Aus jeder Spalte des morphologischen Kastens werden Einträge gewählt und so Szenarien gebildet. Mit Hilfe dieser Szenarien, soll der Unvollständigkeit von RS-B2 weiter beleuchtet und Indizien für etwaige Bedingen der Unvollständigkeit gesammelt werden.
 
-\subsection{Vollständigkeit von RS-B0, RS-B1 und RS-B2}
-
-Mit Hilfe des implementierten Optimierers können unterschiedliche Regelmengen ausgeführt werden. Wie in Kapitel 4 beschrieben, lassen sich neue Regeln leicht hinzufügen, Testszenarien generieren und die Ergebnisse speichern. Um die Vollständigkeit der Regelmengen zu prüfen, wurden unterschiedliche Testszenarien generiert und die einzelnen Regelmengen auf ihre Ausgabe hin überprüft. In einem ersten Schritt musste die Korrektheit der Implementierung geprüft werden.
-
-Die Tests wurden mit Hilfe des folgenden morphologischen Kastens gebildet und ausgeführt. So konnten unterschiedliche Test Arten geprüft werden:
 
 \begin{figure}[ht]
 \centering
@@ -15,249 +10,194 @@ Die Tests wurden mit Hilfe des folgenden morphologischen Kastens gebildet und au
 \hline
 {\bf Algorithmus} & {\bf Anzahl an Knoten} & {\bf Formen} &  {\bf Initialer Baum} & {\bf Selektvität}    & {\bf Kardinalitäten} \\ \hline
 RS-B0             & 5                      & Stern        & Bushy                 & Standard (0.5)       & Standard (10)        \\ \hline
-RS-B1             & 7                      & Kette        & Linkstief             & Zufällig (0.0 - 1.0) & Zufällig (1 -100)    \\ \hline
-RS-B2             & 10                     & Baum         & Rechtstief            &                      &                      \\ \hline
-GraphRule         & 12                     & Zyklisch     &                       &                      &                      \\ \hline
+RS-B1             & 7                      & Kette        & Links-tief             & Zufällig (0.0 - 1.0) & Zufällig (1 -100)    \\ \hline
+RS-B2             & 9                    & Zyklisch         & Rechts-tief            &                      &                      \\ \hline
+GraphRule         &                     &      &                       &                      &                      \\ \hline
 \end{tabular}
 }
-\caption{Morthologischer Kasten zur Testgenerierung}
-\label{my-label}
+\caption{Morphologischer Kasten zur Testgenerierung}
+\label{Morphologischer}
 \end{figure}
 
-Für jeden Test wurde das exakte Testszenario, Beobachtungen und Ergebnisse dokumentiert, um sie besser nachvollziehbar zu machen.
 
+\subsection{Sternförmige Join-Graphen mit 5 Relationen}
 
+In diesem Test werden die Regelmengen RS-B0, RS-B1 und RS-B2 im Kontext von sternförmigen Abfragen geprüft. Es werden unterschiedliche Formen der Bäume gewählt.
 
-\newtheorem{hypo}{Hypothese} 
-
-
-
-
-
-Einige Tests wurden ausgeführt, um die Performance und Vollständigkeit der einzelnen Regelmengen zu prüfen. Entlang der Dimensionen Regelmenge, Anzahl der Relationen, Form des Join Graphen, Form des initialen Anfragebaums, Selektivität und Kardinalität wurde ein morphologischer Kasten aufgestellt. Auf dessen Basis konnten verschiedene Tests behandelt werden. 
-
-\subsection{Vollständigkeit der Regelmengen bei azyklischen linkstiefen Bäumen }
-
-\begin{hypo}
-Alle Regelmengen sind bei azyklischen Join-Bäumen und linkstiefen initialen-Bäumen vollständig.
-\end{hypo}
+In den Abbildungen \ref{left-deep5-star.png} kann die Konfiguration abgelesen werden. Die anderen test unterscheiden sich in der Form, dass die Join-Trees entweder rechts-tief bzw. Bushy sind, soweit dies möglich ist. (Es wurde immer ein Knoten links als auch rechts an einen Basis Join angehängt.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{05_ResultsEvaluation/00_media/Test1.png}
-  \caption{Konfiguration: Test 1}
-  \label{Konfiguration:Test1}
+  \includegraphics[width=\textwidth]{05_ResultsEvaluation/00_media/left-deep5-star.png}
+  \caption{Konfiguration: Star-Join-Graph}
+  \label{left-deep5-star.png}
 \end{figure}
 
-Zu diesem Zweck wurde eine Konfiguration mit fünf Relationen gewählt, die wie in Abbildung \ref{Konfiguration:Test1} zu sehen mit einander verknüpft sind.
 
-Um festzustellen, ob alle Algorithmen für diesen speziellen Fall korrekt funktionieren, wurden zuerst alle erzeugten Pläne ausgegeben und verglichen. In einem zweiten Schritt wurden alle Äquivalenzklassen betrachtet und auf ihren Inhalt manuell geprüft.
 
 
 
 \begin{figure}[ht]
 \centering
-
-\begin{tabular}{|l|l|l|l|}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
 \hline
-                         & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
-{\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
-{\bf Anzahl Bäume}       & 224       & 224       & 224       \\ \hline
-{\bf Dauer}              & 28558  & 25523  & 23280  \\ \hline
+            & \multicolumn{3}{l|}{RS-B0}             & \multicolumn{3}{l|}{RS-B1}             & \multicolumn{3}{l|}{RS-B2}             \\ \hline
+            & Äqui. & Pläne & ms & Äqui. & Pläne & ms & Äqui. & Pläne & ms \\ \hline
+Links-Tief  & 39                & 384   & 75.894     & 39                & 384   & 71.184     & 39                & 384   & 65.211     \\ \hline
+Bushy       & 39                & 384   & 75.768     & 39                & 384   & 72.485     & 39                & 384   & 66.498     \\ \hline
+Rechts-Tief & 39                & 384   & 74.929     & 39                & 384   & 71.428     & 39                & 384   & 66.760     \\ \hline
 \end{tabular}
-
-\caption{Resultat: Test 1}
-\label{Resultat:Test1}
+}
+\caption{Resultat: Star-Join-Graph}
+\label{Star-Join-Graph:Result}
 \end{figure}
 
-Wie in Tabelle \ref{Resultat:Test1} zu sehen ist, wurden je 224 unterschiedliche Bäume erzeugt. Eine Prüfung ergab, dass die Pläne, die durch die drei Regelmengen erzeugt wurden, alle gleich sind.
+In Abb. \ref{Star-Join-Graph:Result} sind die Ergebnisse der Test dargestellt. Es fällt auf, dass sowohl die Anzahld er Äquivalenzklassen (Äqui.) und die Anzahl der Pläne nicht unterscheiden. Die Dauer (gemessen in ms = Microsektunden) ist für alle initialen Pläne praktisch gleich. Nur minimale Abweichungen treten auf. Es kann davon asugegangen werden, dass alle Pläne gefunden wurden. Erstaunlich ist, dass die Ausführung von RS-B2 deutlich schneller war, als die der anderen Regelmengen. Es konnten jeweils ca. 10k - 15k ms eingespart werden.
 
-In einem nächsten Schritt wurden die Äuqivalenzklassen auf ihren Inhalt geprüft. In der obersten Äquivalenzklasse fanden sich die folgenden Planknoten:
+\subsection{Kettenförmige Join-Graphen}
 
-\begin{itemize}
-\item join(1,2345)
-\item join(12,345)
-\item join(123,45)
-\item join(1234,5)
-\item join(2345,1)
-\item join(345,12)
-\item join(45,123)
-\item join(5,1234)
-\end{itemize}
-
-Bei diesen Planknoten handelt es sich um alle möglichen Permutationen der Äquivalenzklasse, die die Relationen 1 bis 5 repräsentiert. Auch alle anderen 34 Äquivalenzklassen wurden manuell geprüft. Das Ergebnis ist klar: Alle Permutationen wurden generiert und somit alle Pläne gefunden.
-
-Es lässt sich also feststellen, dass alle Regelmengen in Bezug auf linkstiefe, azyklische Query Graphen mit 5 Relationen vollständig sind.
-
-\subsection{Prüfung von azyklischen, sternförmigen Anfragen}
-
-In einem zweiten Schritt wurde die Aussage von \cite{shanbhag2014optimizing} als Grundlage genommen, der behauptete, dass sternförmige Join-Trees zu umvollständigen Resultaten führen würden.
+In dieser Testreihe soll bestimmt werden, ob alle Pläne aus einem kettenförmigen Join-Graphen gebildet werden können. Am Beispiel von links-tiefen Join-Graphen werden immer mehr Knoten angehängt und so die Geschwindigkeit und Vollständigkeit geprüft. Für den Vergleichstest aus RS-Graph, werden auch die Werte für RS-Graph angegeben.
 
 
-\begin{hypo}
-Auf Basis eines azyklischen, sternförmigen Join-Trees lässt sich mit RS-B2 der Suchraum nicht vollständig erforschen.
-\end{hypo}
+\subsection{Zyklische Join-Graphen}
+Tests wurden auch mit zyklischen Graphen durchgeführt. Zuerst wurde ein Test mit dem Join-Graphen durchgeführt, der in Abb. \ref{CylceJoin1} dargestellt wurde. In diesem Test konnte mir RS-B2 nicht jeder Plan generiert werden. Insgesamt wurden knapp 200 Pläne nicht generiert und so knapp 6 Äquivalenzklassen weniger erzeugt. 
 
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{05_ResultsEvaluation/00_media/Test2.png}
-  \caption{Konfiguration: Test 2}
-  \label{Konfiguration:Test2}
+  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/CycleJoin1.pdf}
+  \caption{Join-Graph: Zyklische Abfrage 1}
+  \label{CylceJoin1}
 \end{figure}
 
 
-Um die Hypothese zu untersuchen, wurde eine Konfiguration gewählt, die der aus Test 1 gleicht. Einziger Unterschied sind andere Join Kanten. Wie in  Abb. \ref{Konfiguration:Test2} zu sehen, sind hier alle Knoten per Join mit Knoten 1 verbunden. Eine Sternform ergibt sich.
-
-Nach den vorhergehenden Tests von \cite{shanbhag2014optimizing} wurde erwartet, dass durch RS-B2 nicht alle Pläne gefunden werden würden. Wie in Tabelle \ref{Result:Test2} zu sehen ist, wurden jedoch genau gleich viele Pläne mit Hilfe RS-B2 wie mit RS-B1 gefunden. 
-
-\begin{figure}[ht]
-\centering
-
-\begin{tabular}{|l|l|l|l|}
-\hline
-                         & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
-{\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
-{\bf Anzahl Bäume}       & 384       & 384       & 384       \\ \hline
-{\bf Dauer}              & 66643  & 65110  & 58225   \\ \hline
-\end{tabular}
-
-\caption{Resultat: Test 2}
-\label{Result:Test2}
-\end{figure}
 
 
-Auch die Pläne aus Test 2 wurden verglichen. Pro Regelmenge wurden die gleichen Pläne generiert. Alle 43 Äquivalenzklassen wurden geprüft und ihre Vollständigkeit festgestellt.
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{05_ResultsEvaluation/00_media/Test3.png}
-  \caption{Konfiguration: Test 3}
-  \label{Konfiguration:Test3}
-\end{figure}
-
-
-Um sicherzustellen, dass die Aussage von \cite{shanbhag2014optimizing} nicht abhängig von der Form des Baums ist, wurde ein weiterer Test durchgeführt. Dieses Mal wurde ein recht-tiefer Baum gewählt. Die Konfiguration (vgl. Abb. \ref{Konfiguration:Test3}) gleicht der vorhergehenden, ausschließlich die Join-Reihenfolge wurde verändert.
-
-\begin{figure}[ht]
-\centering
-\begin{tabular}{|l|l|l|l|}
-\hline
-                         & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
-{\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
-{\bf Anzahl Bäume}       & 384       & 384       & 384       \\ \hline
-{\bf Dauer}              & 66643  & 65110  & 58225  \\ \hline
-\end{tabular}
-
-\caption{Resultat: Test 3}
-\label{Result:Test3}
-\end{figure}
-
-
-Wie schon im vorhergehenden Test wurden alle Pläne geprüft. Es wurden gleich viele und die gleichen Pläne wie im vorhergehenden Fall ausgegeben. Daher kann davon ausgegangen werden, dass bei einer Menge von 5 Relationen für die Vollständigkeit nicht entscheidend ist, ob es sich initial um einen linkstiefen oder einen rechtstiefen Baum gehandelt hat.
-
-
-
-\subsection{RS-B2 ist vollständig bei zyklischen Graphen}
-Um dennoch Unvollständigkeit zu finden, wurde eine neue Hypothese aufgestellt:
-
-Hypothese 3: RS-B2 ist bei zyklischen Join Graphen unvollständig.
-
-Um diese Hypothese zu prüfen, wurde Test 3 herangezogen und eine neue Join-Kante zwischen 3 und 4 eingezogen (vgl. Abb. \ref{Konfiguration:Test3}. Durch diese zusätzliche Kante ist ein zyklischer Join-Graph entstanden. 
 
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{05_ResultsEvaluation/00_media/Test4.png}
-  \caption{Konfiguration: Test 4}
-  \label{Konfiguration:Test4}
-\end{figure}
-
-Wie erwartet, wurden weniger (ca. 50\%) Pläne gefunden (vgl. Tabelle \ref{Result:Test4}). Bei einem Vergleich fiel auf, dass gerade entlang der zyklischen-Join-Kanten weniger Pläne generiert wurden.
-
-
-\begin{figure}[h]
-\centering
-\begin{tabular}{|l|l|l|l|}
+  \begin{tabular}{|l|l|l|l|}
 \hline
-                         & \multicolumn{3}{c|}{{\bf Result}} \\ \hline
-{\bf Algorithmus}        & RS-B0     & RS-B1     & RS-B2     \\ \hline
-{\bf Anzahl Bäume}       & 480       & 480       & 272       \\ \hline
-{\bf Dauer}              & 60197027  & 56166774  & 28628930  \\ \hline
+                  & RS-B0  & RS-B1  & RS-B2  \\ \hline
+Äquivalenzklassen & 41     & 41     & 35     \\ \hline
+Pläne             & 560    & 560    & 368    \\ \hline
+Dauer (ms)        & 86.069 & 74.154 & 41.929 \\ \hline
 \end{tabular}
+  \caption{Resultat: Zyklische Abfrage 1}
+  \label{ResCylceJoin1}
 
-\caption{Resultat: Test 4}
-\label{Result:Test4}
 \end{figure}
 
-Es zeigt sich mit diesem Experiment, dass RS-B2 nicht geeignet sind, um alle Pläne für einen zyklischen Join-Graphen zu erzeugen.
 
-\subsection{RS-B2 ist Vollständig für bestimmte zyklische Join-Graphen}
+Bei den Ergebnissen aus Abb. \ref{ResCylceJoin1} kann nun analysiert werden, welche Transformationen nicht stattgefunden haben. Hierzu wurden nur Transformationen betrachtet, die nicht durch Kommutativität direkt erzeugt wurden.
 
-
-
+Je nach Anzahl der Relationen, die an der Transformation beteiligt waren, wurde eine unterschiedliche Anzahl an durchgeführten Transformationen festgestellt (vgl. Abb. \ref{involvedRelations}).
 
 
-
-
-\subsection{RS-B2-CPS Vollständigkeit bzgl. sternförmigen Anfragen}
-
-Wie in Kapitel 3 gesehen wurde die Unvollständigkeit von \cite{bachelor}  mit Hilfe einer sternförmigen Anfrage nachgewiesen. Dieses Ergebnisse sollte reproduziert werden. Da diese Ergebnisse so nicht reproduzierbar waren, wird ein Erklärungsansatz vorgeschlagen.
-
-\subsubsection{Prüfung der Ergebnisse aus Kapitel 3}
-Es wurden zwei Tests durchgeführt. hierzu wurden zwei sternförmige Anfragen erzeugt. Jede Anfrage wurde ausgeführt und die Anzahl der unterschiedlichen Pläne gemessen.
-
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 
 \begin{tabular}{|l|l|l|}
 \hline
-Relationen & RS-B2-CPS & RS-B1-CPS \\ \hline
-5          & 284       & 284       \\ \hline
-7          & 46080     & 46080     \\ \hline
+{\bf Relationen} & {\bf RS-B1} & {\bf RS-B2} \\ \hline
+3                & 10          & 4           \\ \hline
+4                & 30          & 6           \\ \hline
+5                & 60          & 6           \\ \hline
+\end{tabular}
+
+\caption{Anzahl der Transformationen nach involvierten Relationen}
+\label{involvedRelations}
+\end{figure}
+
+
+Bei einem Vergleich der durchgeführten Transformationen mit 3 Relationen fällt auf, warum RS-B2 nicht vollständig ist. In Abbildung \ref{Transformations3Rel} sind die Transformationen, die in den Regelmengen RS-B1 bzw. RS-B2 vorkommen mit x markiert. Transformationen, die nur Ergebnisse liefern, die mit Hilfe von Kommutativität in ihre Ursprungsform gebracht werden können, wurden mit o markiert, da diese Ergebnisse auch mit RS-B2 erzeugt werden können.
+
+
+Zwei Transformationen wurden nicht markiert: $(45,1)-\textgreater(4,15)$ und $(15,4)-\textgreater(1,45)$. Sie werden nicht von RS-B2 erzeugt. Da jedoch das zweite Ergebnis auch mit Hilfe von Kommutativität aus dem ersten der beiden Startpläne erzeugt werden kann, muss es nicht weiter betrachtet werden.
+
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+{\bf Transformation}   & {\bf RS-B1} & {\bf RS-B2} \\ \hline
+(12,3)-\textgreater(1,23) & x           & x           \\ \hline
+(23,1)-\textgreater(3,12) & x           & o           \\ \hline
+(23,4)-\textgreater(2,34) & x           & x           \\ \hline
+(34,2)-\textgreater(4,23) & x           & o           \\ \hline
+(12,5)-\textgreater(2,15) & x           & x           \\ \hline
+(15,2)-\textgreater(5,12) & x           & o           \\ \hline
+(34,5)-\textgreater(3,45) & x           & x           \\ \hline
+(45,3)-\textgreater(5,34) & x           & o           \\ \hline
+(45,1)-\textgreater(4,15) & x           &             \\ \hline
+(15,4)-\textgreater(1,45) & x           &             \\ \hline
 \end{tabular}
 
 
+\caption{Transformationen mit 3 Relationen}
+\label{Transformations3Rel}
+\end{figure}
+
+Es stellt sich die Frage, warum konnte diese Transformation nicht erreicht werden? Die Ursache findet sich im Join-Graphen \ref{CylceJoin1}. Die Knoten 4 und 5 sind unmittelbar miteinander verbunden. Der Knoten 1 jedoch nur über die Knoten 2 und 3. Um die Mittelbarkeit zu überwinden, musste zuerst Assoziativität angewendet werden.
+
+Damit die Transformationen, die bei RS-B2 nicht durchgeführt wurden, möglich sind, muss eine Reihe von anderen Transformationen zuvor durchgeführt werden. 
+
+Beispielsweise könnte nach einer Reihe von Transformationen die folgenden Graphen entstehen:
+
+\begin{enumerate}
+\item $((((1 \Join_{1} 2) \Join_{2} 3) \Join_{3} 4) \Join_{4} 5)$
+\item $(1 \Join_{5} (2 \Join_{6} (3 \Join_{7} (4 \Join_{8} 5))))$
+\item $(1 \Join_{5} ((2 \Join_{9} 3) \Join_{10} (4 \Join_{11} 5)))$
+\item $((1 \Join_{5} (4 \Join_{11} 5)) \Join_{10} ((2 \Join_{9} 3)  ))$
+\end{enumerate}
+
+Im ersten Schritt wird ein links-tiefer Baum gebildet.
+In einem zweiten Schritt muss die Relation 1 nach oben gezogen werden und der Teilbaum $4 \Join 5$ gebildet werden. Im dritten Schritt wird 4 und 5 auf eine Ebene mit 2 und 3 gebracht, um dann in Schritt 4 die Form $1 \Join (4 \Join 5)$ zu bilden.
+
+Es fällt auf, dass i, die Form $1 \Join (4 \Join 5)$ zu erreichen auf alle Joins Transformationen angewendet werden mussten.
 
 
-
-\caption{Anzahl Pläne nach Regelmenge und Anzahl-Relationen}
-\label{protoUnvollstaendig}
-\endfigure
-
-Im Gegensatz zu \cite{bachelor} konnte nicht festgestellt werden, dass RS-B2 schlechter als die Vergleichsregelmenge RS-B1 funktioniert.
+Wie bereits zuvor in Kapitel 3 besprochen, darf auf das Produkt einer Transformation nur Kommutativität angewendet werden. Daher ist es nicht möglich, eine Transformation der Form (15,4) -\textgreater (1,45) bzw. umgekehrt durchzuführen.
 
 
-\subsubsection{Erklärungsansatz: Pyros Expansionsalgorithmus}
+Klar ist, nicht nur das Beispiel aus Kapitel 3 zeigt die Unvollständigkeit von RS-B2. Auch bei zyklischen Graphen kann RS-B2 nicht alle alternativen Pläne erzeugen.
 
-Der Grund für die Abweichung mag am Expansionsalgorithmus in Pyro liegen. Der verwendete Expansionsalgorithmus (vgl. Abb. \ref{ExpandDAG}) ist vollständig für die Regelmenge RS-B1. Ob dies auch für die Regelmenge RS-B2 zutrifft, wird im folgenden an einem konkreten Beispiel geprüft.
+
+\subsection{Durchführung mit 4 Relationen}
+
+Das Experiement wurde auch mit 4 Relationen durchgeführt. Auch hier gib es ein ähnliches Ergebnis (Abb. \ref{ResCylceJoin2}).
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/PyroInital_0.pdf}
-  \caption{Initialer Query Tree}
-  \label{PyroInital}
+  \begin{tabular}{|l|l|l|l|}
+\hline
+                  & RS-B0  & RS-B1  & RS-B2  \\ \hline
+Äquivalenzklassen & 25     & 25     & 23     \\ \hline
+Pläne             & 80    & 80    & 64    \\ \hline
+Dauer (ms)        & 7.241 & 6.952 & 4.680 \\ \hline
+\end{tabular}
+  \caption{Resultat: Zyklische Abfrage 2}
+  \label{ResCylceJoin2}
+
 \end{figure}
+
+
+Der Test wurde wie zuvor auch mit einem links-tiefen Baum durchgeführt. Wie bereits beschrieben, war es nicht möglich alle Pläne mit RS-B2 zu bilden. Strukturell ähnlich Transformationen konnten nicht durchgeführt werden.
+
+\subsection{Vereinfachung des Beispiels aus Kapitel 3}
+
+Nachdem nun festgestellt wurde, dass auch bei 4 Relationen in einem Zyklus nicht alle Pläne gefunden werden, wurde das Beispiel aus Abbildung 3.1 vereinfacht und erneut getestet. Dabei wurde die Frage gestellt: Ist es möglich mit dem Join-Graphen aus Abb. \ref{CylceJoin3} aus dem initialen Tree Q1 der neue Tree Q2 bilden?
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/PyroJoinGraph.pdf}
-  \caption{Join-Graph}
-  \label{PyroJoinGraph}
+  \includegraphics[scale=0.5]{05_ResultsEvaluation/00_media/CycleJoin3.pdf}
+  \caption{Unvollständigkeit von RS-B2 vereinfacht}
+  \label{CylceJoin3}
 \end{figure}
 
-Die Prüfung des Algorithmus erfolgt in vereinfachter Form am Beispiel des in Abb. \ref{PyroInital} dargestellten Query-Tree und Join-Graphen aus Abb. \ref{PyroJoinGraph}. Um die Darstellung zu vereinfachen, wird die Regel Kommutativität der Regelmenge nicht angewendet. Es bleiben also linke-Assoziativität, rechte-Assoziativität und Exchange erhalten.
+Auch diese Transformation des Baums konnte zwar mit RS-B1 bzw. RS-B0 durchgeführt werden, jedoch nicht mit RS-B2.
 
-In einem ersten Schritt sollen die Regeln auf Planknoten 1 angewendet werden. Da die untergeordneten Planknoten noch nicht expandiert wurden, muss die Expansion auf die Knoten 2 bzw. 3 angewendet werden. Da sich auf Knoten 3 keine Regel anwenden lässt, wird dieser Knoten als expandiert markiert. Auf den Knoten 2 kann Assoziativität angewendet werden. Es entsteht so der neue Knoten 4. Auf Knoten 4 lässt sich keine Regel anwenden. Alle Regeln wurden für Knoten 2 angewendet, daher kann Knoten 2 als expandiert markiert werden.
-
-Da nun alle untergeordneten Knoten expandiert sind, kann auf Ebene von Knoten 1 alle Regeln angewendet werden. Hier ist die Anwendung von Exchange am interessantesten. Es werden die neuen Knoten 7, 8, 9, 10, 11 geschaffen. Da auf die Knoten 7, 9 keine weiteren Regeln angewendet werden dürfen, bricht der Algorithmus ab. 
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[scale=0.75]{05_ResultsEvaluation/00_media/PyroResult.pdf}
-  \caption{Expandierter Query Tree}
-  \label{ExpandedQueryTree}
-\end{figure}
-
-Wie in Abb. \ref{ExpandedQueryTree} zu erkennen, sind die Regeln nicht auf alle Teilbäume angewendet worden. Der gesamte Suchraum wurde nicht erforscht. Einer der Unterschiede zwischen dem von Pyro verwendeten und dem in Abb. \ref{Pseudocod:enumerator} gezeigten Expander ist, dass sobald ein neuer Planknoten gefunden wurde versucht wird alle Regeln, solange es möglich ist auf den gesamten Teilbaum erneut anzuwenden. So werden auch neue, untergeordnete Teilbäume in die Expansion einbezogen und der gesamte Suchraum im konkreten Beispiel erforscht.
-
+\subsection{Fazit: Unvollständigkeit}
+Die Experimente weisen darauf hin, dass RS-B2 bei zyklischen Join-Graphen unvollständig ist. Dies konnte in zwei Fällen gezeigt werden. Hingegen ist eine Unvollständigkeit bei sternförmigen bzw. kettenförmigen Join-Graphen nicht gefunden worden.

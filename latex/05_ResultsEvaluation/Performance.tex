@@ -1,6 +1,13 @@
 \section{Performance von RS-Graph zu anderen Regelmengen}
 
 
-Ähnlich wie \cite{} wurde auch hier die Performance der einzelnen Regelmengen gemessen. Im Gegensatz zu den vorherigen Messungen - sie wurden in Kapitel 3 beschrieben, wurde die Kostenbrechnung mit einbezogen. Genau wie bei den Test in Kapitel 3 wurden die unterschiedliche Formen einbezogen und unterschiedliche Anzahlen an Relationen verwendet. Im Gegensatz zu \cite{} werden jedoch nur die Regelmengen getestet, die auch kreuzproduktfrei sind. 
+Ähnlich wie \cite{shanbhag2014optimizing} wurde auch hier die Performance der einzelnen Regelmengen gemessen. Im Gegensatz zu den vorherigen Messungen - sie wurden in Kapitel 3 beschrieben, wurde die Kostenbrechnung mit einbezogen. Genau wie bei den Test in Kapitel 3 wurden die unterschiedliche Formen einbezogen und unterschiedliche Anzahlen an Relationen verwendet. Im Gegensatz zu \cite{shanbhag2014optimizing} werden jedoch nur die Regelmengen getestet, die auch kreuzproduktfrei sind. 
 
-Die Auswertung beginnt mit den Kettenförmigen Graphen. Die Anzahl der Relationen wurde immer weiter gesteigert. 
+Die Auswertung beginnt mit den Kettenförmigen Graphen. Die Anzahl der Relationen wurde immer weiter gesteigert.
+
+
+\subsection{Vergleich der Enumeratoren und Regelmengen}
+
+Im ersten Beispiel wurden kettenförmige Join-Graphen gebildet und die Performance gemessen. In einem ersten Schritt wurde der eigen entwickelte Enumerator verwendet. Es zeigt sich, totz einer logarithmischen Skala klar, wie ineffzient der Algorithmus verglichen zu RS-Graph und damit MinCutConservative ist.
+
+

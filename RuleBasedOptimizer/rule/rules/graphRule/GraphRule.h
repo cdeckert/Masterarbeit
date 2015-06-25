@@ -10,6 +10,7 @@
 #define TESTING_YES
 
 #include "easylogging++.h"
+#include <list>
 /**
  * @brief Graph Rule
  * @details Rule that creates commutative plan nodes based on a given node
@@ -24,22 +25,26 @@ class GraphRule : public Rule<PlanNode, Operations_t>
 	typedef typename PlanNode_t::EquivalenceClass_t EquivalenceClass_t;
 	typedef typename EquivalenceClass_t::Iterator EItr;
 	typedef typename PlanNode_t::BV Bitvector_t;
-	typedef std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> BvSet_t;
+	//typedef std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> BvSet_t;
 	typedef std::unordered_set<Bitvector_t, PlanNode *, Hasher<Bitvector_t>> BVPlanNodeMap_t;
 	typedef typename Bitvector_t::IteratorElement BVIter;
 	typedef std::unordered_map<Bitvector_t, std::unordered_set<Bitvector_t, Hasher<Bitvector_t>>, Hasher<Bitvector_t>> DPTable_t;
 	typedef typename EquivalenceClass_t::Iterator ECItr_t;
 
-	struct BVSet_t
-	{
-		Bitvector_t _bitvector;
-		BVSet_t *_next;
-	};
+
+    struct partition_res
+    {
+    public:
+        Bitvector_t _left;
+        Bitvector_t _right;
+    };
+    
+    typedef std::list<partition_res> BvSet_t;
 public:
 
 
 	GraphRule() : Rule<PlanNode, Operations_t>() {};
-	GraphRule(BvSet_t joinEdges) : Rule<PlanNode, Operations_t>()
+	GraphRule(std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> joinEdges) : Rule<PlanNode, Operations_t>()
 	{
 		_joinEdges = joinEdges;
 	};
@@ -60,13 +65,13 @@ public:
 	bool isApplicable(PlanNode &aPlanNode) const override
 	{
 		// IF is Parent Node
-		return aPlanNode.getOperator() == JOIN;
+		return aPlanNode.getOperator() == JOIN && !aPlanNode._explored;
 	};
 
 	bool isApplicable(PlanNode &aPlanNode, PlanNode_t &left, PlanNode_t &right) const override
 	{
 		// IF is Parent Node
-		return aPlanNode.getOperator() == JOIN;
+		return aPlanNode.getOperator() == JOIN && !aPlanNode._explored;
 	};
 
 
@@ -86,6 +91,7 @@ public:
 		Bitvector_t js = merge(aPlanNode.l().getRelations(), aPlanNode.r().getRelations());
 		BvSet_t partition = this->partition(js);
 		EquivalenceClass_t *e = this->createTrees(partition, js);
+        aPlanNode._explored = true;
 		return e->getFirst();
 	};
 
@@ -101,9 +107,9 @@ private:
 	BvSet_t partition(Bitvector_t &input) const;
 
 	std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> getConnectedPars(Bitvector_t s, Bitvector_t c, Bitvector_t);
-	BvSet_t getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const;
+    std::list<Bitvector_t> getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const;
 	Bitvector_t getNeighbors(Bitvector_t relations, Bitvector_t s) const;
-	BvSet_t MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const;
+	void MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded, BvSet_t & partitions) const;
 	Bitvector_t merge(Bitvector_t bv1, Bitvector_t bv2) const
 	{
 		Bitvector_t js;
@@ -112,7 +118,8 @@ private:
 	}
 	EquivalenceClass_t *createTrees(BvSet_t partition, Bitvector_t js) const;
 
-	BvSet_t _joinEdges;
+	std::unordered_set<Bitvector_t, Hasher<Bitvector_t>> _joinEdges;
+	bool _isApplicable = true;
 };
 
 
@@ -123,90 +130,123 @@ private:
 
 
 template <typename PlanNode, typename Operations_t>
-typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::MinCutConservative(Bitvector_t &subSetOfRelations, Bitvector_t &connectedRelations, Bitvector_t &excluded) const
+void
+GraphRule<PlanNode, Operations_t>::MinCutConservative(Bitvector_t &s, Bitvector_t &c, Bitvector_t &x, BvSet_t & partitions) const
 {
-	BvSet_t result;
-	if (connectedRelations == subSetOfRelations)
-	{
-		return result;
-	}
-	if (connectedRelations.is_not_empty())
-	{
-		result.insert({connectedRelations, getNeighbors(connectedRelations, subSetOfRelations)});
-	}
+    /*std::cout << "c:" << c << std::endl;
+    std::cout << "x:" << x << std::endl;
+    std::cout << "c.disjoint(s)" << c.disjoint(s) << std::endl;*/
+    if(c == s) //  || c.disjoint(s))
+    {
+        //return;
+    }
+    
+    if(!c.is_empty())
+    {
+        partition_res part;
+        part._left = c;
+        part._right = s;
+        part._right.set_difference(c);
+        //std::cout <<part._left << ":" <<part._right << std::endl;
+        partitions.push_back(part);
+    }
+    
+    Bitvector_t x_prim(x);
+    Bitvector_t neigh_no_x(getNeighbors(c,s));
+    if(c.is_empty())
+    {
+        neigh_no_x = s.lowest_bit();
+    }
+    neigh_no_x.intersect_with(s).set_difference(x);
+    
+    for (typename Bitvector_t::IteratorBit v_iter = neigh_no_x.beginBit(); v_iter != neigh_no_x.endBit(); ++v_iter) {
+        Bitvector_t v(*v_iter);
+        
+        std::list<Bitvector_t> bcc;
+        bcc = getConnectedParts(s, Bitvector_t(c).union_with(v), v);
+        typename std::list<Bitvector_t>::iterator list_iter;
+        
+        x_prim.union_with(v);
+        for (list_iter = bcc.begin(); list_iter != bcc.end(); ++list_iter) {
+            MinCutConservative(s, Bitvector_t(s).set_difference(*list_iter), x_prim, partitions);
+        }
+        
+       
+    }
 
-	Bitvector_t excluded_new = excluded;
-	Bitvector_t neighborhood = getNeighbors(connectedRelations, subSetOfRelations);
-	neighborhood.intersect_with(subSetOfRelations);
-	neighborhood = neighborhood.without(excluded);
-
-	for (unsigned int i = 0; i < neighborhood.capacity(); ++i)
-	{
-		if (neighborhood.test(i))
-		{
-			Bitvector_t v;
-			v.set(i);
-			BvSet_t O = getConnectedParts(subSetOfRelations, connectedRelations.uni(v), v);
-			excluded_new.union_with(v);
-			for (Bitvector_t o : O)
-			{
-				Bitvector_t newConnectedRelationships;
-				newConnectedRelationships = subSetOfRelations.without(o);
-				BvSet_t r = MinCutConservative(subSetOfRelations, newConnectedRelationships, excluded_new);
-				result.insert(r.begin(), r.end());
-			}
-		}
-	}
-	return result;
-}
-
-template <typename PlanNode, typename Operations_t>
-typename GraphRule<PlanNode, Operations_t>::BvSet_t GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
-{
-	Bitvector_t b;
-	return MinCutConservative(input, b, b);
 };
 
 template <typename PlanNode, typename Operations_t>
-typename GraphRule<PlanNode, Operations_t>::EquivalenceClass_t *GraphRule<PlanNode, Operations_t>::createTrees(BvSet_t partition, Bitvector_t js) const
+typename GraphRule<PlanNode, Operations_t>::BvSet_t
+GraphRule<PlanNode, Operations_t>::partition(Bitvector_t &input)const
+{
+	Bitvector_t b;
+    BvSet_t bv;
+    MinCutConservative(input, b, b, bv);
+    return bv;
+};
+
+template <typename PlanNode, typename Operations_t>
+typename GraphRule<PlanNode, Operations_t>::EquivalenceClass_t *
+GraphRule<PlanNode, Operations_t>::createTrees(BvSet_t partition, Bitvector_t js) const
 {
 	EquivalenceClass_t *eq = new EquivalenceClass_t();
-	for (Bitvector_t t : partition)
+	for (partition_res t : partition)
 	{
-		if (js.contains(t))
-		{
-			if (t.size() == 1 && js.size() == 1)
+        PlanNode & p = this->o.joinPN(* this->o.scan(t._left), * this->o.scan(t._right));
+        p._explored = true;
+        eq->push_back(p);
+        /*std::cout << "T" << &t << std::endl;
+        if (t == js && t.size() == 1)
+        {
+            return this->o.scan(t);
+        }
+			else
 			{
-				return this->o.scan(t);
+				if (partition.count(js.without(t)) > 0)
+				{
+					EquivalenceClass_t &left = *createTrees(partition, t);
+
+					std::cout << t << std::endl;
+					EquivalenceClass_t &right = *createTrees(partition, js.without(t));
+
+					if (left.getRelations().size() > 0 && right.getRelations().size() > 0)
+					{
+						std::cout << "l" << left.getRelations() << std::endl;
+						std::cout << "r" << right.getRelations() << std::endl;
+						EquivalenceClass_t * p = this->o.join(left, right);
+
+						p->getFirst()->print();
+						eq->concat(p);
+					}
+				}
 			}
-			else if (partition.count(js.without(t)) > 0)
-			{
-				EquivalenceClass_t &left = *createTrees(partition, t);
-				EquivalenceClass_t &right = *createTrees(partition, js.without(t));
-				eq->concat( this->o.join(left, right));
-			}
-		}
+		}*/
 	}
 	return eq;
 };
 
 
 template <typename PlanNode, typename Operations_t>
-typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operations_t>::getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
+std::list<typename GraphRule<PlanNode, Operations_t>::Bitvector_t>  GraphRule<PlanNode, Operations_t>::getConnectedParts(Bitvector_t S, Bitvector_t C, Bitvector_t T) const
 {
-	BvSet_t O;
-	Bitvector_t D, N, U, L, L_new;
-	N = getNeighbors(T, S).without(C);
+    std::list<Bitvector_t> O;
+	Bitvector_t D, N, U, L_new;
+    N = getNeighbors(T, S);
+    N.intersect_with(S);
+    N = N.without(C);
 	if (N.size() <= 1)
 	{
 		Bitvector_t b = S.without(C);
-		O.insert({b});
-		O.insert({C});
-		return O;
+		O.push_back(b);
+		O.push_back(C);
+		//return O;
 	}
+    
+    
 	for (unsigned int i = 0; i < N.capacity(); ++i)
 	{
-		L_new.reset();
+		Bitvector_t L;
 		if (N.test(i))
 		{
 			L_new.set(i);
@@ -220,7 +260,8 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operati
 			}
 			if (U.is_not_empty())
 			{
-				O.insert( {S.without(C)});
+                O.push_back(S.without(C));
+                O.push_back(C); //, C});
 			}
 			U = N.without(L);
 			while (U.is_not_empty())
@@ -238,7 +279,8 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operati
 							L = L_new;
 							L_new.union_with(getNeighbors(D, S).without(C));
 						}
-						O.insert({L});
+                        O.push_back(L);
+                        O.push_back(D); // , D});
 						U = U.without(L);
 					}
 
@@ -255,8 +297,9 @@ typename GraphRule<PlanNode, Operations_t>::BvSet_t  GraphRule<PlanNode, Operati
 template <typename PlanNode, typename Operations_t>
 typename GraphRule<PlanNode, Operations_t>::Bitvector_t GraphRule<PlanNode, Operations_t>::getNeighbors(Bitvector_t relations, Bitvector_t s) const
 {
-
-	Bitvector_t result;
+    
+    Bitvector_t result;
+    result.reset();
 	if (relations.is_empty())
 	{
 

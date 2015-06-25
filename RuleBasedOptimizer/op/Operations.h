@@ -67,6 +67,19 @@ public:
 		b->set(i);
 		return b;
 	};
+	
+	/**
+	 * @brief returns new and initalized bitvector
+	 * @details returns a new bitvector instance and flips a bit
+	 * at a specific position
+	 *
+	 * @return Bitvector
+	 */
+	Bitvector_t *getBitVector() const
+	{
+		Bitvector_t *b = _bitvectors->get_new_entry();
+		return b;
+	};
 
 	/**
 	 * @brief creates a equivalence class, which represents a scan operation

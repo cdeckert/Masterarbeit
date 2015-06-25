@@ -1,26 +1,32 @@
-\chapter{Fazit und Ausblick}
+\chapter{Ausblick und Fazit}
+
+
+In dieser Arbeit wurde sowohl die Frage nach der Vollständigkeit der von Pellenkoft vorgestellten Regelmengen geprüft, als auch die neue, von \cite{shanbhag2014optimizing} implementierten Regelmenge RS-Graph mit ihrer Regel GraphRule untersucht und auf ihre Performance hin geprüft.
+
+Zu diesem Zweck wurden in Kapitel 2 die Grundlagen gelegt und unterschiedliche Datenbankoptimierer und Datenbanksysteme zusammen mit Grundbegriffen angesprochen. In Kapitel 3 wurden die Regelmengen vorgestellt und die bisherige Forschung bzgl. der Performance und Vollständigkeit der Regelmengen dargelegt. Die für die Evaluation (Kapitel 5) notwendige Implementierung eines Prototypen ist in Kapitel 4 dokumentiert worden. Die Ergebnisse der Evaluation wurden in Kapitel 5 dargestellt.
+
+Die Ergebnisse auf die Frage der Vollständigkeit der Pellenkoft Regelmengen zeigt, dass die Regelmenge RS-B2 zwar unvollständig ist, jedoch nicht im selben Maß wie von \cite{shanbhag2014optimizing} angenommen. Es wurde eine mögliche Begründung für die Messfehler von \cite{shanbhag2014optimizing} vorgeschlagen: Ein ungeeigneter Expansion Algorithmus. Abgesehen von diesem Algorithmus konnte in einer Menge von Tests gezeigt werden, dass RS-B2 bei einer Reihe von Formen korrekte Ergebnisse liefert und dies sogar ohne die Erzeugung von Duplikaten.
+
+In einem zweiten Schritt konnte die Performance von RS-Graph geprüft werden. Wie zu erwarten, war RS-Graph in allen Fällen schneller als andere Regelmengen. Selbst die von \cite{shanbhag2014optimizing} betrachtete Regelmenge könnte RS-Graph übertreffen. Es wurde zudem festgestellt, dass die Dauer der Enumeration auch abhängig vom jeweiligen transformationsbasierten Enumerationsalgorithmus ist und ein solcher Algorithmus zu erheblichen unterschieden in der Laufzeit führen kann.
+
+\section{Ausblick}
+
+Die Arbeit eröffnet eine Vielzahl an Erweiterungsmöglichkeiten. Auf der einen Seite wurden bisher nur die Regelmengen von Pellenkoft und die neue Regelmenge RS-Graph untersucht. Andere Regelmengen wurden nicht untersucht. Neue Regelmengen insbesondere Regelmengen, die effizienter als die bisher vorhandenen Regelmengen sind, können erforscht und mit dem bestehenden Framework an Optimizer getestet werden.
+
+In Kapitel 5 wurde erneut gezeigt, dass RS-B2 nicht vollständig ist. Es wurden Belege für die Unvollständigkeit gesammelt. Ein genauer Beweis der Unvollständigkeit und die Eingrenzung der Fälle steht aus.
+
+Neben der Erweiterung auf andere transformationsbasierte Regeln, bietet es sich auch an andere Enumerationsalgorithmen in bestehende regelbasierte Transformationsregeln einzubauen. Beispielsweise liegt es nahe auch DPccp in das bestehende System einzubinden, um so die Geschwindigkeit der Enuemration weiter zu erhöhen.
+
+Ebenfalls wurde in Kapitel 5 angesprochen, dass der verwendete Enumerator ExpandDAG zwar vergleichsweise schnell, jedoch nicht sehr akkurat bei der Enumeration von Plänen mit der Regelmenge RS-B2 ist. Der selbst implementierte Enumerator ist zwar viel akkurater, aber dafür externem ineffizient und repetitiv. Die Entwicklung von transformationsbasierten Enumerationsalgorithmen, die sich adaptiv auf die Bedürfnisse der Regelmengen anpassen und so den Ressourcenbedarf reduzieren, ist ein anderes Feld, dass es zu untersuchen gilt.  
 
 
 
+\section{Fazit}
 
+Abschließend lässt sich zusammenfassen, dass Regelmengen wie die von Pellenkoft zwar leicht eingängig, jedoch wenig effizient sind (im Vergleich zu MinCutConservative). Auch ist es möglich, dass Regelmengen nicht den gesamten Suchraum erforschen und so nicht das optimale Ergebnis finden. 
 
+Regelbasierte Optimierer sind erweiterbar. Es ist möglich andere Enumeratoren als Regel zu verpacken und in einen regelbasierten Enumerator einzubauen. Ob es sich bei einem solchen Vorgehen um eine optimale Lösung handelt, liegt im Auge des Betrachters.
 
-Die Arbeit startete mit einem
-
-
-In dieser Arbeit wurde sowohl die Frage nach der Vollständigkeit der von Pellenkoft vorgestellten Regelmengen geprüft als auch die neue Regelmenge RS-Graph mit ihrer neuen Regel GraphRule untersucht und ihre Performance geprüft. Auf Basis des in Kapitel 2 gesammelten Wissens konnten die Regeln aus Sicht von \cite{shanbhag2014optimizing} dargestellt werden. Mit Hilfe dieser Regeln wurde ein Prototyp in Kapitel 4 implementiert. Der Prototyp ermöglichte die Prüfung der Regelmengen auf Vollständigkeit und ermöglichte den Vergleich der unterschiedlichen Regelmengen im Hinblick auf ihre Performance. Ebenfalls wurde die neue Regel GraphRule kritisch betrachtet.
-
-
-
-\subsection{Ausblick}
-
-
-
-Erweiterungen dieser Arbeit sind in mehreren Dimensionen möglich.Begonnen bei den hier implementierten Prototypen und der Tests, der zugrunde liegenden Arbeit.                                                                                                                                                   Wie bereits in Kapitel 5 kritisch bemerkt, kann Java als Plattform von Tests  bzgl. Performance leicht in Frage gestellt werden. Da mit Pyro eine Alternative zur Verfügung steht, können alle Tests nochmals mit diesem System nachvollzogen und so unabhängig geprüft werden. Teil dieser neuerlichen Prüfung kann hier auch eine Prüfung auf Vollständigkeit mit Hilfe aller Pläne sein, die wie in dieser Arbeit einzeln betrachtet und verglichen werden können. Ebenfalls ist eine Messung mit Kostenberechnung bei allen Algorithmen zu empfehlen, um ein vollständiges Bild zu zeichnen. Eine neue Implementierung von Graph Rule in Pyro kann die Ergebnisse erneut bestätigen.
-
-Wie bereits in Kapitel 5 angesprochen, eröffnet die Kombination von bekannten Algorithmen und bekannten Optimierern neue Möglichkeiten zur Forschung. Weitere Algorithmen können implementiert und in neuem Kontext getestet werden. Eigenschaften verschiedener Systeme können ausgeglichen und völlig neu zusammengestellt werden. Andere Algorithmen wie \texttt{TDMINCUTLAZY} bieten ähnliches Potenzial zur Implementierung.
-
-Einige technische Erweiterungen des Prototypen sind ebenfalls anzudenken: Zunächst  können durch die Implementierung nach den in Kapitel 4 vorgestellten SOLID-Prinzipien schnell neue Features hinzugefügt werden. Insbesondere kann eine Erweiterung von Adaptern sinnvoll sein, um so den Prototypen an andere Systeme anzuschließen und so noch mehr Funktionalität und Eigenschaften hinzuzufügen. Des Weiteren können völlig neue Regeln und Regelmengen kombiniert und erstellt werden. Auch in diesem Bereich gibt es Potenziale, die es auszuschöpfen gilt. Die Implementierung verschiedener Kostenschätzer, die eine komplexere Kostenschätzung ermöglichen, würde den Prototypen um ein wichtiges Feature erweitern. 
 
 
 
